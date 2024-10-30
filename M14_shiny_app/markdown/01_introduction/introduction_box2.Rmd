@@ -1,0 +1,15 @@
+# this is a title
+
+## subtitle
+
+Now i am making a **strong** statement.
+
+Here, I am including some code: `2+2` alternatively
+
+```
+library(dplyr)
+
+data <- dataset %>%
+  filter()
+  
+```

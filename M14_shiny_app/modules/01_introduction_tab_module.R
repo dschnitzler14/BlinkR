@@ -1,0 +1,41 @@
+introduction_module_ui <- function(id){
+  ns <- NS(id)
+  introduction_tab <- tabItem(tabName = "Introduction",
+                              fluidPage(
+                                fluidRow(
+                                  box(
+                                    title = "Who is this app for?",
+                                    id = "introduction_box1",
+                                    collapsible = TRUE,
+                                    status = "info",
+                                    width = 12,
+                                    includeMarkdown("markdown/01_introduction/introduction_box1.Rmd")
+                                  ),
+                                  box(
+                                    title = "How to use this app",
+                                    id = "introduction_box2",
+                                    collapsible = TRUE,
+                                    status = "info",
+                                    width = 12,
+                                    includeMarkdown("markdown/01_introduction/introduction_box2.Rmd")
+                                  ),
+                                  box(
+                                    title = "Test Box",
+                                    id = "introduction_box3",
+                                    collapsible = TRUE,
+                                    status = "info",
+                                    width = 12
+                                  )
+                                )
+                              )
+  )
+}
+
+introduction_module_server <- function(id){
+  moduleServer(
+    id,
+    function(input, output, server){
+      #function logic here
+    }
+  )
+}
