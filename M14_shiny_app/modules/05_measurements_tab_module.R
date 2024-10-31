@@ -39,7 +39,6 @@ student_tabBox_module_UI <- function(id, student_number) {
         column(width = 4, measurement_input_module_ui(id = ns("unstressed_condition_module_3"), label = "Blinks/ 1 Minute: Technical Replicate 3"))
       ),
       actionButton(ns("submit_unstressed"), "Submit Unstressed Measurements"),
-      p("text should go below this"),
       textOutput(ns("Submission_unstressed_outcome"))
     ),
     
@@ -51,7 +50,6 @@ student_tabBox_module_UI <- function(id, student_number) {
         column(width = 4, measurement_input_module_ui(id = ns("stressed_condition_module_3"), label = "Blinks/ 1 Minute: Technical Replicate 3"))
       ),
       actionButton(ns("submit_stressed"), "Submit Stressed Measurements"),
-      p("text should go below this"),
       textOutput(ns("Submission_stressed_outcome"))
     )
   )
