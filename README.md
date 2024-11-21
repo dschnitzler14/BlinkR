@@ -4,7 +4,7 @@
 Empowering undergraduates to engage in the scientific process through interactive class experiments.
 
 ## 1	Introduction
-BlinkTrackR is an interactive Shiny app designed for undergraduate students to conduct and analyse a class experiment examining blinking as a physiological response to stress. The app guides users through every step of the scientific process in a scaffolded approach —from researching background information to formulating hypotheses, designing protocols, collecting and entering data, performing statistical analysis in R, creating visualisations, interpreting results, and writing up conclusions. 
+BlinkR is an interactive Shiny app designed for undergraduate students to conduct and analyse a class experiment examining blinking as a physiological response to stress. The app guides users through every step of the scientific process in a scaffolded approach —from researching background information to formulating hypotheses, designing protocols, collecting and entering data, performing statistical analysis in R, creating visualisations, interpreting results, and writing up conclusions. 
 
 Currently, this app is tailored specifically for use within MSB, but the long-term goal is to make it accessible to educators and students across different institutes. This Shiny app can run entirely on mobile, thereby increasing accessibility for all students and educators. 
 
