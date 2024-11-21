@@ -3,7 +3,6 @@ library(bslib)
 library(shinydashboard)
 library(markdown)
 library(DT)
-library(googlesheets4)
 library(shinyAce)
 library(shinyauthr)
 library(dplyr)
@@ -19,12 +18,6 @@ user_base <- tibble::tibble(
 #load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
 sapply(module_files, source)
-
-# load google sheets ----
-SHEET_ID_UNSTRESSED <- gs4_get("https://docs.google.com/spreadsheets/d/13lZ_Icc3wFOdeYW-lSKnYC7R3s9YAenTmaO_iSx-ciE/edit?usp=sharing")
-SHEET_ID_STRESSED <- gs4_get("https://docs.google.com/spreadsheets/d/1wMLrxKj6JViqH4s8td1MURsY8-VuEVxuDcBE2Z_fAio/edit?usp=sharing")
-
-gs4_auth(cache=".secrets", email="dschnitzler1@gmail.com")
 
 # variable to point to css ----
 css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"))
