@@ -1,5 +1,5 @@
 
-# BlinkTrackR: A Shiny App for Exploring Blinking as a Stress Response
+# BlinkR: A Shiny App for Exploring Blinking as a Stress Response
 
 Empowering undergraduates to engage in the scientific process through interactive class experiments.
 
