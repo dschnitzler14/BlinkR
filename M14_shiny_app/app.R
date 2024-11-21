@@ -8,7 +8,6 @@ library(shinyAce)
 library(shinyauthr)
 library(dplyr)
 
-
 # User base for login credentials
 user_base <- tibble::tibble(
   user = c("user1", "user2"),
