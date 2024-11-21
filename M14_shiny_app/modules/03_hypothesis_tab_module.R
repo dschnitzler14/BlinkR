@@ -1,29 +1,3 @@
-# Protocol Design Module ----
-# protocol_design_module_UI <- function(id, text_label = "Protocol Design", button_label = "Submit") {
-#   ns <- NS(id)
-#   tagList(
-#     textAreaInput(
-#       inputId = ns("text_input"),
-#       label = text_label
-#     ),
-#     actionButton(ns("inputTextButton"), label = button_label),
-#     verbatimTextOutput(ns("text"))
-#   )
-# }
-# 
-# protocol_design_module_server <- function(id) {
-#   moduleServer(
-#     id,
-#     function(input, output, session) {
-#       observeEvent(input$inputTextButton, {
-#         output$text <- renderText({
-#           "Protocol submitted"
-#         })
-#       })
-#     }
-#   )
-# }
-
 # Hypothesis Module ----
 hypothesis_module_ui <- function(id) {
   ns <- NS(id)
@@ -40,20 +14,20 @@ hypothesis_module_ui <- function(id) {
           includeMarkdown("markdown/03_hypothesis/what_is_a_hypothesis.Rmd")
         ),
         box(
-          title = "What is the background?",
+          title = "Tips for Writing Your Hypothesis",
           id = "hypothesis_box2",
           collapsible = FALSE,
           status = "info",
           width = 12,
-          includeMarkdown("markdown/03_hypothesis/background_summary.Rmd")
+          includeMarkdown("markdown/03_hypothesis/hypothesis_tips.Rmd")
         ),
         box(
-          title = "Let's design this experiment",
+          title = "What is your hypothesis?",
           id = "hypothesis_box3",
           collapsible = FALSE,
           status = "info",
           width = 12,
-          text_area_module_UI(ns("protocol1"), text_label = "Protocol", text_value = "What will we measure? How will we measure it? What are the limitations?")
+          text_area_module_UI(ns("hypothesis"), text_label = "Hypothesis", text_value = "Given the background of x, y, and z, my hypothesis is ...")
         )
       )
     )
@@ -65,7 +39,7 @@ hypothesis_module_server <- function(id) {
   moduleServer(
     id,
     function(input, output, session) {
-      text_area_module_server("protocol1")
+      text_area_module_server("hypothesis")
     }
   )
 }

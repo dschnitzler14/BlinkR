@@ -1,0 +1,5 @@
+1. Keep it Clear and Specific: Your hypothesis should make a clear prediction and specify the variables you are investigating.
+
+2. Make it Testable: Ensure that your hypothesis can be confirmed or refuted by data you collect in the experiment.
+
+3. Base it on Background Information: Think about what you learned from the background reading. A hypothesis should be grounded in existing knowledge and logical reasoning.

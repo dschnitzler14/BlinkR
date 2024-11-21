@@ -1,39 +1,39 @@
 /* Change the color of the main header bar */
 .skin-blue .main-header .navbar {
-  background-color: #80bc28 !important; /* Green color */
+  background-color: #80bc28 !important; 
 }
 
 /* Change the color of the header title area */
 .skin-blue .main-header .logo {
-  background-color: #80bc28 !important; /* Matches header */
-  color: white; /* Adjust text color if needed for readability */
+  background-color: #80bc28 !important; 
+  color: white; 
 }
 
 /* Optional: Change the hover color of the sidebar toggle button */
 .skin-blue .main-header .navbar .sidebar-toggle:hover {
-  background-color: #6ca322 !important; /* Slightly darker green on hover */
+  background-color: #6ca322 !important; 
 }
 
 /* Set Markdown h1 styling to match app h1 styling */
 .markdown-body h1 {
-  font-size: 2em; /* Adjust this to match your app's h1 size */
-  color: #333; /* Optional: Set color for consistency */
-  margin-top: 0.5em; /* Optional: Adjust spacing if needed */
+  font-size: 2em;
+  color: #333; 
+  margin-top: 0.5em; 
   margin-bottom: 0.5em;
 }
 
 /* Set styling for other Markdown headers if needed */
 .markdown-body h2 {
-  font-size: 1.5em; /* Adjust as needed */
+  font-size: 1.5em;
   color: #333;
 }
 
 .markdown-body h3 {
-  font-size: 1.2em; /* Adjust as needed */
+  font-size: 1.2em;
   color: #333;
 }
 
-/* Optional: General styling for Markdown text */
+/* General styling for Markdown text */
 .markdown-body p {
   font-size: 1em;
   color: #555;

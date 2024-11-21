@@ -4,12 +4,11 @@ background_module_ui <- function(id){
     tabName = "Background",
     fluidPage(
       fluidRow(
-      # Embed the PubMed website using an iframe
       tags$iframe(
         src = "https://pubmed.ncbi.nlm.nih.gov/",
-        width = "100%",       # Full width of the tab
-        height = "800px",     # Set height as needed
-        style = "border:none;" # Remove border for a clean look
+        width = "100%",
+        height = "800px",
+        style = "border:none;"
       )
     )
     )

@@ -20,11 +20,13 @@ introduction_module_ui <- function(id){
                                     includeMarkdown("markdown/01_introduction/introduction_box2.Rmd")
                                   ),
                                   box(
-                                    title = "Test Box",
+                                    title = "Outline of experiment",
                                     id = "introduction_box3",
                                     collapsible = TRUE,
                                     status = "info",
-                                    width = 12
+                                    width = 12,
+                                    includeMarkdown("markdown/01_introduction/introduction_box3.Rmd")
+                                    
                                   )
                                 )
                               )
