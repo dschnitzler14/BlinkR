@@ -22,7 +22,8 @@ module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRU
 sapply(module_files, source)
 
 # variable to point to css ----
-css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"))
+css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
+                      tags$script(src = "app.js"))
 
 # header ----
 # Header with Logout Button ----
@@ -30,6 +31,7 @@ header <- dashboardHeader(title = "BlinkR", uiOutput("user_area"))
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
+    id = "sidebar",
     menuItem("Introduction", tabName = "Introduction", icon = icon("sun")),
     conditionalPanel(
       condition = "output.user_auth",
@@ -49,7 +51,12 @@ sidebar <- dashboardSidebar(
         menuItem("Protocol", tabName = "Protocol", icon = icon("list")),
         menuItem("Measurements", tabName = "Measurements", icon = icon("ruler")),
         menuItem("Raw Data", tabName = "Raw_Data", icon = icon("database")),
-        menuItem("Analysis", tabName = "Analysis", icon = icon("magnifying-glass")),
+        menuItem("Analysis", tabName = "Analysis", icon = icon("play"),
+                 menuItem("Analysis Home", tabName = "Analysis_Home", icon = icon("magnifying-glass")),
+                 menuItem("Summarise Data", tabName="Summarise_Data", icon = icon("rectangle-list")),
+                 menuItem("Statistical Analysis", tabName="Statistical_Analysis", icon = icon("equals")),
+                 menuItem("Create Figure", tabName="Create_Figure", icon = icon("chart-simple"))
+        ),
         menuItem("Writing Up", tabName = "Writing-Up", icon = icon("pen")),
         menuItem("Feedback", tabName = "Feedback", icon = icon("comment"))
       )
@@ -122,10 +129,31 @@ body <- dashboardBody(
       )
     ),
     tabItem(
-      tabName = "Analysis",
+      tabName = "Analysis_Home",
       conditionalPanel(
         condition = "output.user_auth", 
-        analysis_module_ui("analysis")
+        analysis_module_ui("analysis_home")
+      )
+    ),
+    tabItem(
+      tabName = "Summarise_Data",
+      conditionalPanel(
+        condition = "output.user_auth", 
+        analysis_summarise_data_module_ui("summarise")
+      )
+    ),
+    tabItem(
+      tabName = "Statistical_Analysis",
+      conditionalPanel(
+        condition = "output.user_auth", 
+        analysis_stats_module_ui("stats")
+      )
+    ),
+    tabItem(
+      tabName = "Create_Figure",
+      conditionalPanel(
+        condition = "output.user_auth", 
+        analysis_create_figure_module_ui("figure")
       )
     ),
     tabItem(
@@ -184,7 +212,10 @@ server <- function(input, output, session) {
     protocol_module_server("protocol")
     measurements_module_server("measurements", db = db_student_table)
     class_data_module_server("class_data", db_measurement = db_measurement)
-    analysis_module_server("analysis", results_data = data_read)
+    analysis_module_server("analysis_home", results_data = data_read, parent.session = session)
+    analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session)
+    analysis_stats_module_server("stats", results_data = data_read, parent.session = session)
+    analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session)
     write_up_module_server("write_up")
   })
 }

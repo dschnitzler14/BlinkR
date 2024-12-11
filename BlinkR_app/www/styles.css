@@ -76,3 +76,16 @@
   margin-right: 8px;
 }
 
+/* Default style for the specific class of action buttons */
+.action-button.custom-action {
+  background-color: #007bff; /* Default button color (blue) */
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+/* Style for the clicked state (green) */
+.action-button.custom-action.clicked {
+  background-color: #28a745 !important; /* Green background */
+  color: white !important;
+}
