@@ -1,24 +1,66 @@
 # Class Data Module UI
 class_data_module_ui <- function(id) {
   ns <- NS(id)
-  tabItem(
-    tabName = "Raw_Data",
-    fluidPage(
-      DT::dataTableOutput(ns("raw_data")) 
+  tagList(
+    tabBox(
+      title = "Raw Data",
+      id = ns("data_box"),
+      width = 12,
+      side = "left",
+      tabItem(
+        tabName = "Your Group Data",
+        title = "Your Group Data",
+        DT::dataTableOutput(ns("group_data"))
+      ),
+      tabItem(
+        tabName = "Class Data",
+        title = "Class Data",
+        DT::dataTableOutput(ns("class_data"))
+      )
     )
   )
 }
 
-# Class Data Module Server
-class_data_module_server <- function(id) {
+class_data_module_server <- function(id, db_measurement) {
   moduleServer(
     id,
     function(input, output, session) {
-      dummy_data <- read.csv("data/dummy_blinking_data.csv")
+      ns <- session$ns
       
-      output$raw_data <- DT::renderDataTable({
-        DT::datatable(dummy_data, options = list(paging = FALSE, searching = FALSE))
-      })
+      dummy_data <- read.csv("data/dummy_blinking_data.csv") 
+      
+      output$class_data <- renderDT({
+        datatable(
+          dummy_data,
+          escape = FALSE,
+          options = list(
+            paging = TRUE,
+            searching = TRUE,
+            autoWidth = TRUE
+          ),
+          rownames = FALSE
+        )
+      }, server = TRUE)
+      
+      output$group_data <- renderDT({
+        measurement_data <- db_measurement()
+        
+        if (!is.data.frame(measurement_data) || nrow(measurement_data) == 0) {
+          measurement_data <- data.frame(Message = "No data available", stringsAsFactors = FALSE)
+        }
+        
+        datatable(
+          measurement_data,
+          escape = FALSE,
+          options = list(
+            paging = TRUE,
+            searching = TRUE,
+            autoWidth = TRUE
+          ),
+          rownames = FALSE
+        )
+      }, server = TRUE)
+      
     }
   )
 }

@@ -6,6 +6,8 @@ library(DT)
 library(shinyAce)
 library(shinyauthr)
 library(dplyr)
+library(ggplot2)
+library(car)
 
 # User base for login credentials
 user_base <- tibble::tibble(
@@ -24,12 +26,11 @@ css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "s
 
 # header ----
 # Header with Logout Button ----
-header <- dashboardHeader(title = "Experiment", uiOutput("user_area"))
+header <- dashboardHeader(title = "BlinkR", uiOutput("user_area"))
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Introduction", tabName = "Introduction", icon = icon("sun")),
-    
     conditionalPanel(
       condition = "output.user_auth",
       menuItem("User Area", tabName = "User_Area", icon = icon("user"))
@@ -144,7 +145,11 @@ ui <- dashboardPage(header, sidebar,body)
 # server function ----
 server <- function(input, output, session) {
   
-  db <- reactiveVal(data.frame(ID = integer(), Initials = character(), Unstressed_1 = integer(), Unstressed_2 = integer(), Unstressed_3 = integer(), Stressed_1 = integer(), Stressed_2 = integer(), Stressed_3 = integer(), stringsAsFactors = FALSE))
+  db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), stringsAsFactors = FALSE))
+  
+  db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), stringsAsFactors = FALSE))
+  
+  data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
   
   introduction_module_server("introduction")
   
@@ -174,12 +179,12 @@ server <- function(input, output, session) {
     
     # Load authenticated-only modules
     background_module_server("background")
-    group_info_module_server("student_initials", db = db)
+    group_info_module_server("student_initials", db = db_student_table, auth = auth)
     hypothesis_module_server("hypothesis")
     protocol_module_server("protocol")
-    measurements_module_server("measurements", db = db)
-    class_data_module_server("class_data")
-    analysis_module_server("analysis")
+    measurements_module_server("measurements", db = db_student_table)
+    class_data_module_server("class_data", db_measurement = db_measurement)
+    analysis_module_server("analysis", results_data = data_read)
     write_up_module_server("write_up")
   })
 }

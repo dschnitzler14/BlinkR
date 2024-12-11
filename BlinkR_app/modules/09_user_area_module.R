@@ -12,11 +12,11 @@ group_info_module_ui <- function(id) {
       class = "btn-primary"
     ),
     h3("Student Database"),
-    DTOutput(ns("student_table"))
+    DT::dataTableOutput(ns("student_table"))
   )
 }
 
-group_info_module_server <- function(id, db) {
+group_info_module_server <- function(id, db_student_table, auth) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -32,19 +32,23 @@ group_info_module_server <- function(id, db) {
           return()
         }
         
-        if (initials %in% db()$Initials) {
+        current_table <- db_student_table()
+        
+        if (initials %in% current_table$Initials) {
           showNotification("These initials already exist in the database. Please enter different initials.", type = "error")
           return()
         }
-                new_entry <- data.frame(
+        
+        # Create the new entry
+        new_entry <- data.frame(
+          Group = auth()$user_info$user,
           ID = next_id(),
           Initials = initials,
-          Unstressed_1 = NA, Unstressed_2 = NA, Unstressed_3 = NA,
-          Stressed_1 = NA, Stressed_2 = NA, Stressed_3 = NA,
-          Remove = "Remove",  # Text label instead of HTML button
+          Remove = "Remove",
           stringsAsFactors = FALSE
         )
-        db(rbind(db(), new_entry))
+        
+        db_student_table(rbind(current_table, new_entry))
         
         next_id(next_id() + 1)
         
@@ -53,23 +57,25 @@ group_info_module_server <- function(id, db) {
         showNotification("Student added to the database.", type = "message")
       })
       
+  
       output$student_table <- renderDT({
+
         datatable(
-          db(),
+          db_student_table(),
+          escape = FALSE,
           options = list(
             autoWidth = TRUE
           ),
-          rownames = FALSE,
-          selection = "none"
+          rownames = FALSE
         )
       }, server = TRUE)
       
       observeEvent(input$student_table_cell_clicked, {
         info <- input$student_table_cell_clicked
-        if (!is.null(info) && !is.null(info$row) && info$col == (ncol(db()) - 1)) {
-          student_id_to_remove <- db()$ID[info$row]
-          updated_db <- db()[db()$ID != student_id_to_remove, ]
-          db(updated_db)
+        if (!is.null(info) && !is.null(info$row) && info$col == (ncol(db_student_table()) - 1)) {
+          student_id_to_remove <- db_student_table()$ID[info$row]
+          updated_db <- db_student_table()[db_student_table()$ID != student_id_to_remove, ]
+          db_student_table(updated_db)
           showNotification("Student removed from the database.", type = "warning")
         }
       })
