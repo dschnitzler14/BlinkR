@@ -1,0 +1,3 @@
+- **Background**: Provide a clear and concise biological context. Ensure it's understandable for peers in your field.
+- **Literature Reference**: Use and cite relevant scientific literature properly.
+- **Hypothesis**: State a clear null and alternative hypothesis. Justify the alternative hypothesis with references to prior studies.

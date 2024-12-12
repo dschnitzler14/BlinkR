@@ -101,6 +101,7 @@ barplot <- ggplot(data_summary, aes(x = stress_status, y = mean, fill = stress_s
   ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
 
 
+
 boxplot <- ggplot(average_trs, aes(x = stress_status, y = average_blinks_per_minute, fill = stress_status)) + 
   geom_boxplot(outlier.shape = NA, width = 0.5) + 
   geom_jitter(

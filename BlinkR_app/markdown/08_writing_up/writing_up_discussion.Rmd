@@ -1,0 +1,3 @@
+- **Findings**: Summarize results and compare with your initial hypothesis.
+- **Limitations**: Identify flaws or constraints in your study.
+- **Relevance**: Relate findings to existing literature and broader context.

@@ -12,7 +12,16 @@ analysis_dashboard_module_ui <- function(id) {
             collapsible = FALSE,
             width = 12,
             class = "custom-box",
-            actionButton(ns("start"), "Let's Get Started!", class = "action-button custom-action"),
+            actionButton(ns("start"), "Click Here To Get Started!", class = "action-button custom-action"),
+          ),
+          box(
+            title = "What do you want to do next?",
+            collapsible = FALSE,
+            width = 12,
+            class = "custom-box",
+            actionButton(ns("summarise"), "Summarise the Data", class = "action-button custom-action"),
+            actionButton(ns("statistics"), "Run Statistical Analysis", class = "action-button custom-action"),
+            actionButton(ns("figure"), "Create a Figure", class = "action-button custom-action")
           ),
         
           box(
@@ -38,6 +47,17 @@ analysis_dashboard_module_server <- function(id, parent.session) {
  
     observeEvent(input$start, {
       updateTabItems(parent.session, "sidebar", "Prepare_Data")
-    })   
+    })
+    
+    observeEvent(input$summarise, {
+      updateTabItems(parent.session, "sidebar", "Summarise_Data")
+    })
+    observeEvent(input$statistics, {
+      updateTabItems(parent.session, "sidebar", "Statistical_Analysis")
+    })
+    observeEvent(input$figure, {
+      updateTabItems(parent.session, "sidebar", "Create_Figure")
+    })
+    
   })
 }

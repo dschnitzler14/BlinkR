@@ -227,7 +227,7 @@ server <- function(input, output, session) {
     analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session)
     analysis_stats_module_server("stats", results_data = data_read, parent.session = session)
     analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session)
-    write_up_module_server("write_up")
+    write_up_module_server("write_up", parent.session = session)
   })
 }
 

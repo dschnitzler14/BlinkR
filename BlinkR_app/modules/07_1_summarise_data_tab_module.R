@@ -39,6 +39,14 @@ analysis_summarise_data_module_ui <- function(id) {
             )
           ),
           box(
+            title = "What do you want to do next?",
+            collapsible = FALSE,
+            width = 12,
+            class = "custom-box",
+            actionButton(ns("statistics"), "Run Statistical Analysis", class = "action-button custom-action"),
+            actionButton(ns("figure"), "Create a Figure", class = "action-button custom-action")
+          ),
+          box(
             title = " ",
             collapsible = FALSE,
             width = 12,
@@ -208,6 +216,13 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
       output$summary_result_interpretation_quiz_feedback <- renderUI({
         feedback
       })
+    })
+    
+    observeEvent(input$statistics, {
+      updateTabItems(parent.session, "sidebar", "Statistical_Analysis")
+    })
+    observeEvent(input$figure, {
+      updateTabItems(parent.session, "sidebar", "Create_Figure")
     })
     
     #home button
