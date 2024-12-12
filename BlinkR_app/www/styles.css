@@ -89,3 +89,29 @@
   background-color: #28a745 !important; /* Green background */
   color: white !important;
 }
+
+/* Styling for the custom box */
+.custom-box {
+  border: 3px solid #007bff; /* Thicker blue border for prominence */
+  border-radius: 12px; /* Slightly more rounded corners */
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* Gradient background */
+  padding: 25px; /* More spacious padding inside */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow for a floating effect */
+  text-align: center; /* Center-align content inside the box */
+}
+
+/* Title styling for the custom box */
+.custom-box .box-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #0056b3; /* Slightly darker blue for contrast */
+  margin-bottom: 20px;
+  text-decoration: underline;
+}
+
+/* Spacing for buttons in the box */
+.custom-box .action-button {
+  display: inline-block; /* Keep buttons inline */
+  margin: 15px 10px; /* Add space between buttons */
+}
+
