@@ -8,6 +8,7 @@ library(shinyauthr)
 library(dplyr)
 library(ggplot2)
 library(car)
+library(tidyr)
 
 # User base for login credentials
 user_base <- tibble::tibble(
@@ -52,7 +53,8 @@ sidebar <- dashboardSidebar(
         menuItem("Measurements", tabName = "Measurements", icon = icon("ruler")),
         menuItem("Raw Data", tabName = "Raw_Data", icon = icon("database")),
         menuItem("Analysis", tabName = "Analysis", icon = icon("play"),
-                 menuItem("Analysis Home", tabName = "Analysis_Home", icon = icon("magnifying-glass")),
+                 menuItem("Analysis Dashboard", tabName = "Analysis_Dashboard", icon = icon("dashboard")),
+                 menuItem("Prepare Data", tabName = "Prepare_Data", icon = icon("magnifying-glass")),
                  menuItem("Summarise Data", tabName="Summarise_Data", icon = icon("rectangle-list")),
                  menuItem("Statistical Analysis", tabName="Statistical_Analysis", icon = icon("equals")),
                  menuItem("Create Figure", tabName="Create_Figure", icon = icon("chart-simple"))
@@ -129,10 +131,17 @@ body <- dashboardBody(
       )
     ),
     tabItem(
-      tabName = "Analysis_Home",
+      tabName = "Analysis_Dashboard",
       conditionalPanel(
         condition = "output.user_auth", 
-        analysis_module_ui("analysis_home")
+        analysis_dashboard_module_ui("analysis_dashboard")
+      )
+    ),
+    tabItem(
+      tabName = "Prepare_Data",
+      conditionalPanel(
+        condition = "output.user_auth", 
+        analysis_prepare_data_module_ui("analysis_prepare_data")
       )
     ),
     tabItem(
@@ -212,7 +221,9 @@ server <- function(input, output, session) {
     protocol_module_server("protocol")
     measurements_module_server("measurements", db = db_student_table)
     class_data_module_server("class_data", db_measurement = db_measurement)
-    analysis_module_server("analysis_home", results_data = data_read, parent.session = session)
+    analysis_dashboard_module_server("analysis_dashboard", parent.session = session)
+    analysis_prepare_data_module_server("analysis_prepare_data", results_data = data_read, parent.session = session)
+    
     analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session)
     analysis_stats_module_server("stats", results_data = data_read, parent.session = session)
     analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session)

@@ -1,0 +1,23 @@
+```r
+  average_trs$stress_status <- factor(average_trs$stress_status, levels = c("unstressed", "stressed"))
+
+  variance_boxplot <- boxplot(
+    average_blinks_per_minute ~ stress_status,
+    data = average_trs,
+    xlab = "Stress Status",
+    ylab = "Blinks Per Minute",
+    main = "Variance: Blinks/Minute by Stress Status",
+    col = c("grey49", "lightgrey")
+  )
+
+  variance_boxplot <- stripchart(
+    average_blinks_per_minute ~ stress_status,
+    data = average_trs,
+    add = TRUE,
+    vertical = TRUE,
+    method = "jitter",
+    pch = 21,
+    bg = "maroon"
+  )
+```
+

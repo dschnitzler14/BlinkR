@@ -1,0 +1,2 @@
+  - The boxplot displays the spread of your data across different groups (e.g., stress status).
+  - The scatter overlay shows individual data points. This helps us visually inspect variability within and between groups, which is important for ensuring equal variances.

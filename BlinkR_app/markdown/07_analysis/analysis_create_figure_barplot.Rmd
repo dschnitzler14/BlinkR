@@ -1,0 +1,30 @@
+```r
+data_summary <- average_trs %>%
+  group_by(stress_status) %>%
+  summarise(
+    n = n(),
+    mean = mean(average_blinks_per_minute, na.rm = TRUE),
+    sd = sd(average_blinks_per_minute, na.rm = TRUE),
+    sem = sd / sqrt(n)
+  )
+
+data_summary$stress_status <- factor(data_summary$stress_status, levels = c("unstressed", "stressed"))
+
+barplot <- ggplot(data_summary, aes(x = stress_status, y = mean, fill = stress_status)) +
+  geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+  geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+  geom_jitter(
+    data = average_trs, 
+    aes(x = stress_status, y = average_blinks_per_minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("unstressed" = "grey49", "stressed" = "lightgrey")) +
+  labs(x = "Stress Status",
+       y = "Mean Blinks/Minute",
+       title = "Mean Blinks/Minute by Stress Status") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+```

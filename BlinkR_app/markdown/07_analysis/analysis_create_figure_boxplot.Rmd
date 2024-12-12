@@ -1,0 +1,20 @@
+```r
+boxplot <- ggplot(average_trs, aes(x = stress_status, y = average_blinks_per_minute, fill = stress_status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = stress_status, y = average_blinks_per_minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("unstressed" = "grey49", "stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+```

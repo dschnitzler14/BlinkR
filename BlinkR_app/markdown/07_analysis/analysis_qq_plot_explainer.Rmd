@@ -1,0 +1,2 @@
+  - The Q-Q plot compares the quantiles of your data to the quantiles of a normal distribution.
+  - If the points fall along a straight diagonal line, your data is likely normally distributed.

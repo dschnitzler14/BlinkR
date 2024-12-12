@@ -9,9 +9,9 @@ analysis_create_figure_module_ui <- function(id) {
           12,
           
           box(
-            title = "Step 5: Creating a Figure",
+            title = "Creating a Figure",
             collapsible = TRUE,
-            collapsed = TRUE,
+            collapsed = FALSE,
             width = 12,
             fluidRow(
               column(
@@ -19,63 +19,27 @@ analysis_create_figure_module_ui <- function(id) {
                 markdown(
                   "Time to make a figure!"
                 ),
-                radioButtons(ns("step5_figure_type_quiz"),
+                radioButtons(ns("figure_type_selector"),
                              label = "What type of figure would be best here?",
                              choices = c("bar chart" = "bar",
-                                         "box plot" = "box",
-                                         "line graph" = "line",
-                                         "scatter plot" = "scatter"),
+                                         "box plot" = "box"
+                                         ),
                              selected = character(0)),
-                uiOutput(ns("step5_figure_type_quiz_feedback")),
-                box(
-                  title = "View code used to generate plot",
-                  collapsible = TRUE,
-                  collapsed = TRUE,
-                  width = 12,
-                  status = "success",
-                  wellPanel(
-                    markdown("
-                          First, we need to summarise our data before we plot it:
-                           ```
-                           data_summary <- average_trs %>%
-                              group_by(stress_status) %>%
-                              summarise(
-                                n = n(),
-                                mean = mean(average_blinks_per_minute, na.rm = TRUE),
-                                sd = sd(average_blinks_per_minute, na.rm = TRUE),
-                                sem = sd / sqrt(n)
-                              )
-                            
-                            data_summary$stress_status <- factor(data_summary$stress_status, levels = c(\"unstressed\", \"stressed\"))
-
-                           ```
-                           
-                           Next, we can create our plot:
-                           ```
-                           barplot <- ggplot(data_summary, aes(x = stress_status, y = mean, fill = stress_status)) + 
-                          geom_bar(stat = \"identity\", color = \"black\", position = position_dodge()) +
-                          geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
-                          scale_fill_manual(values = c(\"unstressed\" = \"grey49\", \"stressed\" = \"lightgrey\")) + 
-                          labs(x = \"Stress Status\",
-                               y = \"Mean Blinks/Minute\",
-                               title = \"Mean Blinks/Minute by Stress Status\") +
-                          theme_minimal() +
-                          theme(legend.position = \"none\") +
-                          ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
-                          ```
-                    ")
-                  )
-                ),
+                uiOutput(ns("figure_type_selector_output")),
               ),
               column(
-                4,
-                editor_module_ui(ns("step5_editor"))
-              ),
-              column(
-                4,
-                plotOutput(ns("results_plot")),
+                8,
+                uiOutput(ns("editor_ui"))
               )
             )
+          ),
+          box(
+            title = " ",
+            collapsible = FALSE,
+            width = 12,
+            class = "custom-box",
+            markdown("View all your results in the Analysis Dashboard"),
+            actionButton(ns("dashboard"), "Go to Dashboard", class = "action-button custom-action")
           )
 ))))
 
@@ -84,42 +48,53 @@ analysis_create_figure_module_ui <- function(id) {
 analysis_create_figure_module_server <- function(id, results_data, parent.session) {
   moduleServer(id, function(input, output, session) {
     # Load data
-    data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
-    
-    data <- reactive({ data_read })
-
-#Step 5: Make Figure
-observeEvent(input$step5_figure_type_quiz, {
-  feedback <- if (input$step5_figure_type_quiz == "bar") {
-    div(class = "success-box", "\U1F64C Correct!")
-  } else {
-    div(class = "error-box", "\U1F914 Not quite - try again!")
-  }
+  data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
   
-  output$step5_figure_type_quiz_feedback <- renderUI({
-    feedback
-  })
-})
+  data <- reactive({ data_read })
 
-
-step5_result <- editor_module_server("step5_editor", data = average_trs)
-
-observeEvent(step5_result(), {
-  output$results_plot <- renderPlot({
-    req(step5_result())
-    plot <- step5_result()
-    x
-    if (inherits(plot, "ggplot")) {
-      print(plot)
-    } else if (is.function(plot)) {
-      plot()
+  average_trs <- data_read %>%
+    dplyr::group_by(id, stress_status) %>%
+    dplyr::summarise(
+      average_blinks_per_minute = mean(blinks_per_minute, na.rm = TRUE),
+      .groups = 'drop'
+    )
+  #Make Figure
+  observeEvent(input$figure_type_selector, {
+    figure_type_selector_output <- if (input$figure_type_selector == "bar") {
+      includeMarkdown("markdown/07_analysis/analysis_create_figure_barplot.Rmd")
     } else {
-      plot.new()
-      text(0.5, 0.5, "No valid plot returned.", cex = 1.5)
+      includeMarkdown("markdown/07_analysis/analysis_create_figure_boxplot.Rmd")
     }
-  })
+    
+    output$figure_type_selector_output <- renderUI({
+      figure_type_selector_output
+    })
+
+    # output$editor_ui <- renderUI({
+    #   NULL
+    # })
+    
+    output$editor_ui <- renderUI({
+      if (input$figure_type_selector == "bar") {
+        editor_module_ui(session$ns("figure_editor_bar_plot"))
+      } else {
+        editor_module_ui(session$ns("figure_editor_box_plot"))
+      }
+    })
 })
 
+
+  figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", data = average_trs)
+  figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", data = average_trs)
+  
+
+  
+  
+  
+# go to dashboard button
+observeEvent(input$dashboard, {
+  updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
+})
 
 
   }
