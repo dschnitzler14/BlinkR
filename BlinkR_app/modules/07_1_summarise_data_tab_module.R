@@ -35,7 +35,9 @@ analysis_summarise_data_module_ui <- function(id) {
                 uiOutput(ns("summary_code_feedback"))
               
               ),
-              column(8, editor_module_ui(ns("summarise_editor")))
+              column(8, editor_module_ui(ns("summarise_editor")),
+                     uiOutput(ns("save_summary_result"))
+              )
             )
           ),
           box(
@@ -43,22 +45,29 @@ analysis_summarise_data_module_ui <- function(id) {
             collapsible = FALSE,
             width = 12,
             class = "custom-box",
-            actionButton(ns("statistics"), "Run Statistical Analysis", class = "action-button custom-action"),
-            actionButton(ns("figure"), "Create a Figure", class = "action-button custom-action")
-          ),
+            actionButton(ns("statistics"),
+                         label = tagList(icon("equals"), "Run Statistical Analysis"),
+                         class = "action-button custom-action",
+                         `data-id` = "stats"),
+            actionButton(ns("figure"),
+                         label = tagList(icon("chart-simple"), "Create a Figure"),
+                         class = "action-button custom-action",
+                         `data-id` = "create_figure")
+            ),
           box(
             title = " ",
             collapsible = FALSE,
             width = 12,
             class = "custom-box",
             markdown("View all your results in the Analysis Dashboard"),
-            actionButton(ns("dashboard"), "Go to Dashboard", class = "action-button custom-action")
-          )
+            actionButton(ns("dashboard"),
+                         label = tagList(icon("dashboard"), "Go to Dashboard"))
+            )
           
         ))))}
 
 
-analysis_summarise_data_module_server <- function(id, results_data, parent.session) {
+analysis_summarise_data_module_server <- function(id, results_data, parent.session, saved_results) {
   moduleServer(id, function(input, output, session) {
     # Load data
     data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
@@ -146,9 +155,22 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
           
           )
         })
+        
+        output$save_summary_result <- renderUI({
+          actionButton(
+            session$ns("save_summary_results_button"),
+            label = tagList(icon("save"), "Save Results to Dashboard"),
+            class = "action-button custom-action"
+          )
+        })
+        
       } else {
         output$summary_code_feedback <- renderUI({
           div(class = "error-box", "\U1F914 Not quite - try again!")
+        })
+        
+        output$save_summary_result <- renderUI({
+          NULL
         })
       }
     })
@@ -217,6 +239,20 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
         feedback
       })
     })
+    
+    summary_updated <- reactiveVal(FALSE)
+    
+    observeEvent(input$save_summary_results_button, {
+      if (!is.null(summarise_result())) {
+        key <- "summary"
+        saved_results$scripts[[key]] <- summarise_result()
+        
+        showNotification("Summary script saved successfully.", type = "message")
+      } else {
+        showNotification("No summary script to save.", type = "error")
+      }
+    })
+    
     
     observeEvent(input$statistics, {
       updateTabItems(parent.session, "sidebar", "Statistical_Analysis")

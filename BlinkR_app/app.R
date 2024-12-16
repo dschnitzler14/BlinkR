@@ -9,6 +9,7 @@ library(dplyr)
 library(ggplot2)
 library(car)
 library(tidyr)
+library(utils)
 
 # User base for login credentials
 user_base <- tibble::tibble(
@@ -179,8 +180,14 @@ body <- dashboardBody(
 # ui combined ----
 ui <- dashboardPage(header, sidebar,body)
 
+saved_results <- reactiveValues(
+  plots = list(),
+  recorded_plots = list(),
+  scripts = list()
+)
 # server function ----
 server <- function(input, output, session) {
+  
   
   db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), stringsAsFactors = FALSE))
   
@@ -219,14 +226,14 @@ server <- function(input, output, session) {
     group_info_module_server("student_initials", db = db_student_table, auth = auth)
     hypothesis_module_server("hypothesis")
     protocol_module_server("protocol")
-    measurements_module_server("measurements", db = db_student_table)
+    measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement)
     class_data_module_server("class_data", db_measurement = db_measurement)
-    analysis_dashboard_module_server("analysis_dashboard", parent.session = session)
+    analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results)
     analysis_prepare_data_module_server("analysis_prepare_data", results_data = data_read, parent.session = session)
     
-    analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session)
-    analysis_stats_module_server("stats", results_data = data_read, parent.session = session)
-    analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session)
+    analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session, saved_results = saved_results)
+    analysis_stats_module_server("stats", results_data = data_read, parent.session = session, saved_results = saved_results)
+    analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session, saved_results = saved_results)
     write_up_module_server("write_up", parent.session = session)
   })
 }

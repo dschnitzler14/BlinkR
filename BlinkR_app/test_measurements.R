@@ -19,11 +19,14 @@ measurement_input_module_server <- function(id) {
   moduleServer(
     id,
     function(input, output, session) {
-      reactive({ input$numeric_input1 })
+      reactive({
+        input$numeric_input1
+      })
     }
   )
 }
 
+# Student Tab Module ----
 # Student Tab Module ----
 student_tabBox_module_UI <- function(id, student_number) {
   ns <- NS(id)
@@ -33,10 +36,8 @@ student_tabBox_module_UI <- function(id, student_number) {
     width = 12,
     tabPanel(
       title = "Unstressed Condition",
-      measurement_input_module_ui(ns("unstressed_input"), label = "Input"),
       actionButton(ns("submit_button"), "Submit"),
-      textOutput(ns("success_message")),
-      p("test text paragraph")
+      textOutput(ns("success_message"))
     )
   )
 }
@@ -45,24 +46,19 @@ student_tabBox_module_server <- function(id) {
   moduleServer(
     id,
     function(input, output, session) {
-      ns <- session$ns
-      
       observeEvent(input$submit_button, {
         output$success_message <- renderText({
-          p("Success!")
+          "Success!"
         })
       })
     }
   )
 }
 
-
 # Measurements Module ----
 measurements_module_ui <- function(id) {
   ns <- NS(id)
-  fluidRow(
-    uiOutput(ns("students_ui"))
-  )
+  uiOutput(ns("students_ui"))
 }
 
 measurements_module_server <- function(id, student_data) {
@@ -75,26 +71,24 @@ measurements_module_server <- function(id, student_data) {
         req(student_data())
         num_students <- nrow(student_data())
         
-        if (num_students > 0) {
-          output$students_ui <- renderUI({
+        # Dynamically render student modules
+        output$students_ui <- renderUI({
+          tagList(
             lapply(1:num_students, function(i) {
               student_tabBox_module_UI(
                 id = paste0("student_module_", i),
                 student_number = student_data()$Initials[i]
               )
             })
-          })
-          
-          lapply(1:num_students, function(i) {
-            student_tabBox_module_server(
-              id = paste0("student_module_", i)
-            )
-          })
-        } else {
-          output$students_ui <- renderUI({
-            h3("No students available. Please add students to proceed.")
-          })
-        }
+          )
+        })
+        
+        # Attach server logic to each dynamically created module
+        lapply(1:num_students, function(i) {
+          student_tabBox_module_server(
+            id = paste0("student_module_", i)
+          )
+        })
       })
     }
   )
@@ -107,8 +101,8 @@ ui <- fluidPage(
 
 # Main App Server ----
 server <- function(input, output, session) {
-
-    student_data <- reactive({
+  # Sample student data
+  student_data <- reactive({
     data.frame(
       ID = 1:2,
       Initials = c("A.B.", "C.D."),
@@ -116,9 +110,9 @@ server <- function(input, output, session) {
     )
   })
   
+  # Connect measurements module
   measurements_module_server("measurements_module", student_data)
 }
 
 # Run App ----
 shinyApp(ui, server)
-

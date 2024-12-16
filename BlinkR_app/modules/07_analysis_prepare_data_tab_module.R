@@ -59,18 +59,25 @@ analysis_prepare_data_module_ui <- function(id) {
             collapsible = FALSE,
             width = 12,
             class = "custom-box",
-            actionButton(ns("summarise"), "Summarise the Data", class = "action-button custom-action"),
-            actionButton(ns("statistics"), "Run Statistical Analysis", class = "action-button custom-action"),
-            actionButton(ns("figure"), "Create a Figure", class = "action-button custom-action")
-            #align = "center"
+            actionButton(ns("summarise"),
+                         label = tagList(icon("rectangle-list"), "Summarise the Data"),
+                         class = "action-button custom-action"),
+            actionButton(ns("statistics"),
+                         label = tagList(icon("equals"), "Run Statistical Analysis"),
+                         class = "action-button custom-action"),
+            actionButton(ns("figure"),
+                         label = tagList(icon("chart-simple"), "Create a Figure"),
+                         class = "action-button custom-action")
           ),
           box(
             title = "",
             collapsible = FALSE,
             width = 12,
             class = "custom-box",
-            actionButton(ns("dashboard"), "Go to Dashboard", class = "action-button custom-action")
-          ),
+            actionButton(ns("dashboard"),
+                         label = tagList(icon("dashboard"), "Go to Dashboard"),
+                         class = "action-button custom-action")
+            ),
         )
       )
     )

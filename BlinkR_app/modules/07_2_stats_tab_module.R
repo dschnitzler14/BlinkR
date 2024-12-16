@@ -136,7 +136,9 @@ analysis_stats_module_ui <- function(id) {
           uiOutput(ns("t_test_code_feedback"))
         ),
         #column(8, editor_module_ui(ns("t_test_editor")))
-        column(8, uiOutput(ns("editor_ui")))
+        column(8, uiOutput(ns("editor_ui")),
+               uiOutput(ns("save_stats_result"))
+               )
       )
     ),
     box(
@@ -144,8 +146,14 @@ analysis_stats_module_ui <- function(id) {
       collapsible = FALSE,
       width = 12,
       class = "custom-box",
-      actionButton(ns("summarise"), "Summarise the Data", class = "action-button custom-action"),
-      actionButton(ns("figure"), "Create a Figure", class = "action-button custom-action")
+      actionButton(ns("summarise"),
+                   label = tagList(icon("rectangle-list"), "Summarise the Data"),
+                   class = "action-button custom-action",
+                   `data-id` = "summarise_data"),
+      actionButton(ns("figure"),
+                   label = tagList(icon("chart-simple"), "Create a Figure"),
+                   class = "action-button custom-action",
+                   `data-id` = "create_figure")
     ),
     box(
       title = " ",
@@ -153,7 +161,8 @@ analysis_stats_module_ui <- function(id) {
       width = 12,
       class = "custom-box",
       markdown("You can see all your results in the Analysis Dashboard!"),
-      actionButton(ns("dashboard"), "Go to Analyis Dashboard", class = "action-button custom-action")
+      actionButton(ns("dashboard"),
+                   label = tagList(icon("dashboard"), "Go to Dashboard"))
     )
     
     
@@ -163,7 +172,7 @@ analysis_stats_module_ui <- function(id) {
 
 
 
-analysis_stats_module_server <- function(id, results_data, parent.session) {
+analysis_stats_module_server <- function(id, results_data, parent.session, saved_results) {
   moduleServer(id, function(input, output, session) {
     # Load data
     data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
@@ -222,6 +231,9 @@ analysis_stats_module_server <- function(id, results_data, parent.session) {
         )
       })
       
+      saved_results$recorded_plots[["q_q_plot"]] <- recordPlot()
+      
+      
       output$qq_explainer_ui <- renderUI({
         box(
           id = session$ns("qq_explainer_box"),
@@ -258,6 +270,9 @@ analysis_stats_module_server <- function(id, results_data, parent.session) {
           bg = "maroon"
         )
       })
+    
+      saved_results$recorded_plots[["box_plot"]] <- recordPlot()
+      
       
       output$boxplot_explainer_ui <- renderUI({
         box(
@@ -284,6 +299,9 @@ analysis_stats_module_server <- function(id, results_data, parent.session) {
         )
         
       })
+      
+      saved_results$recorded_plots[["hist_plot"]] <- recordPlot()
+      
       output$hist_explainer_ui <- renderUI({
         box(
           id = session$ns("hist_explainer_box"),
@@ -303,7 +321,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session) {
     #   as.data.frame(average_trs_assumptions)
     # })
     
-    
+
     observeEvent(input$t_test_type_selector, {
       t_test_selector_output <- if (input$t_test_type_selector == "two"){
         markdown("This type of t-test is appropriate for samples that are entirely independent of one-another.
@@ -335,6 +353,15 @@ analysis_stats_module_server <- function(id, results_data, parent.session) {
       })
       
       output$t_test_code_feedback <- renderUI({
+        NULL
+      })
+      
+      output$save_stats_result <- renderUI({
+        NULL
+      })
+      
+      
+      output$editor_ui <- renderUI({
         NULL
       })
       
@@ -421,9 +448,22 @@ analysis_stats_module_server <- function(id, results_data, parent.session) {
             uiOutput(session$ns("submit_two_sided_p_value_quiz_significant_feedback"))
           )
         })
+        
+        output$save_stats_result <- renderUI({
+          actionButton(
+            session$ns("save_stats_two_sample_results_button"),
+            label = tagList(icon("save"), "Save Results to Dashboard"),
+            class = "action-button custom-action"
+          )
+        })
+        
       } else {
         output$t_test_code_feedback <- renderUI({
           div(class = "error-box", "\U1F914 Not quite - try again!")
+        })
+        
+        output$save_stats_result <- renderUI({
+          NULL
         })
       }
     })
@@ -470,9 +510,22 @@ analysis_stats_module_server <- function(id, results_data, parent.session) {
             uiOutput(session$ns("submit_paired_p_value_quiz_significant_feedback"))
           )
         })
+        
+        output$save_stats_result <- renderUI({
+          actionButton(
+            session$ns("save_stats_paired_results_button"),
+            label = tagList(icon("save"), "Save Results to Dashboard"),
+            class = "action-button custom-action"
+          )
+        })
+        
       } else {
         output$t_test_code_feedback <- renderUI({
           div(class = "error-box", "\U1F914 Not quite - try again!")
+        })
+        
+        output$save_stats_result <- renderUI({
+          NULL
         })
       }
     })
@@ -550,6 +603,33 @@ analysis_stats_module_server <- function(id, results_data, parent.session) {
       
     })
 
+    
+    observeEvent(input$save_stats_two_sample_results_button, {
+      if (!is.null(t_test_result())) {
+        key <- "stats_two_sample"
+        saved_results$scripts[[key]] <- t_test_result()
+        saved_results$scripts[["stats_paired"]] <- NULL
+        
+
+        showNotification("Two-Sample T-Test result saved successfully.", type = "message")
+      } else {
+        showNotification("No result to save.", type = "error")
+      }
+    })
+
+    
+    observeEvent(input$save_stats_paired_results_button, {
+      if (!is.null(t_test_paired_result())) {
+        key <- "stats_paired"
+        saved_results$scripts[[key]] <- t_test_paired_result()
+        saved_results$scripts[["stats_two_sample"]] <- NULL
+        
+        showNotification("Paired T-Test result saved successfully.", type = "message")
+      } else {
+        showNotification("No result to save.", type = "error")
+      }
+    })
+    
     
     observeEvent(input$summarise, {
       updateTabItems(parent.session, "sidebar", "Summarise_Data")
