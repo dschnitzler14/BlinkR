@@ -27,9 +27,10 @@ measurements_module_server <- function(id, db_student_table, db_measurement) {
               group_name <- db_student_table()$Group[i]
               student_ID <- db_student_table()$ID[i]
               measurement_input_module_ui(
-                ns(paste0("student_module_", student_name, " | ", student_ID)),
-                student_number = student_name,
-                student_ID = student_ID
+                ns(paste0("student_module_", student_name)),
+                student_name = student_name,
+                student_ID = student_ID,
+                db_student_table = db_student_table
                 )
             })
             
@@ -41,11 +42,12 @@ measurements_module_server <- function(id, db_student_table, db_measurement) {
             group_name <- db_student_table()$Group[i]
             student_ID <- db_student_table()$ID[i]
             measurement_input_module_server(
-              ns(paste0("student_module_", student_name, " | ", student_ID)),
-              student_number = student_name,
+              paste0("student_module_", student_name),
+              student_name = student_name,
               student_ID = student_ID,
               group_name = group_name,
-              db_measurement
+              db_measurement = db_measurement,
+              db_student_table= db_student_table
             )
           })
           

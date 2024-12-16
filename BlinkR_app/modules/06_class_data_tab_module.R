@@ -10,6 +10,7 @@ class_data_module_ui <- function(id) {
       tabItem(
         tabName = "Your Group Data",
         title = "Your Group Data",
+        actionButton(ns("refresh_group_data"), "Refresh Group Data"),
         DT::dataTableOutput(ns("group_data"))
       ),
       tabItem(
@@ -42,7 +43,15 @@ class_data_module_server <- function(id, db_measurement) {
         )
       }, server = TRUE)
       
+      
+      group_data_trigger <- reactiveVal(0)
+      
+      observeEvent(input$refresh_group_data, {
+        group_data_trigger(group_data_trigger() + 1)
+      })
+      
       output$group_data <- renderDT({
+        req(group_data_trigger())
         measurement_data <- db_measurement()
         
         if (!is.data.frame(measurement_data) || nrow(measurement_data) == 0) {
