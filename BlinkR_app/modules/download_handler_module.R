@@ -1,7 +1,7 @@
 download_handler_ui <- function(id, label = "Download File") {
   ns <- NS(id)
   tagList(
-    downloadButton(ns("download_file"), label)
+    downloadButton(ns("download_file"), label, class = "fun-download-button")
   )
 }
 

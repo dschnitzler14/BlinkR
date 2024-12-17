@@ -12,12 +12,21 @@ library(tidyr)
 library(utils)
 
 # User base for login credentials
+num_groups <- 100
+group_names <- paste0("Group", 1:num_groups)
+
 user_base <- tibble::tibble(
-  user = c("user1", "user2"),
-  password = sapply(c("pass1", "pass2"), sodium::password_store),
-  permissions = c("admin", "standard"),
-  name = c("User One", "User Two")
+  user = group_names,
+  permissions = rep("group", num_groups),
+  name = group_names
 )
+
+# user_base <- tibble::tibble(
+#   user = c("user1", "user2"),
+#   password = sapply(c("pass1", "pass2"), sodium::password_store),
+#   permissions = c("admin", "standard"),
+#   name = c("User One", "User Two")
+# )
 
 #load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
@@ -35,10 +44,6 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     id = "sidebar",
     menuItem("Introduction", tabName = "Introduction", icon = icon("sun")),
-    conditionalPanel(
-      condition = "output.user_auth",
-      menuItem("User Area", tabName = "User_Area", icon = icon("user"))
-    ),
     
     conditionalPanel(
       condition = "!output.user_auth",
@@ -87,15 +92,7 @@ body <- dashboardBody(
       tabName = "Introduction",
       introduction_module_ui("introduction") 
     ),
-    
-        tabItem(
-      tabName = "User_Area",
-      conditionalPanel(
-        condition = "output.user_auth",
-        group_info_module_ui("student_initials")
-      )
-    ),
-    
+   
     tabItem(
       tabName = "Background",
       conditionalPanel(
@@ -178,7 +175,7 @@ body <- dashboardBody(
 
 
 # ui combined ----
-ui <- dashboardPage(header, sidebar,body)
+ui <- dashboardPage(header, sidebar, body)
 
 saved_results <- reactiveValues(
   plots = list(),
@@ -223,10 +220,9 @@ server <- function(input, output, session) {
     
     # Load authenticated-only modules
     background_module_server("background")
-    group_info_module_server("student_initials", db = db_student_table, auth = auth)
     hypothesis_module_server("hypothesis")
     protocol_module_server("protocol")
-    measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement)
+    measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session)
     class_data_module_server("class_data", db_measurement = db_measurement)
     analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results)
     analysis_prepare_data_module_server("analysis_prepare_data", results_data = data_read, parent.session = session)

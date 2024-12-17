@@ -16,7 +16,11 @@ editor_module_ui <- function(id) {
       setBehavioursEnabled = TRUE,
       autoScrollEditorIntoView = TRUE
     ),
-    actionButton(ns("run_code"), "Run Code"),
+    actionButton(
+      ns("run_code"),
+      label = tagList("\U1F3C3", "Run Code"),
+      class = "custom-run-button"           
+    ),
     div(
       style = "margin-top: 20px;",
       uiOutput(ns("dynamic_console"))

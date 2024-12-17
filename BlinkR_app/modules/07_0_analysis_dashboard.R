@@ -7,37 +7,18 @@ analysis_dashboard_module_ui <- function(id) {
       fluidRow(
         column(
           12,
-          box(
-            title = "Your Analysis",
-            collapsible = FALSE,
-            width = 12,
-            class = "custom-box",
             fluidRow(
               column(
                 width = 12,
-                actionButton(ns("start"),
-                             label = tagList(icon("magnifying-glass"), "Click Here To Get Started!"),
-                             class = "action-button custom-action")
+                div(
+                  style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+                  actionButton(
+                    ns("start"),
+                    label = tagList(icon("magnifying-glass"), "Click Here To Get Started!"),
+                    class = "action-button custom-dark-yellow"
+                  )
               )
             ),
-            
-            fluidRow(
-              column(
-                width = 12,
-                actionButton(ns("summarise"),
-                             label = tagList(icon("rectangle-list"), "Summarise the Data"),
-                             class = "action-button custom-action",
-                             `data-id` = "summarise_data"),
-                actionButton(ns("statistics"),
-                             label = tagList(icon("equals"), "Run Statistical Analysis"),
-                             class = "action-button custom-action",
-                             `data-id` = "stats"),
-                actionButton(ns("figure"),
-                             label = tagList(icon("chart-simple"), "Create a Figure"),
-                             class = "action-button custom-action",
-                             `data-id` = "create_figure")
-              )
-            )
           ),
         
           box(
@@ -45,6 +26,7 @@ analysis_dashboard_module_ui <- function(id) {
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
+            solidHeader = TRUE,
             column(6,
                    actionButton(ns("summarise"), 
                                 label = tagList(icon("rectangle-list"), "Summarise the Data"), 
@@ -60,6 +42,7 @@ analysis_dashboard_module_ui <- function(id) {
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
+            solidHeader = TRUE,
             column(6,
                    actionButton(ns("statistics"),
                                 label = tagList(icon("equals"), "Run Statistical Analysis"),
@@ -86,6 +69,7 @@ analysis_dashboard_module_ui <- function(id) {
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
+            solidHeader = TRUE,
             column(6,
                    actionButton(ns("figure"),
                                 label = tagList(icon("chart-simple"), "Create a Figure"),
@@ -95,17 +79,17 @@ analysis_dashboard_module_ui <- function(id) {
             column(6,
                    uiOutput(ns("saved_plot_results"))
             )
+          )
+        ),
+          fluidRow(
+            column(
+              width = 12,
+              div(
+                style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+                download_handler_ui("download_script", "Download R Script")
+              )
+            ),
           ),
-          box(
-            title = "Download the R Script",
-            collapsible = TRUE,
-            collapsed = FALSE,
-            width = 12,
-            class = "custom-box",
-            download_handler_ui("download_script", "Download R Script")
-          ),
-          
-        )
       )
     )
   )

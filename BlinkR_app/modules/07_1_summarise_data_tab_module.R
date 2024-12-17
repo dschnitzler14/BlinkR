@@ -12,6 +12,7 @@ analysis_summarise_data_module_ui <- function(id) {
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
+            solidHeader = TRUE,
             fluidRow(
               column(
                 4,
@@ -40,29 +41,39 @@ analysis_summarise_data_module_ui <- function(id) {
               )
             )
           ),
-          box(
-            title = "What do you want to do next?",
-            collapsible = FALSE,
+        ),
+        fluidRow(
+          column(
             width = 12,
-            class = "custom-box",
-            actionButton(ns("statistics"),
-                         label = tagList(icon("equals"), "Run Statistical Analysis"),
-                         class = "action-button custom-action",
-                         `data-id` = "stats"),
-            actionButton(ns("figure"),
-                         label = tagList(icon("chart-simple"), "Create a Figure"),
-                         class = "action-button custom-action",
-                         `data-id` = "create_figure")
-            ),
-          box(
-            title = " ",
-            collapsible = FALSE,
-            width = 12,
-            class = "custom-box",
-            markdown("View all your results in the Analysis Dashboard"),
-            actionButton(ns("dashboard"),
-                         label = tagList(icon("dashboard"), "Go to Dashboard"))
+            div(
+              style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;", # Added 'gap'
+              actionButton(
+                ns("statistics"),
+                label = tagList(icon("equals"), "Run Statistical Analysis"),
+                class = "action-button custom-action",
+                `data-id` = "stats"
+              ),
+              actionButton(
+                ns("figure"),
+                label = tagList(icon("chart-simple"), "Create a Figure"),
+                class = "action-button custom-action",
+                `data-id` = "create_figure"
+              )
             )
+          )
+        ),
+        fluidRow(
+          column(
+            width = 12,
+            div(
+              style = "display: flex; justify-content: center; align-items: center; height: 100px;",
+              actionButton(
+                ns("dashboard"),
+                label = tagList(icon("dashboard"), "Go to Dashboard"),
+                class = "action-button custom-dark-yellow"
+              )
+            )
+          )
           
         ))))}
 
@@ -126,7 +137,8 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
           ),
           actionButton(
             session$ns("submit_mean_unstressed_group_quiz_answer"),
-            label = "Submit"
+            label = "Submit",
+            class = "fun-submit-button"
           ),
           uiOutput(session$ns("mean_unstressed_group_quiz_feedback")),
           numericInput(
@@ -138,7 +150,8 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
           ),
           actionButton(
             session$ns("submit_sem_stressed_group_quiz_answer"),
-            label = "Submit"
+            label = "Submit",
+            class = "fun-submit-button"
           ),
           uiOutput(session$ns("submit_sem_stressed_group_quiz_feedback")),
           radioButtons(

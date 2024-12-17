@@ -1,4 +1,4 @@
-text_area_module_UI <- function(id, text_label = "Text Area", text_value = "", button_label = "Submit") {
+text_area_module_UI <- function(id, text_label = "Type Your Notes Here", text_value = "", button_label = "Submit") {
   ns <- NS(id)
   tagList(
     textAreaInput(
@@ -6,7 +6,8 @@ text_area_module_UI <- function(id, text_label = "Text Area", text_value = "", b
       label = text_label,
       value = text_value
     ),
-    actionButton(ns("inputTextButton"), label = button_label),
+    actionButton(ns("inputTextButton"), label = button_label, class = "fun-submit-button"
+),
     verbatimTextOutput(ns("text"))
   )
 }

@@ -2,7 +2,7 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
   ns <- NS(id)
   tagList(
     tabBox(
-      title = paste("Student:", student_name, " | ", student_ID),
+      title = paste("Student:", student_name, " | ID: ", student_ID),
       width = 12,
       tabPanel(
         title = "Unstressed Measurements",
@@ -70,9 +70,8 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
           )
         ),
         actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements"),
-        uiOutput(ns("Submit_Stressed_Feedback"))
+      ),
       )
-    )
   )
 }
 
@@ -83,12 +82,42 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
       
       ns <- session$ns
       
+      state <- reactiveValues(
+        unstressed_ids = list(),
+        stressed_ids = list()
+      )
+      
       add_measurement <- function(stress_status, inputs) {
+        
         if (any(sapply(inputs, is.null)) || any(sapply(inputs, function(x) x == 0))) {
-          showNotification("Error: Some inputs are invalid.", type = "error")
+          showNotification("Please enter all three measurements.", type = "error")
           return(FALSE)
         }
         
+        existing_list <- if (stress_status == "Unstressed") state$unstressed_ids else state$stressed_ids
+        if (student_ID %in% existing_list) {
+          showModal(modalDialog(
+            title = "Overwrite Confirmation",
+            paste("Data for", stress_status, "measurements already exists. Do you want to overwrite it?"),
+            footer = tagList(
+              modalButton("Cancel"),
+              actionButton(ns("confirm_overwrite"), "Overwrite")
+            )
+          ))
+          
+          observeEvent(input$confirm_overwrite, {
+            removeModal()
+            save_measurement(stress_status, inputs, overwrite = TRUE)
+          }, once = TRUE, ignoreInit = TRUE)
+          
+          return(FALSE)
+        }
+        
+        save_measurement(stress_status, inputs, overwrite = FALSE)
+        return(TRUE)
+      }
+      
+      save_measurement <- function(stress_status, inputs, overwrite = FALSE) {
         new_data <- data.frame(
           Group = group_name,
           ID = student_ID,
@@ -100,14 +129,24 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         
         current_data <- db_measurement()
         
-        if (nrow(current_data) > 0 && any(duplicated(rbind(current_data, new_data)))) {
-          showNotification("Warning: Duplicate data not added.", type = "warning")
-          return(FALSE)
+        if (overwrite) {
+          current_data <- current_data[
+            !(current_data$Group == group_name & 
+                current_data$ID == student_ID & 
+                current_data$Stress_Status == stress_status), 
+          ]
         }
         
-        db_measurement(rbind(current_data, new_data))
-        return(TRUE)
+        updated_data <- rbind(current_data, new_data)
+        db_measurement(updated_data)
         
+        if (stress_status == "Unstressed") {
+          state$unstressed_ids <- unique(c(state$unstressed_ids, student_ID))
+        } else {
+          state$stressed_ids <- unique(c(state$stressed_ids, student_ID))
+        }
+        
+        showNotification("Success: Measurements saved.", type = "message")
       }
       
       observeEvent(input$Submit_Unstressed, {
@@ -116,30 +155,18 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           input$unstressed_input2,
           input$unstressed_input3
         )
-        
-        if (add_measurement("Unstressed", inputs)) {
-          showNotification("Success: Unstressed measurements saved.", type= "message")
-          
-      } else {
-          showNotification("Please enter all three unstressed measurements.", type= "error")
-      }
-    })
-
+        add_measurement("Unstressed", inputs)
+      })
+      
       observeEvent(input$Submit_Stressed, {
         inputs <- list(
           input$stressed_input1,
           input$stressed_input2,
           input$stressed_input3
         )
-
-        if (add_measurement("Stressed", inputs)) {
-          showNotification("Success: Stressed measurements saved.", type= "message")
-          
-        } else {
-          showNotification("Please enter all three stressed measurements.", type= "error")
-          
-        }
+        add_measurement("Stressed", inputs)
       })
+      
     }
   )
 }

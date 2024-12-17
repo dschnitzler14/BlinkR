@@ -4,63 +4,219 @@ measurements_module_ui <- function(id) {
     tabName = "Measurements",
     fluidPage(
       fluidRow(
-        uiOutput(ns("students_ui"))
+        box(
+          title = "Add Students",
+          collapsible = FALSE,
+          width = 12,
+          solidHeader = TRUE,
+          markdown("To get started, use this box to enter everyone's initials.
+                   Please enter them one at a time and hit enter after each one.
+                   If you make a mistake, you can delete a student below.
+                   Each student will be assigned an \"ID\" for this experiment."),
+          group_info_module_ui(ns("add_students"))
+        ),
+        box(
+          title = "Measurements",
+          collapsible = FALSE,
+          width = 12,
+          solidHeader = TRUE,
+          uiOutput(ns("students_added_helper_text")),
+          uiOutput(ns("students_ui")),
+          textOutput(ns("please_add_students"))
+        )
+      ),
+      fluidRow(
+        column(
+          width = 12,
+          div(
+            style = "display: flex; justify-content: center; align-items: center; height: 100px;", # CSS for centering
+            actionButton(
+              ns("raw_data"),
+              label = tagList(icon("database"), "View Raw Data"),
+              class = "action-button custom-action"
+            )
+          )
+        )
       )
     )
   )
 }
 
-measurements_module_server <- function(id, db_student_table, db_measurement) {
+
+measurements_module_server <- function(id, db_student_table, db_measurement, auth, parent.session) {
   moduleServer(
     id,
     function(input, output, session) {
       ns <- session$ns
       
-      observe({
+      group_info_module_server("add_students", db_student_table = db_student_table, auth = auth)
+      
+      student_ids <- reactiveVal(character())
+      
+      observeEvent(db_student_table(), {
         req(db_student_table())
-        num_students <- nrow(db_student_table())
         
-        if (num_students != 0) {
-          output$students_ui <- renderUI({
-            student_ui_list <- lapply(1:num_students, function(i) {
-              student_name <- db_student_table()$Initials[i]
-              group_name <- db_student_table()$Group[i]
-              student_ID <- db_student_table()$ID[i]
-              measurement_input_module_ui(
-                ns(paste0("student_module_", student_name)),
-                student_name = student_name,
-                student_ID = student_ID,
-                db_student_table = db_student_table
-                )
-            })
-            
-            do.call(fluidRow, student_ui_list)
-          })
+        if (nrow(db_student_table()) != 0) {
+          output$please_add_students <- renderText(
+            NULL
+          )
+          current_ids <- db_student_table()$ID
           
-          lapply(1:num_students, function(i) {
-            student_name <- db_student_table()$Initials[i]
-            group_name <- db_student_table()$Group[i]
-            student_ID <- db_student_table()$ID[i]
+          new_students <- setdiff(current_ids, student_ids())
+          
+          for (student_ID in new_students) {
+            student_row <- db_student_table() %>% filter(ID == student_ID)
+            student_name <- student_row$Initials
+            group_name <- student_row$Group
+            
+            insertUI(
+              selector = paste0("#", ns("students_ui")),
+              where = "beforeEnd",
+              ui = fluidRow(
+                id = ns(paste0("row_", student_ID)),
+                column(10,
+                       measurement_input_module_ui(
+                         ns(paste0("student_module_", student_ID)),
+                         student_name = student_name,
+                         student_ID = student_ID,
+                         db_student_table = db_student_table
+                       )
+                ),
+                column(2,
+                       actionButton(
+                         ns(paste0("delete_student_", student_ID)),
+                         label = "Delete Student",
+                         class = "fun-delete-button"
+                       )
+                )
+              )
+            )
+            
             measurement_input_module_server(
-              paste0("student_module_", student_name),
+              paste0("student_module_", student_ID),
               student_name = student_name,
               student_ID = student_ID,
               group_name = group_name,
               db_measurement = db_measurement,
-              db_student_table= db_student_table
+              db_student_table = db_student_table
             )
-          })
+            
+            observeEvent(input[[paste0("delete_student_", student_ID)]], {
+              updated_students <- db_student_table() %>% filter(ID != student_ID)
+              db_student_table(updated_students)
+              
+              updated_measurements <- db_measurement() %>% filter(ID != student_ID)
+              db_measurement(updated_measurements)
+              
+              removeUI(selector = paste0("#", ns(paste0("row_", student_ID))))
+              
+              student_ids(setdiff(student_ids(), student_ID))
+              
+              showNotification(paste("Deleted student with ID:", student_ID), type = "message")
+            }, ignoreInit = TRUE)
+          }
           
+          student_ids(current_ids)
         } else {
-          output$students_ui <- renderUI({
-            tagList(
-              h3("No Subjects Added"),
-              p("Please check the database or add new students in 'User Area' to proceed.")
-            )
-          })
+          output$please_add_students <- renderText(
+            "To get started, please add students in the box above!"
+          )
         }
+      }, ignoreNULL = FALSE, ignoreInit = FALSE)
+      
+      output$students_ui <- renderUI({
+        div(id = ns("students_ui"))
       })
+      
+      output$students_added_helper_text <- renderUI(
+        markdown("You can enter your measurement results here. 
+                 If you make a mistake, you can re-enter the results and overwrite the existing data.
+                 You can also delete students from your group using the button on the right.")
+      )
+      
+      observeEvent(input$raw_data, {
+        updateTabItems(parent.session, "sidebar", "Raw_Data")
+      })  
     }
   )
 }
 
+# measurements_module_server <- function(id, db_student_table, db_measurement, auth) {
+#   moduleServer(
+#     id,
+#     function(input, output, session) {
+#       ns <- session$ns
+# 
+#       group_info_module_server("add_students", db_student_table = db_student_table, auth = auth)
+# 
+#       student_ids <- reactiveVal(character())
+# 
+#       observeEvent(db_student_table(), {
+#         req(db_student_table())
+# 
+#         current_ids <- db_student_table()$ID
+# 
+#         new_students <- setdiff(current_ids, student_ids())
+# 
+#         for (student_ID in new_students) {
+#           student_row <- db_student_table() %>% filter(ID == student_ID)
+#           student_name <- student_row$Initials
+#           group_name <- student_row$Group
+# 
+#           insertUI(
+#             selector = paste0("#", ns("students_ui")),
+#             where = "beforeEnd",
+#             ui = fluidRow(
+#               id = ns(paste0("row_", student_ID)),
+#               column(10,
+#                      measurement_input_module_ui(
+#                        ns(paste0("student_module_", student_ID)),
+#                        student_name = student_name,
+#                        student_ID = student_ID,
+#                        db_student_table = db_student_table
+#                      )
+#               ),
+#               column(2,
+#                      actionButton(
+#                        ns(paste0("delete_student_", student_ID)),
+#                        label = "Delete Student",
+#                        class = "btn-danger"
+#                      )
+#               )
+#             )
+#           )
+# 
+#           measurement_input_module_server(
+#             paste0("student_module_", student_ID),
+#             student_name = student_name,
+#             student_ID = student_ID,
+#             group_name = group_name,
+#             db_measurement = db_measurement,
+#             db_student_table = db_student_table
+#           )
+# 
+#           observeEvent(input[[paste0("delete_student_", student_ID)]], {
+#             updated_students <- db_student_table() %>% filter(ID != student_ID)
+#             db_student_table(updated_students)
+# 
+#             updated_measurements <- db_measurement() %>% filter(ID != student_ID)
+#             db_measurement(updated_measurements)
+# 
+#             removeUI(selector = paste0("#", ns(paste0("row_", student_ID))))
+# 
+#             student_ids(setdiff(student_ids(), student_ID))
+# 
+#             showNotification(paste("Deleted student with ID:", student_ID), type = "message")
+#           }, ignoreInit = TRUE)
+#         }
+# 
+#         
+#         student_ids(current_ids)
+#       }, ignoreNULL = FALSE, ignoreInit = FALSE)
+#     
+#       output$students_ui <- renderUI({
+#         div(id = ns("students_ui"))
+#       })
+#     }
+#   )
+# }

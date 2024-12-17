@@ -7,24 +7,24 @@ introduction_module_ui <- function(id){
                                     title = "Who is this app for?",
                                     id = "introduction_box1",
                                     collapsible = TRUE,
-                                    status = "info",
                                     width = 12,
+                                    solidHeader = TRUE,
                                     includeMarkdown("markdown/01_introduction/introduction_box1.Rmd")
                                   ),
                                   box(
                                     title = "How to use this app",
                                     id = "introduction_box2",
                                     collapsible = TRUE,
-                                    status = "info",
                                     width = 12,
+                                    solidHeader = TRUE,
                                     includeMarkdown("markdown/01_introduction/introduction_box2.Rmd")
                                   ),
                                   box(
                                     title = "Outline of experiment",
                                     id = "introduction_box3",
                                     collapsible = TRUE,
-                                    status = "info",
                                     width = 12,
+                                    solidHeader = TRUE,
                                     includeMarkdown("markdown/01_introduction/introduction_box3.Rmd")
                                     
                                   )

@@ -17,8 +17,19 @@ write_up_module_ui <- function(id) {
                     ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_intro.Rmd"),
-                         actionButton(ns("background"), "Go to Background"),
-                         actionButton(ns("hypothesis"), "Go to Hypothesis")
+                         actionButton(
+                           ns("background"),
+                           label = tagList(icon("book-open"), "Go to Background"),
+                           class = "action-button custom-action",
+                           
+                         ),
+                         actionButton(
+                           ns("hypothesis"),
+                           label = tagList(icon("pen-to-square"), "Go to Hypothesis"),
+                           class = "action-button custom-action",
+                         ),
+                         #actionButton(ns("background"), "Go to Background"),
+                         #actionButton(ns("hypothesis"), "Go to Hypothesis")
                   )
                   )
                 ),
@@ -33,8 +44,18 @@ write_up_module_ui <- function(id) {
                   ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_methods.Rmd"),
-                         actionButton(ns("protocol"), "Go to Protocol"),
-                         actionButton(ns("analysis_dashboard"), "Go to Analysis Dashboard")
+                         actionButton(
+                           ns("protocol"),
+                           label = tagList(icon("list"), "Go to Protocol"),
+                           class = "action-button custom-action",
+                         ),
+                         actionButton(
+                           ns("analysis_dashboard"),
+                           label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
+                           class = "action-button custom-action",
+                         ),
+                         # actionButton(ns("protocol"), "Go to Protocol"),
+                         # actionButton(ns("analysis_dashboard"), "Go to Analysis Dashboard")
                          )
                 )
             ),
@@ -49,7 +70,12 @@ write_up_module_ui <- function(id) {
                   ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_results.Rmd"),
-                         actionButton(ns("analysis_dashboard"), "Go to Analysis Dashboard")
+                         actionButton(
+                           ns("analysis_dashboard"),
+                           label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
+                           class = "action-button custom-action",
+                         ),
+                         #actionButton(ns("analysis_dashboard"), "Go to Analysis Dashboard")
                          )
                 )
             ),

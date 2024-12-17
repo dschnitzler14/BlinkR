@@ -7,8 +7,8 @@ protocol_module_ui <- function(id){
                                 title = "Protocol",
                                 id = "protocol_",
                                 collapsible = FALSE,
-                                status = "info",
                                 width = 12,
+                                solidHeader = TRUE,
                                 includeMarkdown("markdown/04_protocol/protocol.Rmd")
                               ),
                             )

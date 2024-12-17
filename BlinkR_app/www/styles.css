@@ -1,117 +1,362 @@
+/* Global styling adjustments */
+body {
+  font-family: Arial, sans-serif; /* Revert to original font */
+  background-color: #f9f9f9; /* Light gray background */
+  color: #333;
+}
+
 /* Change the color of the main header bar */
 .skin-blue .main-header .navbar {
-  background-color: #80bc28 !important; 
+  background-color: #80bc28 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Change the color of the header title area */
 .skin-blue .main-header .logo {
-  background-color: #80bc28 !important; 
-  color: white; 
-}
-
-/* Optional: Change the hover color of the sidebar toggle button */
-.skin-blue .main-header .navbar .sidebar-toggle:hover {
-  background-color: #6ca322 !important; 
-}
-
-/* Set Markdown h1 styling to match app h1 styling */
-.markdown-body h1 {
-  font-size: 2em;
-  color: #333; 
-  margin-top: 0.5em; 
-  margin-bottom: 0.5em;
-}
-
-/* Set styling for other Markdown headers if needed */
-.markdown-body h2 {
-  font-size: 1.5em;
-  color: #333;
-}
-
-.markdown-body h3 {
-  font-size: 1.2em;
-  color: #333;
-}
-
-/* General styling for Markdown text */
-.markdown-body p {
-  font-size: 1em;
-  color: #555;
-  line-height: 1.5;
-}
-
-.success-box {
-  background-color: #d4edda;
-  border-color: #c3e6cb;
-  color: #155724;
-  padding: 15px;
-  border-radius: 5px;
-  margin: 10px 0;
-  border: 1px solid transparent;
-}
-
-.error-box {
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  color: #721c24;
-  padding: 15px;
-  border-radius: 5px;
-  margin: 10px 0;
-  border: 1px solid transparent;
-}
-
-
-.yellow-box {
-  background-color: #fff9c4; /* Light yellow background */
-  border-left: 6px solid #ffeb3b; /* Yellow border */
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  font-family: Arial, sans-serif; /* Optional: change the font */
-}
-
-.yellow-box::before {
-  content: "\1F4A1 "; /* Lightbulb emoji */
-  font-size: 1.5em;
-  margin-right: 8px;
-}
-
-/* Default style for the specific class of action buttons */
-.action-button.custom-action {
-  background-color: #007bff; /* Default button color (blue) */
+  background-color: #80bc28 !important;
   color: white;
-  border: none;
-  transition: background-color 0.3s ease;
+  font-weight: bold;
+  font-size: 1.3em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* Style for the clicked state (green) */
+/* Hover effect for sidebar toggle */
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+  background-color: #6ca322 !important;
+  transform: scale(1.05);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom action buttons */
+.action-button.custom-action {
+  background-color: #ff9800; /* Fun orange */
+  color: white;
+  font-weight: bold;        /* Bold text */
+  font-size: 16px;          /* Slightly larger text */
+  border: none;             /* No border */
+  border-radius: 25px;      /* Fully rounded edges for a pill shape */
+  padding: 10px 20px;       /* Padding for size */
+  cursor: pointer;          /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth animation */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+}
+
+.action-button.custom-action:hover {
+  background-color: #fb8c00; /* Slightly darker orange */
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 .action-button.custom-action.clicked {
-  background-color: #28a745 !important; /* Green background */
+  background-color: #28a745 !important;
   color: white !important;
 }
 
-/* Styling for the custom box */
+/* Card-style container for visual appeal */
 .custom-box {
-  border: 3px solid #007bff; /* Thicker blue border for prominence */
-  border-radius: 12px; /* Slightly more rounded corners */
-  background: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* Gradient background */
-  padding: 25px; /* More spacious padding inside */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow for a floating effect */
-  text-align: center; /* Center-align content inside the box */
+  border-radius: 15px; /* Rounded edges */
+  background: linear-gradient(135deg, #ffffff, #f1f8e9); /* Soft gradient */
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 15px auto;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
-/* Title styling for the custom box */
+.custom-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 .custom-box .box-title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  color: #0056b3;
+  margin-bottom: 10px;
+}
+
+/* Fun success and error boxes */
+.success-box, .error-box, .yellow-box {
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  margin: 15px 0;
   font-weight: bold;
-  color: #0056b3; /* Slightly darker blue for contrast */
-  margin-bottom: 20px;
+  font-size: 1.1em;
+}
+
+.success-box {
+  background-color: #e1f5e6;
+  color: #2e7d32;
+  border: 2px solid #66bb6a;
+}
+
+.error-box {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 2px solid #e57373;
+}
+
+.yellow-box {
+  background-color: #fffde7;
+  border-left: 6px solid #fbc02d;
+  padding: 10px;
+}
+
+.yellow-box::before {
+  content: "💡"; /* Lightbulb emoji */
+  font-size: 1.5em;
+  margin-right: 5px;
+}
+
+/* Styling for Markdown headings */
+.markdown-body h1, h2, h3 {
+  font-family: Arial, sans-serif; /* Revert to original font */
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2.2em;
+  color: #4caf50; /* Bright green */
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
+.markdown-body h2 {
+  font-size: 1.8em;
+  color: #ff9800;
+}
+
+.markdown-body h3 {
+  font-size: 1.4em;
+  color: #007bff;
+}
+
+/* Animation for hoverable elements */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hover-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+/* Add hover effects for interactive areas */
+.custom-interactive {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-interactive:hover {
+  transform: scale(1.05);
+  color: #ff9800;
+}
+
+/* General links */
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #0056b3;
   text-decoration: underline;
 }
 
-/* Spacing for buttons in the box */
-.custom-box .action-button {
-  display: inline-block; /* Keep buttons inline */
-  margin: 15px 10px; /* Add space between buttons */
+/* Sidebar: General active item styling */
+.skin-blue .sidebar-menu > li.active > a {
+  color: white !important;
+  font-weight: bold;
+  border-left: 5px solid #333; /* Common border for active items */
+}
+
+/* Active Sidebar Item */
+.skin-blue .sidebar-menu > li.active > a {
+  background-color: #80bc28 !important; /* Green matching the header */
+  color: white !important; /* White text */
+  font-weight: bold;
+  border-left: 5px solid #6ca322; /* Slightly darker green border for emphasis */
+}
+
+/* Sidebar Item Hover Effect */
+.skin-blue .sidebar-menu > li:hover > a {
+  background-color: #6ca322 !important; /* Slightly darker green on hover */
+  color: white !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  transform: scale(1.03); /* Slight zoom-in effect */
+}
+
+/* Submenu Items Under Sidebar */
+.skin-blue .sidebar-menu > li > ul > li > a {
+  color: white !important; /* White text for submenu items */
+  padding-left: 20px; /* Indentation for submenu items */
+  transition: color 0.3s ease-in-out;
+}
+
+.skin-blue .sidebar-menu > li > ul > li > a:hover {
+  color: #e0f2e9 !important; /* Light green text on hover */
+  background-color: #6ca322 !important; /* Slightly darker green background */
+  transition: all 0.3s ease;
+}
+
+
+.custom-dark-yellow {
+  background-color: #D4AF37; /* Dark Yellow */
+  color: white;              /* White text */
+  font-weight: bold;        /* Bold text */
+  font-size: 16px;          /* Slightly larger text */
+  border: none;             /* No border */
+  border-radius: 25px;      /* Fully rounded edges for a pill shape */
+  padding: 10px 20px;       /* Padding for size */
+  cursor: pointer;          /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth animation */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+}
+
+.custom-dark-yellow:hover {
+  background-color: #C99A2B; /* Slightly darker yellow on hover */
+  transform: scale(1.1);     /* Slight zoom-in */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add soft shadow */
+}
+
+.custom-dark-yellow.clicked {
+  background-color: #28a745 !important; /* Green background when clicked */
+  color: white !important;             /* White text */
+}
+
+
+.custom-run-button {
+  background-color: #28a745; /* Green background */
+  color: #ffffff;           /* White text */
+  border: none;             /* Remove border */
+  font-weight: bold;        /* Make text bold */
+  border-radius: 5px;       /* Slightly rounded corners */
+  padding: 8px 15px;        /* Padding around text */
+  display: inline-flex;     /* Aligns emoji and text properly */
+  align-items: center;      /* Centers items vertically */
+  gap: 8px;                 /* Spacing between emoji and text */
+  cursor: pointer;          /* Cursor changes to pointer */
+}
+
+.custom-run-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.fun-submit-button {
+  background-color: #ff69b4; /* Hot pink background */
+  color: #ffffff;           /* White text */
+  font-weight: bold;        /* Bold text */
+  font-size: 16px;          /* Slightly larger text */
+  border: none;             /* No border */
+  border-radius: 25px;      /* Fully rounded edges for a pill shape */
+  padding: 10px 20px;       /* Padding for size */
+  cursor: pointer;          /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth animation */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+}
+
+.fun-submit-button:hover {
+  background-color: #ff1493; /* Darker pink on hover */
+  transform: scale(1.1);     /* Slight zoom-in effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft hover shadow */
+}
+
+.fun-submit-button:active {
+  background-color: #c71585; /* Even darker pink on click */
+  transform: scale(1.0);     /* Return to normal size */
+}
+
+.fun-delete-button {
+  background-color: #dc3545; /* Red background (Bootstrap danger color) */
+  color: #ffffff;           /* White text */
+  font-weight: bold;        /* Bold text */
+  font-size: 16px;          /* Slightly larger text */
+  border: none;             /* No border */
+  border-radius: 25px;      /* Fully rounded edges for a pill shape */
+  padding: 10px 20px;       /* Padding for size */
+  cursor: pointer;          /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth animation */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+}
+
+.fun-delete-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: scale(1.05);    /* Slight zoom-in effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft hover shadow */
+}
+
+.fun-delete-button:active {
+  background-color: #bd2130; /* Even darker red on click */
+  transform: scale(1.0);     /* Return to normal size */
+}
+
+.fun-download-button {
+  background-color: #6c757d; /* Grey background (Bootstrap secondary color) */
+  color: #ffffff;           /* White text */
+  font-weight: bold;        /* Bold text */
+  font-size: 16px;          /* Slightly larger text */
+  border: none;             /* No border */
+  border-radius: 25px;      /* Fully rounded edges for a pill shape */
+  padding: 10px 20px;       /* Padding for size */
+  cursor: pointer;          /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth animation */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+}
+
+.fun-download-button:hover {
+  background-color: #5a6268; /* Darker grey on hover */
+  transform: scale(1.05);    /* Slight zoom-in effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft hover shadow */
+}
+
+.fun-download-button:active {
+  background-color: #545b62; /* Even darker grey on click */
+  transform: scale(1.0);     /* Return to normal size */
+}
+
+/* Analysis Main Tab - Remains Active */
+.skin-blue .sidebar-menu > li:nth-child(6).active > a,
+.skin-blue .sidebar-menu > li:nth-child(6) > ul > li.active > a {
+  background-color: #80bc28 !important; /* Green matching header */
+  color: white !important; /* White text */
+  font-weight: bold;
+  border-left: 5px solid #6ca322; /* Slightly darker green border for emphasis */
+}
+
+/* Analysis Submenu Item - Active State */
+.skin-blue .sidebar-menu > li:nth-child(6) > ul > li.active > a {
+  color: #80bc28 !important; /* Green font for active submenu */
+  background-color: transparent !important; /* No background color */
+  font-weight: bold;
+}
+
+/* Analysis Submenu Hover Effect */
+.skin-blue .sidebar-menu > li:nth-child(6) > ul > li > a:hover {
+  color: #80bc28 !important; /* Green font on hover */
+  background-color: rgba(128, 188, 40, 0.1) !important; /* Light green background */
+  transition: all 0.3s ease;
+}
+
+/* Sidebar Hover Effect for Non-Active Submenu Items */
+.skin-blue .sidebar-menu > li:hover > a {
+  background-color: #6ca322 !important; /* Slightly darker green */
+  color: white !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  transform: scale(1.03); /* Slight zoom-in effect */
+}
+
+/* Submenu Indentation for Consistent Styling */
+.skin-blue .sidebar-menu > li > ul > li > a {
+  color: white !important; /* Default white font */
+  padding-left: 20px; /* Indentation for submenu items */
+  transition: color 0.3s ease-in-out;
 }
 
