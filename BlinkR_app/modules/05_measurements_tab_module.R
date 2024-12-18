@@ -29,7 +29,7 @@ measurements_module_ui <- function(id) {
         column(
           width = 12,
           div(
-            style = "display: flex; justify-content: center; align-items: center; height: 100px;", # CSS for centering
+            style = "display: flex; justify-content: center; align-items: center; height: 100px;",
             actionButton(
               ns("raw_data"),
               label = tagList(icon("database"), "View Raw Data"),
@@ -43,7 +43,7 @@ measurements_module_ui <- function(id) {
 }
 
 
-measurements_module_server <- function(id, db_student_table, db_measurement, auth, parent.session) {
+measurements_module_server <- function(id, db_student_table, db_measurement, auth, parent.session, BlinkR_measurement_sheet) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -68,6 +68,20 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
             student_row <- db_student_table() %>% filter(ID == student_ID)
             student_name <- student_row$Initials
             group_name <- student_row$Group
+            
+            generate_random_id <- function() {
+              sprintf("%06d", sample(0:999999, 1))
+            }
+            
+            submission_id_value <- paste0(student_ID, "_", generate_random_id())
+            
+            if (!"submission_ID" %in% colnames(db_student_table())) {
+              db_student_table <- db_student_table() %>%
+                mutate(submission_ID = NA_character_)
+            }
+            
+            db_student_table <- db_student_table %>%
+              mutate(submission_ID = ifelse(ID == student_ID, submission_id_value, submission_ID))
             
             insertUI(
               selector = paste0("#", ns("students_ui")),
@@ -97,8 +111,10 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
               student_name = student_name,
               student_ID = student_ID,
               group_name = group_name,
+              submission_ID = submission_id_value,
               db_measurement = db_measurement,
-              db_student_table = db_student_table
+              db_student_table = db_student_table,
+              BlinkR_measurement_sheet = BlinkR_measurement_sheet
             )
             
             observeEvent(input[[paste0("delete_student_", student_ID)]], {

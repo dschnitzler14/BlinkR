@@ -36,7 +36,7 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
           )
         ),
         actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements"),
-    
+        
       ),
       tabPanel(
         title = "Stressed Measurements",
@@ -71,11 +71,11 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
         ),
         actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements"),
       ),
-      )
+    )
   )
 }
 
-measurement_input_module_server <- function(id, student_name, student_ID, group_name, db_measurement, db_student_table) {
+measurement_input_module_server <- function(id, student_name, student_ID, group_name, submission_ID, db_measurement, db_student_table, BlinkR_measurement_sheet) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -87,7 +87,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         stressed_ids = list()
       )
       
-      add_measurement <- function(stress_status, inputs) {
+      add_measurement <- function(stress_status, inputs, submission_ID) {
         
         if (any(sapply(inputs, is.null)) || any(sapply(inputs, function(x) x == 0))) {
           showNotification("Please enter all three measurements.", type = "error")
@@ -95,7 +95,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         }
         
         existing_list <- if (stress_status == "Unstressed") state$unstressed_ids else state$stressed_ids
-        if (student_ID %in% existing_list) {
+        if (submission_ID %in% existing_list) {
           showModal(modalDialog(
             title = "Overwrite Confirmation",
             paste("Data for", stress_status, "measurements already exists. Do you want to overwrite it?"),
@@ -107,43 +107,47 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           
           observeEvent(input$confirm_overwrite, {
             removeModal()
-            save_measurement(stress_status, inputs, overwrite = TRUE)
+            save_measurement(stress_status, inputs, submission_ID, overwrite = TRUE)
           }, once = TRUE, ignoreInit = TRUE)
           
           return(FALSE)
         }
         
-        save_measurement(stress_status, inputs, overwrite = FALSE)
+        save_measurement(stress_status, inputs, submission_ID, overwrite = FALSE)
+        
         return(TRUE)
       }
       
-      save_measurement <- function(stress_status, inputs, overwrite = FALSE) {
+      save_measurement <- function(stress_status, inputs, submission_ID, overwrite = FALSE) {
+        
         new_data <- data.frame(
-          Group = group_name,
-          ID = student_ID,
-          Stress_Status = stress_status,
-          Technical_Replicate = 1:length(inputs),
-          Blinks_Per_Minute = unlist(inputs),
+          Group = as.character(group_name),
+          Initials = as.character(student_name),
+          ID = as.integer(student_ID),               
+          Stress_Status = as.character(stress_status), 
+          Technical_Replicate = as.integer(1:length(inputs)), 
+          Blinks_Per_Minute = as.integer(unlist(inputs)),     
+          Submission_ID = as.character(submission_ID),       
           stringsAsFactors = FALSE
         )
         
+        
         current_data <- db_measurement()
         
-        if (overwrite) {
+        if(overwrite) {
           current_data <- current_data[
-            !(current_data$Group == group_name & 
-                current_data$ID == student_ID & 
-                current_data$Stress_Status == stress_status), 
+            !(current_data$Submission_ID == submission_ID),
           ]
         }
         
         updated_data <- rbind(current_data, new_data)
         db_measurement(updated_data)
         
+        
         if (stress_status == "Unstressed") {
-          state$unstressed_ids <- unique(c(state$unstressed_ids, student_ID))
+          state$unstressed_ids <- unique(c(state$unstressed_ids, submission_ID))
         } else {
-          state$stressed_ids <- unique(c(state$stressed_ids, student_ID))
+          state$stressed_ids <- unique(c(state$stressed_ids, submission_ID))
         }
         
         showNotification("Success: Measurements saved.", type = "message")
@@ -155,7 +159,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           input$unstressed_input2,
           input$unstressed_input3
         )
-        add_measurement("Unstressed", inputs)
+        add_measurement("Unstressed", inputs, submission_ID)
       })
       
       observeEvent(input$Submit_Stressed, {
@@ -164,8 +168,10 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           input$stressed_input2,
           input$stressed_input3
         )
-        add_measurement("Stressed", inputs)
+        add_measurement("Stressed", inputs, submission_ID)
       })
+      
+
       
     }
   )

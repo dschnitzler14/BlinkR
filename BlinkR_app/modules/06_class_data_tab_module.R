@@ -22,7 +22,7 @@ class_data_module_ui <- function(id) {
   )
 }
 
-class_data_module_server <- function(id, db_measurement) {
+class_data_module_server <- function(id, db_measurement, BlinkR_measurement_sheet) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -50,15 +50,12 @@ class_data_module_server <- function(id, db_measurement) {
 
       observeEvent(input$refresh_group_data, {
         group_data_trigger(group_data_trigger() + 1)
+        
       })
 
       output$group_data <- renderDT({
         req(group_data_trigger())
         measurement_data <- db_measurement()
-        
-        # if (!is.data.frame(measurement_data) || nrow(measurement_data) == 0) {
-        #   measurement_data <- data.frame(Message = "No data available", stringsAsFactors = FALSE)
-        # }
         
         datatable(
           measurement_data,
@@ -73,6 +70,27 @@ class_data_module_server <- function(id, db_measurement) {
           rownames = FALSE
         )
       }, server = TRUE)
+      
+      observe({
+        measurement_data <- db_measurement()
+        req(!is.null(measurement_data), nrow(measurement_data) > 0)
+        
+        group_name <- unique(measurement_data$Group)[1]
+        existing_sheets <- sheet_names(ss = BlinkR_measurement_sheet)
+        sheet_name <- paste0(group_name, "_", Sys.Date())
+        
+        if (!(sheet_name %in% existing_sheets)) {
+          sheet_add(ss = BlinkR_measurement_sheet, sheet = sheet_name)
+          
+          sheet_write(data = measurement_data,
+                      ss = BlinkR_measurement_sheet,
+                      sheet = sheet_name)
+        } else {
+          sheet_write(data = measurement_data,
+                       ss = BlinkR_measurement_sheet,
+                       sheet = sheet_name)
+        }
+      })
       
     }
   )

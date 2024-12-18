@@ -10,8 +10,13 @@ library(ggplot2)
 library(car)
 library(tidyr)
 library(utils)
+library(googlesheets4)
+library(googledrive)
+library(readr)
 
-# User base for login credentials
+
+#users_sheet <- drive_get("BlinkR Users")$id
+
 num_groups <- 100
 group_names <- paste0("Group", 1:num_groups)
 
@@ -21,12 +26,16 @@ user_base <- tibble::tibble(
   name = group_names
 )
 
-# user_base <- tibble::tibble(
-#   user = c("user1", "user2"),
-#   password = sapply(c("pass1", "pass2"), sodium::password_store),
-#   permissions = c("admin", "standard"),
-#   name = c("User One", "User Two")
-# )
+options(
+  gargle_oauth_email = TRUE,
+  gargle_oauth_cache = "BlinkR/BlinkR_app/.newsecrets"
+)
+
+#only run once:
+# googledrive::drive_auth()
+# googlesheets4::gs4_auth()
+
+BlinkR_measurement_sheet <- drive_get("BlinkR_Measurements")$id
 
 #load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
@@ -186,15 +195,15 @@ saved_results <- reactiveValues(
 server <- function(input, output, session) {
   
   
-  db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), stringsAsFactors = FALSE))
+  db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), Submission_ID = character(), stringsAsFactors = FALSE))
   
-  db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), stringsAsFactors = FALSE))
+  db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), Submission_ID = character(), stringsAsFactors = FALSE))
   
   data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
   
   introduction_module_server("introduction")
   
-  auth <- custom_login_server("login_module", user_base = user_base)
+  auth <- custom_login_server("login_module", user_base)
   
   output$user_auth <- reactive({ auth()$user_auth })
   outputOptions(output, "user_auth", suspendWhenHidden = FALSE)
@@ -222,15 +231,15 @@ server <- function(input, output, session) {
     background_module_server("background")
     hypothesis_module_server("hypothesis")
     protocol_module_server("protocol")
-    measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session)
-    class_data_module_server("class_data", db_measurement = db_measurement)
+    measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session, BlinkR_measurement_sheet = BlinkR_measurement_sheet)
+    class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet)
     analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results)
     analysis_prepare_data_module_server("analysis_prepare_data", results_data = data_read, parent.session = session)
     
     analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session, saved_results = saved_results)
     analysis_stats_module_server("stats", results_data = data_read, parent.session = session, saved_results = saved_results)
     analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session, saved_results = saved_results)
-    write_up_module_server("write_up", parent.session = session)
+    write_up_module_server("write_up", parent.session = session, auth = auth)
   })
 }
 

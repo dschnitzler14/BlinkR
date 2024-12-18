@@ -13,7 +13,8 @@ write_up_module_ui <- function(id) {
                   solidHeader = TRUE,
                   fluidRow(
                   column(6, 
-                    text_area_module_UI(ns("write_up_intro"))
+                    text_area_module_UI(ns("write_up_intro")),
+                    existing_data_module_ui(ns("existing_intro"))
                     ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_intro.Rmd"),
@@ -28,8 +29,7 @@ write_up_module_ui <- function(id) {
                            label = tagList(icon("pen-to-square"), "Go to Hypothesis"),
                            class = "action-button custom-action",
                          ),
-                         #actionButton(ns("background"), "Go to Background"),
-                         #actionButton(ns("hypothesis"), "Go to Hypothesis")
+                        
                   )
                   )
                 ),
@@ -54,8 +54,7 @@ write_up_module_ui <- function(id) {
                            label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
                            class = "action-button custom-action",
                          ),
-                         # actionButton(ns("protocol"), "Go to Protocol"),
-                         # actionButton(ns("analysis_dashboard"), "Go to Analysis Dashboard")
+                         
                          )
                 )
             ),
@@ -75,7 +74,6 @@ write_up_module_ui <- function(id) {
                            label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
                            class = "action-button custom-action",
                          ),
-                         #actionButton(ns("analysis_dashboard"), "Go to Analysis Dashboard")
                          )
                 )
             ),
@@ -109,20 +107,36 @@ write_up_module_ui <- function(id) {
                 )
             )
           ), 
+    ),
+    fluidRow(
+      column(
+        width = 12,
+        div(
+          style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+          concat_notes_ui("concat_write_up")
+        )
+      ),
     )
   )
 )
 }
 
-write_up_module_server <- function(id, parent.session){
+write_up_module_server <- function(id, parent.session, auth){
   moduleServer(
     id,
     function(input, output, server){
-      text_area_module_server("write_up_intro")
-      text_area_module_server("write_up_methods")
-      text_area_module_server("write_up_results")
-      text_area_module_server("write_up_discussion")
-      text_area_module_server("write_up_future")
+      
+      existing_data_module_server("existing_intro", auth, "Intro")
+      
+      #Intro <- "Intro"
+      
+      text_area_module_server("write_up_intro", auth, "Intro")
+      text_area_module_server("write_up_methods", auth, "Methods")
+      text_area_module_server("write_up_results", auth, "Results")
+      text_area_module_server("write_up_discussion", auth, "Discussion")
+      text_area_module_server("write_up_future", auth, "Future")
+      
+      concat_notes_server("concat_write_up", auth)
       
       observeEvent(input$background, {
         updateTabItems(parent.session, "sidebar", "Background")
@@ -136,8 +150,7 @@ write_up_module_server <- function(id, parent.session){
       observeEvent(input$analysis_dashboard, {
         updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
       })
-      
-      
+
     }
   )
 }
