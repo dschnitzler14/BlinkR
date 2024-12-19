@@ -13,18 +13,7 @@ library(utils)
 library(googlesheets4)
 library(googledrive)
 library(readr)
-
-
-#users_sheet <- drive_get("BlinkR Users")$id
-
-num_groups <- 100
-group_names <- paste0("Group", 1:num_groups)
-
-user_base <- tibble::tibble(
-  user = group_names,
-  permissions = rep("group", num_groups),
-  name = group_names
-)
+library(here)
 
 options(
   gargle_oauth_email = TRUE,
@@ -35,6 +24,21 @@ options(
 # googledrive::drive_auth()
 # googlesheets4::gs4_auth()
 
+user_base_google_sheet <- drive_get("BlinkR Users")$id
+
+user_base <- read_sheet(user_base_google_sheet)
+
+# num_groups <- 100
+# group_names <- paste0("Group", 1:num_groups)
+# 
+# user_base <- tibble::tibble(
+#   user = group_names,
+#   permissions = rep("group", num_groups),
+#   name = group_names
+# )
+
+
+
 BlinkR_measurement_sheet <- drive_get("BlinkR_Measurements")$id
 
 #load all modules in modules/ directory ----
@@ -43,7 +47,8 @@ sapply(module_files, source)
 
 # variable to point to css ----
 css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
-                      tags$script(src = "app.js"))
+                      tags$script(src = "app.js"),
+                      tags$script("hljs.highlightAll();"))
 
 # header ----
 # Header with Logout Button ----
@@ -199,11 +204,11 @@ server <- function(input, output, session) {
   
   db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), Submission_ID = character(), stringsAsFactors = FALSE))
   
-  data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
+  data_read <- read.csv(here("BlinkR_app", "data", "dummy_blinking_data.csv"))
   
   introduction_module_server("introduction")
   
-  auth <- custom_login_server("login_module", user_base)
+  auth <- custom_login_server("login_module", user_base, user_base_google_sheet)
   
   output$user_auth <- reactive({ auth()$user_auth })
   outputOptions(output, "user_auth", suspendWhenHidden = FALSE)

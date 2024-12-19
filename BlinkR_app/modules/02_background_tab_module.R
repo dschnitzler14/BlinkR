@@ -19,7 +19,6 @@ background_module_server <- function(id){
   moduleServer(
     id,
     function(input, output, server){
-      #function logic here
     }
   )
 }

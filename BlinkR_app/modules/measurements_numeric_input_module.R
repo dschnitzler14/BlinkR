@@ -35,7 +35,7 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
                  )
           )
         ),
-        actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements"),
+        actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-submit-button"),
         
       ),
       tabPanel(
@@ -69,7 +69,7 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
                  )
           )
         ),
-        actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements"),
+        actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements", class = "fun-submit-button"),
       ),
     )
   )

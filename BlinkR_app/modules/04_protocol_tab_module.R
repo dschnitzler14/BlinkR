@@ -9,7 +9,7 @@ protocol_module_ui <- function(id){
                                 collapsible = FALSE,
                                 width = 12,
                                 solidHeader = TRUE,
-                                includeMarkdown("markdown/04_protocol/protocol.Rmd")
+                                includeMarkdown(here("BlinkR_app", "markdown","04_protocol/protocol.Rmd"))
                               ),
                             )
                           )
@@ -20,7 +20,6 @@ protocol_module_server <- function(id){
   moduleServer(
     id,
     function(input, output, server){
-      #function logic here
     }
   )
 }

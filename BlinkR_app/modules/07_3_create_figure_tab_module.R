@@ -84,7 +84,7 @@ analysis_create_figure_module_ui <- function(id) {
 analysis_create_figure_module_server <- function(id, results_data, parent.session, saved_results) {
   moduleServer(id, function(input, output, session) {
     # Load data
-  data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
+  data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
   
   data <- reactive({ data_read })
 
@@ -98,9 +98,9 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
 
   observeEvent(input$figure_type_selector, {
     figure_type_selector_output <- if (input$figure_type_selector == "bar") {
-      includeMarkdown("markdown/07_analysis/analysis_create_figure_barplot.Rmd")
+      includeMarkdown(here("BlinkR_app", "markdown","analysis_create_figure_barplot.Rmd"))
     } else {
-      includeMarkdown("markdown/07_analysis/analysis_create_figure_boxplot.Rmd")
+      includeMarkdown(here("BlinkR_app", "markdown","analysis_create_figure_boxplot.Rmd"))
     }
     
     output$figure_type_selector_output <- renderUI({
@@ -138,7 +138,7 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
-          includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
+          includeMarkdown(here("BlinkR_app", "markdown","analysis_figure_editing_colours.Rmd")),
           box(title = "Open me for a hint",
               collapsible = TRUE,
               collapsed = TRUE,
@@ -173,7 +173,7 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
-          includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
+          includeMarkdown(here("BlinkR_app", "markdown","analysis_figure_editing_colours.Rmd")),
           box(title = "Open me for a hint",
               collapsible = TRUE,
               collapsed = TRUE,

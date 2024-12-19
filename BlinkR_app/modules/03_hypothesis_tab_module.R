@@ -11,7 +11,7 @@ hypothesis_module_ui <- function(id) {
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          includeMarkdown("markdown/03_hypothesis/what_is_a_hypothesis.Rmd")
+          includeMarkdown(here("BlinkR_app", "markdown","03_hypothesis/what_is_a_hypothesis.Rmd"))
         ),
         box(
           title = "Tips for Writing Your Hypothesis",
@@ -19,7 +19,7 @@ hypothesis_module_ui <- function(id) {
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          includeMarkdown("markdown/03_hypothesis/hypothesis_tips.Rmd")
+          includeMarkdown(here("BlinkR_app", "markdown","03_hypothesis/hypothesis_tips.Rmd"))
         ),
         box(
           title = "What is your hypothesis?",

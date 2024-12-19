@@ -40,15 +40,17 @@ analysis_prepare_data_module_ui <- function(id) {
                   "Time to average out the technical replicates for each student. Try the following code:"
                 ),
                 wellPanel(
-                  markdown("
+                  markdown(
+                  "
                   ```
                   average_trs <- data %>%
                     group_by(id, stress_status) %>%
-                    summarise(average_blinks_per_minute = mean(blinks_per_minute, na.rm = TRUE), .groups = 'drop')
-                  ```")
+                        summarise(average_blinks_per_minute = mean(blinks_per_minute, na.rm = TRUE), .groups = 'drop')
+                  ``` 
+                  "
+                  )
                 ),
                 uiOutput(ns("average_technical_replicates_code_result")),
-                #uiOutput(ns("average_technical_replicates_quiz_feedback"))
               ),
               column(
                 8,
@@ -106,7 +108,7 @@ analysis_prepare_data_module_ui <- function(id) {
 analysis_prepare_data_module_server <- function(id, results_data, parent.session) {
   moduleServer(id, function(input, output, session) {
     # Load data
-    data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
+    data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
 
     data <- reactive({ data_read })
     
@@ -166,7 +168,7 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
       feedback <- if (is.data.frame(average_trs_result()) && nrow(average_trs_result()) > 0) {
         tagList(
           div(class = "success-box", "\U1F64C Good Job!"),
-          includeMarkdown("markdown/07_analysis/analysis_home_prepare_data.Rmd")
+          includeMarkdown(here("BlinkR_app", "markdown","analysis_home_prepare_data.Rmd"))
         )
       } else if (!is.null(average_trs_result())) {
         div(class = "error-box", "\U1F914 Not quite - try again!")

@@ -17,7 +17,7 @@ write_up_module_ui <- function(id) {
                     existing_data_module_ui(ns("existing_intro"))
                     ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_intro.Rmd"),
+                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_intro.Rmd")),
                          actionButton(
                            ns("background"),
                            label = tagList(icon("book-open"), "Go to Background"),
@@ -43,7 +43,7 @@ write_up_module_ui <- function(id) {
                          text_area_module_UI(ns("write_up_methods"))
                   ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_methods.Rmd"),
+                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_methods.Rmd")),
                          actionButton(
                            ns("protocol"),
                            label = tagList(icon("list"), "Go to Protocol"),
@@ -68,7 +68,7 @@ write_up_module_ui <- function(id) {
                          text_area_module_UI(ns("write_up_results"))
                   ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_results.Rmd"),
+                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_results.Rmd")),
                          actionButton(
                            ns("analysis_dashboard"),
                            label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
@@ -87,7 +87,7 @@ write_up_module_ui <- function(id) {
                          text_area_module_UI(ns("write_up_discussion"))
                   ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_discussion.Rmd")
+                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_discussion.Rmd"))
                          )
                 )
             ),
@@ -101,7 +101,7 @@ write_up_module_ui <- function(id) {
                          text_area_module_UI(ns("write_up_future"))
                   ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_future_work.Rmd")
+                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_future_work.Rmd"))
                          
                          )
                 )

@@ -10,7 +10,6 @@ class_data_module_ui <- function(id) {
       tabItem(
         tabName = "Your Group Data",
         title = "Your Group Data",
-        #actionButton(ns("refresh_group_data"), "Refresh Group Data"),
         DT::dataTableOutput(ns("group_data"))
       ),
       tabItem(
@@ -28,7 +27,7 @@ class_data_module_server <- function(id, db_measurement, BlinkR_measurement_shee
     function(input, output, session) {
       ns <- session$ns
       
-      dummy_data <- read.csv("data/dummy_blinking_data.csv") 
+      dummy_data <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv")) 
       
       output$class_data <- renderDT({
         datatable(

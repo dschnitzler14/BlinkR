@@ -16,24 +16,25 @@ custom_login_ui <- function(id, title = "Welcome", subtitle = "Please enter your
           actionButton(ns("login_button"), "Log in", class = "btn btn-primary btn-block")
       )
     ),
-    # div(
-    #   id = ns("signup-panel"),
-    #   class = "panel panel-primary",
-    #   div(class = "panel-heading", h3(class = "panel-title", title)),
-    #   div(class = "panel-body",
-    #       p(subtitle), 
-    #       textInput(ns("user_name"), "Group ID", placeholder = "Enter group ID"),
-    #       textInput(ns("name"), "Your Name", placeholder = "Enter the name of anyone in your group"),
-    #       div(class = "text-danger", textOutput(ns("error"), inline = TRUE)),
-    #       actionButton(ns("sign_up_button"), "Sign up", class = "btn btn-primary btn-block"),
-    #   )
-    # ),
+    div(
+      id = ns("signup-panel"),
+      class = "panel panel-primary",
+      div(class = "panel-heading", h3(class = "panel-title", title)),
+      div(class = "panel-body",
+          p(subtitle),
+          textInput(ns("sign_up_user_name"), "Group ID", placeholder = "Enter a 4 digit group ID"),
+          textInput(ns("name"), "Your Name", placeholder = "Enter the name of anyone in your group"),
+          div(class = "text-danger", textOutput(ns("sign_uperror"), inline = TRUE)),
+          actionButton(ns("sign_up_button"), "Sign up", class = "btn btn-primary btn-block"),
+          textOutput(ns("sign_up_status")),
+      )
+    ),
     uiOutput(ns("logout_ui"))
   )
 }
 
 
-custom_login_server <- function(id, user_base) {
+custom_login_server <- function(id, user_base, user_base_google_sheet) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -43,7 +44,7 @@ custom_login_server <- function(id, user_base) {
       req(input$user_name)
       
       user <- user_base %>% 
-        filter(user == input$user_name) %>% 
+        filter(User == input$user_name) %>% 
         slice(1)
       
       if (nrow(user) == 1) {
@@ -76,13 +77,58 @@ custom_login_server <- function(id, user_base) {
           credentials$session_folder <- existing_folder
         }
         
-        
-        
         output$error <- renderText(paste("Logged in successfully. Session folder created:", session_folder_name))
       } else {
         output$error <- renderText("Invalid Group ID. Please try again.")
       }
     })
+    
+    observeEvent(input$sign_up_button, {
+      req(input$sign_up_user_name, input$name)
+      
+      user <- user_base %>%
+        filter(User == input$sign_up_user_name) %>%
+        slice(1)
+      
+      if (!(nrow(user) == 1)) {
+        credentials$user_auth <- TRUE
+        credentials$info <- user
+        output$error <- renderText("")
+        
+        user_data <- data.frame(
+          input$sign_up_user_name,  
+          "group",                  
+          input$name,               
+          stringsAsFactors = FALSE
+        )
+        
+        tryCatch(
+          {
+            sheet_append(user_base_google_sheet, user_data)
+            output$sign_up_status <- renderText("User successfully signed up!")
+          },
+          error = function(e) {
+            output$sign_up_status <- renderText(paste("Error: ", e$message))
+          }
+        )
+        
+        parent_folder_name <- "BlinkR_text_results"
+        parent_folder <- googledrive::drive_get(parent_folder_name)
+        
+        group_name <- input$sign_up_user_name
+        session_folder_name <- group_name
+        
+        new_folder <- googledrive::drive_mkdir(
+          name = session_folder_name, 
+          path = googledrive::as_id(parent_folder$id)
+        )
+        credentials$session_folder <- new_folder
+        
+      } else {
+        output$sign_uperror <- renderText("User already exists.")
+      }
+    })
+    
     
     output$logout_ui <- renderUI({
       req(credentials$user_auth)
@@ -119,5 +165,7 @@ custom_login_server <- function(id, user_base) {
         session_folder = credentials$session_folder
       )
     })
+    
+    
   })
 }

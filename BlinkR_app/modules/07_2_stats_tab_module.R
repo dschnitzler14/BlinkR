@@ -79,7 +79,7 @@ analysis_stats_module_ui <- function(id) {
             width = 12,
             status = "info",
             wellPanel(
-              includeMarkdown("markdown/07_analysis/analysis_boxplot_code.Rmd")
+              includeMarkdown(here("BlinkR_app", "markdown","07_analysis","analysis_boxplot_code.Rmd"))
             )
           ),
           align = "center"
@@ -188,7 +188,7 @@ analysis_stats_module_ui <- function(id) {
 analysis_stats_module_server <- function(id, results_data, parent.session, saved_results) {
   moduleServer(id, function(input, output, session) {
     # Load data
-    data_read <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv")
+    data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
     
     data <- reactive({
       data_read
@@ -254,7 +254,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsible = TRUE,
           collapsed = FALSE,
           width = 12,
-          includeMarkdown("markdown/07_analysis/analysis_qq_plot_explainer.Rmd")
+          includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_qq_plot_explainer.Rmd"))
         )
       })
     })
@@ -294,7 +294,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsible = TRUE,
           collapsed = FALSE,
           width = 12,
-          includeMarkdown("markdown/07_analysis/analysis_box_plot_explainer.Rmd")
+          includeMarkdown(here("BlinkR_app", "markdown","07_analysis","analysis_box_plot_explainer.Rmd"))
         )
       })
     })
@@ -322,7 +322,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsible = TRUE,
           collapsed = FALSE,
           width = 12,
-          includeMarkdown("markdown/07_analysis/analysis_hist_plot_explainer.Rmd")
+          includeMarkdown(here("BlinkR_app", "markdown","07_analysis","analysis_hist_plot_explainer.Rmd"))
         )
       })
     })
@@ -402,7 +402,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     p_value_round <- round(p_value,2)
     
     #paired
-    data_paired <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_data_repeated_measures.csv", header = TRUE)
+    data_paired <- read.csv(here("BlinkR_app", "data", "dummy_data_repeated_measures.csv"), header = TRUE)
     
     average_trs_paired <- data_paired %>%
       group_by(id, stress_status) %>%
