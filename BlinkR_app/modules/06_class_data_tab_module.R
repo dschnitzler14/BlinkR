@@ -17,15 +17,36 @@ class_data_module_ui <- function(id) {
         title = "Class Data",
         DT::dataTableOutput(ns("class_data"))
       )
+    ),
+    fluidPage(
+    fluidRow(
+      column(
+      width = 12,
+      div(
+        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+        actionButton(ns("back_page"),
+                     label = tagList(icon("arrow-left"), "Back")),
+        actionButton(ns("next_page"), 
+              label = tagList("Next", icon("arrow-right")))
+          )
+        ),
+      ),
     )
   )
 }
 
-class_data_module_server <- function(id, db_measurement, BlinkR_measurement_sheet) {
+class_data_module_server <- function(id, db_measurement, BlinkR_measurement_sheet, parent.session) {
   moduleServer(
     id,
     function(input, output, session) {
       ns <- session$ns
+      
+       observeEvent(input$back_page, {
+      updateTabItems(parent.session, "sidebar", "Measurement")
+    })
+      observeEvent(input$next_page, {
+      updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
+    })
       
       dummy_data <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv")) 
       

@@ -37,7 +37,19 @@ measurements_module_ui <- function(id) {
             )
           )
         )
-      )
+      ),
+      fluidRow(
+      column(
+      width = 12,
+      div(
+        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+        actionButton(ns("back_page"),
+                     label = tagList(icon("arrow-left"), "Back")),
+        actionButton(ns("next_page"), 
+              label = tagList("Next", icon("arrow-right")))
+          )
+        ),
+      ),
     )
   )
 }
@@ -48,6 +60,13 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
     id,
     function(input, output, session) {
       ns <- session$ns
+      
+       observeEvent(input$back_page, {
+      updateTabItems(parent.session, "sidebar", "Protocol")
+    })
+      observeEvent(input$next_page, {
+      updateTabItems(parent.session, "sidebar", "Raw_Data")
+    })
       
       group_info_module_server("add_students", db_student_table = db_student_table, auth = auth)
       

@@ -90,6 +90,18 @@ analysis_dashboard_module_ui <- function(id) {
               )
             ),
           ),
+        fluidRow(
+      column(
+      width = 12,
+      div(
+        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+        actionButton(ns("back_page"),
+                     label = tagList(icon("arrow-left"), "Back")),
+        actionButton(ns("next_page"), 
+              label = tagList("Next", icon("arrow-right")))
+          )
+        ),
+      ),
       )
     )
   )
@@ -99,7 +111,13 @@ analysis_dashboard_module_ui <- function(id) {
 analysis_dashboard_module_server <- function(id, parent.session, saved_results) {
   moduleServer(id, function(input, output, session) {
  
-    
+        observeEvent(input$back_page, {
+      updateTabItems(parent.session, "sidebar", "Raw_Data")
+    })
+      observeEvent(input$next_page, {
+      updateTabItems(parent.session, "sidebar", "Writing-Up")
+    })
+      
     source("data/test_analysis.R")
     
     # Summary Results

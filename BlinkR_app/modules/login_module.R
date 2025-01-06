@@ -11,7 +11,7 @@ custom_login_ui <- function(id, title = "Welcome", subtitle = "Please enter your
       div(class = "panel-heading", h3(class = "panel-title", title)),
       div(class = "panel-body",
           p(subtitle), 
-          textInput(ns("user_name"), "Group ID", placeholder = "Enter group ID"),
+          textInput(ns("group_name"), "Group ID", placeholder = "Enter group ID"),
           div(class = "text-danger", textOutput(ns("error"), inline = TRUE)),
           actionButton(ns("login_button"), "Log in", class = "btn btn-primary btn-block")
       )
@@ -22,11 +22,11 @@ custom_login_ui <- function(id, title = "Welcome", subtitle = "Please enter your
       div(class = "panel-heading", h3(class = "panel-title", title)),
       div(class = "panel-body",
           p(subtitle),
-          textInput(ns("sign_up_user_name"), "Group ID", placeholder = "Enter a 4 digit group ID"),
+          textInput(ns("sign_up_group_name"), "Group ID", placeholder = "Enter a 4 digit group ID"),
           textInput(ns("name"), "Your Name", placeholder = "Enter the name of anyone in your group"),
-          div(class = "text-danger", textOutput(ns("sign_uperror"), inline = TRUE)),
+          div(class = "text-danger", uiOutput(ns("sign_uperror"), inline = TRUE)),
           actionButton(ns("sign_up_button"), "Sign up", class = "btn btn-primary btn-block"),
-          textOutput(ns("sign_up_status")),
+          uiOutput(ns("sign_up_status")),
       )
     ),
     uiOutput(ns("logout_ui"))
@@ -34,17 +34,26 @@ custom_login_ui <- function(id, title = "Welcome", subtitle = "Please enter your
 }
 
 
-custom_login_server <- function(id, user_base, user_base_google_sheet) {
+custom_login_server <- function(id, user_base_google_sheet, user_base) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
-    credentials <- reactiveValues(user_auth = FALSE, info = NULL, session_folder = NULL)
+    #credentials <- reactiveValues(user_auth = FALSE, info = NULL, session_folder = NULL)
     
+    credentials <- reactiveValues(
+  user_auth = FALSE,
+  info = list(Group = NULL),
+  session_folder = NULL
+)
+
+    #user_base <- googlesheets4::read_sheet(user_base_google_sheet)
+
     observeEvent(input$login_button, {
-      req(input$user_name)
+      req(input$group_name)
       
       user <- user_base %>% 
-        filter(User == input$user_name) %>% 
+        filter(Group == input$group_name
+      ) %>% 
         slice(1)
       
       if (nrow(user) == 1) {
@@ -59,7 +68,7 @@ custom_login_server <- function(id, user_base, user_base_google_sheet) {
           parent_folder <- googledrive::drive_mkdir(parent_folder_name)
         }
         
-        group_name <- user$name
+        group_name <- input$group_name
         session_folder_name <- group_name
         
         existing_folder <- googledrive::drive_ls(
@@ -83,80 +92,84 @@ custom_login_server <- function(id, user_base, user_base_google_sheet) {
       }
     })
     
+    
+    
     observeEvent(input$sign_up_button, {
-      req(input$sign_up_user_name, input$name)
-      
+      req(input$sign_up_group_name, input$name)
+
       user <- user_base %>%
-        filter(User == input$sign_up_user_name) %>%
+        filter(Group == input$sign_up_group_name) %>%
         slice(1)
-      
+
       if (!(nrow(user) == 1)) {
         credentials$user_auth <- TRUE
         credentials$info <- user
         output$error <- renderText("")
-        
+
         user_data <- data.frame(
-          input$sign_up_user_name,  
-          "group",                  
-          input$name,               
+          input$sign_up_group_name,
+          "group",
+          input$name,
           stringsAsFactors = FALSE
         )
-        
+
         tryCatch(
           {
             sheet_append(user_base_google_sheet, user_data)
-            output$sign_up_status <- renderText("User successfully signed up!")
+            output$sign_up_status <- renderUI("Group successfully signed up!")
           },
           error = function(e) {
-            output$sign_up_status <- renderText(paste("Error: ", e$message))
+            output$sign_up_status <- renderUI(paste("Error: ", e$message))
           }
         )
-        
+
         parent_folder_name <- "BlinkR_text_results"
         parent_folder <- googledrive::drive_get(parent_folder_name)
-        
-        group_name <- input$sign_up_user_name
+
+        group_name <- input$sign_up_group_name
         session_folder_name <- group_name
-        
+
         new_folder <- googledrive::drive_mkdir(
-          name = session_folder_name, 
+          name = session_folder_name,
           path = googledrive::as_id(parent_folder$id)
         )
         credentials$session_folder <- new_folder
-        
+
       } else {
-        output$sign_uperror <- renderText("User already exists.")
+        output$sign_uperror <- renderUI("Group already exists.")
       }
     })
-    
+
     
     output$logout_ui <- renderUI({
       req(credentials$user_auth)
       tagList(
-        p(paste("Logged in as:", credentials$info$name)),
+        #p(paste("Logged in as:", credentials$info$Group)),
         actionButton(ns("logout_button"), "Log out", class = "btn btn-danger btn-block")
       )
     })
     
     observeEvent(input$logout_button, {
-      req(credentials$session_folder)
+        req(credentials$user_auth)      
+      # if (!is.null(credentials$session_folder)) {
+      #   folder_files <- googledrive::drive_ls(credentials$session_folder)
+      #   if (nrow(folder_files) == 0) {
+      #     googledrive::drive_rm(credentials$session_folder)
+      #     output$error <- renderText("Session folder was empty and has been deleted.")
+      #   } else {
+      #     output$error <- renderText("Session folder contains files and was not deleted.")
+      #   }
+      # } else {
+      #   output$error <- renderText("Session folder does not exist.")
+      # }
       
-      if (!is.null(credentials$session_folder$id)) {
-        folder_files <- googledrive::drive_ls(credentials$session_folder$id)
-        if (nrow(folder_files) == 0) {
-          googledrive::drive_rm(credentials$session_folder)
-          output$error <- renderText("Session folder was empty and has been deleted.")
-        } else {
-          output$error <- renderText("Session folder contains files and was not deleted.")
-        }
-      } else {
-        output$error <- renderText("Session folder does not exist.")
-      }
+        credentials$user_auth <- NULL
+        #credentials$info <- list(Group = NULL)
+        credentials$session_folder <- NULL
       
-      credentials$user_auth <- FALSE
-      credentials$info <- NULL
-      credentials$session_folder <- NULL
-    })
+        output$logout_ui <- renderUI({ NULL }) 
+        output$error <- renderText("Logged out successfully.")
+          })
     
     reactive({
       list(

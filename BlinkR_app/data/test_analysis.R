@@ -3,10 +3,10 @@ library(ggplot2)
 library(car)
 library(tidyr)
 
-data <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_blinking_data.csv", header = TRUE)
+data <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
 data
 
-data_paired <- read.csv("/Users/Danny_1/GitHub/BlinkR/BlinkR_app/data/dummy_data_repeated_measures.csv", header = TRUE)
+data_paired <- read.csv(here("BlinkR_app", "data","dummy_data_repeated_measures.csv"), header = TRUE)
 data_paired
 
 average_trs <- data %>%

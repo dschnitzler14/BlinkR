@@ -5,7 +5,7 @@ write_up_module_ui <- function(id) {
       fluidPage(
         fluidRow(
           column(
-            12,
+            8,
               box(title = "Introduction",
                   collapsible = TRUE,
                   collapsed = FALSE,
@@ -13,11 +13,10 @@ write_up_module_ui <- function(id) {
                   solidHeader = TRUE,
                   fluidRow(
                   column(6, 
-                    text_area_module_UI(ns("write_up_intro")),
-                    existing_data_module_ui(ns("existing_intro"))
-                    ),
+                        md_input_ui(ns("introduction"), "Introduction")
+                        ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_intro.Rmd")),
+                         includeMarkdown(here("BlinkR_app", "markdown","08_writing_up","writing_up_intro.Rmd")),
                          actionButton(
                            ns("background"),
                            label = tagList(icon("book-open"), "Go to Background"),
@@ -40,10 +39,11 @@ write_up_module_ui <- function(id) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                         text_area_module_UI(ns("write_up_methods"))
+                        md_input_ui(ns("methods"), "Methods")
+
                   ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_methods.Rmd")),
+                         includeMarkdown(here("BlinkR_app", "markdown","08_writing_up","writing_up_methods.Rmd")),
                          actionButton(
                            ns("protocol"),
                            label = tagList(icon("list"), "Go to Protocol"),
@@ -65,10 +65,11 @@ write_up_module_ui <- function(id) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                         text_area_module_UI(ns("write_up_results"))
+                        md_input_ui(ns("results"), "Results")
+
                   ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_results.Rmd")),
+                         includeMarkdown(here("BlinkR_app", "markdown", "08_writing_up", "writing_up_results.Rmd")),
                          actionButton(
                            ns("analysis_dashboard"),
                            label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
@@ -84,10 +85,10 @@ write_up_module_ui <- function(id) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                         text_area_module_UI(ns("write_up_discussion"))
+                      md_input_ui(ns("discussion"), "Discussion")
                   ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_discussion.Rmd"))
+                         includeMarkdown(here("BlinkR_app", "markdown", "08_writing_up", "writing_up_discussion.Rmd"))
                          )
                 )
             ),
@@ -98,16 +99,22 @@ write_up_module_ui <- function(id) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                         text_area_module_UI(ns("write_up_future"))
+                      md_input_ui(ns("future_work"), "Future Work")
+
                   ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown","writing_up_future_work.Rmd"))
+                         includeMarkdown(here("BlinkR_app", "markdown", "08_writing_up", "writing_up_future_work.Rmd"))
                          
                          )
                 )
             )
-          ), 
+          ),
+          column(4,
+                 uiOutput(ns("markdown_preview"))
+                 
+          
     ),
+        ),
     fluidRow(
       column(
         width = 12,
@@ -116,27 +123,60 @@ write_up_module_ui <- function(id) {
           concat_notes_ui("concat_write_up")
         )
       ),
-    )
+    ),
+     fluidRow(
+      column(
+      width = 12,
+      div(
+        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+        actionButton(ns("back_page"),
+                     label = tagList(icon("arrow-left"), "Back"))
+          )
+        ),
+      ),
   )
 )
 }
 
-write_up_module_server <- function(id, parent.session, auth){
+write_up_module_server <- function(id, parent.session, auth, reload_trigger){
   moduleServer(
     id,
     function(input, output, server){
       
-      existing_data_module_server("existing_intro", auth, "Intro")
+    observeEvent(input$back_page, {
+      updateTabItems(parent.session, "sidebar", "Feedback")
+    })
       
+      intro_markdown <- md_input_server("introduction")
+      methods_markdown <- md_input_server("methods")
+      results_markdown <- md_input_server("results")
+      discussion_markdown <- md_input_server("discussion")
+      future_work_markdown <- md_input_server("future_work")
+      
+      # Combine Markdown sections dynamically
+      combined_markdown <- reactive({
+        paste0(
+          "# Introduction\n", intro_markdown(), "\n\n",
+          "# Methods\n", methods_markdown(), "\n\n",
+          "# Results\n", results_markdown(), "\n\n",
+          "# Discussion\n", discussion_markdown(), "\n\n",
+          "# Future Work\n", future_work_markdown(), "\n"
+        )
+      })
+      
+      # Render combined Markdown for live preview
+      output$markdown_preview <- renderUI({
+        HTML(markdown::markdownToHTML(text = combined_markdown(), fragment.only = TRUE))
+      })
       #Intro <- "Intro"
       
-      text_area_module_server("write_up_intro", auth, "Intro")
-      text_area_module_server("write_up_methods", auth, "Methods")
-      text_area_module_server("write_up_results", auth, "Results")
-      text_area_module_server("write_up_discussion", auth, "Discussion")
-      text_area_module_server("write_up_future", auth, "Future")
-      
-      concat_notes_server("concat_write_up", auth)
+      # text_area_module_server("write_up_intro", auth, "Intro", reload_trigger)
+      # text_area_module_server("write_up_methods", auth, "Methods", reload_trigger)
+      # text_area_module_server("write_up_results", auth, "Results", reload_trigger)
+      # text_area_module_server("write_up_discussion", auth, "Discussion", reload_trigger)
+      # text_area_module_server("write_up_future", auth, "Future", reload_trigger)
+      # 
+      # concat_notes_server("concat_write_up", auth)
       
       observeEvent(input$background, {
         updateTabItems(parent.session, "sidebar", "Background")

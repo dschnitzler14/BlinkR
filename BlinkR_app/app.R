@@ -14,6 +14,9 @@ library(googlesheets4)
 library(googledrive)
 library(readr)
 library(here)
+library(markdownInput)
+library(knitr)
+
 
 options(
   gargle_oauth_email = TRUE,
@@ -79,7 +82,12 @@ sidebar <- dashboardSidebar(
                  menuItem("Statistical Analysis", tabName="Statistical_Analysis", icon = icon("equals")),
                  menuItem("Create Figure", tabName="Create_Figure", icon = icon("chart-simple"))
         ),
-        menuItem("Writing Up", tabName = "Writing-Up", icon = icon("pen")),
+        menuItem("Writing Up", tabName = "Writing-Up-menu",icon = icon("pen"),
+          menuItem("Writing Up", tabName = "Writing-Up", icon = icon("pen")),
+          menuItem("View All Notes", tabName = "View_Notes", icon = icon("paperclip")),
+          menuItem("Upload Report", tabName = "Upload_Report", icon = icon("upload"))
+
+          ),
         menuItem("Feedback", tabName = "Feedback", icon = icon("comment"))
       )
     )
@@ -183,6 +191,19 @@ body <- dashboardBody(
         condition = "output.user_auth",
         write_up_module_ui("write_up")
       )
+    ),
+    # tabItem(
+    #   tabName = "View_Notes",
+    #   conditionalPanel(
+    #     condition = "output.user_auth",
+    #     view_all_notes_ui("view_notes")
+    #   )
+    # ),
+     tabItem(
+      tabName = "Upload_Report",
+      conditionalPanel(
+        condition = "output.user_auth",
+      )
     )
   )
 )
@@ -199,16 +220,17 @@ saved_results <- reactiveValues(
 # server function ----
 server <- function(input, output, session) {
   
-  
+  reload_trigger <- reactiveValues(reload = 0)
+
   db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), Submission_ID = character(), stringsAsFactors = FALSE))
   
   db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), Submission_ID = character(), stringsAsFactors = FALSE))
   
   data_read <- read.csv(here("BlinkR_app", "data", "dummy_blinking_data.csv"))
   
-  introduction_module_server("introduction")
+  introduction_module_server("introduction", parent.session = session)
   
-  auth <- custom_login_server("login_module", user_base, user_base_google_sheet)
+  auth <- custom_login_server("login_module", user_base_google_sheet, user_base)
   
   output$user_auth <- reactive({ auth()$user_auth })
   outputOptions(output, "user_auth", suspendWhenHidden = FALSE)
@@ -233,18 +255,19 @@ server <- function(input, output, session) {
     output$login_ui <- renderUI(NULL) 
     
     # Load authenticated-only modules
-    background_module_server("background")
-    hypothesis_module_server("hypothesis")
-    protocol_module_server("protocol")
+    background_module_server("background", parent.session = session)
+    hypothesis_module_server("hypothesis", parent.session = session)
+    protocol_module_server("protocol", auth = auth, parent.session = session)
     measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session, BlinkR_measurement_sheet = BlinkR_measurement_sheet)
-    class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet)
+    class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session)
     analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results)
     analysis_prepare_data_module_server("analysis_prepare_data", results_data = data_read, parent.session = session)
-    
     analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session, saved_results = saved_results)
     analysis_stats_module_server("stats", results_data = data_read, parent.session = session, saved_results = saved_results)
     analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session, saved_results = saved_results)
-    write_up_module_server("write_up", parent.session = session, auth = auth)
+    write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger)
+    #view_all_notes_server("view_notes", parent.session = session, auth = auth, reload_trigger)
+
   })
 }
 

@@ -1,8 +1,8 @@
 concat_notes_ui <- function(id) {
   ns <- NS(id)
   tagList(
-    actionButton(ns("concat_notes"), "Concat Notes", class = "fun-download-button"),
-    uiOutput(ns("download_ui"))
+    actionButton(ns("concat_notes"), "Concatenate All Notes", class = "fun-concat-button"),
+    uiOutput(ns("notes_display_ui")) # Replace the download UI with a display UI
   )
 }
 
@@ -52,42 +52,27 @@ concat_notes_server <- function(id, auth) {
                      all_contents <- c(all_contents, paste0("# File: ", file), file_contents, "\n")
                    }
                    
-                   output_file <- paste0(
-                     group_folder_name, "_",
-                     format(Sys.time(), "%d%m%y"),
-                     "_All_Notes.md"
-                   )
-                   output_path <- file.path(temp_dir, output_file)
-                   
-                   writeLines(all_contents, output_path)
-                   return(output_path)
+                   # Return the concatenated content instead of saving it to a file
+                   return(paste(all_contents, collapse = "\n"))
                  }
                  
-                 concatenated_file <- reactiveVal(NULL)
+                 concatenated_content <- reactiveVal(NULL)
                  
                  observeEvent(input$concat_notes, {
-                   req(auth()$user_info$user)
+                   req(auth()$user_info$Group)
                    
-                   group_folder_name <- auth()$user_info$user
-                   file_path <- concatenate_txt_to_md(group_folder_name)
-                   concatenated_file(file_path)
+                   group_folder_name <- auth()$user_info$Group
+                   content <- concatenate_txt_to_md(group_folder_name)
+                   concatenated_content(content)
                    
-                   output$download_ui <- renderUI({
-                     req(concatenated_file())
-                     downloadButton(ns("download_file"), "Download Notes")
+                   # Render the concatenated content as HTML or Markdown
+                   output$notes_display_ui <- renderUI({
+                     req(concatenated_content())
+                     tagList(
+                       h3("Concatenated Notes"),
+                       pre(concatenated_content()) # Display notes as preformatted text
+                     )
                    })
                  })
-                 
-                 output$download_file <- downloadHandler(
-                   filename = function() {
-                     req(concatenated_file())
-                     basename(concatenated_file())
-                   },
-                   content = function(file) {
-                     req(concatenated_file())
-                     file.copy(concatenated_file(), file)
-                   }
-                 )
                })
 }
-
