@@ -12,82 +12,39 @@ text_area_module_UI <- function(id, text_label = "Type Your Notes Here", text_va
   )
 }
 
-text_area_module_server <- function(id, auth, filename = "Filename", reload_trigger) {
+text_area_module_server <- function(id, auth, filename = "Filename") {
   moduleServer(
     id,
     function(input, output, session) {
       observeEvent(input$inputTextButton, {
-        text_to_save <- input$text_input
         
+
+        text_to_save <- input$text_input
+
         temp_file <- tempfile(fileext = ".txt")
         writeLines(text_to_save, temp_file)
-        
-        Group <- auth()$user_info$Group
-        
+
+        Group = auth()$user_info$Group
+
         pathname <- paste0("BlinkR_text_results/", Group)
-        
+
         name <- paste0(
-          filename, "_", 
-          format(Sys.time(), "%d%m%y_%H-%M"), 
+          filename, "_",
+          format(Sys.time(), "%d%m%y_%H-%M"),
           ".txt"
         )
-        
+
         drive_upload(
           media = temp_file,
           path = pathname,
           name = name
         )
-        
+
         output$submission_feedback <- renderUI({
-          div(class = "success-box", "\U1F64C Your text has been submitted.")
+          div(class = "success-box", "\U1F64C Your notes have been saved!")
         })
-        
-        # Increment reload trigger to refresh existing data
-        if (!is.null(reload_trigger)) {
-          reload_trigger$reload <- isolate(reload_trigger$reload + 1)
-        }
+
       })
     }
   )
 }
-
-# 
-# text_area_module_server <- function(id, auth, filename = "Filename", reload_trigger) {
-#   moduleServer(
-#     id,
-#     function(input, output, session) {
-#       observeEvent(input$inputTextButton, {
-#         
-#         text_to_save <- input$text_input
-#         
-#         temp_file <- tempfile(fileext = ".txt")
-#         writeLines(text_to_save, temp_file)
-#         
-#         Group = auth()$user_info$Group
-#         
-#         pathname <- paste0("BlinkR_text_results/", Group)
-#         
-#         name <- paste0(
-#           filename, "_", 
-#           format(Sys.time(), "%d%m%y_%H-%M"), 
-#           ".txt"
-#         )
-#         
-#         drive_upload(
-#           media = temp_file,
-#           path = pathname,
-#           name = name
-#         )
-#         
-#         output$submission_feedback <- renderUI({
-#           div(class = "success-box", "\U1F64C Your text has been submitted.")
-#         })
-#         
-#          if (!is.null(reload_trigger)) {
-#           reload_trigger$reload <- isolate(reload_trigger$reload + 1)
-#         }
-#         
-#       })
-#     }
-#   )
-# }

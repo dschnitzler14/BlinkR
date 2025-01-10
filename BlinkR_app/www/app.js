@@ -5,18 +5,18 @@ document.addEventListener('DOMContentLoaded', function () {
     button.addEventListener('click', function () {
       const groupId = button.getAttribute('data-id');
 
-      // Select all buttons in the same group
       const groupButtons = document.querySelectorAll(`.custom-action[data-id="${groupId}"]`);
-
       groupButtons.forEach(groupButton => {
-        // Add the checkmark only if not already added
         if (!groupButton.classList.contains('checked')) {
-          groupButton.innerHTML += ' &#x2705;'; // Add a single checkmark
-          groupButton.classList.add('checked'); // Mark as checked
+          groupButton.innerHTML += ' &#x2705;';
+          groupButton.classList.add('checked');
         }
       });
     });
   });
+
+  // Add file input reset handler
+  Shiny.addCustomMessageHandler('resetFileInput', function(message) {
+    document.getElementById(message.id).value = null;
+  });
 });
-
-

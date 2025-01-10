@@ -1,4 +1,3 @@
-# Class Data Module UI
 class_data_module_ui <- function(id) {
   ns <- NS(id)
   tagList(
@@ -15,7 +14,8 @@ class_data_module_ui <- function(id) {
       tabItem(
         tabName = "Class Data",
         title = "Class Data",
-        DT::dataTableOutput(ns("class_data"))
+        DT::dataTableOutput(ns("class_data")),
+        textOutput(ns("no_data_text"))
       )
     ),
     fluidPage(
@@ -35,44 +35,65 @@ class_data_module_ui <- function(id) {
   )
 }
 
-class_data_module_server <- function(id, db_measurement, BlinkR_measurement_sheet, parent.session) {
+class_data_module_server <- function(
+    id,
+    db_measurement,
+    BlinkR_measurement_sheet,
+    parent.session,
+    auth
+) {
   moduleServer(
     id,
     function(input, output, session) {
       ns <- session$ns
-      
-       observeEvent(input$back_page, {
-      updateTabItems(parent.session, "sidebar", "Measurement")
-    })
+  
+      observeEvent(input$back_page, {
+        updateTabItems(parent.session, "sidebar", "Measurement")
+      })
       observeEvent(input$next_page, {
-      updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
-    })
+        updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
+      })
       
-      dummy_data <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv")) 
+      view_permission = auth()$user_info$Data
       
-      output$class_data <- renderDT({
-        datatable(
-          dummy_data,
-          escape = FALSE,
-          options = list(
-            paging = FALSE,
-            searching = FALSE,
-            autoWidth = TRUE,
-            lengthChange = FALSE,
-            scrollY = FALSE
-          ),
-          rownames = FALSE
-        )
-      }, server = TRUE)
+      if (is.null(view_permission) || length(view_permission) == 0) {
+        view_permission <- "FALSE"
+      }
       
+      current_data <- reactiveVal()
       
+      if (view_permission == "TRUE") {
+        observe({
+          combined_class_data_id <- tryCatch(
+            drive_get("BlinkR_Combined_Class_Data")$id,
+            error = function(e) NULL
+          )
+          
+          if (!is.null(combined_class_data_id)) {
+            combined_data <- tryCatch(
+              read_sheet(combined_class_data_id),
+              error = function(e) NULL
+            )
+            
+            current_data <- reactiveVal(combined_data)
+            
+            output$class_data <- renderDT({
+              req(current_data())
+              DT::datatable(current_data(), options = list(pageLength = 10))
+            })
+          } else {
+          }
+        })
+      } else {
+        output$no_data_text <- renderText("Check back later for the Class Data")
+      }
+      
+# Group Data 
       group_data_trigger <- reactiveVal(0)
-
       observeEvent(input$refresh_group_data, {
         group_data_trigger(group_data_trigger() + 1)
-        
       })
-
+      
       output$group_data <- renderDT({
         req(group_data_trigger())
         measurement_data <- db_measurement()
@@ -107,11 +128,11 @@ class_data_module_server <- function(id, db_measurement, BlinkR_measurement_shee
                       sheet = sheet_name)
         } else {
           sheet_write(data = measurement_data,
-                       ss = BlinkR_measurement_sheet,
-                       sheet = sheet_name)
+                      ss = BlinkR_measurement_sheet,
+                      sheet = sheet_name)
         }
       })
-      
     }
   )
 }
+

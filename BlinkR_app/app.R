@@ -16,6 +16,12 @@ library(readr)
 library(here)
 library(markdownInput)
 library(knitr)
+library(shinycssloaders)
+library(future)
+library(promises)
+library(shinyWidgets)
+library(tibble)
+library(stringr)
 
 
 options(
@@ -31,19 +37,23 @@ user_base_google_sheet <- drive_get("BlinkR Users")$id
 
 user_base <- read_sheet(user_base_google_sheet)
 
-# num_groups <- 100
-# group_names <- paste0("Group", 1:num_groups)
-# 
-# user_base <- tibble::tibble(
-#   user = group_names,
-#   permissions = rep("group", num_groups),
-#   name = group_names
-# )
+base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
 
+final_reports_folder_id <- drive_get("BlinkR_final_reports")$id
 
+class_data_folder_id <- drive_get("BlinkR_class_data")$id
+
+group_data_file_id <- drive_get("BlinkR_Measurements")$id
+
+protocol_file_id <- drive_get("BlinkR_protocols")$id
+
+drive_share_anyone(protocol_file_id)
+
+drive_share(final_reports_folder_id,
+            role = "writer",
+            type = "anyone")
 
 BlinkR_measurement_sheet <- drive_get("BlinkR_Measurements")$id
-
 #load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
 sapply(module_files, source)
@@ -54,21 +64,25 @@ css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "s
                       tags$script("hljs.highlightAll();"))
 
 # header ----
-# Header with Logout Button ----
 header <- dashboardHeader(title = "BlinkR", uiOutput("user_area"))
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
     id = "sidebar",
     menuItem("Introduction", tabName = "Introduction", icon = icon("sun")),
-    
+
     conditionalPanel(
       condition = "!output.user_auth",
       actionButton("login_button", "Log In", icon = icon("sign-in-alt"), class = "btn-primary", style = "margin: 10px; width: 90%")
     ),
     
     conditionalPanel(
-      condition = "output.user_auth", 
+    condition = "output.user_role === 'admin'",
+    menuItem("Admin Area", tabName = "admin_area", icon = icon("lock")),  
+    ),
+    
+    conditionalPanel(
+      condition = "output.user_auth",
       sidebarMenu(
         menuItem("Background", tabName = "Background", icon = icon("book-open")),
         menuItem("Hypothesis", tabName = "Hypothesis", icon = icon("pen-to-square")),
@@ -83,22 +97,19 @@ sidebar <- dashboardSidebar(
                  menuItem("Create Figure", tabName="Create_Figure", icon = icon("chart-simple"))
         ),
         menuItem("Writing Up", tabName = "Writing-Up-menu",icon = icon("pen"),
-          menuItem("Writing Up", tabName = "Writing-Up", icon = icon("pen")),
-          menuItem("View All Notes", tabName = "View_Notes", icon = icon("paperclip")),
-          menuItem("Upload Report", tabName = "Upload_Report", icon = icon("upload"))
-
+          menuItem("Write Notes", tabName = "Writing-Up", icon = icon("pen")),
+          menuItem("Upload Final Report", tabName = "Upload_Report", icon = icon("upload"))
           ),
         menuItem("Feedback", tabName = "Feedback", icon = icon("comment"))
       )
-    )
-  ),
-  
-  conditionalPanel(
-    condition = "output.user_auth",
-    div(
-      actionButton("logout_button", "Logout", icon = icon("sign-out-alt"), class = "btn-danger", style = "margin: 10px; width: 90%; position: absolute; bottom: 10px;")
+    ),
+    conditionalPanel(
+      condition = "output.user_auth",
+      actionButton("logout_button", "Logout", icon = icon("sign-out-alt"), class = "btn-danger", style = "margin: 10px; width: 90%")
     )
   )
+  
+  
 )
 
 
@@ -108,11 +119,19 @@ body <- dashboardBody(
   css_link,
   
   uiOutput("login_ui"),
+  #uiOutput("admin_area_ui"),
   
   tabItems(
     tabItem(
       tabName = "Introduction",
       introduction_module_ui("introduction") 
+    ),
+    tabItem(
+      tabName = "admin_area",
+      conditionalPanel(
+        condition = "output.user_role === 'admin'",
+        admin_area_module_ui("admin_module")
+      )
     ),
    
     tabItem(
@@ -192,17 +211,20 @@ body <- dashboardBody(
         write_up_module_ui("write_up")
       )
     ),
-    # tabItem(
-    #   tabName = "View_Notes",
-    #   conditionalPanel(
-    #     condition = "output.user_auth",
-    #     view_all_notes_ui("view_notes")
-    #   )
-    # ),
      tabItem(
       tabName = "Upload_Report",
       conditionalPanel(
         condition = "output.user_auth",
+        upload_report_module_ui("upload_report")
+        
+      )
+    ),
+    tabItem(
+      tabName = "Feedback",
+      conditionalPanel(
+        condition = "output.user_auth",
+        feedback_module_ui("feedback")
+        
       )
     )
   )
@@ -230,44 +252,60 @@ server <- function(input, output, session) {
   
   introduction_module_server("introduction", parent.session = session)
   
-  auth <- custom_login_server("login_module", user_base_google_sheet, user_base)
-  
+  auth <- custom_login_server("login_module", user_base_google_sheet, user_base, base_group_files_url)
+
   output$user_auth <- reactive({ auth()$user_auth })
+  output$user_role <- reactive({ auth()$user_info$role })
+  output$data_permission <- reactive({ auth()$user_info$data })
+  output$protocol_permission <- reactive({ auth()$user_info$protocol })
+  
+  outputOptions(output, "user_role", suspendWhenHidden = FALSE)
   outputOptions(output, "user_auth", suspendWhenHidden = FALSE)
   
+  output$session_folder_url <- reactive({ auth()$session_folder_url })
+
   observeEvent(input$login_button, {
     output$login_ui <- renderUI({
       req(!auth()$user_auth)
-      custom_login_ui("login_module", title = "Custom Login Page", subtitle = "Welcome! Please log in below.")
+      custom_login_ui("login_module")
     })
   })
   
+  admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base = user_base, user_base_google_sheet = user_base_google_sheet, final_reports_folder_id = final_reports_folder_id)
+  
+  observeEvent(input$admin_area_button, {
+    req(auth()$user_info$role == "admin")
+    updateTabItems(session, "main_tabs", "admin_area")
+  })
+  
+ 
+  
   observeEvent(input$logout_button, {
     auth()$user_auth <- FALSE
-    auth()$user_info <- NULL
-    output$login_ui <- renderUI({ 
-      custom_login_ui("login_module", title = "Custom Login Page", subtitle = "Welcome! Please log in below.")
-    })
+    auth()$user_info <- list(Group = NULL, role = NULL)
+    
+    # output$login_ui <- renderUI({ 
+    #   custom_login_ui("login_module")
+    # })
   })
   
   observe({
     req(auth()$user_auth)
     output$login_ui <- renderUI(NULL) 
     
-    # Load authenticated-only modules
     background_module_server("background", parent.session = session)
     hypothesis_module_server("hypothesis", parent.session = session)
-    protocol_module_server("protocol", auth = auth, parent.session = session)
+    protocol_module_server("protocol", auth = auth, parent.session = session, protocol_file_id = protocol_file_id)
     measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session, BlinkR_measurement_sheet = BlinkR_measurement_sheet)
-    class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session)
+    class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session, auth = auth)
     analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results)
     analysis_prepare_data_module_server("analysis_prepare_data", results_data = data_read, parent.session = session)
-    analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session, saved_results = saved_results)
-    analysis_stats_module_server("stats", results_data = data_read, parent.session = session, saved_results = saved_results)
-    analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session, saved_results = saved_results)
-    write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger)
-    #view_all_notes_server("view_notes", parent.session = session, auth = auth, reload_trigger)
-
+    analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session, saved_results = saved_results, session_folder_id = auth()$session_folder_id)
+    analysis_stats_module_server("stats", results_data = data_read, parent.session = session, saved_results = saved_results, session_folder_id = auth()$session_folder_id)
+    analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session, saved_results = saved_results, session_folder_id = auth()$session_folder_id)
+    write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_url = auth()$session_folder_url)
+    upload_report_module_server("upload_report", auth = auth, base_group_files_url = base_group_files_url, final_reports_folder_id = final_reports_folder_id)
+    feedback_module_server("feedback")
   })
 }
 

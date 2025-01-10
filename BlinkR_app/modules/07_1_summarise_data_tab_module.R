@@ -46,7 +46,7 @@ analysis_summarise_data_module_ui <- function(id) {
           column(
             width = 12,
             div(
-              style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;", # Added 'gap'
+              style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
               actionButton(
                 ns("statistics"),
                 label = tagList(icon("equals"), "Run Statistical Analysis"),
@@ -78,9 +78,8 @@ analysis_summarise_data_module_ui <- function(id) {
         ))))}
 
 
-analysis_summarise_data_module_server <- function(id, results_data, parent.session, saved_results) {
+analysis_summarise_data_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
-    # Load data
     data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
     
     data <- reactive({ data_read })
@@ -219,7 +218,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
       })
     })
     
-    ##for stressed sem
+    #for stressed sem
     stressed_sem <- data_summary$sem[2]
     stressed_sem_round_up <- round(stressed_sem,2)
     stressed_sem_round_down <- floor(stressed_sem)
@@ -260,7 +259,23 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
         key <- "summary"
         saved_results$scripts[[key]] <- summarise_result()
         
-        showNotification("Summary script saved successfully.", type = "message")
+        result_as_char <- capture.output(print(saved_results$scripts[[key]]))
+        
+        temp_file <- tempfile(fileext = ".txt")
+        writeLines(result_as_char, con = temp_file)
+        
+        path <- drive_get(as_id(session_folder_id))
+        
+        drive_upload(
+          media = temp_file,
+          path = path,
+          name = paste0(key, ".txt"),
+          overwrite = TRUE,
+        )
+        
+        unlink(temp_file)
+        
+        showNotification("Summary script saved successfully & Uploaded to Drive.", type = "message")
       } else {
         showNotification("No summary script to save.", type = "error")
       }

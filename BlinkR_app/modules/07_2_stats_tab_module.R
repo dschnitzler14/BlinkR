@@ -185,7 +185,7 @@ analysis_stats_module_ui <- function(id) {
 
 
 
-analysis_stats_module_server <- function(id, results_data, parent.session, saved_results) {
+analysis_stats_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
     # Load data
     data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
@@ -260,8 +260,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     })
     
     
-    average_trs_assumptions$stress_status <- factor(average_trs_assumptions$stress_status,
-                                                    levels = c("unstressed", "stressed"))
+    average_trs_assumptions$stress_status <- factor(average_trs_assumptions$stress_status,levels = c("unstressed", "stressed"))
     
     observeEvent(input$run_box_Plot, {
       output$box_plot <- renderPlot({
@@ -625,6 +624,21 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
         saved_results$scripts[[key]] <- t_test_result()
         saved_results$scripts[["stats_paired"]] <- NULL
         
+        result_as_char <- capture.output(print(saved_results$scripts[[key]]))
+        
+        temp_file <- tempfile(fileext = ".txt")
+        writeLines(result_as_char, con = temp_file)
+        
+        path <- drive_get(as_id(session_folder_id))
+        
+        drive_upload(
+          media = temp_file,
+          path = path,
+          name = paste0(key, ".txt"),
+          overwrite = TRUE,
+        )
+        
+        unlink(temp_file)
 
         showNotification("Two-Sample T-Test result saved successfully.", type = "message")
       } else {
@@ -638,6 +652,22 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
         key <- "stats_paired"
         saved_results$scripts[[key]] <- t_test_paired_result()
         saved_results$scripts[["stats_two_sample"]] <- NULL
+        
+        result_as_char <- capture.output(print(saved_results$scripts[[key]]))
+        
+        temp_file <- tempfile(fileext = ".txt")
+        writeLines(result_as_char, con = temp_file)
+        
+        path <- drive_get(as_id(session_folder_id))
+        
+        drive_upload(
+          media = temp_file,
+          path = path,
+          name = paste0(key, ".txt"),
+          overwrite = TRUE,
+        )
+        
+        unlink(temp_file)
         
         showNotification("Paired T-Test result saved successfully.", type = "message")
       } else {

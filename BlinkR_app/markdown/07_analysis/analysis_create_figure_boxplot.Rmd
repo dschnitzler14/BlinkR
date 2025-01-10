@@ -15,6 +15,10 @@ boxplot <- ggplot(average_trs, aes(x = stress_status, y = average_blinks_per_min
     title = "Blinks/Minute by Stress Status"
   ) +
   theme_minimal() +
-  theme(legend.position = "none") +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  ) + 
   ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
 ```

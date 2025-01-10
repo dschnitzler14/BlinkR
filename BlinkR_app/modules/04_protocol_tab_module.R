@@ -3,24 +3,25 @@ protocol_module_ui <- function(id){
   protocol_tab <- tabItem(tabName = "Protocol",
                           fluidPage(
                             fluidRow(
-                              box(
-                                title = "Protocol",
-                                id = "protocol_",
-                                collapsible = FALSE,
-                                width = 12,
-                                solidHeader = TRUE,
-                                includeMarkdown(here("BlinkR_app", "markdown","04_protocol/protocol.Rmd"))
+                              column(12,
+                                tabBox(
+                                  width = 12,
+                                  tabPanel(
+                                    tabName = "Your Protocol",
+                                    title = "Your Protocol",
+                                    includeMarkdown(here("BlinkR_app", "markdown","04_protocol/protocol.Rmd")),
+                                    experimental_design_module_ui(ns("experimental_design_protocol"), "Experimental Design", "Think about some general ideas for the experiment here")
+                                    ),
+                                  tabPanel(
+                                    tabName = "Class Protocol",
+                                    title = "Class Protocol",
+                                    DT::dataTableOutput(ns("class_protocol")),
+                                    textOutput(ns("no_protocol_text"))
+                                  )
+                                )
+                              )
                               ),
-                              box(
-                                title = "What is you Protocol?",
-                                id = "protocol_preparation",
-                                collapsible = FALSE,
-                                width = 12,
-                                solidHeader = TRUE,
-                                text_area_module_UI(ns("protocol")),
-                              ),
-                            ),
-                            fluidRow(
+      fluidRow(
       column(
       width = 12,
       div(
@@ -36,12 +37,67 @@ protocol_module_ui <- function(id){
   )
 }
 
-protocol_module_server <- function(id, auth, parent.session){
+protocol_module_server <- function(id, auth, parent.session, protocol_file_id){
   moduleServer(
     id,
     function(input, output, server){
       
-      text_area_module_server("protocol", auth, "Protocol")
+      experimental_design_module_server("experimental_design_protocol", auth, protocol_file_id, "Experimental Design", "What is your general design?")
+      
+      view_permission_protocol = auth()$user_info$Protocol
+
+      if (is.null(view_permission_protocol) || length(view_permission_protocol) == 0) {
+        view_permission_protocol <- "FALSE"
+      }
+      
+      current_protocol <- reactiveVal()
+      
+      if (view_permission_protocol == "TRUE") {
+        observe({
+          combined_class_protocol_id <- tryCatch(
+            drive_get("BlinkR_Class_Protocol")$id,
+            error = function(e) NULL
+          )
+          
+          if (!is.null(combined_class_protocol_id)) {
+            combined_protocol <- tryCatch(
+              read_sheet(combined_class_protocol_id, sheet = 1),
+              error = function(e) NULL
+            )
+            
+            current_protocol(combined_protocol)
+            
+            output$class_protocol <- DT::renderDataTable({
+              req(current_protocol())
+              
+              formatted_data <- current_protocol()
+              formatted_data[] <- lapply(formatted_data, function(col) {
+                if (is.character(col)) {
+                  gsub("\\n", "<br>", col)
+                } else {
+                  col
+                }
+              })
+              
+              DT::datatable(
+                formatted_data,
+                options = list(
+                  paging = FALSE,        
+                  searching = FALSE,     
+                  ordering = FALSE,      
+                  dom = 't',             
+                  scrollX = TRUE         
+                ),
+                rownames = FALSE,
+                escape = FALSE
+              )
+            })
+          }
+        })
+      } else {
+        output$no_protocol_text <- renderText("Check back later for the Class Protocol")
+      }
+      
       
        observeEvent(input$back_page, {
       updateTabItems(parent.session, "sidebar", "Hypothesis")

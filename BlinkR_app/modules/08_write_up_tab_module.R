@@ -1,11 +1,11 @@
-write_up_module_ui <- function(id) {
+write_up_module_ui <- function(id, session_folder_url) {
   ns <- NS(id)
   writing_up_tab <- 
     tabItem(tabName = "Writing-Up",
       fluidPage(
         fluidRow(
           column(
-            8,
+            12,
               box(title = "Introduction",
                   collapsible = TRUE,
                   collapsed = FALSE,
@@ -13,7 +13,7 @@ write_up_module_ui <- function(id) {
                   solidHeader = TRUE,
                   fluidRow(
                   column(6, 
-                        md_input_ui(ns("introduction"), "Introduction")
+                        text_area_module_UI(ns("introduction"), "Introduction")
                         ),
                   column(6,
                          includeMarkdown(here("BlinkR_app", "markdown","08_writing_up","writing_up_intro.Rmd")),
@@ -28,6 +28,11 @@ write_up_module_ui <- function(id) {
                            label = tagList(icon("pen-to-square"), "Go to Hypothesis"),
                            class = "action-button custom-action",
                          ),
+                         textOutput(ns("folder_url")),
+                         actionButton(
+                           ns("view_google_folder"),
+                           label = "View on Google Drive"
+                         )
                         
                   )
                   )
@@ -39,7 +44,7 @@ write_up_module_ui <- function(id) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        md_input_ui(ns("methods"), "Methods")
+                        text_area_module_UI(ns("methods"), "Methods")
 
                   ),
                   column(6,
@@ -65,7 +70,7 @@ write_up_module_ui <- function(id) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        md_input_ui(ns("results"), "Results")
+                        text_area_module_UI(ns("results"), "Results")
 
                   ),
                   column(6,
@@ -85,7 +90,7 @@ write_up_module_ui <- function(id) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      md_input_ui(ns("discussion"), "Discussion")
+                      text_area_module_UI(ns("discussion"), "Discussion")
                   ),
                   column(6,
                          includeMarkdown(here("BlinkR_app", "markdown", "08_writing_up", "writing_up_discussion.Rmd"))
@@ -99,7 +104,7 @@ write_up_module_ui <- function(id) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      md_input_ui(ns("future_work"), "Future Work")
+                      text_area_module_UI(ns("future_work"), "Future Work")
 
                   ),
                   column(6,
@@ -109,11 +114,6 @@ write_up_module_ui <- function(id) {
                 )
             )
           ),
-          column(4,
-                 uiOutput(ns("markdown_preview"))
-                 
-          
-    ),
         ),
     fluidRow(
       column(
@@ -138,46 +138,26 @@ write_up_module_ui <- function(id) {
 )
 }
 
-write_up_module_server <- function(id, parent.session, auth, reload_trigger){
+write_up_module_server <- function(id, parent.session, auth, reload_trigger, session_folder_url){
   moduleServer(
     id,
     function(input, output, server){
-      
+    
+    
+      observeEvent(input$view_google_folder, {
+        shinyjs::runjs(sprintf("window.open('%s', '_blank');", shQuote(session_folder_url, type = "cmd")))
+      })
+
     observeEvent(input$back_page, {
       updateTabItems(parent.session, "sidebar", "Feedback")
     })
       
-      intro_markdown <- md_input_server("introduction")
-      methods_markdown <- md_input_server("methods")
-      results_markdown <- md_input_server("results")
-      discussion_markdown <- md_input_server("discussion")
-      future_work_markdown <- md_input_server("future_work")
-      
-      # Combine Markdown sections dynamically
-      combined_markdown <- reactive({
-        paste0(
-          "# Introduction\n", intro_markdown(), "\n\n",
-          "# Methods\n", methods_markdown(), "\n\n",
-          "# Results\n", results_markdown(), "\n\n",
-          "# Discussion\n", discussion_markdown(), "\n\n",
-          "# Future Work\n", future_work_markdown(), "\n"
-        )
-      })
-      
-      # Render combined Markdown for live preview
-      output$markdown_preview <- renderUI({
-        HTML(markdown::markdownToHTML(text = combined_markdown(), fragment.only = TRUE))
-      })
-      #Intro <- "Intro"
-      
-      # text_area_module_server("write_up_intro", auth, "Intro", reload_trigger)
-      # text_area_module_server("write_up_methods", auth, "Methods", reload_trigger)
-      # text_area_module_server("write_up_results", auth, "Results", reload_trigger)
-      # text_area_module_server("write_up_discussion", auth, "Discussion", reload_trigger)
-      # text_area_module_server("write_up_future", auth, "Future", reload_trigger)
-      # 
-      # concat_notes_server("concat_write_up", auth)
-      
+      text_area_module_server("introduction", auth, "Intro")
+      text_area_module_server("methods", auth, "Methods")
+      text_area_module_server("results", auth, "Results")
+      text_area_module_server("discussion", auth, "Discussion")
+      text_area_module_server("future", auth, "Future")
+
       observeEvent(input$background, {
         updateTabItems(parent.session, "sidebar", "Background")
       })

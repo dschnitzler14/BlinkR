@@ -170,9 +170,6 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         )
         add_measurement("Stressed", inputs, submission_ID)
       })
-      
-
-      
     }
   )
 }

@@ -81,7 +81,7 @@ analysis_create_figure_module_ui <- function(id) {
 
 }
 
-analysis_create_figure_module_server <- function(id, results_data, parent.session, saved_results) {
+analysis_create_figure_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
     # Load data
   data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
@@ -98,9 +98,9 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
 
   observeEvent(input$figure_type_selector, {
     figure_type_selector_output <- if (input$figure_type_selector == "bar") {
-      includeMarkdown(here("BlinkR_app", "markdown","analysis_create_figure_barplot.Rmd"))
+      includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_create_figure_barplot.Rmd"))
     } else {
-      includeMarkdown(here("BlinkR_app", "markdown","analysis_create_figure_boxplot.Rmd"))
+      includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_create_figure_boxplot.Rmd"))
     }
     
     output$figure_type_selector_output <- renderUI({
@@ -118,7 +118,6 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
     output$editor_ui <- renderUI({
       if (input$figure_type_selector == "bar") {
         editor_module_ui(session$ns("figure_editor_bar_plot"))
-        
       } else {
         editor_module_ui(session$ns("figure_editor_box_plot"))
     
@@ -138,7 +137,7 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
-          includeMarkdown(here("BlinkR_app", "markdown","analysis_figure_editing_colours.Rmd")),
+          includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_figure_editing_colours.Rmd")),
           box(title = "Open me for a hint",
               collapsible = TRUE,
               collapsed = TRUE,
@@ -173,7 +172,7 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
-          includeMarkdown(here("BlinkR_app", "markdown","analysis_figure_editing_colours.Rmd")),
+          includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_figure_editing_colours.Rmd")),
           box(title = "Open me for a hint",
               collapsible = TRUE,
               collapsed = TRUE,
@@ -214,8 +213,23 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
       } else {
         saved_results$plots[[key]] <- recordPlot()
       }
-
-      showNotification("Plot saved successfully. Previous save has been overwritten.", type = "message")
+      results_fig <- (saved_results$plots[[key]])
+      
+      temp_file <- tempfile(fileext = ".png")
+      writeLines(result_as_char, con = temp_file)
+      
+      path <- drive_get(as_id(session_folder_id))
+      
+      drive_upload(
+        media = temp_file,
+        path = path,
+        name = paste0(key, ".png"),
+        overwrite = TRUE,
+      )
+      
+      unlink(temp_file)
+      
+      showNotification("Plot saved successfully", type = "message")
     } else {
       showNotification("No plot to save. Please create a plot first.", type = "error")
     }
@@ -223,24 +237,44 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
   
   # box plot save
   observeEvent(input$save_box_plot, {
- 
     if (!is.null(figure_editor_box_plot())) {
+      key <- "box_plot"
+      saved_results$plots[["bar_plot"]] <- NULL
+      saved_results$plots[["box_plot"]] <- NULL
+      
+      temp_file <- tempfile(fileext = ".png")
+      
       if (inherits(figure_editor_box_plot(), "ggplot")) {
-        key <- "box_plot"
-        saved_results$plots[["bar_plot"]] <- NULL
-        saved_results$plots[["box_plot"]] <- NULL
-        
         saved_results$plots[[key]] <- figure_editor_box_plot()
-        
+        ggsave(
+          filename = temp_file,
+          plot = saved_results$plots[[key]],
+          device = "png",
+          width = 8, height = 6, dpi = 300
+        )
       } else {
         saved_results$plots[[key]] <- recordPlot()
+        png(temp_file, width = 800, height = 600)
+        replayPlot(saved_results$plots[[key]])
+        dev.off()
       }
       
-      showNotification("Plot saved successfully. Previous save has been overwritten.", type = "message")
+      path <- drive_get(as_id(session_folder_id))
+      drive_upload(
+        media = temp_file,
+        path = path,
+        name = paste0(key, ".png"),
+        overwrite = TRUE
+      )
+      
+      unlink(temp_file)
+      
+      showNotification("Plot saved successfully.", type = "message")
     } else {
       showNotification("No plot to save. Please create a plot first.", type = "error")
     }
   })
+  
   
   
   

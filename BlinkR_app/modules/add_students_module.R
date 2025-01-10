@@ -14,7 +14,6 @@ group_info_module_ui <- function(id) {
   )
 }
 
-# this works begin
 group_info_module_server <- function(id, db_student_table, auth) {
   moduleServer(
     id,
@@ -54,7 +53,6 @@ group_info_module_server <- function(id, db_student_table, auth) {
     }
   )
 }
-# this works end
 
 
 
