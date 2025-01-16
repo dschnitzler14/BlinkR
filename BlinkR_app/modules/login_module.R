@@ -13,7 +13,7 @@ custom_login_ui <- function(id) {
           p("Please enter your group ID to continue"), 
           textInput(ns("group_name"), "Group ID", placeholder = "Enter group ID"),
           div(class = "text-danger", textOutput(ns("error"), inline = TRUE)),
-          actionButton(ns("login_button"), "Login", class = "btn btn-primary btn-block")
+          actionButton(ns("login_button"), "Login", class = "custom-login-button")
       )
     ),
     div(
@@ -25,7 +25,7 @@ custom_login_ui <- function(id) {
           textInput(ns("sign_up_group_name"), "Group ID", placeholder = "Enter a 4 digit group ID"),
           textInput(ns("name"), "Your Name", placeholder = "Enter the name of anyone in your group"),
           div(class = "text-danger", uiOutput(ns("sign_uperror"), inline = TRUE)),
-          actionButton(ns("sign_up_button"), "Sign up", class = "btn btn-primary btn-block"),
+          actionButton(ns("sign_up_button"), "Sign up", class = "custom-login-button"),
           uiOutput(ns("sign_up_status")),
       )
     ),
@@ -173,10 +173,10 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
           )
           
           folder_id <- new_folder$id
-          
-          credentials$session_folder <- new_folder
-          
+
           drive_share_anyone(as_id(folder_id))
+
+          credentials$session_folder <- new_folder
           
           folder_url <- paste0(base_group_files_url, folder_id)
           

@@ -434,4 +434,16 @@ a:hover {
   color: #2ECC40; /* Green for values and variables */
 }
 
+.custom-login-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
 
+.custom-login-button:hover {
+  background-color: #0056b3;
+}

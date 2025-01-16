@@ -13,7 +13,6 @@ library(utils)
 library(googlesheets4)
 library(googledrive)
 library(readr)
-library(here)
 library(markdownInput)
 library(knitr)
 library(shinycssloaders)
@@ -23,16 +22,22 @@ library(shinyWidgets)
 library(tibble)
 library(stringr)
 library(shinyjs)
+library(jsonlite)
 
 
 options(
   gargle_oauth_email = TRUE,
-  gargle_oauth_cache = "BlinkR/BlinkR_app/.newsecrets"
+  gargle_oauth_cache = "BlinkR_app/.secrets"
 )
 
 #only run once:
-# googledrive::drive_auth()
-# googlesheets4::gs4_auth()
+#gs4_auth(email = "m14.blinkr@gmail.com", cache = "BlinkR_app/.secrets")
+#drive_auth(email = "m14.blinkr@gmail.com", cache = "BlinkR_app/.secrets")
+
+googledrive::drive_auth()
+googlesheets4::gs4_auth()
+
+
 
 user_base_google_sheet <- drive_get("BlinkR Users")$id
 
@@ -42,7 +47,7 @@ base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
 
 final_reports_folder_id <- drive_get("BlinkR_final_reports")$id
 
-class_data_folder_id <- drive_get("BlinkR_class_data")$id
+#class_data_folder_id <- drive_get("BlinkR_class_data")$id
 
 group_data_file_id <- drive_get("BlinkR_Measurements")$id
 
@@ -78,7 +83,7 @@ sidebar <- dashboardSidebar(
 
     conditionalPanel(
       condition = "!output.user_auth",
-      withSpinner(actionButton("login_button", "Log In", icon = icon("sign-in-alt"), class = "btn-primary", style = "margin: 10px; width: 90%"), type = 7, size = 0.5)
+      actionButton("login_button", "Log In", icon = icon("sign-in-alt"), class = "btn-primary", style = "margin: 10px; width: 90%")
     ),
     
     conditionalPanel(
@@ -256,12 +261,10 @@ server <- function(input, output, session) {
   db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), Submission_ID = character(), stringsAsFactors = FALSE))
   
   db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), Submission_ID = character(), stringsAsFactors = FALSE))
-  
-  #data_read_local <- read.csv(here("BlinkR_app", "data", "dummy_blinking_data.csv"))
-  
+    
   combined_class_data_sheet <- drive_get("BlinkR_Combined_Class_Data")$id
   
-  #combined_class_data_read <- read_sheet(combined_class_data_sheet)
+  combined_class_data_read <- read_sheet(combined_class_data_sheet)
   
   introduction_module_server("introduction", parent.session = session)
 
@@ -334,7 +337,7 @@ server <- function(input, output, session) {
     write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id)
     upload_report_module_server("upload_report", auth = auth, base_group_files_url = base_group_files_url, final_reports_folder_id = final_reports_folder_id)
     feedback_module_server("feedback")
-    your_google_drive_module_server("your_drive_module", session_folder_id = auth()$session_folder_id)
+    your_google_drive_module_server("your_drive_module", session_folder_id = session_folder_id)
     
   })
 }

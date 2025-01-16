@@ -24,9 +24,9 @@ class_data_module_ui <- function(id) {
       width = 12,
       div(
         style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page"),
+        actionButton(ns("back_page_data"),
                      label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page"), 
+        actionButton(ns("next_page_data"), 
               label = tagList("Next", icon("arrow-right")))
           )
         ),
@@ -47,10 +47,10 @@ class_data_module_server <- function(
     function(input, output, session) {
       ns <- session$ns
   
-      observeEvent(input$back_page, {
+      observeEvent(input$back_page_data, {
         updateTabItems(parent.session, "sidebar", "Measurements")
       })
-      observeEvent(input$next_page, {
+      observeEvent(input$next_page_data, {
         updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
       })
       

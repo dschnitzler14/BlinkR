@@ -10,7 +10,6 @@ introduction_module_ui <- function(id){
                                     width = 12,
                                     solidHeader = TRUE,
                                     includeMarkdown("markdown/01_introduction/introduction_box1.Rmd")
-                                    #includeMarkdown(here("BlinkR_app", "markdown", "01_introduction/introduction_box1.Rmd"))
                                   ),
                                   box(
                                     title = "How to use this app",
@@ -18,8 +17,7 @@ introduction_module_ui <- function(id){
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("BlinkR_app/markdown/01_introduction/introduction_box2.Rmd")
-                                    #includeMarkdown(here("BlinkR_app", "markdown","01_introduction/introduction_box2.Rmd"))
+                                    includeMarkdown("markdown/01_introduction/introduction_box2.Rmd")
                                   ),
                                   box(
                                     title = "Outline of experiment",
@@ -27,8 +25,7 @@ introduction_module_ui <- function(id){
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("BlinkR_app/markdown/01_introduction/introduction_box3.Rmd")
-                                    #includeMarkdown(here("BlinkR_app", "markdown","01_introduction/introduction_box3.Rmd"))
+                                    includeMarkdown("markdown/01_introduction/introduction_box3.Rmd")
                                     
                                   )
                                 ),
@@ -37,7 +34,7 @@ introduction_module_ui <- function(id){
                                   width = 12,
                                   div(
                                     style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-                                    actionButton(ns("next_page"), 
+                                    actionButton(ns("next_page_intro"), 
                                                  label = tagList("Next", icon("arrow-right")))
                                       )
                                     ),
@@ -51,7 +48,7 @@ introduction_module_server <- function(id, parent.session){
     id,
     function(input, output, server){
       
-      observeEvent(input$next_page, {
+      observeEvent(input$next_page_intro, {
       updateTabItems(parent.session, "sidebar", "Background")
     })
       

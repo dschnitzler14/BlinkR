@@ -14,8 +14,9 @@ your_google_drive_module_server <- function(id, session_folder_id){
   moduleServer(
     id,
     function(input, output, server){
-      
-      path <- paste0("https://drive.google.com/drive/folders/", session_folder_id)
+
+
+    path <- paste0("https://drive.google.com/embeddedfolderview?id=", session_folder_id, "#grid")  
       
       output$iframe_to_your_drive <- renderUI({
         tagList(

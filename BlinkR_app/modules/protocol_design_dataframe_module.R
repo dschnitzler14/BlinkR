@@ -6,9 +6,10 @@ experimental_design_module_ui <- function(id, label = "Protocol Planning Notes",
       label = label,
       placeholder = placeholder
     ),
-    actionButton(ns("submit_protocol_notes"), "Save Notes")
+    actionButton(ns("submit_protocol_notes"), "Save Notes", class = "fun-submit-button")
     )
 }
+#
 
 experimental_design_module_server <- function(id, auth, protocol_file_id, sheet_name = "Protocol Notes", input_question = "Input Question") {
   moduleServer(id, function(input, output, session) {

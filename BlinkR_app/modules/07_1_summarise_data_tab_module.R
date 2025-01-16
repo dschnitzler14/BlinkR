@@ -121,8 +121,9 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
                                              session_folder_id, save_header = "Summarise Result Code")
     
     observe({
-      req(summarise_result())
-      if (tibble::is_tibble(summarise_result())) {
+      req(!is.null(summarise_result()), !is.null(summarise_result()$result))
+
+      if (tibble::is_tibble(summarise_result()$result)) {
         output$summary_code_feedback <- renderUI({
           tagList(
             div(class = "success-box", "\U1F64C Great!"),

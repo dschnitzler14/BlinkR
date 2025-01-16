@@ -95,9 +95,9 @@ analysis_dashboard_module_ui <- function(id) {
       width = 12,
       div(
         style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page"),
+        actionButton(ns("back_page_analysis"),
                      label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page"), 
+        actionButton(ns("next_page_analysis"), 
               label = tagList("Next", icon("arrow-right")))
           )
         ),
@@ -111,10 +111,10 @@ analysis_dashboard_module_ui <- function(id) {
 analysis_dashboard_module_server <- function(id, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
  
-        observeEvent(input$back_page, {
+        observeEvent(input$back_page_analysis, {
       updateTabItems(parent.session, "sidebar", "Raw_Data")
     })
-      observeEvent(input$next_page, {
+      observeEvent(input$next_page_analysis, {
       updateTabItems(parent.session, "sidebar", "Writing-Up")
     })
       
@@ -298,6 +298,7 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
       # 
       showModal(modalDialog(
         title = "Your Google Drive",
+        markdown("You can see all your results here, as well as your code history"),
         your_google_drive_module_ui("your_drive_module_dashboard"),
         
         easyClose = TRUE,
@@ -312,7 +313,6 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
     observeEvent(input$start, {
       updateTabItems(parent.session, "sidebar", "Prepare_Data")
     })
-    
     observeEvent(input$summarise, {
       updateTabItems(parent.session, "sidebar", "Summarise_Data")
     })

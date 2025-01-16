@@ -27,9 +27,9 @@ protocol_module_ui <- function(id){
       width = 12,
       div(
         style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page"),
+        actionButton(ns("back_page_protocol"),
                      label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page"), 
+        actionButton(ns("next_page_protocol"), 
               label = tagList("Next", icon("arrow-right")))
           )
         ),
@@ -103,10 +103,10 @@ protocol_module_server <- function(id, auth, parent.session, protocol_file_id){
       }
       
       
-       observeEvent(input$back_page, {
+       observeEvent(input$back_page_protocol, {
       updateTabItems(parent.session, "sidebar", "Hypothesis")
     })
-      observeEvent(input$next_page, {
+      observeEvent(input$next_page_protocol, {
       updateTabItems(parent.session, "sidebar", "Measurements")
     })
 

@@ -11,7 +11,7 @@ hypothesis_module_ui <- function(id) {
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          includeMarkdown(here("BlinkR_app", "markdown","03_hypothesis/what_is_a_hypothesis.Rmd"))
+          includeMarkdown("markdown/03_hypothesis/what_is_a_hypothesis.Rmd")
         ),
         box(
           title = "Tips for Writing Your Hypothesis",
@@ -19,7 +19,7 @@ hypothesis_module_ui <- function(id) {
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          includeMarkdown(here("BlinkR_app", "markdown","03_hypothesis/hypothesis_tips.Rmd"))
+          includeMarkdown("markdown/03_hypothesis/hypothesis_tips.Rmd")
         ),
         box(
           title = "What is your hypothesis?",
@@ -35,9 +35,9 @@ hypothesis_module_ui <- function(id) {
       width = 12,
       div(
         style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page"),
+        actionButton(ns("back_page_hypo"),
                      label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page"), 
+        actionButton(ns("next_page_hypo"), 
               label = tagList("Next", icon("arrow-right")))
           )
         ),
@@ -54,10 +54,10 @@ hypothesis_module_server <- function(id, parent.session, auth) {
       
       text_area_module_server("hypothesis", auth, "Hypothesis")
       
-       observeEvent(input$back_page, {
+       observeEvent(input$back_page_hypo, {
       updateTabItems(parent.session, "sidebar", "Background")
     })
-      observeEvent(input$next_page, {
+      observeEvent(input$next_page_hypo, {
       updateTabItems(parent.session, "sidebar", "Protocol")
     })
     }

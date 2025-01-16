@@ -8,14 +8,8 @@ background_module_ui <- function(id){
             solidHeader = FALSE,
             collapsible = TRUE,
             width = 12,
-            includeMarkdown(here("BlinkR_app", "markdown", "02_background", "background.Rmd"))
-        ),
-      tags$iframe(
-        src = "https://pubmed.ncbi.nlm.nih.gov/",
-        width = "100%",
-        height = "800px",
-        style = "border:none;"
-      )
+            includeMarkdown("markdown/02_background/background.Rmd")
+        )
     )
   ),
     fluidRow(
@@ -23,9 +17,9 @@ background_module_ui <- function(id){
       width = 12,
       div(
         style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page"),
+        actionButton(ns("back_page_background"),
                      label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page"), 
+        actionButton(ns("next_page_background"), 
               label = tagList("Next", icon("arrow-right")))
           )
         ),
@@ -39,10 +33,10 @@ background_module_server <- function(id, parent.session){
     id,
     function(input, output, server){
       
-       observeEvent(input$back_page, {
+       observeEvent(input$back_page_background, {
       updateTabItems(parent.session, "sidebar", "Introduction")
     })
-      observeEvent(input$next_page, {
+      observeEvent(input$next_page_background, {
       updateTabItems(parent.session, "sidebar", "Hypothesis")
     })
       

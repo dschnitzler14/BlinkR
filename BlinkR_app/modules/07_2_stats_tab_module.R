@@ -79,7 +79,7 @@ analysis_stats_module_ui <- function(id) {
             width = 12,
             status = "info",
             wellPanel(
-              includeMarkdown(here("BlinkR_app", "markdown","07_analysis","analysis_boxplot_code.Rmd"))
+              includeMarkdown("markdown/07_analysis/analysis_boxplot_code.Rmd")
             )
           ),
           align = "center"
@@ -187,6 +187,23 @@ analysis_stats_module_ui <- function(id) {
 analysis_stats_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
     
+    average_trs_t_test <- reactive({
+      NULL
+    })
+    
+    average_trs_t_test_data <- results_data %>%
+      select(-"Group", -"Initials", -"Submission_ID") %>%
+      dplyr::group_by(ID, Stress_Status) %>%
+      dplyr::summarise(
+        Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
+        .groups = 'drop'
+      )
+    
+    average_trs_t_test <- reactive({
+      average_trs_t_test_data
+    })
+    
+    
     observeEvent(input$assumptions_checklist, {
       feedback <- NULL
       
@@ -274,13 +291,12 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsed = FALSE,
           width = 12,
           includeMarkdown(
-            here("BlinkR_app", "markdown", "07_analysis", "analysis_qq_plot_explainer.Rmd")
+            "markdown/07_analysis/analysis_qq_plot_explainer.Rmd"
           )
         )
       })
-      
-      
     })
+    
     
     generate_box_plot <- function(data) {
       boxplot(
@@ -339,7 +355,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsed = FALSE,
           width = 12,
           includeMarkdown(
-            here("BlinkR_app", "markdown","07_analysis","analysis_box_plot_explainer.Rmd")
+            "markdown/07_analysis/analysis_box_plot_explainer.Rmd"
           )
         )
       })
@@ -391,34 +407,14 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsed = FALSE,
           width = 12,
           includeMarkdown(
-            here("BlinkR_app", "markdown","07_analysis","analysis_hist_plot_explainer.Rmd")
+            "markdown/07_analysis/analysis_hist_plot_explainer.Rmd"
           )
         )
       })
     })
     
-    
     #Step 4: Run T-Test
   
-    average_trs_t_test <- reactive({
-      NULL
-    })
-    
-    average_trs_t_test_data <- results_data %>%
-      select(-"Group", -"Initials", -"Submission_ID") %>%
-      dplyr::group_by(ID, Stress_Status) %>%
-      dplyr::summarise(
-        Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
-        .groups = 'drop'
-      )
-    
-    average_trs_t_test <- reactive({
-      average_trs_t_test_data
-    })
-    
-
-    
-    
     perform_two_sample_t_test <- function(data) {
       if (nrow(data) < 2) return(NULL)
       
@@ -467,10 +463,10 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     
     observeEvent(input$t_test_type_selector, {
       if (input$t_test_type_selector == "two"){
-        t_test_selector_output <- includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_two_sided_t_test.Rmd"))
+        t_test_selector_output <- includeMarkdown("markdown/07_analysis/analysis_two_sided_t_test.Rmd")
         
       } else {
-        t_test_selector_output <- includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_paired_t_test.Rmd"))
+        t_test_selector_output <- includeMarkdown("markdown/07_analysis/analysis_paired_t_test.Rmd")
         
         }
       
@@ -543,12 +539,13 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     })
     
     observe({
-      req(!is.null(t_test_result()))
-      if (alternative_hypothesis() == "two.sided" && inherits(t_test_result(), "htest")) {
+      req(!is.null(t_test_result()), !is.null(t_test_result()$result))
+
+      if (alternative_hypothesis() == "two.sided" && inherits(t_test_result()$result, "htest")) {
         output$t_test_code_feedback <- renderUI({
           tagList(
             div(class = "success-box", "\U1F64C Great Job!"),
-            includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_two_sided_code_feedback.Rmd")),
+            includeMarkdown("markdown/07_analysis/analysis_two_sided_code_feedback.Rmd"),
             numericInput(
               inputId = session$ns("two_sided_p_value_quiz"),
               label = "What is the p-value? (2 decimal places)",
@@ -613,12 +610,13 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     
     # Observer for t_test_paired_result
     observe({
-      req(!is.null(t_test_paired_result()))
-      if (method_paired() == "Paired t-test" && (inherits(t_test_paired_result(), "htest") | is.data.frame(t_test_paired_result()))) {
+      req(!is.null(t_test_paired_result()), !is.null(t_test_paired_result()$result))
+
+      if (method_paired() == "Paired t-test" && (inherits(t_test_paired_result()$result, "htest") | is.data.frame(t_test_paired_result()$result))) {
         output$t_test_code_feedback <- renderUI({
           tagList(
             div(class = "success-box", "\U1F64C Great Job!"),
-            includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_paired_code_feedback.Rmd")),
+            includeMarkdown("markdown/07_analysis/analysis_paired_code_feedback.Rmd"),
             numericInput(
               inputId = session$ns("paired_p_value_quiz"),
               label = "What is the p-value? (2 decimal places)",

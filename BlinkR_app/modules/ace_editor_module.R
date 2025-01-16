@@ -74,7 +74,7 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
 
       current_code(code)
 
-
+ 
     }, ignoreInit = TRUE)
 
     output$dynamic_console <- renderUI({
@@ -86,23 +86,28 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
     })
 
     output$plot_output <- renderPlot({
-      req(values$is_plot, values$result)
-      if (inherits(values$result, "ggplot")) {
-        print(values$result)
-      } else {
-        replayPlot(values$result)
-      }
-    })
+  req(values$is_plot, values$result)
+  if (inherits(values$result, "ggplot")) {
+    print(values$result)
+  } else if (inherits(values$result, "recordedplot")) {
+    replayPlot(values$result)
+  } else {
+    stop("Result is not a recognized plot type.")
+  }
+})
+
 
     output$text_output <- renderPrint({
       req(!values$is_plot, values$result)
       values$result
     })
 
-    
     reactive_result <- reactive({
       if (return_type == "result") {
-        values$result
+        list(
+      result = values$result,
+      is_plot = values$is_plot
+    )
       } else if (return_type == "code_history") {
         current_code()
       } else {

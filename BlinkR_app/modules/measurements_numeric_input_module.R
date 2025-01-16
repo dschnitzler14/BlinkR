@@ -9,8 +9,13 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
         fluidRow(
           column(12,
           markdown("You must consent in order to submit measurements."),
-          checkboxInput(ns("consent_check"), "I have read and understood the consent agreement.", value = FALSE),
-          actionButton(ns("read_consent"), "Read About Consent")
+          actionButton(
+            inputId = ns("read_consent"),
+            label = "Read Consent Statement",
+            class = "fun-submit-button"
+            ),
+          checkboxInput(ns("consent_check"), strong("I have read and understood the consent agreement."), value = FALSE),
+
           )
         )
       ),
@@ -102,7 +107,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
       observeEvent(input$read_consent, {
         showModal(modalDialog(
           title = "Consent",
-          includeMarkdown(here("BlinkR_app", "markdown", "05_measurement", "consent.Rmd")),
+          includeMarkdown("markdown/05_measurement/consent.Rmd"),
           easyClose = TRUE,
           footer = modalButton("Close"),
           size = "l" 

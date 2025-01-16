@@ -1,0 +1,985 @@
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+  
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+  
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+  
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+  
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+  
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+  
+
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#View Data Code
+head(data)
+
+#View Data Code
+data
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+data
+
+#View Data Code
+head(data)
+
+#View Data Code
+results_data
+
+#View Data Code
+view_data
+
+#View Data Code
+data
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+data
+
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Paired T-Test Code
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+  
+
+#Two-Sided T-Test Code
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, data = average_trs)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c(\"Unstressed\", \"Stressed\"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = \"identity\", color = \"black\", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = \"maroon\"
+    ) +
+    scale_fill_manual(values = c(\"Unstressed\" = \"grey49\", \"Stressed\" = \"lightgrey\")) +
+    labs(x = \"Stress Status\",
+         y = \"Mean Blinks/Minute\",
+         title = \"Mean Blinks/Minute by Stress Status\") +
+    theme_minimal() +
+    theme(
+      legend.position = \"none\",
+      plot.background = element_rect(fill = \"white\", color = NA),
+      panel.background = element_rect(fill = \"white\", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+
+#Two-Sided T-Test Code
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, data = average_trs)
+
+#Two-Sided T-Test Code
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, data = average_trs)
+

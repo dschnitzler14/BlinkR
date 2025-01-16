@@ -102,12 +102,14 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
 
   observeEvent(input$figure_type_selector, {
     figure_type_selector_output <- if (input$figure_type_selector == "bar") {
-      includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_create_figure_barplot.Rmd"))
+      includeMarkdown("markdown/07_analysis/analysis_create_figure_barplot.Rmd")
     } else {
-      includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_create_figure_boxplot.Rmd"))
+      includeMarkdown("markdown/07_analysis/analysis_create_figure_boxplot.Rmd")
     }
     
     output$figure_type_selector_output <- renderUI({
+      req(input$figure_type_selector)
+
       figure_type_selector_output
     })
     
@@ -129,63 +131,14 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
     })
 })
 
-predefined_code_barplot <- "data_summary <- average_trs %>%
-    group_by(Stress_Status) %>%
-    summarise(
-      n = n(),
-      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
-      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
-      sem = sd / sqrt(n)
+
+predefined_code_barplot <- read_file(
+      "markdown/07_analysis/predefined_code_barplot.txt"
     )
-  
-  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c(\"Unstressed\", \"Stressed\"))
-  
-  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
-    geom_bar(stat = \"identity\", color = \"black\", position = position_dodge()) +
-    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
-    geom_jitter(
-      data = average_trs, 
-      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
-      width = 0.2, 
-      size = 2, 
-      color = \"maroon\"
-    ) +
-    scale_fill_manual(values = c(\"Unstressed\" = \"grey49\", \"Stressed\" = \"lightgrey\")) +
-    labs(x = \"Stress Status\",
-         y = \"Mean Blinks/Minute\",
-         title = \"Mean Blinks/Minute by Stress Status\") +
-    theme_minimal() +
-    theme(
-      legend.position = \"none\",
-      plot.background = element_rect(fill = \"white\", color = NA),
-      panel.background = element_rect(fill = \"white\", color = NA)
-    ) + 
-    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)"
 
-predefined_code_boxplot <- "average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c(\"Unstressed\", \"Stressed\"))
-
-boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
-  geom_boxplot(outlier.shape = NA, width = 0.5) + 
-  geom_jitter(
-    data = average_trs, 
-    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
-    width = 0.2, 
-    size = 2, 
-    color = \"maroon\"
-  ) +
-  scale_fill_manual(values = c(\"Unstressed\" = \"grey49\", \"Stressed\" = \"lightgrey\")) +
-  labs(
-    x = \"Stress Status\",
-    y = \"Blinks/Minute\",
-    title = \"Blinks/Minute by Stress Status\"
-  ) +
-  theme_minimal() +
-  theme(
-    legend.position = \"none\",
-    plot.background = element_rect(fill = \"white\", color = NA),
-    panel.background = element_rect(fill = \"white\", color = NA)
-  )
-  "
+predefined_code_boxplot <- read_file(
+      "markdown/07_analysis/predefined_code_box_plot.txt"
+    )
 
   figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_barplot, return_type = "result", session_folder_id, save_header = "Create Bar Plot Code")
   figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_boxplot, return_type = "result", session_folder_id, save_header = "Create Box Plot Code")
@@ -193,12 +146,14 @@ boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Min
 
 #bar plot
   observe({
-    req(!is.null(figure_editor_bar_plot()))
-    if (inherits(barplot, "ggplot")) {
+    req(!is.null(input$figure_type_selector), input$figure_type_selector == "bar")
+    req(!is.null(figure_editor_bar_plot()), !is.null(figure_editor_bar_plot()$result))
+    if (isTRUE(figure_editor_bar_plot()$is_plot)) {
+    #if (inherits(barplot, "ggplot")) {
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
-          includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_figure_editing_colours.Rmd")),
+          includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
           box(title = "Open me for a hint",
               collapsible = TRUE,
               collapsed = TRUE,
@@ -228,12 +183,15 @@ boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Min
   
 #boxplot
   observe({
-    req(!is.null(figure_editor_box_plot()))
-    if (inherits(boxplot, "ggplot")) {
+   req(!is.null(input$figure_type_selector), input$figure_type_selector == "box")
+  req(!is.null(figure_editor_box_plot()), !is.null(figure_editor_box_plot()$result))
+
+  if (isTRUE(figure_editor_box_plot()$is_plot) && inherits(figure_editor_box_plot()$result, "ggplot")) {
+    #if (inherits(boxplot, "ggplot")) {
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
-          includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_figure_editing_colours.Rmd")),
+          includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
           box(title = "Open me for a hint",
               collapsible = TRUE,
               collapsed = TRUE,
@@ -264,77 +222,118 @@ boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Min
   #bar plot save
   observeEvent(input$save_bar_plot, {
     if (!is.null(figure_editor_bar_plot())) {
-      if (inherits(figure_editor_bar_plot(), "ggplot")) {
         key <- "bar_plot"
+
         saved_results$plots[["bar_plot"]] <- NULL
         saved_results$plots[["box_plot"]] <- NULL
-        
-        saved_results$plots[[key]] <- figure_editor_bar_plot()
-        
-      } else {
-        saved_results$plots[[key]] <- recordPlot()
-      }
-      results_fig <- (saved_results$plots[[key]])
-      
-      temp_file <- tempfile(fileext = ".png")
-      writeLines(result_as_char, con = temp_file)
-      
-      path <- drive_get(as_id(session_folder_id))
-      
-      drive_upload(
-        media = temp_file,
-        path = path,
-        name = paste0(key, ".png"),
-        overwrite = TRUE,
-      )
-      
-      unlink(temp_file)
-      
-      showNotification("Plot saved successfully", type = "message")
+
+        if (inherits(figure_editor_bar_plot()$result, "ggplot")) {
+            saved_results$plots[[key]] <- figure_editor_bar_plot()$result
+        } else if (inherits(figure_editor_bar_plot()$result, "recordedplot")) {
+            saved_results$plots[[key]] <- figure_editor_bar_plot()$result
+        } else {
+            showNotification("Invalid plot type. Unable to save.", type = "error")
+            return()
+        }
+
+        temp_file <- tempfile(fileext = ".png")
+        png(temp_file, width = 800, height = 600)
+        tryCatch({
+            if (inherits(saved_results$plots[[key]], "ggplot")) {
+                print(saved_results$plots[[key]])
+            } else if (inherits(saved_results$plots[[key]], "recordedplot")) {
+                replayPlot(saved_results$plots[[key]])
+            }
+        }, finally = {
+            dev.off()
+        })
+
+        path <- drive_get(as_id(session_folder_id))
+        drive_upload(
+            media = temp_file,
+            path = path,
+            name = paste0(key, ".png"),
+            overwrite = TRUE
+        )
+
+        unlink(temp_file)
+        showNotification("Plot saved successfully", type = "message")
     } else {
-      showNotification("No plot to save. Please create a plot first.", type = "error")
+        showNotification("No plot to save. Please create a plot first.", type = "error")
     }
-  })
+})
+
+ 
   
   # box plot save
   observeEvent(input$save_box_plot, {
-    if (!is.null(figure_editor_box_plot())) {
-      key <- "box_plot"
-      saved_results$plots[["bar_plot"]] <- NULL
-      saved_results$plots[["box_plot"]] <- NULL
+  req(figure_editor_box_plot()$result)
+
+  if (inherits(figure_editor_box_plot()$result, "ggplot")) {
+    key <- "box_plot"
+    saved_results$plots[[key]] <- figure_editor_box_plot()$result
+
+    temp_file <- tempfile(fileext = ".png")
+    ggsave(
+      filename = temp_file,
+      plot = saved_results$plots[[key]],
+      device = "png",
+      width = 8, height = 6, dpi = 300
+    )
+
+    path <- drive_get(as_id(session_folder_id))
+    drive_upload(
+      media = temp_file,
+      path = path,
+      name = paste0(key, ".png"),
+      overwrite = TRUE
+    )
+
+    unlink(temp_file)
+    showNotification("Plot saved successfully.", type = "message")
+  } else {
+    showNotification("No valid plot to save.", type = "error")
+  }
+})
+
+  # observeEvent(input$save_box_plot, {
+  #   if (!is.null(figure_editor_box_plot())) {
+  #     key <- "box_plot"
+  #     saved_results$plots[["bar_plot"]] <- NULL
+  #     saved_results$plots[["box_plot"]] <- NULL
       
-      temp_file <- tempfile(fileext = ".png")
+  #     temp_file <- tempfile(fileext = ".png")
       
-      if (inherits(figure_editor_box_plot(), "ggplot")) {
-        saved_results$plots[[key]] <- figure_editor_box_plot()
-        ggsave(
-          filename = temp_file,
-          plot = saved_results$plots[[key]],
-          device = "png",
-          width = 8, height = 6, dpi = 300
-        )
-      } else {
-        saved_results$plots[[key]] <- recordPlot()
-        png(temp_file, width = 800, height = 600)
-        replayPlot(saved_results$plots[[key]])
-        dev.off()
-      }
+  #     if (inherits(figure_editor_box_plot(), "ggplot")) {
+  #       saved_results$plots[[key]] <- figure_editor_box_plot()
+  #       ggsave(
+  #         filename = temp_file,
+  #         plot = saved_results$plots[[key]],
+  #         device = "png",
+  #         width = 8, height = 6, dpi = 300
+  #       )
+  #     } else {
+  #       saved_results$plots[[key]] <- recordPlot()
+  #       png(temp_file, width = 800, height = 600)
+  #       replayPlot(saved_results$plots[[key]])
+  #       dev.off()
+  #     }
       
-      path <- drive_get(as_id(session_folder_id))
-      drive_upload(
-        media = temp_file,
-        path = path,
-        name = paste0(key, ".png"),
-        overwrite = TRUE
-      )
+  #     path <- drive_get(as_id(session_folder_id))
+  #     drive_upload(
+  #       media = temp_file,
+  #       path = path,
+  #       name = paste0(key, ".png"),
+  #       overwrite = TRUE
+  #     )
       
-      unlink(temp_file)
+  #     unlink(temp_file)
       
-      showNotification("Plot saved successfully.", type = "message")
-    } else {
-      showNotification("No plot to save. Please create a plot first.", type = "error")
-    }
-  })
+  #     showNotification("Plot saved successfully.", type = "message")
+  #   } else {
+  #     showNotification("No plot to save. Please create a plot first.", type = "error")
+  #   }
+  # })
   
   
   

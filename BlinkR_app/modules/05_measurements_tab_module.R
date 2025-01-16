@@ -43,9 +43,9 @@ measurements_module_ui <- function(id) {
           width = 12,
           div(
             style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-            actionButton(ns("back_page"),
+            actionButton(ns("back_page_measure"),
                          label = tagList(icon("arrow-left"), "Back")),
-            actionButton(ns("next_page"), 
+            actionButton(ns("next_page_measure"), 
                          label = tagList("Next", icon("arrow-right")))
           )
         ),
@@ -61,10 +61,10 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
     function(input, output, session) {
       ns <- session$ns
       
-      observeEvent(input$back_page, {
+      observeEvent(input$back_page_measure, {
         updateTabItems(parent.session, "sidebar", "Protocol")
       })
-      observeEvent(input$next_page, {
+      observeEvent(input$next_page_measure, {
         updateTabItems(parent.session, "sidebar", "Raw_Data")
       })
       

@@ -37,7 +37,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                         text_area_module_UI(ns("introduction"), "Introduction")
                         ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown","08_writing_up","writing_up_intro.Rmd")),
+                         includeMarkdown("markdown/08_writing_up/writing_up_intro.Rmd"),
                          actionButton(
                            ns("background"),
                            label = tagList(icon("book-open"), "Go to Background"),
@@ -64,14 +64,14 @@ write_up_module_ui <- function(id, session_folder_url) {
 
                   ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown","08_writing_up","writing_up_methods.Rmd")),
+                         includeMarkdown("markdown/08_writing_up/writing_up_methods.Rmd"),
                          actionButton(
                            ns("protocol"),
                            label = tagList(icon("list"), "Go to Protocol"),
                            class = "action-button custom-action",
                          ),
                          actionButton(
-                           ns("analysis_dashboard"),
+                           ns("analysis_dashboard1"),
                            label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
                            class = "action-button custom-action",
                          ),
@@ -90,9 +90,9 @@ write_up_module_ui <- function(id, session_folder_url) {
 
                   ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown", "08_writing_up", "writing_up_results.Rmd")),
+                         includeMarkdown("markdown/08_writing_up/writing_up_results.Rmd"),
                          actionButton(
-                           ns("analysis_dashboard"),
+                           ns("analysis_dashboard2"),
                            label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
                            class = "action-button custom-action",
                          ),
@@ -109,7 +109,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                       text_area_module_UI(ns("discussion"), "Discussion")
                   ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown", "08_writing_up", "writing_up_discussion.Rmd"))
+                         includeMarkdown("markdown/08_writing_up/writing_up_discussion.Rmd")
                          )
                 )
             ),
@@ -124,7 +124,7 @@ write_up_module_ui <- function(id, session_folder_url) {
 
                   ),
                   column(6,
-                         includeMarkdown(here("BlinkR_app", "markdown", "08_writing_up", "writing_up_future_work.Rmd"))
+                         includeMarkdown("markdown/08_writing_up/writing_up_future_work.Rmd")
                          
                          )
                 )
@@ -144,9 +144,9 @@ write_up_module_ui <- function(id, session_folder_url) {
       width = 12,
       div(
         style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page"),
+        actionButton(ns("back_page_write"),
                      label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page"), 
+        actionButton(ns("next_page_write"), 
                      label = tagList("Next", icon("arrow-right")))
       )
         ),
@@ -178,11 +178,11 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
       #   shinyjs::runjs(sprintf("window.open('%s', '_blank');", shQuote(session_folder_id, type = "cmd")))
       # })
 
-    observeEvent(input$back_page, {
+    observeEvent(input$back_page_write, {
       updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
     })
     
-    observeEvent(input$next_page, {
+    observeEvent(input$next_page_write, {
       updateTabItems(parent.session, "sidebar", "Feedback")
     })
       
@@ -201,7 +201,10 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
       observeEvent(input$protocol, {
         updateTabItems(parent.session, "sidebar", "Protocol")
       })
-      observeEvent(input$analysis_dashboard, {
+      observeEvent(input$analysis_dashboard1, {
+        updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
+      })
+      observeEvent(input$analysis_dashboard2, {
         updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
       })
 
