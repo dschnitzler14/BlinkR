@@ -1,0 +1,10 @@
+This type of t-test is appropriate for samples that are entirely independent of one-another.
+
+In order to analyse your data with a two-sample t-test, use this code:
+
+  ```        
+  t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE,         data = average_trs)
+  ```
+
+
+        

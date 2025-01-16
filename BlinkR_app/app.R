@@ -22,6 +22,7 @@ library(promises)
 library(shinyWidgets)
 library(tibble)
 library(stringr)
+library(shinyjs)
 
 
 options(
@@ -47,13 +48,17 @@ group_data_file_id <- drive_get("BlinkR_Measurements")$id
 
 protocol_file_id <- drive_get("BlinkR_protocols")$id
 
-drive_share_anyone(protocol_file_id)
+#drive_share_anyone(protocol_file_id)
 
-drive_share(final_reports_folder_id,
-            role = "writer",
-            type = "anyone")
+#drive_share(final_reports_folder_id,
+            # role = "writer",
+            # type = "anyone")
 
 BlinkR_measurement_sheet <- drive_get("BlinkR_Measurements")$id
+
+#drive_share_anyone(BlinkR_measurement_sheet)
+
+
 #load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
 sapply(module_files, source)
@@ -73,12 +78,12 @@ sidebar <- dashboardSidebar(
 
     conditionalPanel(
       condition = "!output.user_auth",
-      actionButton("login_button", "Log In", icon = icon("sign-in-alt"), class = "btn-primary", style = "margin: 10px; width: 90%")
+      withSpinner(actionButton("login_button", "Log In", icon = icon("sign-in-alt"), class = "btn-primary", style = "margin: 10px; width: 90%"), type = 7, size = 0.5)
     ),
     
     conditionalPanel(
     condition = "output.user_role === 'admin'",
-    menuItem("Admin Area", tabName = "admin_area", icon = icon("lock")),  
+    menuItem("Admin Area", tabName = "admin_area", icon = icon("lock"))  
     ),
     
     conditionalPanel(
@@ -103,6 +108,12 @@ sidebar <- dashboardSidebar(
         menuItem("Feedback", tabName = "Feedback", icon = icon("comment"))
       )
     ),
+    
+    conditionalPanel(
+      condition = "output.user_auth",
+      actionButton("your_drive_button", "View Your Drive", icon = icon("google-drive"), class = "btn-primary", style = "margin: 10px; width: 90%")
+    ),
+    
     conditionalPanel(
       condition = "output.user_auth",
       actionButton("logout_button", "Logout", icon = icon("sign-out-alt"), class = "btn-danger", style = "margin: 10px; width: 90%")
@@ -119,8 +130,7 @@ body <- dashboardBody(
   css_link,
   
   uiOutput("login_ui"),
-  #uiOutput("admin_area_ui"),
-  
+
   tabItems(
     tabItem(
       tabName = "Introduction",
@@ -133,7 +143,6 @@ body <- dashboardBody(
         admin_area_module_ui("admin_module")
       )
     ),
-   
     tabItem(
       tabName = "Background",
       conditionalPanel(
@@ -248,11 +257,15 @@ server <- function(input, output, session) {
   
   db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), Submission_ID = character(), stringsAsFactors = FALSE))
   
-  data_read <- read.csv(here("BlinkR_app", "data", "dummy_blinking_data.csv"))
+  #data_read_local <- read.csv(here("BlinkR_app", "data", "dummy_blinking_data.csv"))
+  
+  combined_class_data_sheet <- drive_get("BlinkR_Combined_Class_Data")$id
+  
+  #combined_class_data_read <- read_sheet(combined_class_data_sheet)
   
   introduction_module_server("introduction", parent.session = session)
-  
-  auth <- custom_login_server("login_module", user_base_google_sheet, user_base, base_group_files_url)
+
+  auth <- custom_login_server("login_module", user_base_google_sheet, base_group_files_url)
 
   output$user_auth <- reactive({ auth()$user_auth })
   output$user_role <- reactive({ auth()$user_info$role })
@@ -271,14 +284,26 @@ server <- function(input, output, session) {
     })
   })
   
-  admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base = user_base, user_base_google_sheet = user_base_google_sheet, final_reports_folder_id = final_reports_folder_id)
+  admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base_google_sheet = user_base_google_sheet, final_reports_folder_id = final_reports_folder_id)
   
   observeEvent(input$admin_area_button, {
     req(auth()$user_info$role == "admin")
     updateTabItems(session, "main_tabs", "admin_area")
   })
   
- 
+  observeEvent(input$your_drive_button, {
+    req(auth()$user_auth)
+    
+    showModal(modalDialog(
+      title = "Your Google Drive",
+      your_google_drive_module_ui("your_drive_module"),
+      
+      easyClose = TRUE,
+      footer = modalButton("Close"),
+      size = "l" 
+    ))
+  })
+  
   
   observeEvent(input$logout_button, {
     auth()$user_auth <- FALSE
@@ -289,23 +314,28 @@ server <- function(input, output, session) {
     # })
   })
   
+  
+  
   observe({
     req(auth()$user_auth)
     output$login_ui <- renderUI(NULL) 
+    session_folder_id = auth()$session_folder_id
     
     background_module_server("background", parent.session = session)
-    hypothesis_module_server("hypothesis", parent.session = session)
+    hypothesis_module_server("hypothesis", parent.session = session, auth = auth)
     protocol_module_server("protocol", auth = auth, parent.session = session, protocol_file_id = protocol_file_id)
-    measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session, BlinkR_measurement_sheet = BlinkR_measurement_sheet)
+    measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session)
     class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session, auth = auth)
-    analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results)
-    analysis_prepare_data_module_server("analysis_prepare_data", results_data = data_read, parent.session = session)
-    analysis_summarise_data_module_server("summarise", results_data = data_read, parent.session = session, saved_results = saved_results, session_folder_id = auth()$session_folder_id)
-    analysis_stats_module_server("stats", results_data = data_read, parent.session = session, saved_results = saved_results, session_folder_id = auth()$session_folder_id)
-    analysis_create_figure_module_server("figure", results_data = data_read, parent.session = session, saved_results = saved_results, session_folder_id = auth()$session_folder_id)
-    write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_url = auth()$session_folder_url)
+    analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results, session_folder_id = session_folder_id)
+    analysis_prepare_data_module_server("analysis_prepare_data", results_data = combined_class_data_read, parent.session = session, session_folder_id = session_folder_id)
+    analysis_summarise_data_module_server("summarise", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    analysis_stats_module_server("stats", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    analysis_create_figure_module_server("figure", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id)
     upload_report_module_server("upload_report", auth = auth, base_group_files_url = base_group_files_url, final_reports_folder_id = final_reports_folder_id)
     feedback_module_server("feedback")
+    your_google_drive_module_server("your_drive_module", session_folder_id = auth()$session_folder_id)
+    
   })
 }
 

@@ -22,11 +22,11 @@ analysis_summarise_data_module_ui <- function(id) {
                     "
                     ```
                     data_summary <- average_trs %>%
-                      group_by(stress_status) %>%
+                      group_by(Stress_Status) %>%
                       summarise(
                         n = n(),
-                        mean = mean(average_blinks_per_minute, na.rm = TRUE),
-                        sd = sd(average_blinks_per_minute, na.rm = TRUE),
+                        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+                        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
                         sem = sd / sqrt(n)
                       )
                     ```
@@ -80,31 +80,45 @@ analysis_summarise_data_module_ui <- function(id) {
 
 analysis_summarise_data_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
-    data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
     
-    data <- reactive({ data_read })
+    average_trs <- reactive({ NULL })
     
-    average_trs_assumptions <- data_read %>%
-      dplyr::group_by(id, stress_status) %>%
+    average_trs_results <- results_data %>%
+      select(-"Group", -"Initials", -"Submission_ID") %>%
+      dplyr::group_by(ID, Stress_Status) %>%
       dplyr::summarise(
-        average_blinks_per_minute = mean(blinks_per_minute, na.rm = TRUE),
+        Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
         .groups = 'drop'
       )
     
-    data_summary <- average_trs %>%
-      group_by(stress_status) %>%
+    average_trs <- reactive({ average_trs_results })
+    
+    # average_trs <- reactive({
+    #   as.data.frame(average_trs_assumptions)
+    # })
+    
+    data_summary <- average_trs_results %>%
+      group_by(Stress_Status) %>%
       summarise(
         n = n(),
-        mean = mean(average_blinks_per_minute, na.rm = TRUE),
-        sd = sd(average_blinks_per_minute, na.rm = TRUE),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
         sem = sd / sqrt(n)
       )
     
-    average_trs <- reactive({
-      as.data.frame(average_trs_assumptions)
-    })
     
-    summarise_result <- editor_module_server("summarise_editor", data = average_trs)
+    predefined_code_summarise <- "data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )"
+    
+    summarise_result <- editor_module_server("summarise_editor", data = average_trs, variable_name = "average_trs", 
+                                             predefined_code = predefined_code_summarise, return_type = "result", 
+                                             session_folder_id, save_header = "Summarise Result Code")
     
     observe({
       req(summarise_result())

@@ -5,6 +5,18 @@ write_up_module_ui <- function(id, session_folder_url) {
       fluidPage(
         fluidRow(
           column(
+            width = 12,
+            div(
+              style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+              actionButton(ns("link_to_drive"),
+                           label = tagList(icon("google-drive"), "View on Google Drive"),
+                           class = "action-button custom-action"
+              )
+            )
+          ),
+        ),
+        fluidRow(
+          column(
             12,
               box(title = "Introduction",
                   collapsible = TRUE,
@@ -12,6 +24,15 @@ write_up_module_ui <- function(id, session_folder_url) {
                   width = 12,
                   solidHeader = TRUE,
                   fluidRow(
+                    fluidRow(
+                      column(
+                        width = 12,
+                        div(
+                          style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+                          #download_handler_ui("download_script", "Download R Script")
+                        )
+                      ),
+                    ),
                   column(6, 
                         text_area_module_UI(ns("introduction"), "Introduction")
                         ),
@@ -29,11 +50,6 @@ write_up_module_ui <- function(id, session_folder_url) {
                            class = "action-button custom-action",
                          ),
                          textOutput(ns("folder_url")),
-                         actionButton(
-                           ns("view_google_folder"),
-                           label = "View on Google Drive"
-                         )
-                        
                   )
                   )
                 ),
@@ -120,7 +136,6 @@ write_up_module_ui <- function(id, session_folder_url) {
         width = 12,
         div(
           style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-          concat_notes_ui("concat_write_up")
         )
       ),
     ),
@@ -130,25 +145,44 @@ write_up_module_ui <- function(id, session_folder_url) {
       div(
         style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
         actionButton(ns("back_page"),
-                     label = tagList(icon("arrow-left"), "Back"))
-          )
+                     label = tagList(icon("arrow-left"), "Back")),
+        actionButton(ns("next_page"), 
+                     label = tagList("Next", icon("arrow-right")))
+      )
         ),
       ),
   )
 )
 }
 
-write_up_module_server <- function(id, parent.session, auth, reload_trigger, session_folder_url){
+write_up_module_server <- function(id, parent.session, auth, reload_trigger, session_folder_id){
   moduleServer(
     id,
     function(input, output, server){
-    
-    
-      observeEvent(input$view_google_folder, {
-        shinyjs::runjs(sprintf("window.open('%s', '_blank');", shQuote(session_folder_url, type = "cmd")))
+      
+      observeEvent(input$link_to_drive, {
+        showModal(modalDialog(
+          title = "Your Google Drive",
+          your_google_drive_module_ui("your_drive_module_write_up"),
+          
+          easyClose = TRUE,
+          footer = modalButton("Close"),
+          size = "l" 
+        ))    
       })
+    
+      your_google_drive_module_server("your_drive_module_write_up", session_folder_id = session_folder_id)
+      
+      
+      # observeEvent(input$view_google_folder, {
+      #   shinyjs::runjs(sprintf("window.open('%s', '_blank');", shQuote(session_folder_id, type = "cmd")))
+      # })
 
     observeEvent(input$back_page, {
+      updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
+    })
+    
+    observeEvent(input$next_page, {
       updateTabItems(parent.session, "sidebar", "Feedback")
     })
       

@@ -1,0 +1,47 @@
+Before you begin your experiment, it's essential to gather background knowledge by reviewing existing literature. This will help you refine your hypothesis, understand what has already been studied, and identify gaps your experiment can address. Here’s how to get started:
+
+### Using Research Databases
+
+One of the most widely used resources for scientific literature is PubMed. It provides access to a vast collection of studies, including those related to stress and physiological responses like blinking rates.
+
+If you’ve never used a research database like PubMed before, don’t worry! It’s straightforward once you get the hang of search terms and strategies.
+
+### Search Strategies
+
+When searching, it’s important to use Boolean operators (AND, OR, NOT) to refine your results. These operators help you combine or exclude specific terms to either broaden or narrow your search. Here’s a quick guide:
+
+- **AND**: Includes results that contain all specified terms (e.g., Stress AND blink* will return studies that mention both stress and blinking).
+- **OR**: Broadens your search to include results that contain any of the terms (e.g., stress OR anxiety).
+- **NOT**: Excludes results containing a specific term (e.g., stress NOT chronic will exclude studies on chronic stress).
+- **Parentheses ()**: Group terms to clarify relationships (e.g., (Stress OR anxiety) AND blink\*).
+- **Asterisk (\*)**: Adds a wildcard to your search to include variations of a term (e.g., blink* will search for blink, blinking, blinks, etc.).
+
+### Getting Started with Search Terms
+
+Use these search terms as a starting point for your research:
+
+- Stress AND blink*
+- Stress AND “eye movements”
+- Stress OR anxiety AND “visual attention”
+
+### Additional Tips for Effective Searches
+
+- **Use quotation marks (" ")**: Surround phrases in quotes to search for exact matches (e.g., "blinking rate").
+- **Filter your results**: Use filters on PubMed to narrow down by publication date, type of study (e.g., clinical trial, meta-analysis), or population (e.g., humans, adults).
+- **Start broad, then narrow**: Begin with general terms, then add more specific ones as you understand the scope of research.
+
+### Why This Step Matters
+
+Reading existing studies will not only inform your hypothesis but also provide insights into methodologies you might adapt for your experiment. For instance, you might discover different ways to measure blinking rate or learn about specific stress-inducing tasks used in past research.
+
+### Reflect on What You’ve Found
+
+As you review studies, keep these questions in mind:
+
+- What is the current understanding of blinking rates under stress?
+- What gaps exist in the literature?
+- How do these findings relate to my hypothesis?
+
+### Taking Notes on Key Findings
+
+As you review the studies you find, keep organised, detailed notes on key findings. These notes will be invaluable when you write up your experiment later, helping you contextualise your results and demonstrate how your study builds on or differs from previous work.

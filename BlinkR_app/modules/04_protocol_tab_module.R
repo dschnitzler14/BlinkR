@@ -9,8 +9,9 @@ protocol_module_ui <- function(id){
                                   tabPanel(
                                     tabName = "Your Protocol",
                                     title = "Your Protocol",
-                                    includeMarkdown(here("BlinkR_app", "markdown","04_protocol/protocol.Rmd")),
-                                    experimental_design_module_ui(ns("experimental_design_protocol"), "Experimental Design", "Think about some general ideas for the experiment here")
+                                    experimental_design_module_ui(ns("experimental_design_protocol"), "Experimental Design", "Think about some general ideas for the experiment here"),
+                                    experimental_design_module_ui(ns("measurement_protocol"), "Measurement", "How will you record measurements?"),
+                                    experimental_design_module_ui(ns("analysis_protocol"), "Analysis", "How will you analyse your results?")
                                     ),
                                   tabPanel(
                                     tabName = "Class Protocol",
@@ -42,7 +43,10 @@ protocol_module_server <- function(id, auth, parent.session, protocol_file_id){
     id,
     function(input, output, server){
       
+   
       experimental_design_module_server("experimental_design_protocol", auth, protocol_file_id, "Experimental Design", "What is your general design?")
+      experimental_design_module_server("measurement_protocol", auth, protocol_file_id, "Measurement", "How will you record measurements?")
+      experimental_design_module_server("analysis_protocol", auth, protocol_file_id, "Experimental Design", "How will you analyse your results?")
       
       view_permission_protocol = auth()$user_info$Protocol
 

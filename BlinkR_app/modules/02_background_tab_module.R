@@ -1,16 +1,23 @@
 background_module_ui <- function(id){
   ns <- NS(id)
-  background_tab <- tabItem(
-    tabName = "Background",
+  background_tab <- tabItem(tabName = "background",
     fluidPage(
       fluidRow(
+        column(12,
+        box(title = "Start Your Background Reading",
+            solidHeader = FALSE,
+            collapsible = TRUE,
+            width = 12,
+            includeMarkdown(here("BlinkR_app", "markdown", "02_background", "background.Rmd"))
+        ),
       tags$iframe(
         src = "https://pubmed.ncbi.nlm.nih.gov/",
         width = "100%",
         height = "800px",
         style = "border:none;"
       )
-    ),
+    )
+  ),
     fluidRow(
       column(
       width = 12,

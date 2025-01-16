@@ -5,6 +5,16 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
       title = paste("Student:", student_name, " | ID: ", student_ID),
       width = 12,
       tabPanel(
+        title = "Consent",
+        fluidRow(
+          column(12,
+          markdown("You must consent in order to submit measurements."),
+          checkboxInput(ns("consent_check"), "I have read and understood the consent agreement.", value = FALSE),
+          actionButton(ns("read_consent"), "Read About Consent")
+          )
+        )
+      ),
+      tabPanel(
         title = "Unstressed Measurements",
         fluidRow(
           column(4,
@@ -35,8 +45,11 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
                  )
           )
         ),
-        actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-submit-button"),
-        
+        #actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-submit-button"),
+        conditionalPanel(
+          condition = paste0("input['", ns("consent_check"), "'] == true"),
+          actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-submit-button")
+        )
       ),
       tabPanel(
         title = "Stressed Measurements",
@@ -69,18 +82,32 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
                  )
           )
         ),
-        actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements", class = "fun-submit-button"),
+        conditionalPanel(
+          condition = paste0("input['", ns("consent_check"), "'] == true"),
+          actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements", class = "fun-submit-button")
+        )
+        #actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements", class = "fun-submit-button"),
       ),
     )
   )
 }
 
-measurement_input_module_server <- function(id, student_name, student_ID, group_name, submission_ID, db_measurement, db_student_table, BlinkR_measurement_sheet) {
+measurement_input_module_server <- function(id, student_name, student_ID, group_name, submission_ID, db_measurement, db_student_table) {
   moduleServer(
     id,
     function(input, output, session) {
       
       ns <- session$ns
+      
+      observeEvent(input$read_consent, {
+        showModal(modalDialog(
+          title = "Consent",
+          includeMarkdown(here("BlinkR_app", "markdown", "05_measurement", "consent.Rmd")),
+          easyClose = TRUE,
+          footer = modalButton("Close"),
+          size = "l" 
+        ))
+      })
       
       state <- reactiveValues(
         unstressed_ids = list(),
@@ -123,14 +150,13 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         new_data <- data.frame(
           Group = as.character(group_name),
           Initials = as.character(student_name),
-          ID = as.integer(student_ID),               
-          Stress_Status = as.character(stress_status), 
-          Technical_Replicate = as.integer(1:length(inputs)), 
-          Blinks_Per_Minute = as.integer(unlist(inputs)),     
-          Submission_ID = as.character(submission_ID),       
+          ID = as.integer(student_ID),
+          Stress_Status = as.character(stress_status),
+          Technical_Replicate = as.integer(1:length(inputs)),
+          Blinks_Per_Minute = as.integer(unlist(inputs)),
+          Submission_ID = as.character(submission_ID),
           stringsAsFactors = FALSE
         )
-        
         
         current_data <- db_measurement()
         
@@ -173,4 +199,3 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
     }
   )
 }
-

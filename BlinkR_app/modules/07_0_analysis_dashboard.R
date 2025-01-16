@@ -52,16 +52,12 @@ analysis_dashboard_module_ui <- function(id) {
             column(6,
             fluidRow(
               column(12,
-                     # uiOutput(ns("saved_q_q_plot_result")),
-                     # uiOutput(ns("saved_box_plot_result")),
-                     # uiOutput(ns("saved_hist_plot_result"))
+                     uiOutput(ns("saved_stats_results")),
+                     uiOutput(ns("saved_q_q_plot_result")),
+                     uiOutput(ns("saved_box_plot_result")),
+                     uiOutput(ns("saved_hist_plot_result"))
               )
             ),
-            fluidRow(
-              column(12,
-                     uiOutput(ns("saved_stats_results"))
-              )
-            )
             )
             ),
           box(
@@ -86,7 +82,11 @@ analysis_dashboard_module_ui <- function(id) {
               width = 12,
               div(
                 style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-                download_handler_ui("download_script", "Download R Script")
+                #download_handler_ui("download_script", "Download R Script")
+                actionButton(ns("link_to_drive"),
+                             label = tagList(icon("google-drive"), "View on Google Drive"),
+                             class = "action-button custom-action"
+                )
               )
             ),
           ),
@@ -108,7 +108,7 @@ analysis_dashboard_module_ui <- function(id) {
 }
 
 
-analysis_dashboard_module_server <- function(id, parent.session, saved_results) {
+analysis_dashboard_module_server <- function(id, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
  
         observeEvent(input$back_page, {
@@ -118,7 +118,7 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results) 
       updateTabItems(parent.session, "sidebar", "Writing-Up")
     })
       
-    source("data/test_analysis.R")
+    #source("data/test_analysis.R")
     
     # Summary Results
     
@@ -131,8 +131,7 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results) 
       req(summary_content_reactive())
       
       tagList(
-        verbatimTextOutput(session$ns("saved_summary_script")),
-        download_handler_ui(session$ns("download_summary"), "Download Summary Results")
+        verbatimTextOutput(session$ns("saved_summary_script"))
       )
     })
     
@@ -140,62 +139,52 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results) 
       summary_content_reactive()
     })
     
-    download_handler_server(
-      "download_summary",
-      content_reactive = summary_content_reactive,
-      filename_generator = function() {
-        paste0("summary-results-", Sys.Date(), ".txt")
-      },
-      type = "text"
-    )
-    
-    
+   
     # Stats Results
     #assumption plots
-    # output$saved_q_q_plot_result <- renderUI({
-    #   req(saved_results$recorded_plots[["q_q_plot"]])
-    #   tagList(
-    #     plotOutput(session$ns("saved_q_q_plot"))
-    #   )
-    # })
-    # 
-    # output$saved_q_q_plot <- renderPlot({
-    #   req(saved_results$recorded_plots[["q_q_plot"]]) 
-    #   replayPlot(saved_results$recorded_plots[["q_q_plot"]])  
-    # })
-    # 
-    # output$saved_hist_plot_result <- renderUI({
-    #   req(saved_results$recorded_plots[["hist_plot"]])
-    #   tagList(
-    #     plotOutput(session$ns("saved_hist_plot"))
-    #   )
-    # })
-    # 
-    # output$saved_hist_plot <- renderPlot({
-    #   req(saved_results$recorded_plots[["hist_plot"]]) 
-    #   replayPlot(saved_results$recorded_plots[["hist_plot"]])  
-    # })
-    # 
-    # output$saved_box_plot_result <- renderUI({
-    #   req(saved_results$recorded_plots[["box_plot"]])
-    #   tagList(
-    #     plotOutput(session$ns("saved_box_plot"))
-    #   )
-    # })
-    # 
-    # output$saved_box_plot <- renderPlot({
-    #   req(saved_results$recorded_plots[["box_plot"]])
-    #   replayPlot(saved_results$recorded_plots[["box_plot"]])  
-    # })
-    # 
-   
+    output$saved_q_q_plot_result <- renderUI({
+      req(saved_results$recorded_plots[["q_q_plot"]])
+      tagList(
+        plotOutput(session$ns("saved_q_q_plot"))
+      )
+    })
+
+    output$saved_q_q_plot <- renderPlot({
+      req(saved_results$recorded_plots[["q_q_plot"]])
+      replayPlot(saved_results$recorded_plots[["q_q_plot"]])
+    })
+
+    output$saved_hist_plot_result <- renderUI({
+      req(saved_results$recorded_plots[["hist_plot"]])
+      tagList(
+        plotOutput(session$ns("saved_hist_plot"))
+      )
+    })
+
+    output$saved_hist_plot <- renderPlot({
+      req(saved_results$recorded_plots[["hist_plot"]])
+      replayPlot(saved_results$recorded_plots[["hist_plot"]])
+    })
+
+    output$saved_box_plot_result <- renderUI({
+      req(saved_results$recorded_plots[["box_plot"]])
+      tagList(
+        plotOutput(session$ns("saved_box_plot"))
+      )
+    })
+
+    output$saved_box_plot <- renderPlot({
+      req(saved_results$recorded_plots[["box_plot"]])
+      replayPlot(saved_results$recorded_plots[["box_plot"]])
+    })
+
     #stats results
     output$saved_stats_results <- renderUI({
       req(!is.null(saved_results$scripts[["stats_two_sample"]]) || !is.null(saved_results$scripts[["stats_paired"]]))
       
       tagList(
-        verbatimTextOutput(session$ns("saved_stats_script")),
-        download_handler_ui(session$ns("download_stats"), "Download Stats Results")
+        verbatimTextOutput(session$ns("saved_stats_script"))
+        #download_handler_ui(session$ns("download_stats"), "Download Stats Results")
       )
     })
     
@@ -217,8 +206,8 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results) 
       req(stats_content_reactive())
       
       tagList(
-        verbatimTextOutput(session$ns("saved_stats_script")),
-        download_handler_ui(session$ns("download_stats"), "Download Stats Results")
+        verbatimTextOutput(session$ns("saved_stats_script"))
+        #download_handler_ui(session$ns("download_stats"), "Download Stats Results")
       )
     })
     
@@ -226,14 +215,14 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results) 
       stats_content_reactive()
     })
     
-    download_handler_server(
-      "download_stats",
-      content_reactive = stats_content_reactive,
-      filename_generator = function() {
-        paste0("stats-results-", Sys.Date(), ".txt")
-      },
-      type = "text"
-    )
+    # download_handler_server(
+    #   "download_stats",
+    #   content_reactive = stats_content_reactive,
+    #   filename_generator = function() {
+    #     paste0("stats-results-", Sys.Date(), ".txt")
+    #   },
+    #   type = "text"
+    # )
     
     
     # Figure
@@ -251,8 +240,8 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results) 
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
-            plotOutput(session$ns(paste0("plot_", key))),
-            download_handler_ui(ns_key, label = "Download This Plot")
+            plotOutput(session$ns(paste0("plot_", key)))
+            #download_handler_ui(ns_key, label = "Download This Plot")
           )
         })
       )
@@ -276,31 +265,48 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results) 
           }
         })
         
-        download_handler_server(
-          key,
-          content_reactive = reactive({
-            req(saved_results$plots[[key]])
-            saved_results$plots[[key]]
-          }),
-          filename_generator = function() {
-            paste0(key, "-plot-", Sys.Date(), ".png")
-          },
-          type = "plot"
-        )
+        # download_handler_server(
+        #   key,
+        #   content_reactive = reactive({
+        #     req(saved_results$plots[[key]])
+        #     saved_results$plots[[key]]
+        #   }),
+        #   filename_generator = function() {
+        #     paste0(key, "-plot-", Sys.Date(), ".png")
+        #   },
+        #   type = "plot"
+        # )
       })
     })
     
     
-    download_handler_server(
-      "download_script",
-      content_reactive = reactive({
-        "data/test_analysis.R"
-      }),
-      filename_generator = function() {
-        "test_analysis.R"
-      },
-      type = "file"
-    )
+    # download_handler_server(
+    #   "download_script",
+    #   content_reactive = reactive({
+    #     "data/test_analysis.R"
+    #   }),
+    #   filename_generator = function() {
+    #     "test_analysis.R"
+    #   },
+    #   type = "file"
+    # )
+    
+    observeEvent(input$link_to_drive, {
+      # drive_group_folder_id <- drive_get(as_id(session_folder_id))
+      # 
+      # drive_group_folder_path <- paste0("https://drive.google.com/drive/u/0/folders/", session_folder_id)
+      # 
+      showModal(modalDialog(
+        title = "Your Google Drive",
+        your_google_drive_module_ui("your_drive_module_dashboard"),
+        
+        easyClose = TRUE,
+        footer = modalButton("Close"),
+        size = "l" 
+      ))    
+      })
+    
+    your_google_drive_module_server("your_drive_module_dashboard", session_folder_id = session_folder_id)
     
     
     observeEvent(input$start, {

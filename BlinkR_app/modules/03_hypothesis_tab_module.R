@@ -47,11 +47,12 @@ hypothesis_module_ui <- function(id) {
 }
 
 # Hypothesis Module Server
-hypothesis_module_server <- function(id, parent.session) {
+hypothesis_module_server <- function(id, parent.session, auth) {
   moduleServer(
     id,
     function(input, output, session) {
-      text_area_module_server("hypothesis")
+      
+      text_area_module_server("hypothesis", auth, "Hypothesis")
       
        observeEvent(input$back_page, {
       updateTabItems(parent.session, "sidebar", "Background")

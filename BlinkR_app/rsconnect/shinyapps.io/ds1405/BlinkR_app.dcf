@@ -1,0 +1,13 @@
+name: BlinkR_app
+title: BlinkR_app
+username: ds1405
+account: ds1405
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13733500
+bundleId: 9656026
+url: https://ds1405.shinyapps.io/BlinkR_app/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data/dummy_blinking_data.csv|data/dummy_data_repeated_measures.csv|data/test_analysis.R

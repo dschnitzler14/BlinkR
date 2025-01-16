@@ -137,7 +137,6 @@ analysis_stats_module_ui <- function(id) {
           uiOutput(ns("t_test_selector_output")),
           uiOutput(ns("t_test_code_feedback"))
         ),
-        #column(8, editor_module_ui(ns("t_test_editor")))
         column(8, uiOutput(ns("editor_ui")),
                uiOutput(ns("save_stats_result"))
                )
@@ -187,14 +186,7 @@ analysis_stats_module_ui <- function(id) {
 
 analysis_stats_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
-    # Load data
-    data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
     
-    data <- reactive({
-      data_read
-    })
-    
-    #Step 3: Check Assumptions
     observeEvent(input$assumptions_checklist, {
       feedback <- NULL
       
@@ -225,27 +217,54 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
       })
     })
     
-    average_trs_assumptions <- data_read %>%
-      dplyr::group_by(id, stress_status) %>%
+    average_trs_assumptions <- reactive({ NULL })
+    
+    average_trs_assumptions_data <- results_data %>%
+      select(-"Group", -"Initials", -"Submission_ID") %>%
+      dplyr::group_by(ID, Stress_Status) %>%
       dplyr::summarise(
-        average_blinks_per_minute = mean(blinks_per_minute, na.rm = TRUE),
+        Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
         .groups = 'drop'
-      )
+      ) %>%
+      mutate(Stress_Status = factor(Stress_Status, levels = c("Unstressed", "Stressed")))
+    
+    average_trs_assumptions <- reactive({ average_trs_assumptions_data })
     
     observeEvent(input$run_qq_Plot, {
+      req(average_trs_assumptions())
+      
       output$q_q_plot <- renderPlot({
-        qqPlot(
-          average_trs_assumptions$average_blinks_per_minute,
+       car::qqPlot(
+          average_trs_assumptions()$Average_Blinks_Per_Minute,
           main = "Q-Q Plot of Average Blinks/Minute",
           xlab = "Theoretical Quantiles",
           ylab = "Sample Quantiles",
           col = "blue",
           pch = 20
         )
+        saved_results$recorded_plots[["q_q_plot"]] <- recordPlot()
+        
+        temp_file <- tempfile(fileext = ".png")
+        png(temp_file, width = 800, height = 600)
+        replayPlot(saved_results$recorded_plots[["q_q_plot"]])
+        dev.off()
+        
+        path <- drive_get(as_id(session_folder_id))
+        
+        drive_upload(
+          media = temp_file,
+          path = path,
+          name = paste0("q_q_plot.png"),
+          overwrite = TRUE
+        )
+        
+        recordPlot(NULL)
+
+        unlink(temp_file)
+        
+        showNotification("Plot saved successfully.", type = "message")
+      
       })
-      
-      saved_results$recorded_plots[["q_q_plot"]] <- recordPlot()
-      
       
       output$qq_explainer_ui <- renderUI({
         box(
@@ -254,37 +273,63 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsible = TRUE,
           collapsed = FALSE,
           width = 12,
-          includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_qq_plot_explainer.Rmd"))
+          includeMarkdown(
+            here("BlinkR_app", "markdown", "07_analysis", "analysis_qq_plot_explainer.Rmd")
+          )
         )
       })
+      
+      
     })
     
-    
-    average_trs_assumptions$stress_status <- factor(average_trs_assumptions$stress_status,levels = c("unstressed", "stressed"))
+    generate_box_plot <- function(data) {
+      boxplot(
+        Average_Blinks_Per_Minute ~ Stress_Status,
+        data = data,
+        xlab = "Stress Status",
+        ylab = "Blinks Per Minute",
+        main = "Variance: Blinks/Minute by Stress Status",
+        col = c("grey49", "lightgrey")
+      )
+      # stripchart(
+      #   Average_Blinks_Per_Minute ~ Stress_Status,
+      #   data = data,
+      #   add = TRUE,
+      #   vertical = TRUE,
+      #   method = "jitter",
+      #   pch = 21,
+      #   bg = "maroon"
+      # )
+    }
     
     observeEvent(input$run_box_Plot, {
+      req(average_trs_assumptions())
+      
       output$box_plot <- renderPlot({
-        boxplot(
-          average_blinks_per_minute ~ stress_status,
-          data = average_trs_assumptions,
-          xlab = "Stress Status",
-          ylab = "Blinks Per Minute",
-          main = "Variance: Blinks/Minute by Stress Status",
-          col = c("grey49", "lightgrey")
+        generate_box_plot(data = average_trs_assumptions())
+        
+        saved_results$recorded_plots[["box_plot"]] <- recordPlot()
+        temp_file <- tempfile(fileext = ".png")
+        png(temp_file, width = 800, height = 600)
+        replayPlot(saved_results$recorded_plots[["box_plot"]])
+        dev.off()
+        
+        path <- drive_get(as_id(session_folder_id))
+        
+        drive_upload(
+          media = temp_file,
+          path = path,
+          name = paste0("box_plot.png"),
+          overwrite = TRUE
         )
-        stripchart(
-          average_blinks_per_minute ~ stress_status,
-          data = average_trs_assumptions,
-          add = TRUE,
-          vertical = TRUE,
-          method = "jitter",
-          pch = 21,
-          bg = "maroon"
-        )
+        
+        recordPlot(NULL)
+        
+        unlink(temp_file)
+        
+        showNotification("Plot saved successfully.", type = "message")
       })
     
-      saved_results$recorded_plots[["box_plot"]] <- recordPlot()
-      
       
       output$boxplot_explainer_ui <- renderUI({
         box(
@@ -293,26 +338,50 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsible = TRUE,
           collapsed = FALSE,
           width = 12,
-          includeMarkdown(here("BlinkR_app", "markdown","07_analysis","analysis_box_plot_explainer.Rmd"))
+          includeMarkdown(
+            here("BlinkR_app", "markdown","07_analysis","analysis_box_plot_explainer.Rmd")
+          )
         )
       })
     })
     
-    
     observeEvent(input$run_hist_Plot, {
+      req(average_trs_assumptions())
+      
       output$hist_plot <- renderPlot({
         hist(
-          average_trs_assumptions$average_blinks_per_minute,
-          main = "Distribution of Blinks/Minute",
-          xlab = "Average Blinks/Minute",
-          ylab = "Frequency",
-          col = "grey49",
-          border = "black"
+          average_trs_assumptions()$Average_Blinks_Per_Minute,
+          main  = "Distribution of Blinks/Minute",
+          xlab  = "Average Blinks/Minute",
+          ylab  = "Frequency",
+          col   = "grey49",
+          border= "black"
+        )
+        saved_results$recorded_plots[["hist_plot"]] <- recordPlot()
+        
+        temp_file <- tempfile(fileext = ".png")
+        png(temp_file, width = 800, height = 600)
+        replayPlot(saved_results$recorded_plots[["hist_plot"]])
+        dev.off()
+        
+        path <- drive_get(as_id(session_folder_id))
+        
+        drive_upload(
+          media = temp_file,
+          path = path,
+          name = paste0("hist_plot.png"),
+          overwrite = TRUE
         )
         
+        recordPlot(NULL)
+        
+        unlink(temp_file)
+        
+        showNotification("Plot saved successfully.", type = "message")
+        
+       
+        
       })
-      
-      saved_results$recorded_plots[["hist_plot"]] <- recordPlot()
       
       output$hist_explainer_ui <- renderUI({
         box(
@@ -321,44 +390,89 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           collapsible = TRUE,
           collapsed = FALSE,
           width = 12,
-          includeMarkdown(here("BlinkR_app", "markdown","07_analysis","analysis_hist_plot_explainer.Rmd"))
+          includeMarkdown(
+            here("BlinkR_app", "markdown","07_analysis","analysis_hist_plot_explainer.Rmd")
+          )
         )
       })
     })
     
+    
     #Step 4: Run T-Test
+  
+    average_trs_t_test <- reactive({
+      NULL
+    })
     
+    average_trs_t_test_data <- results_data %>%
+      select(-"Group", -"Initials", -"Submission_ID") %>%
+      dplyr::group_by(ID, Stress_Status) %>%
+      dplyr::summarise(
+        Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
+        .groups = 'drop'
+      )
     
-    # average_trs <- reactive({
-    #   as.data.frame(average_trs_assumptions)
-    # })
+    average_trs_t_test <- reactive({
+      average_trs_t_test_data
+    })
     
 
-    observeEvent(input$t_test_type_selector, {
-      t_test_selector_output <- if (input$t_test_type_selector == "two"){
-        markdown("This type of t-test is appropriate for samples that are entirely independent of one-another.
-        In order to analyse your data with a two-sample t-test, use this code:
-        ```
-        t_test <- t.test(average_blinks_per_minute ~ stress_status, var.equal = TRUE, data = average_trs)
-        ```
-        ")
-      } else {
-        markdown("This type of t-test is appropriate for samples that are paired, for example repeated measures within the same subject (e.g. before and after).
-        In order to analyse your data with a two-sample t-test, we first need to restructure our table and then run to the t-test. Copy this whole code into the editor:
-        ```
-        average_trs_paired_wide <- average_trs_paired %>%
-          pivot_wider(names_from = stress_status, values_from = average_blinks_per_minute)
-          
-        t_test_paired <- t.test(
-          average_trs_paired_wide$stressed,
-          average_trs_paired_wide$unstressed,
+    
+    
+    perform_two_sample_t_test <- function(data) {
+      if (nrow(data) < 2) return(NULL)
+      
+      out <- tryCatch({
+        t.test(
+          Average_Blinks_Per_Minute ~ Stress_Status,
+          var.equal = TRUE,
+          data = data
+        )
+      }, error = function(e) {
+        NULL
+      })
+      
+      out
+    }
+    
+    perform_paired_t_test <- function(data) {
+      if (nrow(data) < 2) return(NULL)
+      
+      wide_data <- tryCatch({
+        data %>%
+          pivot_wider(
+            names_from = Stress_Status, 
+            values_from = Average_Blinks_Per_Minute
+          )
+      }, error = function(e) {
+        NULL
+      })
+      if (is.null(wide_data)) return(NULL)
+      
+      out <- tryCatch({
+        t.test(
+          wide_data$Stressed,
+          wide_data$Unstressed,
           paired = TRUE
-        )        
-        ```
+        )
+      }, error = function(e) {
+        NULL
+      })
+      
+      out
+    }
+    
+    t_test <- perform_two_sample_t_test(average_trs_t_test_data)
+    paired_test_result <- perform_paired_t_test(average_trs_t_test_data)
+    
+    observeEvent(input$t_test_type_selector, {
+      if (input$t_test_type_selector == "two"){
+        t_test_selector_output <- includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_two_sided_t_test.Rmd"))
         
-        You will notice that this t-test has an extra argument `paired = TRUE`, which indicates that the data is paired.
-        ")
-      } 
+      } else {
+        t_test_selector_output <- includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_paired_t_test.Rmd"))
+        
+        }
       
       output$t_test_selector_output <- renderUI({
         t_test_selector_output
@@ -372,70 +486,69 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
         NULL
       })
       
-      
       output$editor_ui <- renderUI({
         NULL
       })
       
       output$editor_ui <- renderUI({
         if (input$t_test_type_selector == "two") {
-          editor_module_ui(session$ns("t_test_editor_two_sided"))
+          if (!is.null(t_test)) {
+            editor_module_ui(session$ns("t_test_editor_two_sided"))
+          } else {
+            tags$div(
+              "Sorry, you can't perform a two-sided t-test with this data",
+              style = "color: red; font-weight: bold; margin-top: 20px;"
+            )
+          }
         } else {
-          editor_module_ui(session$ns("t_test_editor_paired"))
+          if (!is.null(paired_test_result)) {
+            editor_module_ui(session$ns("t_test_editor_paired"))
+          } else {
+            tags$div(
+              "Sorry, you can't perform a paired t-test with this data",
+              style = "color: red; font-weight: bold; margin-top: 20px;"
+            )
+          }
         }
       })
       
-      })
-    
-    t_test_result <- editor_module_server("t_test_editor_two_sided", data = average_trs)
-    
-    t_test_paired_result <- editor_module_server("t_test_editor_paired", data = average_trs_paired)
+      
+    })
     
     
-    #two-sided
-    t_test <- t.test(average_blinks_per_minute ~ stress_status, var.equal = TRUE, data = average_trs)
-    
-    alternative_hypothesis <- t_test$alternative
-    
-    p_value <- t_test$p.value
-    p_value_round <- round(p_value,2)
-    
-    #paired
-    data_paired <- read.csv(here("BlinkR_app", "data", "dummy_data_repeated_measures.csv"), header = TRUE)
-    
-    average_trs_paired <- data_paired %>%
-      group_by(id, stress_status) %>%
-      summarise(average_blinks_per_minute = mean(blinks_per_minute, na.rm = TRUE), .groups = 'drop')
-    as.data.frame(average_trs)
-    
-    average_trs_paired_wide <- average_trs_paired %>%
-      pivot_wider(names_from = stress_status, values_from = average_blinks_per_minute)
-    
-    t_test_paired <- t.test(
-      average_trs_paired_wide$stressed,
-      average_trs_paired_wide$unstressed,
-      paired = TRUE
+    predefined_code_two_sided_t_test <- read_file(
+      "markdown/07_analysis/predefined_code_two_sided_t_test.txt"
     )
     
-    p_value_paired <- t_test_paired$p.value
-    p_value_round_paired <- round(p_value_paired,2)
+    predefined_code_paired_t_test <- read_file(
+      "markdown/07_analysis/predefined_code_paired_t_test.txt"
+    )
     
-    method_paired <- t_test_paired$method
+    t_test_result <- editor_module_server("t_test_editor_two_sided", data = average_trs_t_test, variable_name = "average_trs", predefined_code = predefined_code_two_sided_t_test, return_type = "result", session_folder_id, save_header = "Two-Sided T-Test Code")
+    t_test_paired_result <- editor_module_server("t_test_editor_paired", data = average_trs_t_test, variable_name = "average_trs", predefined_code = predefined_code_paired_t_test, return_type = "result", session_folder_id, save_header = "Paired T-Test Code")
+   
+    alternative_hypothesis <- reactive({
+      req(t_test_result())
+      t_test_result()$alternative
+    })
     
-    # Observer for t_test_result
+    p_value <- reactive({
+      req(t_test_result())
+      t_test_result()$p.value
+    })
+    
+    p_value_round <- reactive({
+      req(p_value())
+      round(p_value(), 2)
+    })
+    
     observe({
       req(!is.null(t_test_result()))
-      if (alternative_hypothesis == "two.sided" && inherits(t_test_result(), "htest")) {
+      if (alternative_hypothesis() == "two.sided" && inherits(t_test_result(), "htest")) {
         output$t_test_code_feedback <- renderUI({
           tagList(
             div(class = "success-box", "\U1F64C Great Job!"),
-            markdown("
-        Let's first take a look at the code. We are telling R to use the cookbook `stats` (which I loaded in the background for you),
-        and from that book, to use the recipe `t.test`. The ingredients for this recipe are:
-        - **`average_blinks_per_minute ~ stress_status`**: It is best practice to order this command `dependent variable ~ independent variable` or `numerical~categorical`. 
-        - **`var.equal = TRUE`**: This ingredient tells R that the variances are equal, as we confirmed in the previous step
-        - **`data = average_trs`**: Finally, we need to tell R which data to use
-        "),
+            includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_two_sided_code_feedback.Rmd")),
             numericInput(
               inputId = session$ns("two_sided_p_value_quiz"),
               label = "What is the p-value? (2 decimal places)",
@@ -481,23 +594,31 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
       }
     })
     
+    
+    
+    method_paired <- reactive({
+      req(t_test_result())
+      t_test_paired_result()$method
+    })
+    
+    p_value_paired <- reactive({
+      req(t_test_result())
+      t_test_paired_result()$p.value
+    })
+    
+    p_value_round_paired <- reactive({
+      req(p_value_paired())
+      round(p_value_paired(), 2)
+    })
+    
     # Observer for t_test_paired_result
     observe({
       req(!is.null(t_test_paired_result()))
-      if (method_paired == "Paired t-test" && (inherits(t_test_paired_result(), "htest") | is.data.frame(t_test_paired_result()))) {
+      if (method_paired() == "Paired t-test" && (inherits(t_test_paired_result(), "htest") | is.data.frame(t_test_paired_result()))) {
         output$t_test_code_feedback <- renderUI({
           tagList(
             div(class = "success-box", "\U1F64C Great Job!"),
-            markdown("
-        Let's first take a look at the code. 
-        First, we had to restructure our data so we could pass it to the paired t-test function.
-        - **`average_trs_paired_wide <- average_trs_paired %>%`**: again, using a cookbook called `tidyr`, we started our \"sentence\" with the command to create a new dataset called `average_trs_paired_wide` using the dataset `average_trs`
-        - **`pivot_wider(names_from = stress_status, values_from = average_blinks_per_minute)`**: using the `pivot_wider`command, we next told R to move the names from the `stress_status` into their own columns (you can check back to the viewing our data section to see the current data structure) and to populate these new columns with the corresponding values found in `average_blinks_per_minute`.
-        In the next step, we run our paired t-test using the cookbook `stats` (which I loaded in the background for you), and from that book, to use the recipe `t.test`. The ingredients for this recipe are:
-        - **`average_trs_paired_wide$stressed`**: Values from the column `stressed`.
-        - **`average_trs_paired_wide$unstressed`**: Values from the column `unstressed`.
-        - **`paired = TRUE`**: This tells R that the data is paired and to run a paired t-test.
-        "),
+            includeMarkdown(here("BlinkR_app", "markdown", "07_analysis", "analysis_paired_code_feedback.Rmd")),
             numericInput(
               inputId = session$ns("paired_p_value_quiz"),
               label = "What is the p-value? (2 decimal places)",
@@ -550,7 +671,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
       user_answer_p_value <- as.numeric(input$two_sided_p_value_quiz)
       feedback <- 
         if (!is.na(user_answer_p_value) && user_answer_p_value != "" &&
-            user_answer_p_value == p_value_round) {        
+            user_answer_p_value == p_value_round()) {        
           div(class = "success-box", "\U1F64C Correct!")
         } else {
           div(class = "error-box", "\U1F914 Not quite - try again!")
@@ -562,15 +683,15 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     })
     
     observeEvent(input$submit_two_sided_p_value_quiz_significant, {
-      req(p_value)
-      p_value <- as.numeric(p_value)
-      feedback <- if (p_value <= 0.05 && input$submit_two_sided_p_value_quiz_significant == "option1"){
+      req(p_value())
+      p_value <- as.numeric(p_value())
+      feedback <- if (p_value() <= 0.05 && input$submit_two_sided_p_value_quiz_significant == "option1"){
         div(class = "success-box", "\U1F64C Correct!")
-      } else if (p_value >= 0.05 && input$submit_two_sided_p_value_quiz_significant == "option2"){
+      } else if (p_value() >= 0.05 && input$submit_two_sided_p_value_quiz_significant == "option2"){
         div(class = "success-box", "\U1F64C Correct!")
-      } else if (p_value <= 0.05 && input$submit_two_sided_p_value_quiz_significant == "option2"){
+      } else if (p_value() <= 0.05 && input$submit_two_sided_p_value_quiz_significant == "option2"){
         div(class = "error-box", "\U1F914 Not quite - try again!")
-      } else if (p_value >= 0.05 && input$submit_two_sided_p_value_quiz_significant == "option1"){
+      } else if (p_value() >= 0.05 && input$submit_two_sided_p_value_quiz_significant == "option1"){
         div(class = "error-box", "\U1F914 Not quite - try again!")
         
       }
@@ -587,7 +708,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
       user_answer_p_value <- as.numeric(input$paired_p_value_quiz)
       feedback <- 
         if (!is.na(user_answer_p_value) && user_answer_p_value != "" &&
-            user_answer_p_value == p_value_round_paired) {        
+            user_answer_p_value == p_value_round_paired()) {        
           div(class = "success-box", "\U1F64C Correct!")
         } else {
           div(class = "error-box", "\U1F914 Not quite - try again!")
@@ -599,18 +720,19 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     })
     
     observeEvent(input$submit_paired_p_value_quiz_significant, {
-      req(p_value_paired)
-      p_value <- as.numeric(p_value_paired)
-      feedback <- if (p_value_paired <= 0.05 && input$submit_paired_p_value_quiz_significant == "option1"){
+      req(p_value_paired())
+      p_value <- as.numeric(p_value_paired())
+      feedback <- if (p_value_paired() <= 0.05 && input$submit_paired_p_value_quiz_significant == "option1"){
         div(class = "success-box", "\U1F64C Correct!")
-      } else if (p_value_paired >= 0.05 && input$submit_paired_p_value_quiz_significant == "option2"){
+      } else if (p_value_paired() >= 0.05 && input$submit_paired_p_value_quiz_significant == "option2"){
         div(class = "success-box", "\U1F64C Correct!")
-      } else if (p_value_paired <= 0.05 && input$submit_paired_p_value_quiz_significant == "option2"){
+      } else if (p_value_paired() <= 0.05 && input$submit_paired_p_value_quiz_significant == "option2"){
         div(class = "error-box", "\U1F914 Not quite - try again!")
-      } else if (p_value_paired >= 0.05 && input$submit_paired_p_value_quiz_significant == "option1"){
+      } else if (p_value_paired() >= 0.05 && input$submit_paired_p_value_quiz_significant == "option1"){
         div(class = "error-box", "\U1F914 Not quite - try again!")
         
       }
+      
       output$submit_paired_p_value_quiz_significant_feedback <- renderUI({
         feedback
       })

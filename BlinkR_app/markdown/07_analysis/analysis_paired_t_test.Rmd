@@ -1,0 +1,17 @@
+This type of t-test is appropriate for samples that are paired, for example repeated measures within the same subject (e.g. before and after).
+
+In order to analyse your data with a two-sample t-test, we first need to restructure our table and then run to the t-test. Copy this whole code into the editor:
+        
+  ```
+  average_trs_paired_wide <- average_trs %>%
+    pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+            
+  t_test_paired <- t.test(
+    average_trs_paired_wide$Stressed,
+    average_trs_paired_wide$Unstressed,
+    paired = TRUE
+  )
+  ```
+        
+You will notice that this t-test has an extra argument `paired = TRUE`, which indicates that the data is paired.
+      

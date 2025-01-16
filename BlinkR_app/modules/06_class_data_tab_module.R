@@ -48,7 +48,7 @@ class_data_module_server <- function(
       ns <- session$ns
   
       observeEvent(input$back_page, {
-        updateTabItems(parent.session, "sidebar", "Measurement")
+        updateTabItems(parent.session, "sidebar", "Measurements")
       })
       observeEvent(input$next_page, {
         updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")

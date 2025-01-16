@@ -44,8 +44,8 @@ analysis_prepare_data_module_ui <- function(id) {
                   "
                   ```
                   average_trs <- data %>%
-                    group_by(id, stress_status) %>%
-                        summarise(average_blinks_per_minute = mean(blinks_per_minute, na.rm = TRUE), .groups = 'drop')
+                    group_by(ID, Stress_Status) %>%
+                        summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
                   ``` 
                   "
                   )
@@ -105,15 +105,23 @@ analysis_prepare_data_module_ui <- function(id) {
 }
 
 
-analysis_prepare_data_module_server <- function(id, results_data, parent.session) {
+analysis_prepare_data_module_server <- function(id, results_data, parent.session, session_folder_id) {
   moduleServer(id, function(input, output, session) {
     # Load data
-    data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
+    view_data <- reactive({ NULL })
+    
+    view_data_read <- results_data %>%
+      select(-"Group", -"Initials", -"Submission_ID")
+    
 
-    data <- reactive({ data_read })
+    view_data <- reactive({ view_data_read })
     
     # Step 1: View Data
-    view_data_result <- editor_module_server("view_data_editor", data = data)
+    
+    predefined_code_view_data <- "head(data)"
+    
+    view_data_result <- editor_module_server("view_data_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_view_data, return_type = "result", session_folder_id, save_header = "View Data Code")
+    
     
     observe({
       feedback <- if (is.data.frame(view_data_result()) && nrow(view_data_result()) > 0) {
@@ -161,14 +169,18 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
       })
     })
     
+    predefined_code_pre_process_data <- "average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')"
+      
     # Step 2: Pre-Process Data
-    average_trs_result <- editor_module_server("average_trs_editor", data = data)
+    average_trs_result <- editor_module_server("average_trs_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
     
     observe({
       feedback <- if (is.data.frame(average_trs_result()) && nrow(average_trs_result()) > 0) {
         tagList(
           div(class = "success-box", "\U1F64C Good Job!"),
-          includeMarkdown(here("BlinkR_app", "markdown","analysis_home_prepare_data.Rmd"))
+          includeMarkdown(here("BlinkR_app", "markdown", "07_analysis","analysis_home_prepare_data.Rmd"))
         )
       } else if (!is.null(average_trs_result())) {
         div(class = "error-box", "\U1F914 Not quite - try again!")

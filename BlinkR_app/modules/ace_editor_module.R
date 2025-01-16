@@ -17,37 +17,66 @@ editor_module_ui <- function(id) {
       autoScrollEditorIntoView = TRUE
     ),
     actionButton(
+      ns("send_code_to_editor"),
+      label = tagList(icon("arrow-right"), "Send Code to Editor"),
+      class = "custom-run-button"           
+    ),
+    actionButton(
       ns("run_code"),
       label = tagList("\U1F3C3", "Run Code"),
       class = "custom-run-button"           
     ),
     div(
       style = "margin-top: 20px;",
-      uiOutput(ns("dynamic_console"))
+      withSpinner(uiOutput(ns("dynamic_console")), type = 6)
     )
   )
 }
 
-editor_module_server <- function(id, data) {
+editor_module_server <- function(id, data, variable_name = "ace_editor_data", predefined_code = "", return_type = "", session_folder_id, save_header = "Code Header") {
   moduleServer(id, function(input, output, session) {
     values <- reactiveValues(result = NULL, is_plot = FALSE)
+    current_code <- reactiveVal(NULL)
+
+    observeEvent(input$send_code_to_editor, {
+      updateAceEditor(session, "editor", value = predefined_code)
+      
+    })
     
     observeEvent(input$run_code, {
+
       code <- input$editor
-      temp_env <- new.env()
-      
-      assign("data", data(), envir = temp_env)
-      
+      temp_env <- new.env(parent = globalenv())
+
+      assign(variable_name, data(), envir = temp_env)
+
+      forbidden_packages <- c("googledrive", "googlesheets4")
+      lapply(forbidden_packages, function(pkg) {
+        if (pkg %in% loadedNamespaces()) {
+          detach(paste0("package:", pkg), character.only = TRUE, unload = FALSE)
+        }
+      })
+
       eval_result <- tryCatch({
         eval(parse(text = code), envir = temp_env)
       }, error = function(e) {
         paste("Error:", e$message)
       })
-      
+
+      lapply(forbidden_packages, function(pkg) {
+        if (pkg %in% installed.packages()) {
+          library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
+        }
+      })
+
       values$result <- eval_result
       values$is_plot <- inherits(eval_result, "ggplot") || inherits(eval_result, "recordedplot")
+
+      current_code(code)
+
+
     }, ignoreInit = TRUE)
-    
+
     output$dynamic_console <- renderUI({
       if (values$is_plot) {
         plotOutput(session$ns("plot_output"))
@@ -55,7 +84,7 @@ editor_module_server <- function(id, data) {
         verbatimTextOutput(session$ns("text_output"))
       }
     })
-    
+
     output$plot_output <- renderPlot({
       req(values$is_plot, values$result)
       if (inherits(values$result, "ggplot")) {
@@ -64,16 +93,69 @@ editor_module_server <- function(id, data) {
         replayPlot(values$result)
       }
     })
-    
+
     output$text_output <- renderPrint({
       req(!values$is_plot, values$result)
       values$result
     })
+
     
-    return(reactive({
-      req(values$result)
-      values$result
-    }))
+    reactive_result <- reactive({
+      if (return_type == "result") {
+        values$result
+      } else if (return_type == "code_history") {
+        current_code()
+      } else {
+        list(
+          result = values$result,
+          code_history = current_code()
+        )
+      }
+    })
+    
+    observeEvent(current_code(), {
+      req(session_folder_id)
+      req(current_code())
+      
+      code_to_save <- current_code()
+      current_code(NULL)
+      
+      showNotification("Uploading code to Google Drive…", type = "message")
+      
+      future({
+      file_name <- "code_history.txt"
+      header <- paste0("#", save_header)
+      new_content <- c(header, code_to_save, "")
+      
+      existing_files <- drive_ls(as_id(session_folder_id), pattern = file_name)
+      
+      if (nrow(existing_files) > 0) {
+        drive_download(existing_files$id[1], path = file_name, overwrite = TRUE)
+        current_content <- readLines(file_name, warn = FALSE)
+        combined_content <- c(current_content, new_content)
+        writeLines(combined_content, file_name)
+        drive_update(existing_files$id[1], file_name)
+      } else {
+        writeLines(new_content, file_name)
+        drive_upload(file_name, path = as_id(session_folder_id))
+      }
+      
+      TRUE
+      }) %...>% {
+      showNotification("Code saved to Google Drive", type = "message")
+      } %...!% {
+        err <- .
+        showNotification(
+          paste("Error uploading code to Google Drive:", err$message),
+          type = "error"
+        )
+      }
+      #current_code(NULL)
+    }, ignoreInit = TRUE)
+    
+    
+    return(reactive_result)
+    
   })
 }
 

@@ -34,11 +34,13 @@ custom_login_ui <- function(id) {
 }
 
 
-custom_login_server <- function(id, user_base_google_sheet, user_base, base_group_files_url) {
+custom_login_server <- function(id, user_base_google_sheet, base_group_files_url) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
     #credentials <- reactiveValues(user_auth = FALSE, info = NULL, session_folder = NULL)
+    
+    user_base <- read_sheet(user_base_google_sheet)
     
     credentials <- reactiveValues(
   user_auth = FALSE,
@@ -111,6 +113,7 @@ custom_login_server <- function(id, user_base_google_sheet, user_base, base_grou
       } else {
         output$error <- renderText("Invalid Group ID. Please try again.")
       }
+      
     })
 
     observeEvent(input$sign_up_button, {
@@ -132,7 +135,7 @@ custom_login_server <- function(id, user_base_google_sheet, user_base, base_grou
         output$error <- renderText("")
         
         user_data <- data.frame(
-          Group = as.integer(input$sign_up_group_name),
+          Group = as.character(input$sign_up_group_name),
           Role = as.character("group"),
           Name = as.character(input$name),
           Date = credentials$info$date,

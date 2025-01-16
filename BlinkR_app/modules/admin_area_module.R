@@ -57,7 +57,7 @@ admin_area_module_ui <- function(id) {
 }
 
 
-admin_area_module_server <- function(id, group_data_file_id, parent.session, user_base, user_base_google_sheet, final_reports_folder_id) {
+admin_area_module_server <- function(id, group_data_file_id, parent.session, user_base_google_sheet, final_reports_folder_id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -66,12 +66,13 @@ admin_area_module_server <- function(id, group_data_file_id, parent.session, use
       
     })
     
+    user_base <- read_sheet(user_base_google_sheet)
     
     column_data_permissions <- paste("F")
     column_protocol_permissions <- paste("E")
     
-    share_to_groups_admin_module_server("share_protocol", user_base, user_base_google_sheet, column = column_protocol_permissions)
-    share_to_groups_admin_module_server("share_data", user_base, user_base_google_sheet, column = column_data_permissions)
+    share_to_groups_admin_module_server("share_protocol", user_base_google_sheet, column = column_protocol_permissions)
+    share_to_groups_admin_module_server("share_data", user_base_google_sheet, column = column_data_permissions)
     view_groups_admin_module_server("view_groups", user_base_google_sheet)
     combine_sheets_module_server("combine_data", group_data_file_id, parent.session)
     view_report_submission_admin_module_server("report_submission_viewer", final_reports_folder_id)

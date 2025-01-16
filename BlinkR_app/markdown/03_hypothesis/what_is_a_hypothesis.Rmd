@@ -1,3 +1,3 @@
-A hypothesis is an educated guess or prediction about what you expect to find in your experiment. It’s a statement that you can test through the data you collect and analyze. In other words, it’s your initial idea about the relationship between different variables you’ll be exploring.
+A hypothesis is an educated guess or prediction about what you expect to find in your experiment. It’s a statement that you can test through the data you collect and analyse. In other words, it’s your initial idea about the relationship between different variables you’ll be exploring.
 
-In this experiment, your hypothesis will guide your research focus and give you a basis for designing the experiment and analyzing the results. Keep in mind that a good hypothesis doesn’t have to be correct—it just needs to be testable!
+In this experiment, your hypothesis will guide your research focus and give you a basis for designing the experiment and analysing the results. Keep in mind that a good hypothesis doesn’t have to be correct—it just needs to be testable!

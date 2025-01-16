@@ -83,17 +83,21 @@ analysis_create_figure_module_ui <- function(id) {
 
 analysis_create_figure_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
-    # Load data
-  data_read <- read.csv(here("BlinkR_app", "data","dummy_blinking_data.csv"))
-  
-  data <- reactive({ data_read })
 
-  average_trs <- data_read %>%
-    dplyr::group_by(id, stress_status) %>%
+    
+  average_trs <- reactive({ NULL })
+    
+  average_trs_results <- results_data %>%
+    select(-"Group", -"Initials", -"Submission_ID") %>%
+    dplyr::group_by(ID, Stress_Status) %>%
     dplyr::summarise(
-      average_blinks_per_minute = mean(blinks_per_minute, na.rm = TRUE),
+      Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
       .groups = 'drop'
     )
+  
+  average_trs <- reactive({ average_trs_results })
+  
+  
   #Make Figure
 
   observeEvent(input$figure_type_selector, {
@@ -125,9 +129,66 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
     })
 })
 
+predefined_code_barplot <- "data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c(\"Unstressed\", \"Stressed\"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = \"identity\", color = \"black\", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = \"maroon\"
+    ) +
+    scale_fill_manual(values = c(\"Unstressed\" = \"grey49\", \"Stressed\" = \"lightgrey\")) +
+    labs(x = \"Stress Status\",
+         y = \"Mean Blinks/Minute\",
+         title = \"Mean Blinks/Minute by Stress Status\") +
+    theme_minimal() +
+    theme(
+      legend.position = \"none\",
+      plot.background = element_rect(fill = \"white\", color = NA),
+      panel.background = element_rect(fill = \"white\", color = NA)
+    ) + 
+    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)"
 
-  figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", data = average_trs)
-  figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", data = average_trs)
+predefined_code_boxplot <- "average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c(\"Unstressed\", \"Stressed\"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = \"maroon\"
+  ) +
+  scale_fill_manual(values = c(\"Unstressed\" = \"grey49\", \"Stressed\" = \"lightgrey\")) +
+  labs(
+    x = \"Stress Status\",
+    y = \"Blinks/Minute\",
+    title = \"Blinks/Minute by Stress Status\"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = \"none\",
+    plot.background = element_rect(fill = \"white\", color = NA),
+    panel.background = element_rect(fill = \"white\", color = NA)
+  )
+  "
+
+  figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_barplot, return_type = "result", session_folder_id, save_header = "Create Bar Plot Code")
+  figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_boxplot, return_type = "result", session_folder_id, save_header = "Create Box Plot Code")
   
 
 #bar plot

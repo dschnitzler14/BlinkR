@@ -1,26 +1,26 @@
 ```r
 data_summary <- average_trs %>%
-  group_by(stress_status) %>%
+  group_by(Stress_Status) %>%
   summarise(
     n = n(),
-    mean = mean(average_blinks_per_minute, na.rm = TRUE),
-    sd = sd(average_blinks_per_minute, na.rm = TRUE),
+    mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+    sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
     sem = sd / sqrt(n)
   )
 
-data_summary$stress_status <- factor(data_summary$stress_status, levels = c("unstressed", "stressed"))
+data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
 
-barplot <- ggplot(data_summary, aes(x = stress_status, y = mean, fill = stress_status)) +
+barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
   geom_bar(stat = "identity", color = "black", position = position_dodge()) +
   geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
   geom_jitter(
     data = average_trs, 
-    aes(x = stress_status, y = average_blinks_per_minute), 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
     width = 0.2, 
     size = 2, 
     color = "maroon"
   ) +
-  scale_fill_manual(values = c("unstressed" = "grey49", "stressed" = "lightgrey")) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
   labs(x = "Stress Status",
        y = "Mean Blinks/Minute",
        title = "Mean Blinks/Minute by Stress Status") +

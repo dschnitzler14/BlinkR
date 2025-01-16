@@ -1,0 +1,15 @@
+**Purpose of the Activity**
+This activity involves running an experiment and analyzing the collected data using a Shiny app. The purpose is to enhance your understanding of experimental design, data collection, and analysis as part of your classwork.
+
+**Voluntary Participation**
+Participation in this activity is voluntary. You may choose not to participate, and this will not affect your grade or standing in the course.
+
+**Data Collection and Privacy**
+The data collected during this experiment will be anonymised and used solely for educational purposes. No personally identifiable information will be recorded or shared.
+
+**Consent**
+By agreeing, you acknowledge that:
+
+- You understand the purpose of this activity and what is involved.
+- You consent to the collection and use of data for the purposes outlined above.
+- You are free to withdraw from the activity at any time without penalty.

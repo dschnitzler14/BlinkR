@@ -39,14 +39,14 @@ measurements_module_ui <- function(id) {
         )
       ),
       fluidRow(
-      column(
-      width = 12,
-      div(
-        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page"),
-                     label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page"), 
-              label = tagList("Next", icon("arrow-right")))
+        column(
+          width = 12,
+          div(
+            style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+            actionButton(ns("back_page"),
+                         label = tagList(icon("arrow-left"), "Back")),
+            actionButton(ns("next_page"), 
+                         label = tagList("Next", icon("arrow-right")))
           )
         ),
       ),
@@ -55,18 +55,18 @@ measurements_module_ui <- function(id) {
 }
 
 
-measurements_module_server <- function(id, db_student_table, db_measurement, auth, parent.session, BlinkR_measurement_sheet) {
+measurements_module_server <- function(id, db_student_table, db_measurement, auth, parent.session) {
   moduleServer(
     id,
     function(input, output, session) {
       ns <- session$ns
       
-       observeEvent(input$back_page, {
-      updateTabItems(parent.session, "sidebar", "Protocol")
-    })
+      observeEvent(input$back_page, {
+        updateTabItems(parent.session, "sidebar", "Protocol")
+      })
       observeEvent(input$next_page, {
-      updateTabItems(parent.session, "sidebar", "Raw_Data")
-    })
+        updateTabItems(parent.session, "sidebar", "Raw_Data")
+      })
       
       group_info_module_server("add_students", db_student_table = db_student_table, auth = auth)
       
@@ -132,8 +132,7 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
               group_name = group_name,
               submission_ID = submission_id_value,
               db_measurement = db_measurement,
-              db_student_table = db_student_table,
-              BlinkR_measurement_sheet = BlinkR_measurement_sheet
+              db_student_table = db_student_table
             )
             
             observeEvent(input[[paste0("delete_student_", student_ID)]], {
@@ -175,4 +174,3 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
     }
   )
 }
-

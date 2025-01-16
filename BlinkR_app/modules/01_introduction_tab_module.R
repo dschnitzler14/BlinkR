@@ -9,7 +9,8 @@ introduction_module_ui <- function(id){
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown(here("BlinkR_app", "markdown", "01_introduction/introduction_box1.Rmd"))
+                                    includeMarkdown("markdown/01_introduction/introduction_box1.Rmd")
+                                    #includeMarkdown(here("BlinkR_app", "markdown", "01_introduction/introduction_box1.Rmd"))
                                   ),
                                   box(
                                     title = "How to use this app",
@@ -17,7 +18,8 @@ introduction_module_ui <- function(id){
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown(here("BlinkR_app", "markdown","01_introduction/introduction_box2.Rmd"))
+                                    includeMarkdown("BlinkR_app/markdown/01_introduction/introduction_box2.Rmd")
+                                    #includeMarkdown(here("BlinkR_app", "markdown","01_introduction/introduction_box2.Rmd"))
                                   ),
                                   box(
                                     title = "Outline of experiment",
@@ -25,7 +27,8 @@ introduction_module_ui <- function(id){
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown(here("BlinkR_app", "markdown","01_introduction/introduction_box3.Rmd"))
+                                    includeMarkdown("BlinkR_app/markdown/01_introduction/introduction_box3.Rmd")
+                                    #includeMarkdown(here("BlinkR_app", "markdown","01_introduction/introduction_box3.Rmd"))
                                     
                                   )
                                 ),

@@ -64,13 +64,6 @@ t_test_paired <- t.test(
   paired = TRUE
 )
 
-alternative_hypothesis <- t_test$alternative
-p_value <- t_test$p.value
-
-alternative_hypothesis_paired <- t_test_paired$method
-
-
-
 data_summary <- average_trs %>%
   group_by(stress_status) %>%
   summarise(
