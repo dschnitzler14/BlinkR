@@ -325,7 +325,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
         generate_box_plot(data = average_trs_assumptions())
         
         saved_results$recorded_plots[["box_plot"]] <- recordPlot()
-        temp_file <- tempfile(fileext = ".png")
+        temp_file <- tempfile(fileext = "_assumptions.png")
         png(temp_file, width = 800, height = 600)
         replayPlot(saved_results$recorded_plots[["box_plot"]])
         dev.off()
@@ -462,6 +462,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     paired_test_result <- perform_paired_t_test(average_trs_t_test_data)
     
     observeEvent(input$t_test_type_selector, {
+      req(input$t_test_type_selector)
       if (input$t_test_type_selector == "two"){
         t_test_selector_output <- includeMarkdown("markdown/07_analysis/analysis_two_sided_t_test.Rmd")
         
@@ -487,6 +488,7 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
       })
       
       output$editor_ui <- renderUI({
+        
         if (input$t_test_type_selector == "two") {
           if (!is.null(t_test)) {
             editor_module_ui(session$ns("t_test_editor_two_sided"))
@@ -523,163 +525,193 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     t_test_result <- editor_module_server("t_test_editor_two_sided", data = average_trs_t_test, variable_name = "average_trs", predefined_code = predefined_code_two_sided_t_test, return_type = "result", session_folder_id, save_header = "Two-Sided T-Test Code")
     t_test_paired_result <- editor_module_server("t_test_editor_paired", data = average_trs_t_test, variable_name = "average_trs", predefined_code = predefined_code_paired_t_test, return_type = "result", session_folder_id, save_header = "Paired T-Test Code")
    
+  
+    
     alternative_hypothesis <- reactive({
-      req(t_test_result())
-      t_test_result()$alternative
-    })
+  test_res <- t_test_result()
+  if (is.null(test_res) || is.null(test_res$result)) return(NULL)
+  if (!"alternative" %in% names(test_res$result)) return(NULL)
+  test_res$result$alternative
+})
     
     p_value <- reactive({
-      req(t_test_result())
-      t_test_result()$p.value
+      test_res_p <- t_test_result()
+      if (is.null(test_res_p) || is.null(test_res_p$result)) return(NULL)
+      if (!"p.value" %in% names(test_res_p$result)) return(NULL)
+      test_res_p$result$p.value
     })
-    
+  
     p_value_round <- reactive({
-      req(p_value())
-      round(p_value(), 2)
-    })
+    val <- p_value()
+    if (is.null(val)) return(NULL)
+    round(val, 2)
+  })
+
     
     observe({
       req(!is.null(t_test_result()), !is.null(t_test_result()$result))
+      alt <- alternative_hypothesis()
 
-      if (alternative_hypothesis() == "two.sided" && inherits(t_test_result()$result, "htest")) {
-        output$t_test_code_feedback <- renderUI({
-          tagList(
-            div(class = "success-box", "\U1F64C Great Job!"),
-            includeMarkdown("markdown/07_analysis/analysis_two_sided_code_feedback.Rmd"),
-            numericInput(
-              inputId = session$ns("two_sided_p_value_quiz"),
-              label = "What is the p-value? (2 decimal places)",
-              value = 0.00,
-              min = 0,
-              max = 100
-            ),
-            actionButton(
-              session$ns("submit_two_sided_p_value_quiz_answer"),
-              label = "Submit",
-              class = "fun-submit-button"
-            ),
-            uiOutput(session$ns("submit_two_sided_p_value_quiz_feedback")),
-            radioButtons(
-              session$ns("submit_two_sided_p_value_quiz_significant"),
-              label = "Is this is a statistically significant result?", 
-              choices = list(
-                "Yes" = "option1", 
-                "No" = "option2"
-              ),
-              selected = character(0)
-            ),
-            uiOutput(session$ns("submit_two_sided_p_value_quiz_significant_feedback"))
-          )
-        })
-        
-        output$save_stats_result <- renderUI({
-          actionButton(
-            session$ns("save_stats_two_sample_results_button"),
-            label = tagList(icon("save"), "Save Results to Dashboard"),
-            class = "action-button custom-action"
-          )
-        })
-        
+      if (is.null(alt)) {
+         output$t_test_code_feedback <- renderUI({
+        div(class = "error-box", "\U1F914 Not quite - try again!")
+      })
+     
+      } else if (isTRUE(alt == "two.sided")) {
+         output$t_test_code_feedback <- renderUI({
+      tagList(
+        div(class = "success-box", "\U1F64C Great Job!"),
+        includeMarkdown("markdown/07_analysis/analysis_two_sided_code_feedback.Rmd"),
+        numericInput(
+          inputId = session$ns("two_sided_p_value_quiz"),
+          label = "What is the p-value? (2 decimal places)",
+          value = 0.00,
+          min = 0,
+          max = 100
+        ),
+        actionButton(
+          session$ns("submit_two_sided_p_value_quiz_answer"),
+          label = "Submit",
+          class = "fun-submit-button"
+        ),
+        uiOutput(session$ns("submit_two_sided_p_value_quiz_feedback")),
+        radioButtons(
+          session$ns("submit_two_sided_p_value_quiz_significant"),
+          label = "Is this a statistically significant result?",
+          choices = list("Yes" = "option1", "No" = "option2"),
+          selected = character(0)
+        ),
+        uiOutput(session$ns("submit_two_sided_p_value_quiz_significant_feedback"))
+      )
+    })
+    output$save_stats_result <- renderUI({
+      actionButton(
+        session$ns("save_stats_two_sample_results_button"),
+        label = tagList(icon("save"), "Save Results to Dashboard"),
+        class = "action-button custom-action"
+      )
+    })
       } else {
         output$t_test_code_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
-        })
-        
-        output$save_stats_result <- renderUI({
-          NULL
-        })
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+    output$save_stats_result <- renderUI({ NULL })
       }
     })
     
+
+  method_paired <- reactive({
+  req(!is.null(t_test_paired_result()), !is.null(t_test_paired_result()$result))
+
+  test_res_paired <- t_test_paired_result()
+  if (is.null(test_res_paired) || is.null(test_res_paired$result)) return(NULL)
+  if (!"method" %in% names(test_res_paired$result)) return(NULL)
+  test_res_paired$result$method
+})
     
-    
-    method_paired <- reactive({
-      req(t_test_result())
-      t_test_paired_result()$method
+
+      p_value_paired <- reactive({
+      test_res_p_paired <- t_test_paired_result()
+      if (is.null(test_res_p_paired) || is.null(test_res_p_paired$result)) return(NULL)
+      if (!"p.value" %in% names(test_res_p_paired$result)) return(NULL)
+      test_res_p_paired$result$p.value
     })
-    
-    p_value_paired <- reactive({
-      req(t_test_result())
-      t_test_paired_result()$p.value
-    })
-    
+  
     p_value_round_paired <- reactive({
-      req(p_value_paired())
-      round(p_value_paired(), 2)
-    })
+    val <- p_value_paired()
+    if (is.null(val)) return(NULL)
+    round(val, 2)
+  })
     
     # Observer for t_test_paired_result
-    observe({
-      req(!is.null(t_test_paired_result()), !is.null(t_test_paired_result()$result))
+  observe({
+       method <- method_paired()
+  
+  if (is.null(method)) {
+    output$t_test_code_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+    output$save_stats_result <- renderUI({
+      NULL
+    })
+    
+  } else if (isTRUE(method == "Paired t-test")) {
+    output$t_test_code_feedback <- renderUI({
+      tagList(
+        div(class = "success-box", "\U1F64C Great Job!"),
+        includeMarkdown("markdown/07_analysis/analysis_paired_code_feedback.Rmd"),
+        numericInput(
+          inputId = session$ns("paired_p_value_quiz"),
+          label = "What is the p-value? (2 decimal places)",
+          value = 0.00,
+          min = 0,
+          max = 100
+        ),
+        actionButton(
+          session$ns("submit_paired_p_value_quiz_answer"),
+          label = "Submit",
+          class = "fun-submit-button"
+        ),
+        uiOutput(session$ns("submit_paired_p_value_quiz_feedback")),
+        radioButtons(
+          session$ns("submit_paired_p_value_quiz_significant"),
+          label = "Is this is a statistically significant result?", 
+          choices = list(
+            "Yes" = "option1", 
+            "No"  = "option2", 
+            "I don't know" = "option3"
+          ),
+          selected = character(0)
+        ),
+        uiOutput(session$ns("submit_paired_p_value_quiz_significant_feedback"))
+      )
+    })
+    output$save_stats_result <- renderUI({
+      actionButton(
+        session$ns("save_stats_paired_results_button"),
+        label = tagList(icon("save"), "Save Results to Dashboard"),
+        class = "action-button custom-action"
+      )
+    })
+    
+  } else {
+    output$t_test_code_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+    output$save_stats_result <- renderUI({
+      NULL
+    })
+  }
+})
+    
+    
+    #two-sided
+observeEvent(input$submit_two_sided_p_value_quiz_answer, {
+  
+  val <- p_value_round()
+  
+  if (is.null(val)) {
+    output$submit_two_sided_p_value_quiz_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 We do not have a valid p-value yet!")
+    })
+    return()
+  }
 
-      if (method_paired() == "Paired t-test" && (inherits(t_test_paired_result()$result, "htest") | is.data.frame(t_test_paired_result()$result))) {
-        output$t_test_code_feedback <- renderUI({
-          tagList(
-            div(class = "success-box", "\U1F64C Great Job!"),
-            includeMarkdown("markdown/07_analysis/analysis_paired_code_feedback.Rmd"),
-            numericInput(
-              inputId = session$ns("paired_p_value_quiz"),
-              label = "What is the p-value? (2 decimal places)",
-              value = 0.00,
-              min = 0,
-              max = 100
-            ),
-            actionButton(
-              session$ns("submit_paired_p_value_quiz_answer"),
-              label = "Submit",
-              class = "fun-submit-button"
-            ),
-            uiOutput(session$ns("submit_paired_p_value_quiz_feedback")),
-            radioButtons(
-              session$ns("submit_paired_p_value_quiz_significant"),
-              label = "Is this is a statistically significant result?", 
-              choices = list(
-                "Yes" = "option1", 
-                "No" = "option2", 
-                "I don't know" = "option3"
-              ),
-              selected = character(0)
-            ),
-            uiOutput(session$ns("submit_paired_p_value_quiz_significant_feedback"))
-          )
-        })
-        
-        output$save_stats_result <- renderUI({
-          actionButton(
-            session$ns("save_stats_paired_results_button"),
-            label = tagList(icon("save"), "Save Results to Dashboard"),
-            class = "action-button custom-action"
-          )
-        })
-        
-      } else {
-        output$t_test_code_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
-        })
-        
-        output$save_stats_result <- renderUI({
-          NULL
-        })
-      }
-    })
-    
-    
-    #two-sided     
-    observeEvent(input$submit_two_sided_p_value_quiz_answer, {
-      user_answer_p_value <- as.numeric(input$two_sided_p_value_quiz)
-      feedback <- 
-        if (!is.na(user_answer_p_value) && user_answer_p_value != "" &&
-            user_answer_p_value == p_value_round()) {        
-          div(class = "success-box", "\U1F64C Correct!")
-        } else {
-          div(class = "error-box", "\U1F914 Not quite - try again!")
-        }
-      
-      output$submit_two_sided_p_value_quiz_feedback <- renderUI({
-        feedback
-      })
-    })
-    
+  user_answer_p_value <- as.numeric(input$two_sided_p_value_quiz)
+  tolerance <- 0.01
+
+
+  if (is.na(user_answer_p_value)) {
+    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+  } else if (abs(user_answer_p_value - val) < tolerance) {
+    feedback <- div(class = "success-box", "\U1F64C Correct!")
+  } else {
+    feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+  }
+  
+  output$submit_two_sided_p_value_quiz_feedback <- renderUI({ feedback })
+})
+     
     observeEvent(input$submit_two_sided_p_value_quiz_significant, {
       req(p_value())
       p_value <- as.numeric(p_value())
@@ -703,19 +735,45 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     
     #paired
     observeEvent(input$submit_paired_p_value_quiz_answer, {
-      user_answer_p_value <- as.numeric(input$paired_p_value_quiz)
-      feedback <- 
-        if (!is.na(user_answer_p_value) && user_answer_p_value != "" &&
-            user_answer_p_value == p_value_round_paired()) {        
-          div(class = "success-box", "\U1F64C Correct!")
-        } else {
-          div(class = "error-box", "\U1F914 Not quite - try again!")
-        }
-      
-      output$submit_paired_p_value_quiz_feedback <- renderUI({
-        feedback
-      })
+  val <- p_value_round_paired()
+
+  if (is.null(val)) {
+    output$submit_paired_p_value_quiz_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 We do not have a valid paired p-value yet!")
     })
+    return()
+  }
+
+  user_answer_p_value <- as.numeric(input$paired_p_value_quiz)
+
+  tolerance <- 0.01
+
+
+  if (is.na(user_answer_p_value)) {
+    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+  } else if (abs(user_answer_p_value - val) < tolerance) {
+    feedback <- div(class = "success-box", "\U1F64C Correct!")
+  } else {
+    feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+  }
+
+  output$submit_paired_p_value_quiz_feedback <- renderUI({ feedback })
+})
+    # observeEvent(input$submit_paired_p_value_quiz_answer, {
+      
+    #   user_answer_p_value <- as.numeric(input$paired_p_value_quiz)
+    #   feedback <- 
+    #     if (!is.na(user_answer_p_value) && user_answer_p_value != "" &&
+    #         user_answer_p_value == p_value_round_paired()) {        
+    #       div(class = "success-box", "\U1F64C Correct!")
+    #     } else {
+    #       div(class = "error-box", "\U1F914 Not quite - try again!")
+    #     }
+      
+    #   output$submit_paired_p_value_quiz_feedback <- renderUI({
+    #     feedback
+    #   })
+    # })
     
     observeEvent(input$submit_paired_p_value_quiz_significant, {
       req(p_value_paired())

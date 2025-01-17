@@ -93,10 +93,6 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
     
     average_trs <- reactive({ average_trs_results })
     
-    # average_trs <- reactive({
-    #   as.data.frame(average_trs_assumptions)
-    # })
-    
     data_summary <- average_trs_results %>%
       group_by(Stress_Status) %>%
       summarise(
@@ -214,45 +210,126 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
       })
     })
     
-    unstressed_mean <- data_summary$mean[1]
-    unstressed_mean_round_up <- round(unstressed_mean,0)
-    unstressed_mean_round_down <- floor(unstressed_mean)
-    
-    
-    observeEvent(input$submit_mean_unstressed_group_quiz_answer, {
-      user_answer_mean_unstressed <- as.numeric(input$mean_unstressed_group_quiz)
-      feedback <- 
-        if (!is.na(user_answer_mean_unstressed) && user_answer_mean_unstressed != "" &&
-                      user_answer_mean_unstressed >= unstressed_mean_round_down && user_answer_mean_unstressed <= unstressed_mean_round_up) {        div(class = "success-box", "\U1F64C Correct!")
-      } else {
-        div(class = "error-box", "\U1F914 Not quite - try again!")
-      }
-
-      output$mean_unstressed_group_quiz_feedback <- renderUI({
-        feedback
-      })
-    })
-    
-    #for stressed sem
-    stressed_sem <- data_summary$sem[2]
-    stressed_sem_round_up <- round(stressed_sem,2)
-    stressed_sem_round_down <- floor(stressed_sem)
-    
-
-    observeEvent(input$submit_sem_stressed_group_quiz_answer, {
-      user_answer_sem_stressed <- as.numeric(input$sem_stressed_group_quiz)
-      feedback <- 
-        if (!is.na(user_answer_sem_stressed) && user_answer_sem_stressed != "" &&
-            user_answer_sem_stressed >= stressed_sem_round_down && user_answer_sem_stressed <= stressed_sem_round_up) {
-          div(class = "success-box", "\U1F64C Correct!")
-        } else {
-          div(class = "error-box", "\U1F914 Not quite - try again!")
-        }
+    unstressed_mean <- reactive({
+      sr <- summarise_result()
       
-      output$submit_sem_stressed_group_quiz_feedback <- renderUI({
-        feedback
-      })
+      if (is.null(sr) || is.null(sr$result)) {
+        return(NULL)
+      }
+      if (!tibble::is_tibble(sr$result)) {
+        return(NULL)
+      }
+      if (!all(c("Stress_Status", "mean") %in% names(sr$result))) {
+        return(NULL)
+      }
+      
+      df_unstressed <- sr$result %>%
+        dplyr::filter(Stress_Status == "Unstressed")
+      
+      if (nrow(df_unstressed) == 0) {
+        return(NULL)
+      }
+      
+      df_unstressed$mean[1]
     })
+
+
+    unstressed_mean_round <- reactive({
+    unstressed_mean_round_val <- unstressed_mean()
+    if (is.null(unstressed_mean_round_val)) return(NULL)
+    round(unstressed_mean_round_val, 2)
+  })
+
+ 
+    
+observeEvent(input$submit_mean_unstressed_group_quiz_answer, {
+  val <- unstressed_mean_round()
+
+  if (is.null(val)) {
+    output$mean_unstressed_group_quiz_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 We do not have a valid mean yet!")
+    })
+    return()
+  }
+
+  user_answer_mean_unstressed <- as.numeric(input$mean_unstressed_group_quiz)
+
+  if (is.na(user_answer_mean_unstressed)) {
+    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+  } else {
+    tolerance <- 0.5
+    
+    if (abs(user_answer_mean_unstressed - val) <= tolerance) {
+      feedback <- div(class = "success-box", "\U1F64C Correct!")
+    } else {
+      feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+    }
+  }
+
+  output$mean_unstressed_group_quiz_feedback <- renderUI({
+    feedback
+  })
+})
+
+    #for stressed sem
+    stressed_sem <- reactive({
+  sr <- summarise_result()
+
+  if (is.null(sr) || is.null(sr$result)) {
+    return(NULL)
+  }
+  if (!tibble::is_tibble(sr$result)) {
+    return(NULL)
+  }
+  if (!all(c("Stress_Status", "sem") %in% names(sr$result))) {
+    return(NULL)
+  }
+
+  df_stressed <- sr$result %>%
+    dplyr::filter(Stress_Status == "Stressed")
+
+  if (nrow(df_stressed) == 0) {
+    return(NULL)
+  }
+
+  df_stressed$sem[1]
+})
+
+stressed_sem_round <- reactive({
+  val <- stressed_sem()
+  if (is.null(val)) return(NULL)
+  round(val, 2)
+})
+
+observeEvent(input$submit_sem_stressed_group_quiz_answer, {
+  val <- stressed_sem_round()
+  
+  if (is.null(val)) {
+    output$submit_sem_stressed_group_quiz_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 We do not have a valid SEM yet!")
+    })
+    return()
+  }
+  
+  user_answer_sem_stressed <- as.numeric(input$sem_stressed_group_quiz)
+  
+  if (is.na(user_answer_sem_stressed)) {
+    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+  } else {
+    tolerance <- 0.1
+    
+    if (abs(user_answer_sem_stressed - val) <= tolerance) {
+      feedback <- div(class = "success-box", "\U1F64C Correct!")
+    } else {
+      feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+    }
+  }
+  
+  output$submit_sem_stressed_group_quiz_feedback <- renderUI({
+    feedback
+  })
+})
+
     
     #for significance radio quiz
     observeEvent(input$summary_result_interpretation_quiz, {

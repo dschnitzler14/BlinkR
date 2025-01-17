@@ -160,23 +160,22 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
     id,
     function(input, output, server){
       
-      observeEvent(input$link_to_drive, {
-        showModal(modalDialog(
-          title = "Your Google Drive",
-          your_google_drive_module_ui("your_drive_module_write_up"),
-          
-          easyClose = TRUE,
-          footer = modalButton("Close"),
-          size = "l" 
-        ))    
-      })
+
+  observeEvent(input$link_to_drive, {
+    req(session_folder_id)
+        
+    showModal(modalDialog(
+      title = "Your Google Drive",
+      your_google_drive_module_ui(session$ns("your_drive_module_write_up")),
+      
+      easyClose = TRUE,
+      footer = modalButton("Close"),
+      size = "l" 
+    ))
     
-      your_google_drive_module_server("your_drive_module_write_up", session_folder_id = session_folder_id)
-      
-      
-      # observeEvent(input$view_google_folder, {
-      #   shinyjs::runjs(sprintf("window.open('%s', '_blank');", shQuote(session_folder_id, type = "cmd")))
-      # })
+    your_google_drive_module_server("your_drive_module_write_up", session_folder_id)
+
+  })
 
     observeEvent(input$back_page_write, {
       updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")

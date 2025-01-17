@@ -41,7 +41,7 @@ googlesheets4::gs4_auth()
 
 user_base_google_sheet <- drive_get("BlinkR Users")$id
 
-user_base <- read_sheet(user_base_google_sheet)
+#user_base <- read_sheet(user_base_google_sheet)
 
 base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
 
@@ -248,13 +248,15 @@ body <- dashboardBody(
 # ui combined ----
 ui <- dashboardPage(header, sidebar, body)
 
+# server function ----
+server <- function(input, output, session) {
+
+
 saved_results <- reactiveValues(
   plots = list(),
   recorded_plots = list(),
   scripts = list()
 )
-# server function ----
-server <- function(input, output, session) {
   
   reload_trigger <- reactiveValues(reload = 0)
 
@@ -317,11 +319,11 @@ server <- function(input, output, session) {
     # })
   })
   
-  
+
   
   observe({
     req(auth()$user_auth)
-    output$login_ui <- renderUI(NULL) 
+    output$login_ui <- renderUI(NULL)
     session_folder_id = auth()$session_folder_id
     
     background_module_server("background", parent.session = session)

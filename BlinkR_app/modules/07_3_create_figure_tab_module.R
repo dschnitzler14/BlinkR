@@ -296,48 +296,7 @@ predefined_code_boxplot <- read_file(
   }
 })
 
-  # observeEvent(input$save_box_plot, {
-  #   if (!is.null(figure_editor_box_plot())) {
-  #     key <- "box_plot"
-  #     saved_results$plots[["bar_plot"]] <- NULL
-  #     saved_results$plots[["box_plot"]] <- NULL
-      
-  #     temp_file <- tempfile(fileext = ".png")
-      
-  #     if (inherits(figure_editor_box_plot(), "ggplot")) {
-  #       saved_results$plots[[key]] <- figure_editor_box_plot()
-  #       ggsave(
-  #         filename = temp_file,
-  #         plot = saved_results$plots[[key]],
-  #         device = "png",
-  #         width = 8, height = 6, dpi = 300
-  #       )
-  #     } else {
-  #       saved_results$plots[[key]] <- recordPlot()
-  #       png(temp_file, width = 800, height = 600)
-  #       replayPlot(saved_results$plots[[key]])
-  #       dev.off()
-  #     }
-      
-  #     path <- drive_get(as_id(session_folder_id))
-  #     drive_upload(
-  #       media = temp_file,
-  #       path = path,
-  #       name = paste0(key, ".png"),
-  #       overwrite = TRUE
-  #     )
-      
-  #     unlink(temp_file)
-      
-  #     showNotification("Plot saved successfully.", type = "message")
-  #   } else {
-  #     showNotification("No plot to save. Please create a plot first.", type = "error")
-  #   }
-  # })
-  
-  
-  
-  
+
   
   observeEvent(input$summarise, {
     updateTabItems(parent.session, "sidebar", "Summarise_Data")

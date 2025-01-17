@@ -291,24 +291,25 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
     #   type = "file"
     # )
     
-    observeEvent(input$link_to_drive, {
-      # drive_group_folder_id <- drive_get(as_id(session_folder_id))
-      # 
-      # drive_group_folder_path <- paste0("https://drive.google.com/drive/u/0/folders/", session_folder_id)
-      # 
-      showModal(modalDialog(
-        title = "Your Google Drive",
-        markdown("You can see all your results here, as well as your code history"),
-        your_google_drive_module_ui("your_drive_module_dashboard"),
+
+  observeEvent(input$link_to_drive, {
+    req(session_folder_id)
         
-        easyClose = TRUE,
-        footer = modalButton("Close"),
-        size = "l" 
-      ))    
-      })
+    showModal(modalDialog(
+      title = "Your Google Drive",
+      your_google_drive_module_ui(session$ns("your_drive_module_dashboard")),
+      
+      easyClose = TRUE,
+      footer = modalButton("Close"),
+      size = "l" 
+    ))
     
-    your_google_drive_module_server("your_drive_module_dashboard", session_folder_id = session_folder_id)
-    
+    your_google_drive_module_server("your_drive_module_dashboard", session_folder_id)
+
+  })
+  
+   
+
     
     observeEvent(input$start, {
       updateTabItems(parent.session, "sidebar", "Prepare_Data")

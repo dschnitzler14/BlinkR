@@ -39,8 +39,14 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
     ns <- session$ns
     
     #credentials <- reactiveValues(user_auth = FALSE, info = NULL, session_folder = NULL)
-    
-    user_base <- read_sheet(user_base_google_sheet)
+    user_base <- reactiveVal()
+
+    #user_base <- read_sheet(user_base_google_sheet)
+
+      observe({
+      user_base(read_sheet(user_base_google_sheet))
+    })
+
     
     credentials <- reactiveValues(
   user_auth = FALSE,
@@ -53,7 +59,7 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
     observeEvent(input$login_button, {
       req(input$group_name)
       
-      user <- user_base %>% 
+      user <- user_base() %>% 
         filter(Group == input$group_name) %>% 
         slice(1)
       
@@ -119,7 +125,7 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
     observeEvent(input$sign_up_button, {
       req(input$sign_up_group_name, input$name)
       
-      user <- user_base %>%
+      user <- user_base() %>%
         filter(Group == input$sign_up_group_name) %>%
         slice(1)
       
