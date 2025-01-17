@@ -28,5 +28,4 @@ data_summary <- average_trs %>%
       legend.position = "none",
       plot.background = element_rect(fill = "white", color = NA),
       panel.background = element_rect(fill = "white", color = NA)
-    ) + 
-    ylim(0, max(data_summary$mean + data_summary$sem) * 1.2)
+    )
