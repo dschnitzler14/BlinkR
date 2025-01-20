@@ -71,7 +71,7 @@ analysis_create_figure_module_ui <- function(id) {
               style = "display: flex; justify-content: center; align-items: center; height: 100px;",
               actionButton(
                 ns("dashboard"),
-                label = tagList(icon("dashboard"), "Go to Dashboard"),
+                label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
                 class = "action-button custom-dark-yellow"
               )
             )
@@ -305,7 +305,7 @@ predefined_code_boxplot <- read_file(
     updateTabItems(parent.session, "sidebar", "Statistical_Analysis")
   })
   
-# go to dashboard button
+# Go to Analysis Dashboard button
 observeEvent(input$dashboard, {
   updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
 })

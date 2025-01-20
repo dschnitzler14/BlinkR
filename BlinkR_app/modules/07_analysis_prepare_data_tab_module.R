@@ -92,7 +92,7 @@ analysis_prepare_data_module_ui <- function(id) {
               style = "display: flex; justify-content: center; align-items: center; height: 100px;",
               actionButton(
                 ns("dashboard"),
-                label = tagList(icon("dashboard"), "Go to Dashboard"),
+                label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
                 class = "action-button custom-dark-yellow"
               )
             )

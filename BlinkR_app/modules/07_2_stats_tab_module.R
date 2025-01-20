@@ -172,7 +172,7 @@ analysis_stats_module_ui <- function(id) {
         style = "display: flex; justify-content: center; align-items: center; height: 100px;",
         actionButton(
           ns("dashboard"),
-          label = tagList(icon("dashboard"), "Go to Dashboard"),
+          label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
           class = "action-button custom-dark-yellow"
         )
       )
@@ -759,21 +759,7 @@ observeEvent(input$submit_two_sided_p_value_quiz_answer, {
 
   output$submit_paired_p_value_quiz_feedback <- renderUI({ feedback })
 })
-    # observeEvent(input$submit_paired_p_value_quiz_answer, {
-      
-    #   user_answer_p_value <- as.numeric(input$paired_p_value_quiz)
-    #   feedback <- 
-    #     if (!is.na(user_answer_p_value) && user_answer_p_value != "" &&
-    #         user_answer_p_value == p_value_round_paired()) {        
-    #       div(class = "success-box", "\U1F64C Correct!")
-    #     } else {
-    #       div(class = "error-box", "\U1F914 Not quite - try again!")
-    #     }
-      
-    #   output$submit_paired_p_value_quiz_feedback <- renderUI({
-    #     feedback
-    #   })
-    # })
+
     
     observeEvent(input$submit_paired_p_value_quiz_significant, {
       req(p_value_paired())
