@@ -10,8 +10,8 @@ editor_module_ui <- function(id) {
       height = "200px",
       fontSize = 14,
       showLineNumbers = TRUE,
-      autoComplete = "live",
-      autoCompleters = c("rlang", "text", "snippet", "keyword"),
+      autoComplete = "disabled",
+      #autoCompleters = c("rlang", "text", "snippet", "keyword"),
       showPrintMargin = FALSE,
       setBehavioursEnabled = TRUE,
       autoScrollEditorIntoView = TRUE

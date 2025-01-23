@@ -1,0 +1,1 @@
+Have a look at your figure. Check that everything is as it should be - does it have a title, axis labels, etc.?

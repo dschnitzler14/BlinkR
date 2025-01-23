@@ -23,6 +23,7 @@ library(tibble)
 library(stringr)
 library(shinyjs)
 library(jsonlite)
+library(datasets)
 
 
 options(
@@ -31,37 +32,22 @@ options(
 )
 
 #only run once:
-#gs4_auth(email = "m14.blinkr@gmail.com", cache = "BlinkR_app/.secrets")
-#drive_auth(email = "m14.blinkr@gmail.com", cache = "BlinkR_app/.secrets")
+#gs4_auth(email = "appdemo41@gmail.com", cache = "BlinkR_app/.secrets")
+#drive_auth(email = "appdemo41@gmail.com", cache = "BlinkR_app/.secrets")
 
-googledrive::drive_auth()
+
 googlesheets4::gs4_auth()
-
-
-
-user_base_google_sheet <- drive_get("BlinkR Users")$id
-
-#user_base <- read_sheet(user_base_google_sheet)
+googledrive::drive_auth()
 
 base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
 
 final_reports_folder_id <- drive_get("BlinkR_final_reports")$id
 
-#class_data_folder_id <- drive_get("BlinkR_class_data")$id
-
 group_data_file_id <- drive_get("BlinkR_Measurements")$id
 
 protocol_file_id <- drive_get("BlinkR_protocols")$id
 
-#drive_share_anyone(protocol_file_id)
-
-#drive_share(final_reports_folder_id,
-            # role = "writer",
-            # type = "anyone")
-
 BlinkR_measurement_sheet <- drive_get("BlinkR_Measurements")$id
-
-#drive_share_anyone(BlinkR_measurement_sheet)
 
 
 #load all modules in modules/ directory ----
@@ -99,6 +85,7 @@ sidebar <- dashboardSidebar(
         menuItem("Protocol", tabName = "Protocol", icon = icon("list")),
         menuItem("Measurements", tabName = "Measurements", icon = icon("ruler")),
         menuItem("Raw Data", tabName = "Raw_Data", icon = icon("database")),
+        menuItem("Playground", tabName = "Playground", icon = icon("hand")),
         menuItem("Analysis", tabName = "Analysis", icon = icon("play"),
                  menuItem("Analysis Dashboard", tabName = "Analysis_Dashboard", icon = icon("dashboard")),
                  menuItem("Prepare Data", tabName = "Prepare_Data", icon = icon("magnifying-glass")),
@@ -184,6 +171,13 @@ body <- dashboardBody(
       )
     ),
     tabItem(
+      tabName = "Playground",
+      conditionalPanel(
+        condition = "output.user_auth",
+        playground_module_ui("playground")
+      )
+  ),
+    tabItem(
       tabName = "Analysis_Dashboard",
       conditionalPanel(
         condition = "output.user_auth", 
@@ -252,6 +246,12 @@ ui <- dashboardPage(header, sidebar, body)
 server <- function(input, output, session) {
 
 
+user_base_google_sheet <- drive_get("BlinkR Users")$id
+
+ user_base_read <- reactive({
+    read_sheet(user_base_google_sheet)
+  })
+  
 saved_results <- reactiveValues(
   plots = list(),
   recorded_plots = list(),
@@ -270,7 +270,7 @@ saved_results <- reactiveValues(
   
   introduction_module_server("introduction", parent.session = session)
 
-  auth <- custom_login_server("login_module", user_base_google_sheet, base_group_files_url)
+  auth <- custom_login_server("login_module", user_base_read, base_group_files_url)
 
   output$user_auth <- reactive({ auth()$user_auth })
   output$user_role <- reactive({ auth()$user_info$role })
@@ -331,6 +331,7 @@ saved_results <- reactiveValues(
     protocol_module_server("protocol", auth = auth, parent.session = session, protocol_file_id = protocol_file_id)
     measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session)
     class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session, auth = auth)
+    playground_module_server("playground", session_folder_id = session_folder_id)
     analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results, session_folder_id = session_folder_id)
     analysis_prepare_data_module_server("analysis_prepare_data", results_data = combined_class_data_read, parent.session = session, session_folder_id = session_folder_id)
     analysis_summarise_data_module_server("summarise", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)

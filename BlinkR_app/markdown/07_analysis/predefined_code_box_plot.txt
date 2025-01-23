@@ -11,8 +11,8 @@ boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Min
   ) +
   scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
   labs(
-    x = "Stress Status",
-    y = "Blinks/Minute",
+    x = "X AXIS",
+    y = "Y AXIS",
     title = "Blinks/Minute by Stress Status"
   ) +
   theme_minimal() +

@@ -34,7 +34,7 @@ custom_login_ui <- function(id) {
 }
 
 
-custom_login_server <- function(id, user_base_google_sheet, base_group_files_url) {
+custom_login_server <- function(id, user_base_read, base_group_files_url) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -43,9 +43,15 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
 
     #user_base <- read_sheet(user_base_google_sheet)
 
+    #   observe({
+    #   user_base(read_sheet(user_base_google_sheet))
+    # })
+
       observe({
-      user_base(read_sheet(user_base_google_sheet))
+      user_base(user_base_read())
     })
+
+
 
     
     credentials <- reactiveValues(
@@ -58,6 +64,8 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
     
     observeEvent(input$login_button, {
       req(input$group_name)
+      shinyjs::disable("login_button")
+
       
       user <- user_base() %>% 
         filter(Group == input$group_name) %>% 
@@ -123,8 +131,11 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
     })
 
     observeEvent(input$sign_up_button, {
-      req(input$sign_up_group_name, input$name)
       
+      req(input$sign_up_group_name, input$name)
+
+      shinyjs::disable("sign_up_button")
+
       user <- user_base() %>%
         filter(Group == input$sign_up_group_name) %>%
         slice(1)
@@ -152,9 +163,10 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
           stringsAsFactors = FALSE
         )
         
+        
         tryCatch(
           {
-            sheet_append(user_base_google_sheet, user_data)
+            sheet_append(user_base(), user_data)
             output$sign_up_status <- renderUI("Group successfully signed up!")
           },
           error = function(e) {
@@ -196,6 +208,7 @@ custom_login_server <- function(id, user_base_google_sheet, base_group_files_url
       } else {
         output$sign_uperror <- renderUI("Group already exists.")
       }
+
     })
     
     

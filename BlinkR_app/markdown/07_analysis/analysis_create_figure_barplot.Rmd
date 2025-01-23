@@ -21,8 +21,8 @@ barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_S
     color = "maroon"
   ) +
   scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
-  labs(x = "Stress Status",
-       y = "Mean Blinks/Minute",
+  labs(x = "X AXIS",
+       y = "Y AXIS",
        title = "Mean Blinks/Minute by Stress Status") +
   theme_minimal() +
   theme(

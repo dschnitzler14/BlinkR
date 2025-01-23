@@ -191,6 +191,7 @@ predefined_code_boxplot <- read_file(
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
+          includeMarkdown("markdown/07_analysis/change_axis.Rmd"),
           includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
           box(title = "Open me for a hint",
               collapsible = TRUE,

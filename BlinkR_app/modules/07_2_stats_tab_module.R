@@ -38,54 +38,54 @@ analysis_stats_module_ui <- function(id) {
           ),
           uiOutput(ns("assumptions_feedback"))
         ),
-        column(
-          3,
-          actionButton(ns("run_qq_Plot"), "Generate Q-Q Plot"),
-          plotOutput(ns("q_q_plot")),
-          uiOutput(ns("qq_explainer_ui")),
-          box(
-            title = "View code used to generate plot",
-            collapsible = TRUE,
-            collapsed = TRUE,
-            width = 12,
-            status = "info",
-            wellPanel(
-              markdown(
-                "
-                 ```
-                 variance_qq_plot <- qqPlot(average_trs$average_blinks_per_minute,
-                 main = \"Q-Q Plot of Average Blinks/Minute\",
-                 xlab = \"Theoretical Quantiles\",
-                 ylab = \"Sample Quantiles\",
-                 col = \"blue\",
-                 pch = 20)
-                 ```
-                "
-              )
-            )
-          ),
-          align = "center",
-        ),
-        column(
-          3,
-          actionButton(ns("run_box_Plot"), "Generate Boxplot"),
-          plotOutput(ns("box_plot")),
-          uiOutput(ns("boxplot_explainer_ui")),
+        # column(
+        #   3,
+        #   actionButton(ns("run_qq_Plot"), "Generate Q-Q Plot"),
+        #   plotOutput(ns("q_q_plot")),
+        #   uiOutput(ns("qq_explainer_ui")),
+        #   box(
+        #     title = "View code used to generate plot",
+        #     collapsible = TRUE,
+        #     collapsed = TRUE,
+        #     width = 12,
+        #     status = "info",
+        #     wellPanel(
+        #       markdown(
+        #         "
+        #          ```
+        #          variance_qq_plot <- qqPlot(average_trs$average_blinks_per_minute,
+        #          main = \"Q-Q Plot of Average Blinks/Minute\",
+        #          xlab = \"Theoretical Quantiles\",
+        #          ylab = \"Sample Quantiles\",
+        #          col = \"blue\",
+        #          pch = 20)
+        #          ```
+        #         "
+        #       )
+        #     )
+        #   ),
+        #   align = "center",
+        # ),
+        # column(
+        #   4,
+        #   actionButton(ns("run_bar_Plot"), "Generate Bar Chart"),
+        #   plotOutput(ns("bar_plot")),
+        #   uiOutput(ns("barplot_explainer_ui")),
           
-          box(
-            title = "View code used to generate plot",
-            collapsible = TRUE,
-            collapsed = TRUE,
-            width = 12,
-            status = "info",
-            wellPanel(
-              includeMarkdown("markdown/07_analysis/analysis_boxplot_code.Rmd")
-            )
-          ),
-          align = "center"
-        ),
+        #   box(
+        #     title = "View code used to generate plot",
+        #     collapsible = TRUE,
+        #     collapsed = TRUE,
+        #     width = 12,
+        #     status = "info",
+        #     wellPanel(
+        #       includeMarkdown("markdown/07_analysis/analysis_barplot_code.Rmd")
+        #     )
+        #   ),
+        #   align = "center"
+        # ),
         column(
-          3,
+          9,
           actionButton(ns("run_hist_Plot"), "Generate Histogram"),
           plotOutput(ns("hist_plot")),
           uiOutput(ns("hist_explainer_ui")),
@@ -247,119 +247,118 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     
     average_trs_assumptions <- reactive({ average_trs_assumptions_data })
     
-    observeEvent(input$run_qq_Plot, {
-      req(average_trs_assumptions())
+    # observeEvent(input$run_qq_Plot, {
+    #   req(average_trs_assumptions())
       
-      output$q_q_plot <- renderPlot({
-       car::qqPlot(
-          average_trs_assumptions()$Average_Blinks_Per_Minute,
-          main = "Q-Q Plot of Average Blinks/Minute",
-          xlab = "Theoretical Quantiles",
-          ylab = "Sample Quantiles",
-          col = "blue",
-          pch = 20
-        )
-        saved_results$recorded_plots[["q_q_plot"]] <- recordPlot()
+    #   output$q_q_plot <- renderPlot({
+    #    car::qqPlot(
+    #       average_trs_assumptions()$Average_Blinks_Per_Minute,
+    #       main = "Q-Q Plot of Average Blinks/Minute",
+    #       xlab = "Theoretical Quantiles",
+    #       ylab = "Sample Quantiles",
+    #       col = "blue",
+    #       pch = 20
+    #     )
+    #     saved_results$recorded_plots[["q_q_plot"]] <- recordPlot()
         
-        temp_file <- tempfile(fileext = ".png")
-        png(temp_file, width = 800, height = 600)
-        replayPlot(saved_results$recorded_plots[["q_q_plot"]])
-        dev.off()
+    #     temp_file <- tempfile(fileext = ".png")
+    #     png(temp_file, width = 800, height = 600)
+    #     replayPlot(saved_results$recorded_plots[["q_q_plot"]])
+    #     dev.off()
         
-        path <- drive_get(as_id(session_folder_id))
+    #     path <- drive_get(as_id(session_folder_id))
         
-        drive_upload(
-          media = temp_file,
-          path = path,
-          name = paste0("q_q_plot.png"),
-          overwrite = TRUE
-        )
+    #     drive_upload(
+    #       media = temp_file,
+    #       path = path,
+    #       name = paste0("q_q_plot.png"),
+    #       overwrite = TRUE
+    #     )
         
-        recordPlot(NULL)
+    #     recordPlot(NULL)
 
-        unlink(temp_file)
+    #     unlink(temp_file)
         
-        showNotification("Plot saved successfully.", type = "message")
+    #     showNotification("Plot saved successfully.", type = "message")
       
-      })
+    #   })
       
-      output$qq_explainer_ui <- renderUI({
-        box(
-          id = session$ns("qq_explainer_box"),
-          title = "Q-Q Plot",
-          collapsible = TRUE,
-          collapsed = FALSE,
-          width = 12,
-          includeMarkdown(
-            "markdown/07_analysis/analysis_qq_plot_explainer.Rmd"
-          )
-        )
-      })
-    })
+    #   output$qq_explainer_ui <- renderUI({
+    #     box(
+    #       id = session$ns("qq_explainer_box"),
+    #       title = "Q-Q Plot",
+    #       collapsible = TRUE,
+    #       collapsed = FALSE,
+    #       width = 12,
+    #       includeMarkdown(
+    #         "markdown/07_analysis/analysis_qq_plot_explainer.Rmd"
+    #       )
+    #     )
+    #   })
+    # })
     
     
-    generate_box_plot <- function(data) {
-      boxplot(
-        Average_Blinks_Per_Minute ~ Stress_Status,
-        data = data,
-        xlab = "Stress Status",
-        ylab = "Blinks Per Minute",
-        main = "Variance: Blinks/Minute by Stress Status",
-        col = c("grey49", "lightgrey")
-      )
-      # stripchart(
-      #   Average_Blinks_Per_Minute ~ Stress_Status,
-      #   data = data,
-      #   add = TRUE,
-      #   vertical = TRUE,
-      #   method = "jitter",
-      #   pch = 21,
-      #   bg = "maroon"
-      # )
-    }
+    # generate_box_plot <- function(data) {
+    #   boxplot(
+    #     Average_Blinks_Per_Minute ~ Stress_Status,
+    #     data = data,
+    #     xlab = "Stress Status",
+    #     ylab = "Blinks Per Minute",
+    #     main = "Variance: Blinks/Minute by Stress Status",
+    #     col = c("grey49", "lightgrey")
+    #   )
+    #   # stripchart(
+    #   #   Average_Blinks_Per_Minute ~ Stress_Status,
+    #   #   data = data,
+    #   #   add = TRUE,
+    #   #   vertical = TRUE,
+    #   #   method = "jitter",
+    #   #   pch = 21,
+    #   #   bg = "maroon"
+    #   # )
+    # }
     
-    observeEvent(input$run_box_Plot, {
-      req(average_trs_assumptions())
+    # observeEvent(input$run_bar_Plot, {
+    #   req(average_trs_assumptions())
       
-      output$box_plot <- renderPlot({
-        generate_box_plot(data = average_trs_assumptions())
+    #   output$bar_plot <- renderPlot({
+       
+    #     saved_results$recorded_plots[["bar_plot"]] <- recordPlot()
+    #     temp_file <- tempfile(fileext = "_assumptions.png")
+    #     png(temp_file, width = 800, height = 600)
+    #     replayPlot(saved_results$recorded_plots[["bar_plot"]])
+    #     dev.off()
         
-        saved_results$recorded_plots[["box_plot"]] <- recordPlot()
-        temp_file <- tempfile(fileext = "_assumptions.png")
-        png(temp_file, width = 800, height = 600)
-        replayPlot(saved_results$recorded_plots[["box_plot"]])
-        dev.off()
+    #     path <- drive_get(as_id(session_folder_id))
         
-        path <- drive_get(as_id(session_folder_id))
+    #     drive_upload(
+    #       media = temp_file,
+    #       path = path,
+    #       name = paste0("bar_plot.png"),
+    #       overwrite = TRUE
+    #     )
         
-        drive_upload(
-          media = temp_file,
-          path = path,
-          name = paste0("box_plot.png"),
-          overwrite = TRUE
-        )
+    #     recordPlot(NULL)
         
-        recordPlot(NULL)
+    #     unlink(temp_file)
         
-        unlink(temp_file)
-        
-        showNotification("Plot saved successfully.", type = "message")
-      })
+    #     showNotification("Plot saved successfully.", type = "message")
+    #   })
     
       
-      output$boxplot_explainer_ui <- renderUI({
-        box(
-          id = session$ns("boxplot_explainer_box"),
-          title = "Box Plot",
-          collapsible = TRUE,
-          collapsed = FALSE,
-          width = 12,
-          includeMarkdown(
-            "markdown/07_analysis/analysis_box_plot_explainer.Rmd"
-          )
-        )
-      })
-    })
+    #   output$barplot_explainer_ui <- renderUI({
+    #     box(
+    #       id = session$ns("barplot_explainer_box"),
+    #       title = "Box Plot",
+    #       collapsible = TRUE,
+    #       collapsed = FALSE,
+    #       width = 12,
+    #       includeMarkdown(
+    #         "markdown/07_analysis/analysis_bar_plot_explainer.Rmd"
+    #       )
+    #     )
+    #   })
+    # })
     
     observeEvent(input$run_hist_Plot, {
       req(average_trs_assumptions())
