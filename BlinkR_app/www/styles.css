@@ -453,3 +453,117 @@ a:hover {
 .custom-login-button:hover {
   background-color: #0056b3;
 }
+
+/***********************************************/
+/* RESPONSIVE FIXES FOR SMALL SCREENS          */
+/***********************************************/
+
+/* For tablets and below (~768px width) */
+@media (max-width: 1024px) {
+
+  /* 1) Remove *any* scaling/transform on hover that might push content wider */
+  .action-button.custom-action:hover,
+  .action-button.custom-action.clicked,
+  .custom-box:hover,
+  .custom-dark-yellow:hover,
+  .fun-submit-button:hover,
+  .fun-delete-button:hover,
+  .fun-download-button:hover,
+  .skin-blue .sidebar-menu>li:hover>a,
+  .skin-blue .main-header .navbar .sidebar-toggle:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    /* You can keep a smaller shadow if you’d like, but large shadows can cause overflow issues on some devices. */
+  }
+
+  /* 2) Make large buttons smaller */
+     .action-button.custom-action,
+     .fun-submit-button,
+     .fun-delete-button,
+     .fun-download-button,
+     .custom-dark-yellow,
+     .custom-run-button {
+       display: block !important;
+       /* Stack each button on its own row */
+       width: 100% !important;
+       /* Full width on mobile */
+       margin-bottom: 10px !important;
+       /* Spacing between stacked buttons */
+       font-size: 14px !important;
+       /* Smaller text */
+       padding: 8px 10px !important;
+       /* Less padding so text fits nicely */
+       white-space: normal !important;
+       /* Allow text to wrap onto multiple lines */
+       text-align: center;
+       /* Center the text/emoji for aesthetics */
+     }
+
+  /* 3) Tighten margins/padding on box elements so they fit screens better */
+  .custom-box,
+  .success-box,
+  .error-box,
+  .yellow-box {
+    margin: 10px 5px !important;
+    padding: 15px 10px !important;
+  }
+
+     .btn-group,
+     .row-of-buttons,
+     .shiny-html-output {
+       display: flex !important;
+       flex-wrap: wrap !important;
+       /* or flex-direction: column; if you prefer */
+       justify-content: center;
+       /* center them if you like */
+     }
+
+  /* 4) Scale down headings so they don’t push layout */
+  .custom-box .box-title {
+    font-size: 1.2rem !important;
+  }
+
+  .markdown-body h1 {
+    font-size: 1.4em !important;
+  }
+
+  .markdown-body h2 {
+    font-size: 1.3em !important;
+  }
+
+  .markdown-body h3 {
+    font-size: 1.2em !important;
+  }
+}
+
+/* For phones and very narrow screens (~480px) */
+@media (max-width: 480px) {
+
+  /* Further reduce transforms, fonts, padding */
+  .action-button.custom-action,
+  .custom-dark-yellow,
+  .fun-submit-button,
+  .fun-delete-button,
+  .fun-download-button,
+  .custom-run-button {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+    border-radius: 15px !important;
+  }
+
+  .custom-box .box-title {
+    font-size: 1.1rem !important;
+  }
+
+  .markdown-body h1 {
+    font-size: 1.2em !important;
+  }
+
+  .markdown-body h2 {
+    font-size: 1.1em !important;
+  }
+
+  .markdown-body h3 {
+    font-size: 1.0em !important;
+  }
+}

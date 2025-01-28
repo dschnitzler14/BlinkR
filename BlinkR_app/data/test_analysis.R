@@ -135,3 +135,26 @@ boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Min
 
 
 
+
+
+### manual
+
+stressed_data <- average_trs %>%
+  filter(Stress_Status == "stressed")
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "unstressed")
+
+# mean
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#sd
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#sem
+stressed_n <- nrow(stressed_data)
+unstressed_n <- nrow(unstressed_data)
+
+stressed_sem <- stressed_sd / sqrt(stressed_n)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)

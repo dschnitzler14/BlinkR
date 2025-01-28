@@ -130,10 +130,21 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
             div(class = "success-box", "\U1F64C That's our data! Looks good!"),
             markdown("
         Well done! You just ran your first bit of code!
-        The `head()` command returns the first part of our table, so we can confirm that our data has loaded.
+        The `head()` command returns the first 6 lines of our table, so we can confirm that our data has loaded.
         Take a look at the column names - they will be useful for the next step!
         **The next step is turning this data into something that we can use for analysis.**
         "),
+            textInput(
+              session$ns("interpret_head_results"),
+              label = "How many subjects (students) can you see in this slice of data?",
+              placeholder = "Type your answer here",
+              ),
+              actionButton(
+                session$ns("interpret_head_results_submit"),
+                label = "Submit",
+                class = "action-button custom-action"
+              ),
+              uiOutput(session$ns("feedback_head")),
             radioButtons(
               session$ns("analysis_step2_quiz"), 
               label = "What do you think we need to do to our data?", 
@@ -156,6 +167,19 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
         feedback
     })
     
+    })
+
+
+  observeEvent(input$interpret_head_results_submit, {
+      feedback_head <- if (input$interpret_head_results == 1) {
+        div(class = "success-box", "\U1F64C Correct!")
+      } else {
+        div(class = "error-box", "\U1F914 Not quite - try again!")
+      }
+      
+      output$feedback_head <- renderUI({
+        feedback_head
+      })
     })
     
     observeEvent(input$analysis_step2_quiz, {

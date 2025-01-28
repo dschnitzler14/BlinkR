@@ -34,7 +34,7 @@ custom_login_ui <- function(id) {
 }
 
 
-custom_login_server <- function(id, user_base_read, base_group_files_url) {
+custom_login_server <- function(id, user_base_google_sheet, base_group_files_url) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -43,13 +43,13 @@ custom_login_server <- function(id, user_base_read, base_group_files_url) {
 
     #user_base <- read_sheet(user_base_google_sheet)
 
-    #   observe({
-    #   user_base(read_sheet(user_base_google_sheet))
-    # })
-
       observe({
-      user_base(user_base_read())
+      user_base(read_sheet(user_base_google_sheet))
     })
+
+    #   observe({
+    #   user_base(user_base_read)
+    # })
 
 
 
@@ -166,7 +166,7 @@ custom_login_server <- function(id, user_base_read, base_group_files_url) {
         
         tryCatch(
           {
-            sheet_append(user_base(), user_data)
+            sheet_append(user_base_google_sheet, user_data)
             output$sign_up_status <- renderUI("Group successfully signed up!")
           },
           error = function(e) {

@@ -39,6 +39,12 @@ options(
 googlesheets4::gs4_auth()
 googledrive::drive_auth()
 
+
+user_base_google_sheet <- drive_get("BlinkR Users")$id
+
+#user_base_read <- read_sheet(user_base_google_sheet)
+
+
 base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
 
 final_reports_folder_id <- drive_get("BlinkR_final_reports")$id
@@ -57,7 +63,9 @@ sapply(module_files, source)
 # variable to point to css ----
 css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
                       tags$script(src = "app.js"),
-                      tags$script("hljs.highlightAll();"))
+                      tags$script("hljs.highlightAll();"),
+                      tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
+                      )
 
 # header ----
 header <- dashboardHeader(title = "BlinkR", uiOutput("user_area"))
@@ -88,10 +96,10 @@ sidebar <- dashboardSidebar(
         menuItem("Playground", tabName = "Playground", icon = icon("hand")),
         menuItem("Analysis", tabName = "Analysis", icon = icon("play"),
                  menuItem("Analysis Dashboard", tabName = "Analysis_Dashboard", icon = icon("dashboard")),
-                 menuItem("Prepare Data", tabName = "Prepare_Data", icon = icon("magnifying-glass")),
-                 menuItem("Summarise Data", tabName="Summarise_Data", icon = icon("rectangle-list")),
-                 menuItem("Statistical Analysis", tabName="Statistical_Analysis", icon = icon("equals")),
-                 menuItem("Create Figure", tabName="Create_Figure", icon = icon("chart-simple"))
+                 menuItem("1. Prepare Data", tabName = "Prepare_Data", icon = icon("magnifying-glass")),
+                 menuItem("2. Summarise Data", tabName="Summarise_Data", icon = icon("rectangle-list")),
+                 menuItem("3. Create Figure", tabName="Create_Figure", icon = icon("chart-simple")),
+                 menuItem("4. Statistical Analysis", tabName="Statistical_Analysis", icon = icon("equals"))
         ),
         menuItem("Writing Up", tabName = "Writing-Up-menu",icon = icon("pen"),
           menuItem("Write Notes", tabName = "Writing-Up", icon = icon("pen")),
@@ -245,12 +253,6 @@ ui <- dashboardPage(header, sidebar, body)
 # server function ----
 server <- function(input, output, session) {
 
-
-user_base_google_sheet <- drive_get("BlinkR Users")$id
-
- user_base_read <- reactive({
-    read_sheet(user_base_google_sheet)
-  })
   
 saved_results <- reactiveValues(
   plots = list(),
@@ -270,7 +272,7 @@ saved_results <- reactiveValues(
   
   introduction_module_server("introduction", parent.session = session)
 
-  auth <- custom_login_server("login_module", user_base_read, base_group_files_url)
+  auth <- custom_login_server("login_module", user_base_google_sheet, base_group_files_url)
 
   output$user_auth <- reactive({ auth()$user_auth })
   output$user_role <- reactive({ auth()$user_info$role })

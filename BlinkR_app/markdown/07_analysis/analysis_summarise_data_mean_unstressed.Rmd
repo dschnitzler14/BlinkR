@@ -1,0 +1,6 @@
+Next, we can calculate the mean using this code:
+
+```
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+```
+

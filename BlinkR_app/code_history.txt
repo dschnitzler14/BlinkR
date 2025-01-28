@@ -1,10 +1,215 @@
-#Paired T-Test Code
-average_trs_paired_wide <- average_trs %>%
-      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#Summarise Result Code
+#type your code in here!
+
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "unstressed") 
+
+#Summarise Result Code
+#type your code in here!
+average_trs
+
+#Summarise Result Code
+#type your code in here!
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "unstressed") 
     
-t_test_paired <- t.test(
-  average_trs_paired_wide$Stressed,
-  average_trs_paired_wide$Unstressed,
-  paired = TRUE
-)
+unstressed_data
+
+#Summarise Result Code
+#type your code in here!
+
+unstressed_data
+
+#Summarise Result Code
+#type your code in here!
+
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "unstressed") 
+
+view(unstressed_data)
+
+
+#Summarise Result Code
+#type your code in here!
+
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+view(unstressed_data)
+
+
+#Summarise Result Code
+#type your code in here!
+
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+
+#Summarise Result Code
+#type your code in here!
+
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+
+#Summarise Result Code
+#type your code in here!
+
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+unstressed_data
+
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+
+#Summarise Result Code
+#type your code in here!
+
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+unstressed_data
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
+
+#View Data Code
+print("hello")
+
+#View Data Code
+head(data)
+
+#Summarise Result Code
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Summarise Result Code
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Summarise Result Code
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Summarise Result Code
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Summarise Result Code
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#View Data Code
+head(data)
+
+#View Data Code
+head(data)
 

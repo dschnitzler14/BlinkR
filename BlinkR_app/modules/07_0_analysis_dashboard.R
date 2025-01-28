@@ -7,22 +7,22 @@ analysis_dashboard_module_ui <- function(id) {
       fluidRow(
         column(
           12,
-            fluidRow(
-              column(
-                width = 12,
-                div(
-                  style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-                  actionButton(
-                    ns("start"),
-                    label = tagList(icon("magnifying-glass"), "Click Here To Get Started!"),
-                    class = "action-button custom-dark-yellow"
-                  )
-              )
-            ),
-          ),
-        
           box(
-            title = "Your Results: Summarise Data",
+            title = "Step 1: Prepare Your Data",
+            collapsible = TRUE,
+            collapsed = FALSE,
+            width = 12,
+            solidHeader = TRUE,
+            column(12,
+            markdown("First, you need to prepare your data for analysis. Click the button below to start."),
+                   actionButton(ns("prepare_data"), 
+                                label = tagList(icon("rectangle-list"), "Prepare the Data"), 
+                                class = "action-button custom-action",
+                                `data-id` = "prepare_data")
+                   )
+          ),
+          box(
+            title = "Step 2: Summarise Data",
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -38,7 +38,23 @@ analysis_dashboard_module_ui <- function(id) {
                    )
           ),
           box(
-            title = "Your Results: Statistical Analysis",
+            title = "Step 3: Figure",
+            collapsible = TRUE,
+            collapsed = FALSE,
+            width = 12,
+            solidHeader = TRUE,
+            column(6,
+                   actionButton(ns("figure"),
+                                label = tagList(icon("chart-simple"), "Create a Figure"),
+                                class = "action-button custom-action",
+                                `data-id` = "create_figure")            
+                   ),
+            column(6,
+                   uiOutput(ns("saved_plot_results"))
+            )
+          ),
+          box(
+            title = "Step 4: Statistical Analysis",
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -59,23 +75,7 @@ analysis_dashboard_module_ui <- function(id) {
               )
             ),
             )
-            ),
-          box(
-            title = "Your Results: Figure",
-            collapsible = TRUE,
-            collapsed = FALSE,
-            width = 12,
-            solidHeader = TRUE,
-            column(6,
-                   actionButton(ns("figure"),
-                                label = tagList(icon("chart-simple"), "Create a Figure"),
-                                class = "action-button custom-action",
-                                `data-id` = "create_figure")            
-                   ),
-            column(6,
-                   uiOutput(ns("saved_plot_results"))
             )
-          )
         ),
           fluidRow(
             column(
@@ -312,6 +312,9 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
 
     
     observeEvent(input$start, {
+      updateTabItems(parent.session, "sidebar", "Prepare_Data")
+    })
+    observeEvent(input$prepare_data, {
       updateTabItems(parent.session, "sidebar", "Prepare_Data")
     })
     observeEvent(input$summarise, {

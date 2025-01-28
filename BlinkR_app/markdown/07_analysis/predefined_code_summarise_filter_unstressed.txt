@@ -1,0 +1,2 @@
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")

@@ -27,7 +27,12 @@ hypothesis_module_ui <- function(id) {
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          text_area_module_UI(ns("hypothesis"), text_label = "Hypothesis", text_value = "Given the background of x, y, and z, my hypothesis is ...")
+          markdown("### What is your hypothesis in plain language?"),
+          text_area_module_UI(ns("hypothesis"), text_label = "Hypothesis", text_value = ""),
+          markdown("### What is your null hypothesis?"),
+          text_area_module_UI(ns("null_hypothesis"), text_label = "Null Hypothesis", text_value = ""),
+          markdown("### What is your alterative hypothesis?"),
+          text_area_module_UI(ns("alt_hypothesis"), text_label = "Alternative Hypothesis", text_value = "")
         )
       ),
       fluidRow(
@@ -53,6 +58,10 @@ hypothesis_module_server <- function(id, parent.session, auth) {
     function(input, output, session) {
       
       text_area_module_server("hypothesis", auth, "Hypothesis")
+      text_area_module_server("null_hypothesis", auth, "Null Hypothesis")
+      text_area_module_server("alt_hypothesis", auth, "Alternative Hypothesis")
+
+
       
        observeEvent(input$back_page_hypo, {
       updateTabItems(parent.session, "sidebar", "Background")

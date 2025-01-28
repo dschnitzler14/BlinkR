@@ -1,0 +1,12 @@
+In this step, we will summarise the data to obtain a mean, n, standard deviation, and standard error of the mean (SEM) for each group.
+
+I will show you how to calculate these for the unstressed group, but then you will need to calculate them for the stressed group.
+
+First, we will filter the data to only include the unstressed group. Go ahead and send this code to the console:
+
+```
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+```
+
+If you want to learn more about dplyr, check out the [Dplyr Cheatsheet](https://nyu-cdsc.github.io/learningr/assets/data-transformation.pdf).

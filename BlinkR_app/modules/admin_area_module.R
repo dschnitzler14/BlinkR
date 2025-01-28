@@ -35,12 +35,6 @@ admin_area_module_ui <- function(id) {
                                       width = 12,
                                       solidHeader = TRUE,
                                       share_to_groups_admin_module_ui(ns("share_data")),
-                                      fileInput(
-                                        ns("class_data_file_upload"),
-                                        label = "Choose a local file to upload",
-                                        accept = c(".csv", ".xlsx")
-                                      ),
-                                      textOutput(ns("upload_status")),
                                       combine_sheets_module_ui(ns("combine_data")),
                                   ),
                                   box(title = "Report Submission",

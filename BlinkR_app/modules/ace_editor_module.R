@@ -26,6 +26,11 @@ editor_module_ui <- function(id) {
       label = tagList("\U1F3C3", "Run Code"),
       class = "custom-run-button"           
     ),
+    actionButton(
+      ns("clear_console"),
+      label = tagList(icon("trash"), "Clear Console"),
+      class = "custom-run-button"
+    ),
     div(
       style = "margin-top: 20px;",
       withSpinner(uiOutput(ns("dynamic_console")), type = 6)
@@ -74,16 +79,35 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
 
       current_code(code)
 
+       output$dynamic_console <- renderUI({
+    if (values$is_plot) {
+      plotOutput(session$ns("plot_output"))
+    } else if (!is.null(values$result)) {
+      verbatimTextOutput(session$ns("text_output"))
+    } else {
+      NULL
+    }
+  })
  
     }, ignoreInit = TRUE)
 
-    output$dynamic_console <- renderUI({
-      if (values$is_plot) {
-        plotOutput(session$ns("plot_output"))
-      } else {
-        verbatimTextOutput(session$ns("text_output"))
-      }
-    })
+    # output$dynamic_console <- renderUI({
+    #   if (values$is_plot) {
+    #     plotOutput(session$ns("plot_output"))
+    #   } else {
+    #     verbatimTextOutput(session$ns("text_output"))
+    #   }
+    # })
+
+#     output$dynamic_console <- renderUI({
+#   if (values$is_plot) {
+#     plotOutput(session$ns("plot_output"))
+#   } else if (!is.null(values$result)) {
+#     verbatimTextOutput(session$ns("text_output"))
+#   } else {
+#     NULL 
+#   }
+# })
 
     output$plot_output <- renderPlot({
   req(values$is_plot, values$result)
@@ -125,7 +149,7 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
       code_to_save <- current_code()
       current_code(NULL)
       
-      showNotification("Uploading code to Google Drive…", type = "message")
+      # showNotification("Uploading code to Google Drive…", type = "message")
       
       future({
       file_name <- "code_history.txt"
@@ -147,7 +171,7 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
       
       TRUE
       }) %...>% {
-      showNotification("Code saved to Google Drive", type = "message")
+      showNotification("Saved to Code History", type = "message")
       } %...!% {
         err <- .
         showNotification(
@@ -158,6 +182,14 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
       #current_code(NULL)
     }, ignoreInit = TRUE)
     
+    observeEvent(input$clear_console, {
+      values$result <- NULL
+      values$is_plot <- FALSE
+
+      output$dynamic_console <- renderUI({ NULL })
+
+      updateAceEditor(session, "editor", value = "")
+    })
     
     return(reactive_result)
     

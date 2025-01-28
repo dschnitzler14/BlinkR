@@ -2,20 +2,18 @@ Throughout this app you will come across boxes like this one. Using these boxes,
 
 In most cases you will be able to use the `send code to editor` button to copy a given piece of code to the editor, although sometimes you will be asked to type your own code or edit the existing code!
 
-Let's try it out.
+## Let's try it out.
 
 1. Click `send code to editor`
 2. Wait for the code to appear inside the editor
-3. Add this line to the bottom of the code
+3. Click `Run Code` and wait for the code to print!
 
 ```
 name <- NULL
 print(paste0("Hello ", name))
 ```
 
-4. Click `Run Code` and wait for the code to print!
-
-Now, let's change the code!
+## Now, let's change the code!
 
 1. Change `NULL` to your `"your name"`. So for example, I would write `"Danny"`. Don't forget the `""`!
 2. Click `Run Code` again and wait for the code the print.
