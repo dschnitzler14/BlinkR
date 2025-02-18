@@ -33,7 +33,9 @@ editor_module_ui <- function(id) {
     ),
     div(
       style = "margin-top: 20px;",
-      withSpinner(uiOutput(ns("dynamic_console")), type = 6)
+      #withSpinner(uiOutput(ns("dynamic_console")), type = 6)
+      uiOutput(ns("dynamic_console"))
+
     )
   )
 }

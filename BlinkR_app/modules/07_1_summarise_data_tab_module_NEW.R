@@ -74,7 +74,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
       )
     
     average_trs <- reactive({ average_trs_results })
- 
+    
 tutorial_steps <- list(
   step1 = list(
     predefined_code = read_file("markdown/07_analysis/predefined_code_summarise_filter_unstressed.txt"),
@@ -137,20 +137,15 @@ output$editor_ui <- renderUI({
   editor_module_ui(session$ns("dynamic_editor"))
 })
 
-summarise_result <- reactive({
-  step <- current_step()
-  req(step)
-  
-  editor_module_server(
+summarise_result <- editor_module_server(
     "dynamic_editor",
     data = average_trs,
     variable_name = "average_trs",
-    predefined_code = tutorial_steps[[step]]$predefined_code,
+    predefined_code = tutorial_steps[[ current_step() ]]$predefined_code,
     return_type = "result",
     session_folder_id = session_folder_id,
-    save_header = paste("Code for", step)
+    save_header = paste("Code for", current_step() )
   )
-})
 
 observe({
   req(summarise_result())            
@@ -197,46 +192,6 @@ observe({
     completed_tutorial_steps(completed_tutorial_steps_list)
   }
 })
-
-        
-#   output$step1_filter_data <- renderUI({
-#   tagList(
-#     includeMarkdown("markdown/07_analysis/analysis_summarise_data_filter_unstressed.Rmd"),
-#     uiOutput(session$ns("editor_ui"))
-#   )
-# })
-
-#     output$editor_ui <- renderUI({
-#       editor_module_ui(session$ns("summarise_editor_step1"))
-#     })
-
-
-#     predefined_code_summarise_step1 <- read_file("markdown/07_analysis/predefined_code_summarise_filter_unstressed.txt")
-    
-#     summarise_editor_step1 <- editor_module_server("summarise_editor_step1", data = average_trs, variable_name = "average_trs", 
-#                                              predefined_code = predefined_code_summarise_step1, return_type = "result", 
-#                                              session_folder_id, save_header = "Summarise Result Code")
-    
-#     observe({
-#       req(!is.null(summarise_editor_step1()), !is.null(summarise_editor_step1()$result))
-
-#       if (tibble::is_tibble(summarise_editor_step1()$result)) {
-#         output$step1_filter_data_feedback <- renderUI({
-#           tagList(
-#             div(class = "success-box", "\U1F64C Great!"),
-#             uiOutput(session$ns("step2_calculate_mean")),
-
-#           )
-#         })
-        
-#       } else {
-#         output$step1_filter_data_feedback <- renderUI({
-#           div(class = "error-box", "\U1F914 Not quite - try again!")
-#         })
-        
-#       }
-#     })
-    
     
     observeEvent(input$statistics, {
       updateTabItems(parent.session, "sidebar", "Statistical_Analysis")
