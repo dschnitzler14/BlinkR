@@ -38,57 +38,14 @@ analysis_stats_module_ui <- function(id) {
           ),
           uiOutput(ns("assumptions_feedback"))
         ),
-        # column(
-        #   3,
-        #   actionButton(ns("run_qq_Plot"), "Generate Q-Q Plot"),
-        #   plotOutput(ns("q_q_plot")),
-        #   uiOutput(ns("qq_explainer_ui")),
-        #   box(
-        #     title = "View code used to generate plot",
-        #     collapsible = TRUE,
-        #     collapsed = TRUE,
-        #     width = 12,
-        #     status = "info",
-        #     wellPanel(
-        #       markdown(
-        #         "
-        #          ```
-        #          variance_qq_plot <- qqPlot(average_trs$average_blinks_per_minute,
-        #          main = \"Q-Q Plot of Average Blinks/Minute\",
-        #          xlab = \"Theoretical Quantiles\",
-        #          ylab = \"Sample Quantiles\",
-        #          col = \"blue\",
-        #          pch = 20)
-        #          ```
-        #         "
-        #       )
-        #     )
-        #   ),
-        #   align = "center",
-        # ),
-        # column(
-        #   4,
-        #   actionButton(ns("run_bar_Plot"), "Generate Bar Chart"),
-        #   plotOutput(ns("bar_plot")),
-        #   uiOutput(ns("barplot_explainer_ui")),
-          
-        #   box(
-        #     title = "View code used to generate plot",
-        #     collapsible = TRUE,
-        #     collapsed = TRUE,
-        #     width = 12,
-        #     status = "info",
-        #     wellPanel(
-        #       includeMarkdown("markdown/07_analysis/analysis_barplot_code.Rmd")
-        #     )
-        #   ),
-        #   align = "center"
-        # ),
+        
         column(
           9,
-          actionButton(ns("run_hist_Plot"), "Generate Histogram"),
+          actionButton(ns("run_hist_Plot"), "Generate Histogram to check for Normality"),
           plotOutput(ns("hist_plot")),
           uiOutput(ns("hist_explainer_ui")),
+          uiOutput(ns("analysis_t-test")),
+          uiOutput(ns("analysis_wilcoxon_test")),
           box(
             title = "View code used to generate plot",
             collapsible = TRUE,
@@ -114,6 +71,7 @@ analysis_stats_module_ui <- function(id) {
         ),
       )
     ),
+  
     box(
       title = "Analyse the Data",
       collapsible = TRUE,
@@ -247,118 +205,6 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
     
     average_trs_assumptions <- reactive({ average_trs_assumptions_data })
     
-    # observeEvent(input$run_qq_Plot, {
-    #   req(average_trs_assumptions())
-      
-    #   output$q_q_plot <- renderPlot({
-    #    car::qqPlot(
-    #       average_trs_assumptions()$Average_Blinks_Per_Minute,
-    #       main = "Q-Q Plot of Average Blinks/Minute",
-    #       xlab = "Theoretical Quantiles",
-    #       ylab = "Sample Quantiles",
-    #       col = "blue",
-    #       pch = 20
-    #     )
-    #     saved_results$recorded_plots[["q_q_plot"]] <- recordPlot()
-        
-    #     temp_file <- tempfile(fileext = ".png")
-    #     png(temp_file, width = 800, height = 600)
-    #     replayPlot(saved_results$recorded_plots[["q_q_plot"]])
-    #     dev.off()
-        
-    #     path <- drive_get(as_id(session_folder_id))
-        
-    #     drive_upload(
-    #       media = temp_file,
-    #       path = path,
-    #       name = paste0("q_q_plot.png"),
-    #       overwrite = TRUE
-    #     )
-        
-    #     recordPlot(NULL)
-
-    #     unlink(temp_file)
-        
-    #     showNotification("Plot saved successfully.", type = "message")
-      
-    #   })
-      
-    #   output$qq_explainer_ui <- renderUI({
-    #     box(
-    #       id = session$ns("qq_explainer_box"),
-    #       title = "Q-Q Plot",
-    #       collapsible = TRUE,
-    #       collapsed = FALSE,
-    #       width = 12,
-    #       includeMarkdown(
-    #         "markdown/07_analysis/analysis_qq_plot_explainer.Rmd"
-    #       )
-    #     )
-    #   })
-    # })
-    
-    
-    # generate_box_plot <- function(data) {
-    #   boxplot(
-    #     Average_Blinks_Per_Minute ~ Stress_Status,
-    #     data = data,
-    #     xlab = "Stress Status",
-    #     ylab = "Blinks Per Minute",
-    #     main = "Variance: Blinks/Minute by Stress Status",
-    #     col = c("grey49", "lightgrey")
-    #   )
-    #   # stripchart(
-    #   #   Average_Blinks_Per_Minute ~ Stress_Status,
-    #   #   data = data,
-    #   #   add = TRUE,
-    #   #   vertical = TRUE,
-    #   #   method = "jitter",
-    #   #   pch = 21,
-    #   #   bg = "maroon"
-    #   # )
-    # }
-    
-    # observeEvent(input$run_bar_Plot, {
-    #   req(average_trs_assumptions())
-      
-    #   output$bar_plot <- renderPlot({
-       
-    #     saved_results$recorded_plots[["bar_plot"]] <- recordPlot()
-    #     temp_file <- tempfile(fileext = "_assumptions.png")
-    #     png(temp_file, width = 800, height = 600)
-    #     replayPlot(saved_results$recorded_plots[["bar_plot"]])
-    #     dev.off()
-        
-    #     path <- drive_get(as_id(session_folder_id))
-        
-    #     drive_upload(
-    #       media = temp_file,
-    #       path = path,
-    #       name = paste0("bar_plot.png"),
-    #       overwrite = TRUE
-    #     )
-        
-    #     recordPlot(NULL)
-        
-    #     unlink(temp_file)
-        
-    #     showNotification("Plot saved successfully.", type = "message")
-    #   })
-    
-      
-    #   output$barplot_explainer_ui <- renderUI({
-    #     box(
-    #       id = session$ns("barplot_explainer_box"),
-    #       title = "Box Plot",
-    #       collapsible = TRUE,
-    #       collapsed = FALSE,
-    #       width = 12,
-    #       includeMarkdown(
-    #         "markdown/07_analysis/analysis_bar_plot_explainer.Rmd"
-    #       )
-    #     )
-    #   })
-    # })
     
     observeEvent(input$run_hist_Plot, {
       req(average_trs_assumptions())
@@ -407,10 +253,46 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
           width = 12,
           includeMarkdown(
             "markdown/07_analysis/analysis_hist_plot_explainer.Rmd"
-          )
+          ),
+          actionButton(session$ns("normal"), "The Data is Normal"),
+          actionButton(session$ns("not_normal"), "The Data is Not Normal")
         )
       })
     })
+
+    observeEvent(input$normal, {
+  output$analysis_test_ui <- renderUI({
+    tagList(
+      radioButtons(
+        ns("t_test_type_selector"),
+        label = "What type of t-test should we use?",
+        choices = c(
+          "Two-sample" = "two",
+          "Paired" = "paired"
+        ),
+        selected = character(0)
+      ),
+      uiOutput(ns("t_test_selector_output")),
+      uiOutput(ns("t_test_code_feedback"))
+    )
+  })
+})
+
+observeEvent(input$not_normal, {
+  output$analysis_test_ui <- renderUI({
+    tagList(
+      box(
+        title = "Wilcoxon Test",
+        collapsible = TRUE,
+        collapsed = FALSE,
+        width = 12,
+        solidHeader = TRUE,
+        includeMarkdown("markdown/07_analysis/analysis_wilcoxon_test.Rmd"),
+        editor_module_ui(session$ns("wilcoxon_test_editor"))
+      )
+    )
+  })
+})
     
     #Step 4: Run T-Test
   
@@ -837,6 +719,31 @@ observeEvent(input$submit_two_sided_p_value_quiz_answer, {
         showNotification("No result to save.", type = "error")
       }
     })
+
+
+    wilcoxon_test_result <- editor_module_server(
+  "wilcoxon_test_editor", 
+  data = average_trs_t_test, 
+  variable_name = "average_trs", 
+  predefined_code = read_file("markdown/07_analysis/predefined_code_wilcoxon_test.txt"), 
+  return_type = "result", 
+  session_folder_id, 
+  save_header = "Wilcoxon Test Code"
+)
+
+observe({
+  req(!is.null(wilcoxon_test_result()), !is.null(wilcoxon_test_result()$result))
+  
+  if (inherits(wilcoxon_test_result()$result, "htest")) {
+    output$wilcoxon_code_feedback <- renderUI({
+      div(class = "success-box", "\U1F64C Great Job!")
+    })
+  } else {
+    output$wilcoxon_code_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+  }
+})
     
     
     observeEvent(input$summarise, {
