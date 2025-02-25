@@ -20,3 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById(message.id).value = null;
   });
 });
+
+function collapseBox(boxid) {
+  $('#' + boxid).find('[data-widget="collapse"]').click();
+}
+

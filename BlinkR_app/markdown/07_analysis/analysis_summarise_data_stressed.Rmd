@@ -1,0 +1,8 @@
+Now it's your turn. Using the code snipptets provided above, calculate the following:
+- mean
+- standard deviation (sd)
+- number of observerations (n)
+- standard error of the mean (sem)
+
+Just like we did for the unstressed group, you need to start with the full, unfiltered dataset, which is called `average_trs`.
+

@@ -397,3 +397,513 @@ unstressed_data <- average_trs %>%
 unstressed_data <- average_trs %>%
   filter(Stress_Status == "Unstressed")
 
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 2: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 2: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+# Oops! This time you need to type out the code yourself.
+# Are you stuck? Scroll up to see what we did before. 
+# Start with filtering the data..."
+
+
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_n <- nrow(unstressed_data)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_n <- nrow(stressed_data)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_n <- nrow(stressed_data)
+
+stressed_sem <- stressed_sd/sqrt(stressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+data <- average_trs
+
+
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+Stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+#Step 5: Summarise Data
+Stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+Stressed_mean <- mean(Stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 5: Summarise Data
+Stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+Stressed_mean <- mean(Stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+
+#Step 5: Summarise Data
+Stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+Stressed_mean <- mean(Stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+Stressed_sd <- sd(Stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+Stressed_n <- nrow(Stressed_data)
+Stressed_sem <- Stressed_sd / sqrt(Stressed_data)
+
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+#Step 5: Summarise Data
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+data <- average_trs
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+data <- average_trs
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+

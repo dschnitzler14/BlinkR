@@ -128,7 +128,8 @@ sidebar <- dashboardSidebar(
 # dashboard body combined ----
 body <- dashboardBody(
   css_link,
-  
+  useShinyjs(),
+    
   uiOutput("login_ui"),
 
   tabItems(

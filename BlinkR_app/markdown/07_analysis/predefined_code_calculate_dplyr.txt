@@ -1,0 +1,8 @@
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )

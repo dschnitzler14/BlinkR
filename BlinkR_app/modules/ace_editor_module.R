@@ -1,4 +1,4 @@
-editor_module_ui <- function(id) {
+editor_module_ui <- function(id) { 
   ns <- NS(id)
   tagList(
     aceEditor(
@@ -55,7 +55,15 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
       code <- input$editor
       temp_env <- new.env(parent = globalenv())
 
-      assign(variable_name, data(), envir = temp_env)
+      #assign(variable_name, data(), envir = temp_env)
+
+      if (is.list(data) && length(variable_name) == length(data)) {
+        for (i in seq_along(data)) {
+          assign(variable_name[i], data[[i]](), envir = temp_env)
+        }
+      } else {
+        assign(variable_name, data(), envir = temp_env)
+      }
 
       forbidden_packages <- c("googledrive", "googlesheets4")
       lapply(forbidden_packages, function(pkg) {
