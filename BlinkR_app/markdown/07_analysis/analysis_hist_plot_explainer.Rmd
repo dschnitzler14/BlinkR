@@ -1,2 +1,14 @@
-  - The histogram shows the distribution of your data. 
-   - For a t-test, we typically expect the data to follow a roughly normal distribution. Look for a bell-shaped curve.
+- The histogram shows the distribution of your data. 
+- For a t-test, we typically expect the data to follow a roughly normal distribution. Look for a bell-shaped curve.
+
+- This is the code used to create the histogram in the BlinkR app:
+  ```
+  hist <- hist(average_trs$Average_Blinks_per_Minute,
+                 main = "Distribution of Blinks/Minute",
+                 xlab = "Average Blinks/Minute",
+                 ylab = "Frequency",
+                 col = "grey49",
+                 border = "black")
+  ```
+
+

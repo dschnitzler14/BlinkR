@@ -1,0 +1,2 @@
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
+                                    data = average_trs)
