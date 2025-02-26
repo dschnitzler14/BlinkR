@@ -1,6 +1,6 @@
 ```
-wilcox_test_paired <- wilcox.test(average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-                                  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+wilcox_test_paired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
+                                  data = average_trs, 
                                   paired = TRUE)
 ````
 

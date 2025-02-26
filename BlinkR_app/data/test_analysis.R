@@ -2,6 +2,7 @@ library(dplyr)
 library(ggplot2)
 library(car)
 library(tidyr)
+library(rstatix)
 
 library(googlesheets4)
 library(googledrive)
@@ -11,8 +12,8 @@ options(
   gargle_oauth_cache = "BlinkR_app/.secrets"
 )
 
-googledrive::drive_auth()
-googlesheets4::gs4_auth()
+#googledrive::drive_auth()
+#googlesheets4::gs4_auth()
 
   combined_class_data_sheet <- drive_get("BlinkR_Combined_Class_Data")$id
   
@@ -140,9 +141,9 @@ boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Min
 ### manual
 
 stressed_data <- average_trs %>%
-  filter(Stress_Status == "stressed")
+  filter(Stress_Status == "Stressed")
 unstressed_data <- average_trs %>%
-  filter(Stress_Status == "unstressed")
+  filter(Stress_Status == "Unstressed")
 
 # mean
 stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
@@ -158,3 +159,17 @@ unstressed_n <- nrow(unstressed_data)
 
 stressed_sem <- stressed_sd / sqrt(stressed_n)
 unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+df_effect_size <- effect_size_paired_t %>%
+    dplyr::select("effsize")
+
+
+df_effect_size$effsize[1]
+
+df_effect_size$effsize[1] %>% unname()
+
+as.numeric(df_effect_size$effsize[1] %>% unname())

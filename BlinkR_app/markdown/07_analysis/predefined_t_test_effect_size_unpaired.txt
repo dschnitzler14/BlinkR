@@ -1,0 +1,2 @@
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)

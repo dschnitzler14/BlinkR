@@ -11,6 +11,13 @@ analysis_stats_module_ui <- function(id) {
         uiOutput(ns("not_normal_paired_ui")),
         uiOutput(ns("normal_unpaired_ui")),
         uiOutput(ns("normal_paired_ui")),
+        uiOutput(ns("effect_size_t_test_paired")),
+        uiOutput(ns("effect_size_t_test_unpaired")),
+        uiOutput(ns("effect_size_wilcoxon_paired")),
+        uiOutput(ns("effect_size_wilcoxon_unpaired")),
+        uiOutput(ns("interpretation_quiz")),
+
+
     ),
     fluidRow(
           column(
@@ -68,6 +75,27 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
       average_trs_data
     })
 
+
+average_trs_paired_wide <- reactive({
+      NULL
+    })
+    
+    # average_trs_data <- results_data %>%
+    #   select(-"Group", -"Initials", -"Submission_ID") %>%
+    #   dplyr::group_by(ID, Stress_Status) %>%
+    #   dplyr::summarise(
+    #     Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
+    #     .groups = 'drop'
+    #   )
+
+      average_trs_paired_wide_data <- average_trs()%>%
+        pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+    average_trs_paired_wide <- reactive({
+      average_trs_paired_wide_data
+    })
+
+###
 output$testing_assumptions <- renderUI({
   tagList(
     fluidRow(
@@ -84,11 +112,10 @@ output$testing_assumptions <- renderUI({
                   column(6,
                   includeMarkdown("markdown/07_analysis/analysis_hist_plot_explainer.Rmd"),
                   actionButton(session$ns("run_hist_Plot"), "Generate Histogram to check for Normality", class = "fun-submit-button"),
-                  plotOutput(session$ns("hist_plot")),
+                  uiOutput(session$ns("hist_explainer_ui")),
                   ),
                   column(6,
-                  uiOutput(session$ns("hist_explainer_ui")),
-
+                  plotOutput(session$ns("hist_plot"))
                   )
               ),
               
@@ -139,7 +166,7 @@ observeEvent(input$run_hist_Plot, {
       includeMarkdown(
           "markdown/07_analysis/analysis_hist_plot_explainer.Rmd"
         ),
-        actionButton(session$ns("normal"), "The Data is Normal", class = "fun-submit-button"),
+      actionButton(session$ns("normal"), "The Data is Normal", class = "fun-submit-button"),
         actionButton(session$ns("not_normal"), "The Data is Not Normal", class = "fun-submit-button")
       )
       })
@@ -147,6 +174,7 @@ observeEvent(input$run_hist_Plot, {
   })
 
 observeEvent(input$normal, {
+  req(input$normal)
     output$not_normal_output <- renderUI({NULL})
     output$not_normal_unpaired_ui <- renderUI({NULL})
     output$not_normal_paired_ui <- renderUI({NULL})
@@ -162,6 +190,7 @@ observeEvent(input$normal, {
 })
 
 observeEvent(input$not_normal, {
+  req(input$not_normal)
   output$normal_output <- renderUI({NULL})
   output$not_normal_unpaired_ui <- renderUI({NULL})
   output$not_normal_paired_ui <- renderUI({NULL})
@@ -177,7 +206,7 @@ observeEvent(input$not_normal, {
     })
 })
 
-# not normal unpaired
+# 1. not normal unpaired
   predefined_code_not_normal_unpaired = read_file("markdown/07_analysis/predefined_code_wilcoxon_test_unpaired.txt")
   not_normal_unpaired_result <- editor_module_server("not_normal_unpaired", average_trs, "average_trs", predefined_code = predefined_code_not_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Unpaired")
 
@@ -234,7 +263,7 @@ observe({
         }
       })
 
-# not normal paired
+# 2. not normal paired
 
   predefined_code_not_normal_paired = read_file("markdown/07_analysis/predefined_code_wilcoxon_test_paired.txt")
   not_normal_paired_result <- editor_module_server("not_normal_paired", average_trs, "average_trs", predefined_code = predefined_code_not_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Paired")
@@ -278,7 +307,7 @@ observeEvent(input$paired_not_normal,{
 observe({
       req(!is.null(not_normal_paired_result()), !is.null(not_normal_paired_result()$result))
 
-      if (!is.null(not_normal_paired_result()$result)) {
+      if (inherits(not_normal_paired_result()$result, "htest")) {
         output$not_normal_paired_feedback <- renderUI({
           tagList(
             div(class = "success-box", "\U1F64C Great!"),
@@ -291,7 +320,7 @@ observe({
         }
       })
 
-# normal unpaired
+# 3. normal unpaired
 
   predefined_code_normal_unpaired = read_file("markdown/07_analysis/predefined_code_two_sided_t_test.txt")
   normal_unpaired_result <- editor_module_server("normal_unpaired", average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
@@ -335,7 +364,7 @@ observeEvent(input$unpaired_normal,{
 observe({
       req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result))
 
-      if (!is.null(normal_unpaired_result()$result)) {
+      if (inherits(not_normal_paired_result()$result, "htest")) {
         output$normal_unpaired_feedback <- renderUI({
           tagList(
             div(class = "success-box", "\U1F64C Great!"),
@@ -348,7 +377,7 @@ observe({
         }
       })
 
-# normal paired
+# 4. normal paired
 
   predefined_code_normal_paired = read_file("markdown/07_analysis/predefined_code_paired_t_test.txt")
   normal_paired_result <- editor_module_server("normal_paired", average_trs, "average_trs", predefined_code = predefined_code_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Paired")
@@ -392,7 +421,7 @@ observeEvent(input$paired_normal,{
 observe({
       req(!is.null(normal_paired_result()), !is.null(normal_paired_result()$result))
 
-      if (!is.null(normal_paired_result()$result)) {
+      if (inherits(normal_paired_result()$result, "htest")) {
         output$normal_paired_feedback <- renderUI({
           tagList(
             div(class = "success-box", "\U1F64C Great!"),
@@ -404,6 +433,277 @@ observe({
         })
         }
       })
+
+# 5. effect size t-test paired
+  predefined_code_t_test_effect_size_paired = read_file("markdown/07_analysis/predefined_t_test_effect_size_paired.txt")
+  t_test_effect_size_paired_result <- editor_module_server("t_test_effect_size_paired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
+
+observe({
+    req(!is.null(normal_paired_result()), !is.null(normal_paired_result()$result))
+
+  output$effect_size_t_test_paired <- renderUI({
+    tagList(
+    fluidRow(
+        column(
+            12,
+          box(
+              id = "effect_size_t_test_paired",
+              title = "Effect Size for Paired T-Test",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              width = 12,
+              solidHeader = TRUE,
+              fluidRow(
+                  column(6,
+                  includeMarkdown("markdown/07_analysis/analysis_effect_size_t_test_paired.Rmd"),
+                  uiOutput(session$ns("t_test_effect_size_paired_feedback")),
+                  ),
+                  column(6,
+                  editor_module_ui(session$ns("t_test_effect_size_paired"))
+                  )
+              ),
+              
+            )
+          ),
+          
+        ),
+        
+      )
+  })
+})
+
+observe({
+      req(!is.null(t_test_effect_size_paired_result()), !is.null(t_test_effect_size_paired_result()$result))
+
+      if (!is.null(t_test_effect_size_paired_result())) {
+        output$t_test_effect_size_paired_feedback <- renderUI({
+          tagList(
+            div(class = "success-box", "\U1F64C Great!"),
+          )
+        })
+
+        } else {
+        output$t_test_effect_size_paired_feedback <- renderUI({
+          div(class = "error-box", "\U1F914 Not quite - try again!")
+        })
+        }
+      })
+
+### reactives for t-test effect size paired
+
+   t_test_effect_size <- reactive({
+
+    sr <- NULL
+
+    if (!is.null(t_test_effect_size_paired_result()) && is.null(t_test_effect_size_unpaired_result())){
+        sr <- t_test_effect_size_paired_result()
+
+    } else if (!is.null(t_test_effect_size_unpaired_result()) && is.null(t_test_effect_size_paired_result())) {
+        sr <- t_test_effect_size_unpaired_result()
+    }
+      
+      if (is.null(sr) || is.null(sr$result)) {
+        return(NULL)
+      }
+      if (!tibble::is_tibble(sr$result)) {
+        return(NULL)
+      }
+     
+      df_effect_size <- sr$result %>%
+        dplyr::select("effsize")
+      
+      if (nrow(df_effect_size) == 0) {
+        return(NULL)
+      }
+      
+      as.numeric(df_effect_size$effsize[1] %>% unname())
+
+    })
+
+
+  t_test_effect_size_round <- reactive({
+    t_test_effect_size_round_val <- t_test_effect_size()
+    
+    if (is.null(t_test_effect_size_round_val) || !is.numeric(t_test_effect_size_round_val)) {
+    return(NULL)
+  }
+  
+  round(t_test_effect_size_round_val, 2)
+})
+
+
+#6. effect size t-test unpaired
+  predefined_code_t_test_effect_size_unpaired = read_file("markdown/07_analysis/predefined_t_test_effect_size_unpaired.txt")
+  t_test_effect_size_unpaired_result <- editor_module_server("t_test_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
+
+observe({
+    req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result))
+
+  output$effect_size_t_test_unpaired <- renderUI({
+    tagList(
+    fluidRow(
+        column(
+            12,
+          box(
+              id = "effect_size_t_test_unpaired",
+              title = "Effect Size for Unpaired T-Test",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              width = 12,
+              solidHeader = TRUE,
+              fluidRow(
+                  column(6,
+                  includeMarkdown("markdown/07_analysis/analysis_effect_size_t_test_unpaired.Rmd"),
+                  uiOutput(session$ns("t_test_effect_size_unpaired_feedback")),
+                  ),
+                  column(6,
+                  editor_module_ui(session$ns("t_test_effect_size_unpaired"))
+                  )
+              ),
+              
+            )
+          ),
+          
+        ),
+        
+      )
+  })
+})
+
+observe({
+      req(!is.null(t_test_effect_size_unpaired_result()), !is.null(t_test_effect_size_unpaired_result()$result))
+
+      if (!is.null(t_test_effect_size_unpaired_result())) {
+        output$t_test_effect_size_unpaired_feedback <- renderUI({
+          tagList(
+            div(class = "success-box", "\U1F64C Great!"),
+          )
+        })
+
+        } else {
+        output$t_test_effect_size_unpaired_feedback <- renderUI({
+          div(class = "error-box", "\U1F914 Not quite - try again!")
+        })
+        }
+      })
+
+
+#7. effect size wilcoxon paired
+#uiOutput(ns("effect_size_wilcoxon_paired")),
+
+#8. effect size wilcoxon unpaired
+#uiOutput(ns("effect_size_wilcoxon_unpaired")),
+
+observe({
+  print("Checking values of test results:")
+  print(t_test_effect_size_paired_result())
+  print(t_test_effect_size_unpaired_result())
+})
+
+
+# 9. interpretation quiz
+observe({
+
+  req(
+    (!is.null(t_test_effect_size_paired_result()) && !is.null(t_test_effect_size_paired_result()$result)) ||
+    (!is.null(t_test_effect_size_unpaired_result()) && !is.null(t_test_effect_size_unpaired_result()$result))
+  )
+
+  output$interpretation_quiz <- renderUI({
+    tagList(
+    fluidRow(
+        column(
+            12,
+          box(
+              id = "interpretation_quiz",
+              title = "Your Results",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              width = 12,
+              solidHeader = TRUE,
+              fluidRow(
+                  column(12,
+                  #includeMarkdown("markdown/07_analysis/analysis_effect_size_t_test_paired.Rmd"),
+                  uiOutput(session$ns("interpretation_quiz_feedback")),
+                  )
+              ),
+              
+            )
+          ),
+          
+        ),
+        
+      )
+  })
+})
+
+observe({
+      req(
+    (!is.null(t_test_effect_size_paired_result()) && !is.null(t_test_effect_size_paired_result()$result)) ||
+    (!is.null(t_test_effect_size_unpaired_result()) && !is.null(t_test_effect_size_unpaired_result()$result))
+  )
+
+      if (!is.null(t_test_effect_size_paired_result()) || !is.null(t_test_effect_size_unpaired_result())) {
+        output$interpretation_quiz_feedback <- renderUI({
+          tagList(
+            numericInput(session$ns("enter_p_value"), "What is the p-value?", value = 0),
+            actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button"),
+            uiOutput(session$ns("enter_p_value_feedback")),
+
+            numericInput(session$ns("enter_effect_size"), "What is the effect size?", value = 0),
+            actionButton(session$ns("enter_effect_size_submit"), "Submit", class = "fun-submit-button"),
+            uiOutput(session$ns("enter_effect_size_feedback"))
+          )
+        })
+
+        } else {
+        output$interpretation_quiz_feedback <- renderUI({
+          div(class = "error-box", "\U1F914 Not quite - try again!")
+        })
+        }
+})
+
+observeEvent(input$enter_effect_size_submit, {
+    req(
+    (!is.null(t_test_effect_size_paired_result()) && !is.null(t_test_effect_size_paired_result()$result)) ||
+    (!is.null(t_test_effect_size_unpaired_result()) && !is.null(t_test_effect_size_unpaired_result()$result))
+  )
+
+
+  if (!is.null(t_test_effect_size_paired_result()) || !is.null(t_test_effect_size_paired_result()$result) || !is.null(t_test_effect_size_unpaired_result()) || !is.null(t_test_effect_size_unpaired_result()$result)){
+    val <- t_test_effect_size_round()
+
+  } else {
+    val <- NULL
+  }
+  
+  if (is.null(val)) {
+    output$enter_effect_size_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 We do not know the effect size yet!")
+    })
+    return()
+  }
+
+  user_answer_enter_effect_size <- as.numeric(input$enter_effect_size)
+
+  if (is.na(user_answer_enter_effect_size)) {
+    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+  } else {
+    tolerance <- 0.5
+    
+    if (abs(user_answer_enter_effect_size - val) <= tolerance) {
+      feedback <- div(class = "success-box", "\U1F64C Correct!")
+    } else {
+      feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+    }
+  }
+
+  output$enter_effect_size_feedback <- renderUI({
+    feedback
+  })
+})
+
+
 
 
 })}

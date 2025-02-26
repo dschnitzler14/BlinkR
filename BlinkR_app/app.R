@@ -25,6 +25,7 @@ library(shinyjs)
 library(jsonlite)
 library(datasets)
 library(evaluate)
+library(rstatix)
 
 options(
   gargle_oauth_email = TRUE,

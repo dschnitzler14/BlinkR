@@ -1,0 +1,4 @@
+```
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+```
