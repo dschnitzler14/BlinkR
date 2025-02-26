@@ -1,0 +1,5 @@
+```
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status
+````
+

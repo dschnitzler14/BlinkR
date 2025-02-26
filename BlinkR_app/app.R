@@ -26,6 +26,7 @@ library(jsonlite)
 library(datasets)
 library(evaluate)
 library(rstatix)
+library(coin)
 
 options(
   gargle_oauth_email = TRUE,

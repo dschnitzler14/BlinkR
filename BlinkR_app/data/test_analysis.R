@@ -173,3 +173,41 @@ df_effect_size$effsize[1]
 df_effect_size$effsize[1] %>% unname()
 
 as.numeric(df_effect_size$effsize[1] %>% unname())
+
+##
+
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, data = average_trs)
+
+average_trs_paired_wide <- average_trs_paired %>%
+  pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+
+t_test$p.value
+
+df_p_value <- t_test %>%
+    dplyr::select("p-value")
+
+
+df_effect_size$effsize[1]
+
+df_effect_size$effsize[1] %>% unname()
+
+as.numeric(df_effect_size$effsize[1] %>% unname())
+
+wilcox_test_paired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
+                                  data = average_trs, 
+                                  paired = TRUE)
+
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+wilcox_test_paired$p.value
