@@ -1,14 +1,349 @@
-#View Data Code
-head(data)
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
 
 #View Data Code
 head(data)
 
-#View Data Code
-head(data)
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
 
 #View Data Code
 head(data)
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#View Data Code
+#type your code in here!
+head (data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Two-Sided T-Test Code
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, data = average_trs)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "Stress Status",
+    y = "Blinks/Minute",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "blue"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "blue"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "pink", "Stressed" = "lightgrey")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "blue"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "pink", "Stressed" = "purple")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "black"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "pink", "Stressed" = "purple")) +
+    labs(x = "Stress Status",
+         y = "Mean Blinks/Minute",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Paired T-Test Code
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Playground1
+name <- NULL
+print(paste0("Hello ", name))
+
+#Playground1
+name <- "Danny"
+print(paste0("Hello ", name))
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Summarise Result Code
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
 
 #View Data Code
 head(data)
@@ -19,215 +354,804 @@ average_trs <- data %>%
       summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
 
 #Summarise Result Code
-#type your code in here!
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#View Data Code
+head(data)
+
+#Code for step1
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step1
+library(dplyr)
 
 unstressed_data <- average_trs %>%
-    filter(Stress_Status == "unstressed") 
+  filter(Stress_Status == "Unstressed")
 
-#Summarise Result Code
-#type your code in here!
-average_trs
+#Code for step1
+library(dplyr)
 
-#Summarise Result Code
-#type your code in here!
 unstressed_data <- average_trs %>%
-    filter(Stress_Status == "unstressed") 
+  dplyr::filter(Stress_Status == "Unstressed")
+
+#Code for step1
+head(average_trs)
+
+#Code for step2
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Code for step2
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 2: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 2: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+# Oops! This time you need to type out the code yourself.
+# Are you stuck? Scroll up to see what we did before. 
+# Start with filtering the data..."
+
+
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_n <- nrow(unstressed_data)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_n <- nrow(stressed_data)
+
+#Step 5: Summarise Data
+stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+stressed_mean <- mean(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_sd <- sd(stressed_data$Average_Blinks_Per_Minute)
+
+stressed_n <- nrow(stressed_data)
+
+stressed_sem <- stressed_sd/sqrt(stressed_n)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+data <- average_trs
+
+
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+Stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+#Step 5: Summarise Data
+Stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+Stressed_mean <- mean(Stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 5: Summarise Data
+Stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+Stressed_mean <- mean(Stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+
+#Step 5: Summarise Data
+Stressed_data <- average_trs %>%
+    filter(Stress_Status == "Stressed")
+
+Stressed_mean <- mean(Stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+Stressed_sd <- sd(Stressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+Stressed_n <- nrow(Stressed_data)
+Stressed_sem <- Stressed_sd / sqrt(Stressed_data)
+
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+#Step 5: Summarise Data
+unstressed_data <- average_trs %>%
+    filter(Stress_Status == "Unstressed") 
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+data <- average_trs
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+data <- average_trs
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
     
-unstressed_data
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
 
-#Summarise Result Code
-#type your code in here!
-
-unstressed_data
-
-#Summarise Result Code
-#type your code in here!
-
-unstressed_data <- average_trs %>%
-    filter(Stress_Status == "unstressed") 
-
-view(unstressed_data)
-
-
-#Summarise Result Code
-#type your code in here!
-
-unstressed_data <- average_trs %>%
-    filter(Stress_Status == "Unstressed") 
-
-view(unstressed_data)
-
-
-#Summarise Result Code
-#type your code in here!
-
-unstressed_data <- average_trs %>%
-    filter(Stress_Status == "Unstressed") 
-
-unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
-
-
-#Summarise Result Code
-#type your code in here!
-
-unstressed_data <- average_trs %>%
-    filter(Stress_Status == "Unstressed") 
-
-unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
-
-
-#Summarise Result Code
-#type your code in here!
-
-unstressed_data <- average_trs %>%
-    filter(Stress_Status == "Unstressed") 
-
-unstressed_data
-
-unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
-
-
-#Summarise Result Code
-#type your code in here!
-
-unstressed_data <- average_trs %>%
-    filter(Stress_Status == "Unstressed") 
-
-unstressed_data
-
-#View Data Code
-head(data)
-
-#View Data Code
-head(data)
-
-#View Data Code
-head(data)
-
-#View Data Code
-head(data)
-
-#View Data Code
-head(data)
-
-#View Data Code
-head(data)
-
-#View Data Code
-print("hello")
-
-#View Data Code
-head(data)
-
-#Summarise Result Code
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Summarise Result Code
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Summarise Result Code
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Summarise Result Code
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Summarise Result Code
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Code for step1
-unstressed_data <- average_trs %>%
-  filter(Stress_Status == "Unstressed")
-
-#Summarise Result Code
-data_summary <- average_trs %>%
-      group_by(Stress_Status) %>%
-      summarise(
-        n = n(),
-        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
-        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
-        sem = sd / sqrt(n)
-      )
-
-#Summarise Result Code
-data_summary <- average_trs %>%
-      group_by(Stress_Status) %>%
-      summarise(
-        n = n(),
-        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
-        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
-        sem = sd / sqrt(n)
-      )
-
-#View Data Code
-head(data)
-
-#View Data Code
-head(data)
-
-#Step 1: Summarise Data
-wilcox_test_paired <- wilcox.test(average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "before"], 
-                                  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "after"], 
-                                  paired = TRUE)
-
-#Step 1: Summarise Data
+#Statistical Analysis: Normal Unpaired
 t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, data = average_trs)
 
 #Statistical Analysis: Not Normal Unpaired
 wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
                                     data = average_trs)
 
-#Statistical Analysis: Not Normal Unpaired
-wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
-                                    data = average_trs)
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs_paired_wide %>%
+  cohens_d(Stressed, Unstressed, paired = TRUE)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs_paired_wide %>%
+  cohens_d(Stressed, Unstressed, paired = TRUE)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs_paired_wide %>%
+  cohens_d(Stressed, Unstressed, paired = TRUE)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs_paired_wide %>%
+  cohens_d(Stressed, Unstressed, paired = TRUE)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs_paired_wide %>%
+  cohens_d(Stressed, Unstressed, paired = TRUE)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- cohens_d(average_trs_paired_wide$Stressed, average_trs_paired_wide$Unstressed, paired = TRUE)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- cohens_d(average_trs_paired_wide, Stressed, Unstressed, paired = TRUE)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+average_trs_paired_wide
+
+#Statistical Analysis: Effect Size for Paired T-Test
+average_trs_paired_wide$Stressed
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs_paired_wide %>%
+  cohens_d(Stressed, Unstressed, paired = TRUE)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Stressed, Unstressed, paired = TRUE)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
 
 #Statistical Analysis: Normal Unpaired
 t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
@@ -253,15 +1177,268 @@ effect_size_paired_t <- average_trs %>%
   cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
 
 
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
 #Statistical Analysis: Effect Size for Unpaired T-Test
 effect_size_t <- average_trs %>%
   cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
 
 
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
 #Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
-                                  data = average_trs, 
-                                  paired = TRUE)
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Not Normal Paired
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Paired
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+
+#Statistical Analysis: Not Normal Paired
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+
+#Statistical Analysis: Not Normal Paired
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Paired
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Normal Paired
+#type your code in here!
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
 
 #Statistical Analysis: Not Normal Unpaired
 wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
@@ -270,180 +1447,8 @@ wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, d
 t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
                 data = average_trs)
 
-#Statistical Analysis: Normal Unpaired
-t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
-                data = average_trs)
-
-#Statistical Analysis: Normal Unpaired
-t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
-                data = average_trs)
-
-#Statistical Analysis: Normal Unpaired
-t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
-                data = average_trs)
-
-#Statistical Analysis: Normal Paired
-average_trs_paired_wide <- average_trs %>%
-      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
-    
-t_test_paired <- t.test(
-  average_trs_paired_wide$Stressed,
-  average_trs_paired_wide$Unstressed,
-  paired = TRUE
-)
-
-#Statistical Analysis: Normal Unpaired
-t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
-                data = average_trs)
-
-#Statistical Analysis: Normal Unpaired
-t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
-                data = average_trs)
-
-#Statistical Analysis: Normal Unpaired
-t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
-                data = average_trs)
-
 #Statistical Analysis: Effect Size for Unpaired T-Test
 effect_size_t <- average_trs %>%
   cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
-
-
-#Statistical Analysis: Normal Unpaired
-t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
-                data = average_trs)
-
-#Statistical Analysis: Effect Size for Unpaired T-Test
-effect_size_t <- average_trs %>%
-  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
-
-
-#Statistical Analysis: Normal Paired
-average_trs_paired_wide <- average_trs %>%
-      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
-    
-t_test_paired <- t.test(
-  average_trs_paired_wide$Stressed,
-  average_trs_paired_wide$Unstressed,
-  paired = TRUE
-)
-
-#Statistical Analysis: Effect Size for Paired T-Test
-effect_size_paired_t <- average_trs %>%
-  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
-
-
-#Statistical Analysis: Normal Paired
-average_trs_paired_wide <- average_trs %>%
-      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
-    
-t_test_paired <- t.test(
-  average_trs_paired_wide$Stressed,
-  average_trs_paired_wide$Unstressed,
-  paired = TRUE
-)
-
-#Statistical Analysis: Effect Size for Paired T-Test
-effect_size_paired_t <- average_trs %>%
-  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
-
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
-                                  data = average_trs, 
-                                  paired = TRUE)
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
-                                  data = average_trs, 
-                                  paired = TRUE)
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
-  paired = TRUE
-)
-
-#Statistical Analysis: Effect Size for Paired T-Test
-effect_size_paired <- average_trs %>%
-  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
-
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
-  paired = TRUE
-)
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
-  paired = TRUE
-)
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
-  paired = TRUE
-)
-
-#Statistical Analysis: Effect Size for Paired T-Test
-effect_size_paired <- average_trs %>%
-  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
-
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
-  paired = TRUE
-)
-
-#Statistical Analysis: Effect Size for Paired T-Test
-effect_size_paired <- average_trs %>%
-  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
-
-
-#Statistical Analysis: Not Normal Unpaired
-wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
-  paired = TRUE
-)
-
-#Statistical Analysis: Effect Size for Paired T-Test
-effect_size_paired <- average_trs %>%
-  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
-
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
-  paired = TRUE
-)
-
-#Statistical Analysis: Effect Size for Paired T-Test
-effect_size_paired <- average_trs %>%
-  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
-
-
-#Statistical Analysis: Not Normal Paired
-wilcox_test_paired <- wilcox.test(
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
-  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
-  paired = TRUE
-)
-
-#Statistical Analysis: Effect Size for Paired T-Test
-effect_size_paired <- average_trs %>%
-  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
 
 

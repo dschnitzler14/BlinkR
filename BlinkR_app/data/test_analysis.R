@@ -211,3 +211,10 @@ wilcox_test_paired <- wilcox.test(
 )
 
 wilcox_test_paired$p.value
+
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)

@@ -190,16 +190,37 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
     
     
     stats_content_reactive <- reactive({
-      req(!is.null(saved_results$scripts[["stats_two_sample"]]) || !is.null(saved_results$scripts[["stats_paired"]]))
+      req(!is.null(saved_results$scripts[["stats_not_normal_unpaired"]]) || 
+        !is.null(saved_results$scripts[["stats_not_normal_paired"]]) ||
+        !is.null(saved_results$scripts[["stats_normal_unpaired"]]) ||
+        !is.null(saved_results$scripts[["stats_normal_paired"]]) ||
+        !is.null(saved_results$scripts[["stats_normal_paired_effect_size"]]) ||
+        !is.null(saved_results$scripts[["stats_normal_unpaired_effect_size"]]) ||
+        !is.null(saved_results$scripts[["stats_not_normal_paired_effect_size"]]) ||
+        !is.null(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]])
+
+      )
       
-      if (!is.null(saved_results$scripts[["stats_two_sample"]])) {
-        paste(capture.output(saved_results$scripts[["stats_two_sample"]]), collapse = "\n")
-      } else if (!is.null(saved_results$scripts[["stats_paired"]])) {
-        paste(capture.output(saved_results$scripts[["stats_paired"]]), collapse = "\n")
-      } else {
-        "No statistical scripts found."
-      }
-    })
+      if (!is.null(saved_results$scripts[["stats_not_normal_unpaired"]])) {
+        paste(capture.output(saved_results$scripts[["stats_not_normal_unpaired"]]$result), collapse = "\n")
+      } else if (!is.null(saved_results$scripts[["stats_not_normal_paired"]])) {
+        paste(capture.output(saved_results$scripts[["stats_not_normal_paired"]]$result), collapse = "\n")
+        } else if (!is.null(saved_results$scripts[["stats_normal_unpaired"]])) {
+            paste(capture.output(saved_results$scripts[["stats_normal_unpaired"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_normal_paired"]])) {
+            paste(capture.output(saved_results$scripts[["stats_normal_paired"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_normal_paired_effect_size"]])) {
+            paste(capture.output(saved_results$scripts[["stats_normal_paired_effect_size"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_normal_unpaired_effect_size"]])) {
+            paste(capture.output(saved_results$scripts[["stats_normal_unpaired_effect_size"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_not_normal_paired_effect_size"]])) {
+            paste(capture.output(saved_results$scripts[["stats_not_normal_paired_effect_size"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]])) {
+            paste(capture.output(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]]$result), collapse = "\n")
+            } else {
+            "No statistical scripts found."
+            }
+})
     
     
     output$saved_stats_results <- renderUI({

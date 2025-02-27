@@ -1,6 +1,8 @@
 ```
-effect_size_paired_t <- average_trs %>%
-  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
-
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
 ````
 
