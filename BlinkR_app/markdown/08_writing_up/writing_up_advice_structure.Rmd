@@ -1,0 +1,11 @@
+Your expose should be structured as follows:
+
+1. Introduction
+2. Methods
+3. Results
+4. Discussion
+5. Future Work
+6. References
+
+Each section has a specific purpose and should be written in a specific way.
+The following boxes will provide you with some advice on how to write each section.

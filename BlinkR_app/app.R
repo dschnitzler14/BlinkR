@@ -104,6 +104,7 @@ sidebar <- dashboardSidebar(
                  menuItem("4. Statistical Analysis", tabName="Statistical_Analysis", icon = icon("equals"))
         ),
         menuItem("Writing Up", tabName = "Writing-Up-menu",icon = icon("pen"),
+          menuItem("Write Up Advice", tabName = "Writing_Up_Advice", icon = icon("circle-info")),
           menuItem("Write Notes", tabName = "Writing-Up", icon = icon("pen")),
           menuItem("Upload Final Report", tabName = "Upload_Report", icon = icon("upload"))
           ),
@@ -228,6 +229,13 @@ body <- dashboardBody(
       conditionalPanel(
         condition = "output.user_auth",
         write_up_module_ui("write_up")
+      )
+    ),
+    tabItem(
+      tabName = "Writing_Up_Advice",
+      conditionalPanel(
+        condition = "output.user_auth",
+        writing_up_advice_ui("writing_up_advice")
       )
     ),
      tabItem(

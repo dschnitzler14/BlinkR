@@ -1,0 +1,25 @@
+Your introduction is meant to introduce the topic and clearly lay out the evidence that lead you to your research question.
+In particular, you should use peer-reviewed scientific evidence to justify the importance of the study.
+
+A lot of scientific writing is a type of storytelling. You should aim to tell a story that leads the reader to the research question.
+The introduction should start broadly and then narrow down to the specific research question.
+
+You could start by defining the aspects of the question you are addressing.
+Then, you could provide evidence of its importance, and finally highlight the gap in the literature that your study will address.
+By the time the reader gets to your hypothesis, they should be convinced that your study is important and necessary. 
+The should be tell what the hypothesis will be prior to stating it.
+
+For example, if you are studying the effect of a new drug on a disease, you could start by defining the disease and its impact on society.
+Then, you could provide evidence that the current treatments are not effective.
+Finally, you could introduce the new drug and explain why it is important to study its effects.
+In your hypothesis, you could state that the new drug will be more effective than the current treatments. This should be clearly defined prior to stating. this.
+
+Here is a concrete example:
+- Define the disease: "Cancer is a leading cause of death worldwide (reference). "
+- Provide evidence of the problem: "Current treatments are not effective in all patients (reference)."
+- Introduce the new drug: "Drug X has shown promising results in studies A and B (reference)."
+- Highlight the gap in the literature: "However, no study has compared Drug X to the current treatments."
+- Hypothesis: "We hypothesise that Drug X will be more effective than the current treatments."
+- Alternative hypothesis: "We hypothesise that Drug X will not be more effective than the current treatments."
+
+Remember that the introduction should be concise and to the point. You should not include any results or discussion in this section.

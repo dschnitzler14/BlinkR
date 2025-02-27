@@ -1,0 +1,16 @@
+Your methods section should clearly describe what you did and why you did it. It should be clear enough that someone else could replicate your study. You should include enough detail that someone else could replicate your study. 
+
+This section should include all the work to gather data, the data cleaning, and the analysis. You should also include any statistical tests you used and why you used them. You should also reference any software or tools you used.
+You should also include any ethical considerations you had to take into account when conducting your study.
+
+For example, if you are studying the effect of a new drug on a disease, you should include the following information:
+- The name of the drug and the disease you are studying.
+- The dosage and administration of the drug.
+- The study design (e.g. double-blind).
+- The number of participants and how they were recruited.
+- The statistical tests used to analyse the data, why you used them, and the software used.
+- Any ethical considerations you had to take into account.
+
+Remember that the methods section should be clear and concise. You should not include any results or discussion in this section.
+
+This is also a good place to include any figures that inform how you proceeded with the analysis (e.g. histogram for normality distribution)

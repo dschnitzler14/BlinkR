@@ -1,0 +1,12 @@
+Your discussion section should discuss your findings in context of the existing literature and interpret what your results mean. You should also discuss the limitations of your study and suggest future research directions.
+
+Remember to use peer-reviewed studies to support your discussion. You should also consider the implications of your findings and how they could be applied in practice.
+
+For example:
+- What do your results show? Was your hypothesis correct? 
+- If you are studying the effect of a new drug on a disease, you should discuss how your findings compare to other studies that have looked at the same drug or disease.
+    - Are your results the same or are they different? What could account for that difference?
+- You should also discuss the limitations of your study, such as the sample size or the study design.
+    - How could you mitigate these limitations?
+
+Remember that your discussion should be clear and concise. You should not include any new results in this section.

@@ -1,0 +1,35 @@
+**1. What do I do if my results aren't significant?**
+- Don't panic! This is a common issue in research. It's important to report your results honestly, even if they are not significant.
+- Consider alternative explanations. If your results are not significant, think about other factors that could have influenced the outcome.
+- Discuss limitations. Be honest about the limitations of your study and how they may have affected the results.
+- Consider future research. If your results are not significant, think about how future research could build on your findings.
+
+**2. What do I do if the effect size is small?**
+- Consider practical significance. Even if the effect size is small, it may still be important in practice. Consider the real-world implications of your findings.
+- Consider sample size. A small effect size may be due to a small sample size. Consider whether a larger sample size would change the results.
+- Consider alternative explanations. Think about other factors that could have influenced the effect size.
+
+**3. How do I interpret conflicting results?**
+- Consider the context. Think about the context in which the conflicting results were obtained. Are there factors that could explain the differences?
+- Consider the methods. Look at the methods used in the studies that produced conflicting results. Are there differences in the design or analysis that could explain the discrepancies?
+- Consider the limitations. Think about the limitations of the studies that produced conflicting results. Are there factors that could have influenced the outcomes?
+
+**4. How do I use evidence to back up my arguments?**
+- Every factual claim that you make needs to be supported by evidence. This could be findings from your study or findings from other studies.
+- For example:
+- "Previous studies have demonstrated a positive correlation between X and Y (Smith et al., 2010)."
+- "Stress has been shown to have a negative impact on cognitive function (Jones et al., 2015)."
+- "The findings of this study are in line with previous research on the topic (Smith et al., 2010; Jones et al., 2015)."
+- "The HPA-axis has been implicated in the stress response (Smith et al., 2010)."
+
+- Even if you think something is common knowledge, it is still important to provide a reference to back up your claim.
+
+
+**5. How do I know if a study was any good?**
+- Remember to use your critical thinking skills - some papers are better than others. Look for papers that are published in reputable journals, have been peer-reviewed, and have a clear methodology and results section.
+- It is okay if you consider the study to be sub-par and have critiques of it. This is a normal part of the scientific process.
+- You can discuss any problems or limitations of a study in your report.
+    - For example: "While the present results are in line with a previous study by Smith et al. (2010), the latter study reported a small sample size, which may have limited the generalisability of the results."
+
+**6. I still don't understand how to write this report**
+- Reading other papers can be a great way to learn how to structure your own report. Look for papers in your field that are well-written and follow a similar structure to what you are aiming for.
