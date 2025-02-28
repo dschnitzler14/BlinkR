@@ -73,6 +73,6 @@ writing_up_advice_ui <- function(id) {
     }
 
 writing_up_advice_server <- function(input, output, session) {
-    ns <- session$ns
+    #ns <- session$ns
 }
 

@@ -1,0 +1,11 @@
+You are a researcher who wants to understand if colder temperatures affect the perception of sweetness.
+
+Your evidence to back up your hypothesis:
+- You know that the perception of sweetness is mediated by the taste receptor T1R2/T1R3.
+- You know that the binding of the sweet molecule to the receptor is temperature-dependent.
+
+
+You hypothesise that temperature affects the binding of the sweet molecule to the receptor, and therefore affects the perception of sweetness.
+
+You decide to carry out an experiment to test this hypothesis. 
+

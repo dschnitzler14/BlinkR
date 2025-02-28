@@ -108,6 +108,7 @@ sidebar <- dashboardSidebar(
           menuItem("Write Notes", tabName = "Writing-Up", icon = icon("pen")),
           menuItem("Upload Final Report", tabName = "Upload_Report", icon = icon("upload"))
           ),
+        menuItem("Simulated Experiment", tabName = "Simulated_Experiment", icon = icon("whiskey-glass")),
         menuItem("Feedback", tabName = "Feedback", icon = icon("comment"))
       )
     ),
@@ -247,6 +248,13 @@ body <- dashboardBody(
       )
     ),
     tabItem(
+      tabName = "Simulated_Experiment",
+      conditionalPanel(
+        condition = "output.user_auth",
+        simulated_experiment_module_ui("simulated_experiment")
+      )
+    ),
+    tabItem(
       tabName = "Feedback",
       conditionalPanel(
         condition = "output.user_auth",
@@ -350,8 +358,10 @@ saved_results <- reactiveValues(
     analysis_summarise_data_module_server("summarise", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
     analysis_stats_module_server("stats", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
     analysis_create_figure_module_server("figure", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    writing_up_advice_server("writing_up_advice")
     write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id)
     upload_report_module_server("upload_report", auth = auth, base_group_files_url = base_group_files_url, final_reports_folder_id = final_reports_folder_id)
+    simulated_experiment_module_server("simulated_experiment")
     feedback_module_server("feedback")
     your_google_drive_module_server("your_drive_module", session_folder_id = session_folder_id)
     
