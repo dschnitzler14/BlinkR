@@ -104,11 +104,20 @@ sidebar <- dashboardSidebar(
                  menuItem("4. Statistical Analysis", tabName="Statistical_Analysis", icon = icon("equals"))
         ),
         menuItem("Writing Up", tabName = "Writing-Up-menu",icon = icon("pen"),
-          menuItem("Write Up Advice", tabName = "Writing_Up_Advice", icon = icon("circle-info")),
+          menuItem("Write Up Advice", tabName = "Writing_Up_Advice", icon = icon("circle-question")),
           menuItem("Write Notes", tabName = "Writing-Up", icon = icon("pen")),
           menuItem("Upload Final Report", tabName = "Upload_Report", icon = icon("upload"))
           ),
-        menuItem("Simulated Experiment", tabName = "Simulated_Experiment", icon = icon("whiskey-glass")),
+        menuItem("Simulated Experiment", tabName = "Simulated_Experiment", icon = icon("microscope"),
+          menuItem("Description", tabName = "Simulated_Experiment_Description", icon = icon("circle-info")),
+          menuItem("Background", tabName = "Simulated_Experiment_Background", icon = icon("book-open")),
+          menuItem("Hypothesis", tabName = "Simulated_Experiment_Hypothesis", icon = icon("pen-to-square")),
+          menuItem("Protocol", tabName = "Simulated_Experiment_Protocol", icon = icon("list")),
+          menuItem("Measurements", tabName = "Simulated_Experiment_Measurements", icon = icon("ruler")),
+          menuItem("Raw Data", tabName = "Simulated_Experiment_Raw_Data", icon = icon("database")),
+          menuItem("Analysis", tabName = "Simulated_Experiment_Analysis", icon = icon("chart-simple")),
+          menuItem("Writing Up", tabName = "Simulated_Experiment_Writing_Up", icon = icon("pen"))
+          ),
         menuItem("Feedback", tabName = "Feedback", icon = icon("comment"))
       )
     ),
@@ -248,10 +257,59 @@ body <- dashboardBody(
       )
     ),
     tabItem(
-      tabName = "Simulated_Experiment",
+      tabName = "Simulated_Experiment_Description",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_module_ui("simulated_experiment")
+        simulated_experiment_description_module_ui("simulated_experiment_description")
+      )
+    ),
+    tabItem(
+      tabName = "Simulated_Experiment_Background",
+      conditionalPanel(
+        condition = "output.user_auth",
+        simulated_experiment_background_module_ui("simulated_experiment_background")
+      )
+    ),
+    tabItem(
+      tabName = "Simulated_Experiment_Hypothesis",
+      conditionalPanel(
+        condition = "output.user_auth",
+        simulated_experiment_hypothesis_module_ui("simulated_experiment_hypothesis")
+      )
+    ),
+    tabItem(
+      tabName = "Simulated_Experiment_Protocol",
+      conditionalPanel(
+        condition = "output.user_auth",
+        simulated_experiment_protocol_module_ui("simulated_experiment_protocol")
+      )
+    ),
+    tabItem(
+      tabName = "Simulated_Experiment_Measurements",
+      conditionalPanel(
+        condition = "output.user_auth",
+        simulated_experiment_measurements_module_ui("simulated_experiment_measurements")
+      )
+    ),
+    tabItem(
+      tabName = "Simulated_Experiment_Raw_Data",
+      conditionalPanel(
+        condition = "output.user_auth",
+        simulated_experiment_raw_data_module_ui("simulated_experiment_raw_data")
+      )
+    ),
+    tabItem(
+      tabName = "Simulated_Experiment_Analysis",
+      conditionalPanel(
+        condition = "output.user_auth",
+        simulated_experiment_analysis_module_ui("simulated_experiment_analysis")
+      )
+    ),
+    tabItem(
+      tabName = "Simulated_Experiment_Writing_Up",
+      conditionalPanel(
+        condition = "output.user_auth",
+        simulated_experiment_writing_up_module_ui("simulated_experiment_writing_up")
       )
     ),
     tabItem(
@@ -361,7 +419,14 @@ saved_results <- reactiveValues(
     writing_up_advice_server("writing_up_advice")
     write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id)
     upload_report_module_server("upload_report", auth = auth, base_group_files_url = base_group_files_url, final_reports_folder_id = final_reports_folder_id)
-    simulated_experiment_module_server("simulated_experiment")
+    simulated_experiment_description_module_server("simulated_experiment_description")
+    simulated_experiment_background_module_server("simulated_experiment_background")
+    simulated_experiment_hypothesis_module_server("simulated_experiment_hypothesis")
+    simulated_experiment_protocol_module_server("simulated_experiment_protocol")
+    simulated_experiment_measurements_module_server("simulated_experiment_measurements")
+    simulated_experiment_raw_data_module_server("simulated_experiment_raw_data")
+    simulated_experiment_analysis_module_server("simulated_experiment_analysis")
+    simulated_experiment_writing_up_module_server("simulated_experiment_writing_up")
     feedback_module_server("feedback")
     your_google_drive_module_server("your_drive_module", session_folder_id = session_folder_id)
     

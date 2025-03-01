@@ -150,6 +150,30 @@ output$testing_assumptions <- renderUI({
     })
 
 observeEvent(input$run_hist_Plot, {
+  output$not_normal_unpaired_ui <- renderUI({NULL})
+  output$not_normal_paired_ui <- renderUI({NULL})
+  output$normal_unpaired_ui <- renderUI({NULL})
+  output$normal_paired_ui <- renderUI({NULL})
+
+  output$effect_size_t_test_paired <- renderUI({NULL})
+  output$effect_size_t_test_unpaired <- renderUI({NULL})
+  output$effect_size_wilcoxon_paired <- renderUI({NULL})
+  output$effect_size_wilcoxon_unpaired <- renderUI({NULL})
+  output$interpretation_quiz <- renderUI({NULL})
+  output$enter_effect_size_feedback <- renderUI({NULL})
+  output$enter_p_value_feedback <- renderUI({NULL})
+
+
+if(!is.null(normal_unpaired_result()$result)){
+    normal_unpaired_result <- NULL
+  } else if (!is.null(normal_paired_result()$result)) {
+     normal_paired_result <- NULL
+  } else if (!is.null(not_normal_unpaired_result()$result)) {
+     not_normal_unpaired_result <- NULL
+  } else if (!is.null(not_normal_paired_result()$result)) {
+     not_normal_paired_result <- NULL
+  }
+
       req(average_trs())
       
       output$hist_plot <- renderPlot({
@@ -185,9 +209,7 @@ observeEvent(input$run_hist_Plot, {
 
     output$hist_explainer_ui <- renderUI({
       tagList(
-      includeMarkdown(
-          "markdown/07_analysis/analysis_hist_plot_explainer.Rmd"
-        ),
+      
       actionButton(session$ns("normal"), "The Data is Normal", class = "fun-submit-button"),
         actionButton(session$ns("not_normal"), "The Data is Not Normal", class = "fun-submit-button")
       )
