@@ -9,6 +9,3 @@ version: 1.0
 doi: ""
 date-released: 2024
 url: "https://github.com/dschnitzler14/BlinkR"
-
-
-add citation, fix multiple user base sheet reads on start up, move about section to header, added citation in header
