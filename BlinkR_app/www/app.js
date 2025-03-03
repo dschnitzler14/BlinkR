@@ -25,3 +25,18 @@ function collapseBox(boxid) {
   $('#' + boxid).find('[data-widget="collapse"]').click();
 }
 
+Shiny.addCustomMessageHandler("copyToClipboard", function(message) {
+  // Use the modern Async Clipboard API
+  navigator.clipboard.writeText(message).then(
+    function() {
+      // success callback
+      alert("Copied citation to clipboard!");
+    },
+    function(err) {
+      // error callback
+      console.error("Async: Could not copy text: ", err);
+      alert("Error copying to clipboard.");
+    }
+  );
+});
+

@@ -373,7 +373,7 @@ saved_results <- reactiveValues(
   
   introduction_module_server("introduction", parent.session = session)
 
-  auth <- custom_login_server("login_module", user_base_google_sheet, all_users, base_group_files_url)
+  auth <- custom_login_server("login_module", user_base_google_sheet, all_users, base_group_files_url, external_logout_button = reactive(input$logout_button))
 
   output$user_auth <- reactive({ auth()$user_auth })
   output$user_role <- reactive({ auth()$user_info$role })
@@ -413,14 +413,10 @@ saved_results <- reactiveValues(
   })
   
   
-  observeEvent(input$logout_button, {
-    auth()$user_auth <- FALSE
-    auth()$user_info <- list(Group = NULL, role = NULL)
-    
-    # output$login_ui <- renderUI({ 
-    #   custom_login_ui("login_module")
-    # })
-  })
+  #  observeEvent(input$logout_button, {
+  
+  #   })
+
   
 
   
@@ -479,8 +475,8 @@ saved_results <- reactiveValues(
     )
   })
 
+  
 }
-
 
 # runapp ----
 shinyApp(ui = ui, server = server)

@@ -446,7 +446,8 @@ output$step6_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step6"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step6_editor"))
+                  editor_module_ui(session$ns("step6_editor")),
+                  uiOutput(session$ns("save_summary_result"))
                   )
               )
             )
@@ -506,11 +507,13 @@ observe({
     })
 
     output$save_summary_result <- renderUI({
+        tagList(
           actionButton(
             session$ns("save_summary_results_button"),
             label = tagList(icon("save"), "Save Results to Dashboard"),
             class = "action-button custom-action"
           )
+        )
         })
         
     
@@ -520,9 +523,9 @@ observe({
       div(class = "error-box", "\U1F914 Not quite - try again!")
     })
     
-    output$save_summary_result <- renderUI({
-          NULL
-        })
+    # output$save_summary_result <- renderUI({
+    #       NULL
+    #     })
   }
 })
     

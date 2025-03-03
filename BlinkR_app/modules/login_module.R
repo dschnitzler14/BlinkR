@@ -34,7 +34,7 @@ custom_login_ui <- function(id) {
 }
 
 
-custom_login_server <- function(id, user_base_sheet_id, all_users, base_group_files_url) {
+custom_login_server <- function(id, user_base_sheet_id, all_users, base_group_files_url, external_logout_button = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -44,7 +44,7 @@ custom_login_server <- function(id, user_base_sheet_id, all_users, base_group_fi
     #user_base <- read_sheet(user_base_google_sheet)
 
       observe({
-      user_base(user_base_sheet_id)
+      user_base(read_sheet(user_base_sheet_id))
     })
 
     #   observe({
@@ -212,7 +212,44 @@ custom_login_server <- function(id, user_base_sheet_id, all_users, base_group_fi
       }
     })
     
-    
+   observeEvent(external_logout_button(), ignoreInit = TRUE, {
+      req(credentials$user_auth)   # only do this if we’re logged in
+
+      if (!is.null(credentials$session_folder)) {
+        folder_files <- googledrive::drive_ls(credentials$session_folder)
+        if (nrow(folder_files) == 0) {
+          googledrive::drive_rm(credentials$session_folder)
+          output$error <- renderText("Session folder was empty and has been deleted.")
+        } else {
+          output$error <- renderText("Session folder contains files and was not deleted.")
+        }
+      } else {
+        output$error <- renderText("Session folder does not exist.")
+      }
+      
+      # Clear out everything in 'credentials'
+      credentials$user_auth <- FALSE
+      credentials$info <- list(Group = NULL, role = NULL, date = NULL, protocol = NULL, data = NULL)
+      credentials$session_folder <- NULL
+      credentials$session_folder_id <- NULL
+      credentials$session_folder_url <- NULL
+
+      # (Optional) show a logout message in the same 'error' spot
+      output$error <- renderText("Logged out successfully.")
+    })
+
+    # Return read-only info if you like, or the entire credentials, etc.
+    return(
+      reactive({
+        list(
+          user_auth = credentials$user_auth,
+          user_info = credentials$info,
+          session_folder = credentials$session_folder,
+          session_folder_url = credentials$session_folder_url,
+          session_folder_id = credentials$session_folder_id
+        )
+      })
+    )
     # output$logout_ui <- renderUI({
     #   req(credentials$user_auth)
     #   tagList(
@@ -223,17 +260,17 @@ custom_login_server <- function(id, user_base_sheet_id, all_users, base_group_fi
     # 
     # observeEvent(input$logout_button, {
     #     req(credentials$user_auth)      
-    #   # if (!is.null(credentials$session_folder)) {
-    #   #   folder_files <- googledrive::drive_ls(credentials$session_folder)
-    #   #   if (nrow(folder_files) == 0) {
-    #   #     googledrive::drive_rm(credentials$session_folder)
-    #   #     output$error <- renderText("Session folder was empty and has been deleted.")
-    #   #   } else {
-    #   #     output$error <- renderText("Session folder contains files and was not deleted.")
-    #   #   }
-    #   # } else {
-    #   #   output$error <- renderText("Session folder does not exist.")
-    #   # }
+      # if (!is.null(credentials$session_folder)) {
+      #   folder_files <- googledrive::drive_ls(credentials$session_folder)
+      #   if (nrow(folder_files) == 0) {
+      #     googledrive::drive_rm(credentials$session_folder)
+      #     output$error <- renderText("Session folder was empty and has been deleted.")
+      #   } else {
+      #     output$error <- renderText("Session folder contains files and was not deleted.")
+      #   }
+      # } else {
+      #   output$error <- renderText("Session folder does not exist.")
+      # }
     #   
     #     credentials$user_auth <- NULL
     #     credentials$info <- list(Group = NULL)
