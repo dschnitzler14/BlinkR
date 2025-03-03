@@ -27,14 +27,14 @@ admin_area_module_ui <- function(id) {
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
-                                      share_to_groups_admin_module_ui(ns("share_protocol")),
+                                      #share_to_groups_admin_module_ui(ns("share_protocol")),
                                   ),
                                   box(title = "Class Data",
                                       collapsible = TRUE,
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
-                                      share_to_groups_admin_module_ui(ns("share_data")),
+                                      #share_to_groups_admin_module_ui(ns("share_data")),
                                       combine_sheets_module_ui(ns("combine_data")),
                                   ),
                                   box(title = "Report Submission",
@@ -60,13 +60,21 @@ admin_area_module_server <- function(id, group_data_file_id, parent.session, use
       
     })
     
-    user_base <- read_sheet(user_base_google_sheet)
+    #user_base <- read_sheet(user_base_google_sheet)
+     
+    #user_base <- user_base_google_sheet
+
+    #   user_base <- reactiveVal()
+
+    #   observe({
+    #   user_base(user_base_google_sheet)
+    # })
     
     column_data_permissions <- paste("F")
     column_protocol_permissions <- paste("E")
     
-    share_to_groups_admin_module_server("share_protocol", user_base_google_sheet, column = column_protocol_permissions)
-    share_to_groups_admin_module_server("share_data", user_base_google_sheet, column = column_data_permissions)
+    #share_to_groups_admin_module_server("share_protocol", user_base, column = column_protocol_permissions)
+    #share_to_groups_admin_module_server("share_data", user_base, column = column_data_permissions)
     view_groups_admin_module_server("view_groups", user_base_google_sheet)
     combine_sheets_module_server("combine_data", group_data_file_id, parent.session)
     view_report_submission_admin_module_server("report_submission_viewer", final_reports_folder_id)

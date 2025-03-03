@@ -44,15 +44,7 @@ googledrive::drive_auth()
 
 user_base_google_sheet <- drive_get("BlinkR Users")$id
 
-#user_base_read <- read_sheet(user_base_google_sheet)
-
-# all_users <- reactiveVal()
-
-# observe({
-#   req(user_base_google_sheet)
-#   user_data <- googlesheets4::read_sheet(user_base_google_sheet)
-#   all_users(user_data)
-# })
+user_base_read <- read_sheet(user_base_google_sheet)
 
 
 base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
@@ -78,7 +70,16 @@ css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "s
                       )
 
 # header ----
-header <- dashboardHeader(title = "BlinkR", uiOutput("user_area"))
+header <- dashboardHeader(title = "BlinkR",
+            tags$li(
+      class = "dropdown",
+      actionLink("about_link", label = "About", icon = icon("info-circle"))
+    ),
+    tags$li(
+      class = "dropdown",
+      actionLink("citing", label = "Cite BlinkR", icon = icon("asterisk"))
+    )
+            )
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
@@ -159,13 +160,13 @@ body <- dashboardBody(
       tabName = "Introduction",
       introduction_module_ui("introduction") 
     ),
-    tabItem(
-      tabName = "admin_area",
-      conditionalPanel(
-        condition = "output.user_role === 'admin'",
-        admin_area_module_ui("admin_module")
-      )
-    ),
+    # tabItem(
+    #   tabName = "admin_area",
+    #   conditionalPanel(
+    #     condition = "output.user_role === 'admin'",
+    #     admin_area_module_ui("admin_module")
+    #   )
+    # ),
     tabItem(
       tabName = "Background",
       conditionalPanel(
@@ -346,7 +347,14 @@ ui <- dashboardPage(header, sidebar, body)
 # server function ----
 server <- function(input, output, session) {
 
-  
+all_users <- reactiveVal()
+
+observe({
+  req(user_base_google_sheet)
+  user_data <- googlesheets4::read_sheet(user_base_google_sheet)
+  all_users(user_data)
+})
+
 saved_results <- reactiveValues(
   plots = list(),
   recorded_plots = list(),
@@ -365,7 +373,7 @@ saved_results <- reactiveValues(
   
   introduction_module_server("introduction", parent.session = session)
 
-  auth <- custom_login_server("login_module", user_base_google_sheet, base_group_files_url)
+  auth <- custom_login_server("login_module", user_base_google_sheet, all_users, base_group_files_url)
 
   output$user_auth <- reactive({ auth()$user_auth })
   output$user_role <- reactive({ auth()$user_info$role })
@@ -384,12 +392,12 @@ saved_results <- reactiveValues(
     })
   })
   
-  admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base_google_sheet = user_base_google_sheet, final_reports_folder_id = final_reports_folder_id)
+  # admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base_google_sheet = all_users(), final_reports_folder_id = final_reports_folder_id)
   
-  observeEvent(input$admin_area_button, {
-    req(auth()$user_info$role == "admin")
-    updateTabItems(session, "main_tabs", "admin_area")
-  })
+  # observeEvent(input$admin_area_button, {
+  #   req(auth()$user_info$role == "admin")
+  #   updateTabItems(session, "main_tabs", "admin_area")
+  # })
   
   observeEvent(input$your_drive_button, {
     req(auth()$user_auth)
@@ -448,6 +456,29 @@ saved_results <- reactiveValues(
     your_google_drive_module_server("your_drive_module", session_folder_id = session_folder_id)
     
   })
+
+  observeEvent(input$about_link, {
+    showModal(
+      modalDialog(
+        title = "About BlinkR",
+        includeMarkdown("markdown/00_about/about_box.Rmd"),
+        easyClose = TRUE,
+        footer = NULL
+      )
+    )
+  })
+
+  observeEvent(input$citing, {
+    showModal(
+      modalDialog(
+        title = "Citing BlinkR",
+        includeMarkdown("markdown/00_about/citing.Rmd"),
+        easyClose = TRUE,
+        footer = NULL
+      )
+    )
+  })
+
 }
 
 

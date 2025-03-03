@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Schnitzler"
+    given-names: "Daniela"
+    orcid: ""
+title: "BlinkR"
+version: 1.0
+doi: ""
+date-released: 2024
+url: "https://github.com/dschnitzler14/BlinkR"
+
+
+add citation, fix multiple user base sheet reads on start up, move about section to header, added citation in header

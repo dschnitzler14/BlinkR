@@ -11,18 +11,19 @@ view_groups_admin_module_server <- function(id, user_base_google_sheet) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    user_base_data <- reactiveVal(NULL)
+
+    user_base_data <- user_base_google_sheet()
     
-    observe({
-      user_base <- read_sheet(user_base_google_sheet)
-      user_base_data(user_base)
-    })
+    # observe({
+    #   user_base <- user_base_google_sheet
+    #   user_base_data(user_base)
+    # })
     
-    observeEvent(input$refresh_data, {
-      user_base <- read_sheet(user_base_google_sheet)
-      user_base_data(user_base)
-      showNotification("Groups data refreshed!", type = "message")
-    })
+    # observeEvent(input$refresh_data, {
+    #   user_base <- user_base_data
+    #   user_base_data(user_base)
+    #   showNotification("Groups data refreshed!", type = "message")
+    # })
     
     observe({
     output$user_table <- DT::renderDT({

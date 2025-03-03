@@ -19,7 +19,7 @@ share_to_groups_admin_module_server <- function(id, user_base_google_sheet, colu
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
-    user_base <- read_sheet(user_base_google_sheet)
+    user_base <- user_base_google_sheet
     
     date_group_choices <- user_base %>%
       filter(!is.na(Date)) %>%   
