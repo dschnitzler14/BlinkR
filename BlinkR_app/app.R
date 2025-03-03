@@ -46,6 +46,14 @@ user_base_google_sheet <- drive_get("BlinkR Users")$id
 
 #user_base_read <- read_sheet(user_base_google_sheet)
 
+# all_users <- reactiveVal()
+
+# observe({
+#   req(user_base_google_sheet)
+#   user_data <- googlesheets4::read_sheet(user_base_google_sheet)
+#   all_users(user_data)
+# })
+
 
 base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
 
@@ -105,6 +113,7 @@ sidebar <- dashboardSidebar(
         ),
         menuItem("Writing Up", tabName = "Writing-Up-menu",icon = icon("pen"),
           menuItem("Write Up Advice", tabName = "Writing_Up_Advice", icon = icon("circle-question")),
+          menuItem("AI", tabName = "AI", icon = icon("wand-magic-sparkles")),
           menuItem("Write Notes", tabName = "Writing-Up", icon = icon("pen")),
           menuItem("Upload Final Report", tabName = "Upload_Report", icon = icon("upload"))
           ),
@@ -246,6 +255,13 @@ body <- dashboardBody(
       conditionalPanel(
         condition = "output.user_auth",
         writing_up_advice_ui("writing_up_advice")
+      )
+    ),
+    tabItem(
+      tabName = "AI",
+      conditionalPanel(
+        condition = "output.user_auth",
+        writing_up_ai_ui("AI")
       )
     ),
      tabItem(
@@ -417,6 +433,7 @@ saved_results <- reactiveValues(
     analysis_stats_module_server("stats", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
     analysis_create_figure_module_server("figure", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
     writing_up_advice_server("writing_up_advice")
+    writing_up_ai_server("AI")
     write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id)
     upload_report_module_server("upload_report", auth = auth, base_group_files_url = base_group_files_url, final_reports_folder_id = final_reports_folder_id)
     simulated_experiment_description_module_server("simulated_experiment_description")
