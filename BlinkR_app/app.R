@@ -27,6 +27,7 @@ library(datasets)
 library(evaluate)
 library(rstatix)
 library(coin)
+library(rsconnect)
 
 options(
   gargle_oauth_email = TRUE,
