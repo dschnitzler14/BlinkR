@@ -118,16 +118,16 @@ sidebar <- dashboardSidebar(
           menuItem("Write Notes", tabName = "Writing-Up", icon = icon("pen")),
           menuItem("Upload Final Report", tabName = "Upload_Report", icon = icon("upload"))
           ),
-        menuItem("Simulated Experiment", tabName = "Simulated_Experiment", icon = icon("microscope"),
-          menuItem("Description", tabName = "Simulated_Experiment_Description", icon = icon("circle-info")),
-          menuItem("Background", tabName = "Simulated_Experiment_Background", icon = icon("book-open")),
-          menuItem("Hypothesis", tabName = "Simulated_Experiment_Hypothesis", icon = icon("pen-to-square")),
-          menuItem("Protocol", tabName = "Simulated_Experiment_Protocol", icon = icon("list")),
-          menuItem("Measurements", tabName = "Simulated_Experiment_Measurements", icon = icon("ruler")),
-          menuItem("Raw Data", tabName = "Simulated_Experiment_Raw_Data", icon = icon("database")),
-          menuItem("Analysis", tabName = "Simulated_Experiment_Analysis", icon = icon("chart-simple")),
-          menuItem("Writing Up", tabName = "Simulated_Experiment_Writing_Up", icon = icon("pen"))
-          ),
+        # menuItem("Simulated Experiment", tabName = "Simulated_Experiment", icon = icon("microscope"),
+        #   menuItem("Description", tabName = "Simulated_Experiment_Description", icon = icon("circle-info")),
+        #   menuItem("Background", tabName = "Simulated_Experiment_Background", icon = icon("book-open")),
+        #   menuItem("Hypothesis", tabName = "Simulated_Experiment_Hypothesis", icon = icon("pen-to-square")),
+        #   menuItem("Protocol", tabName = "Simulated_Experiment_Protocol", icon = icon("list")),
+        #   menuItem("Measurements", tabName = "Simulated_Experiment_Measurements", icon = icon("ruler")),
+        #   menuItem("Raw Data", tabName = "Simulated_Experiment_Raw_Data", icon = icon("database")),
+        #   menuItem("Analysis", tabName = "Simulated_Experiment_Analysis", icon = icon("chart-simple")),
+        #   menuItem("Writing Up", tabName = "Simulated_Experiment_Writing_Up", icon = icon("pen"))
+        #   ),
         menuItem("Feedback", tabName = "Feedback", icon = icon("comment"))
       )
     ),
