@@ -1154,9 +1154,11 @@ observe({
             actionButton(session$ns("enter_effect_size_submit"), "Submit", class = "fun-submit-button"),
             
             textInput(session$ns("interpretation_quiz_text_p_value"), "Interpret the p-value result in one sentence", value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", width = "100%"),
-            actionButton(session$ns("interpretation_quiz_p_value_submit"), "Submit", class = "fun-submit-button"),
             textInput(session$ns("interpretation_quiz_text_effect_size"), "Summarise these results in one sentence", value = "An effect size of [effect size method]=[effect size] suggests that ______.", width = "100%"),
-            actionButton(session$ns("interpretation_quiz_effect_size_submit"), "Submit", class = "fun-submit-button")
+            actionButton(session$ns("save_text_interpretation_button"), "Submit", class = "fun-submit-button"),
+            uiOutput(session$ns("interpretation_quiz_text_input_feedback")),
+            #uiOutput(session$ns("save_text_interpretation"))
+            
           )
         })
 
@@ -1253,6 +1255,54 @@ observeEvent(input$enter_p_value_submit, {
     feedback
   })
 })
+
+observeEvent(input$save_text_interpretation_button, {
+  req(nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size))
+
+  if (nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size)) {
+      output$interpretation_quiz_text_input_feedback <- renderUI({
+          tagList(
+            div(class = "success-box", "\U1F64C Great!"),
+          )
+        })
+
+        interpretation_text <- paste0(
+    "Interpretation: ", input$interpretation_quiz_text_p_value, ". ", input$interpretation_quiz_text_effect_size, "."
+  )
+
+  saved_results$user_writing[["stats_interpretation_text"]] <- interpretation_text
+
+  temp_file <- tempfile(fileext = ".txt")
+  writeLines(interpretation_text, con = temp_file)
+
+  path <- drive_get(as_id(session_folder_id))
+  drive_upload(
+    media = temp_file,
+    path = path,
+    name = "stats_interpretation_text.txt",
+    overwrite = TRUE
+  )
+
+  unlink(temp_file)
+
+  showNotification("Interpretation saved successfully.", type = "message")
+  
+
+    } else {
+    output$interpretation_quiz_text_input_feedback <- renderUI({
+              div(class = "error-box", "\U1F914 Not quite - try again!")
+            })
+    }
+    
+    })
+
+# observeEvent(input$save_text_interpretation_button, {
+#   req(nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size))
+
+  
+# })
+
+
 
 observeEvent(input$summarise, {
       updateTabItems(parent.session, "sidebar", "Summarise_Data")

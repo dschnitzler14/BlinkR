@@ -632,3 +632,106 @@ effect_size_paired <- average_trs %>%
   wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
 
 
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Playground1
+name <- NULL
+print(paste0("Hello ", name))
+
+#Playground1
+name <- "Danny"
+print(paste0("Hello ", name))
+
+#Playground1
+2+2
+

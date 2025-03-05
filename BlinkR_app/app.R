@@ -358,7 +358,8 @@ observe({
 saved_results <- reactiveValues(
   plots = list(),
   recorded_plots = list(),
-  scripts = list()
+  scripts = list(),
+  user_writing = list()
 )
   
   reload_trigger <- reactiveValues(reload = 0)
@@ -366,7 +367,22 @@ saved_results <- reactiveValues(
   db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), Submission_ID = character(), stringsAsFactors = FALSE))
   
   db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), Submission_ID = character(), stringsAsFactors = FALSE))
-    
+  
+  feedback_data <- reactiveVal(data.frame(
+    timestamp = character(),
+    overall_experience = numeric(),
+    clarity = numeric(),
+    clarity_issues = character(),
+    bugs = character(),
+    bug_details = character(),
+    experiment_tools = character(),
+    missing_features = character(),
+    useful_features = character(),
+    least_useful_features = character(),
+    general_feedback = character(),
+    stringsAsFactors = FALSE
+  ))
+
   combined_class_data_sheet <- drive_get("BlinkR_Combined_Class_Data")$id
   
   combined_class_data_read <- read_sheet(combined_class_data_sheet)
@@ -448,7 +464,7 @@ saved_results <- reactiveValues(
     simulated_experiment_raw_data_module_server("simulated_experiment_raw_data")
     simulated_experiment_analysis_module_server("simulated_experiment_analysis")
     simulated_experiment_writing_up_module_server("simulated_experiment_writing_up")
-    feedback_module_server("feedback")
+    feedback_module_server("feedback", feedback_data)
     your_google_drive_module_server("your_drive_module", session_folder_id = session_folder_id)
     
   })

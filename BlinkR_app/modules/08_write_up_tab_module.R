@@ -158,7 +158,7 @@ write_up_module_ui <- function(id, session_folder_url) {
 write_up_module_server <- function(id, parent.session, auth, reload_trigger, session_folder_id){
   moduleServer(
     id,
-    function(input, output, server){
+    function(input, output, session){
       
 
   observeEvent(input$link_to_drive, {
@@ -167,7 +167,7 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
     showModal(modalDialog(
       title = "Your Google Drive",
       your_google_drive_module_ui(session$ns("your_drive_module_write_up")),
-      
+
       easyClose = TRUE,
       footer = modalButton("Close"),
       size = "l" 

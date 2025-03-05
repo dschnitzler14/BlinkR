@@ -64,11 +64,13 @@ analysis_dashboard_module_ui <- function(id) {
                                 label = tagList(icon("equals"), "Run Statistical Analysis"),
                                 class = "action-button custom-action",
                                 `data-id` = "stats"),
+                    uiOutput(ns("stats_interpretation"))
                    ),
             column(6,
             fluidRow(
               column(12,
                      uiOutput(ns("saved_stats_results")),
+                     uiOutput(ns("saved_effect_size_results")),
                      uiOutput(ns("saved_q_q_plot_result")),
                      uiOutput(ns("saved_box_plot_result")),
                      uiOutput(ns("saved_hist_plot_result"))
@@ -179,14 +181,14 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
     })
 
     #stats results
-    output$saved_stats_results <- renderUI({
-      req(!is.null(saved_results$scripts[["stats_two_sample"]]) || !is.null(saved_results$scripts[["stats_paired"]]))
+    # output$saved_stats_results <- renderUI({
+    #   req(!is.null(saved_results$scripts[["stats_two_sample"]]) || !is.null(saved_results$scripts[["stats_paired"]]))
       
-      tagList(
-        verbatimTextOutput(session$ns("saved_stats_script"))
-        #download_handler_ui(session$ns("download_stats"), "Download Stats Results")
-      )
-    })
+    #   tagList(
+    #     verbatimTextOutput(session$ns("saved_stats_script"))
+    #     #download_handler_ui(session$ns("download_stats"), "Download Stats Results")
+    #   )
+    # })
     
     
     stats_content_reactive <- reactive({
@@ -221,6 +223,60 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
             "No statistical scripts found."
             }
 })
+
+stats_content_reactive <- reactive({
+      req(!is.null(saved_results$scripts[["stats_not_normal_unpaired"]]) || 
+        !is.null(saved_results$scripts[["stats_not_normal_paired"]]) ||
+        !is.null(saved_results$scripts[["stats_normal_unpaired"]]) ||
+        !is.null(saved_results$scripts[["stats_normal_paired"]])
+      )
+      
+      if (!is.null(saved_results$scripts[["stats_not_normal_unpaired"]])) {
+        paste(capture.output(saved_results$scripts[["stats_not_normal_unpaired"]]$result), collapse = "\n")
+      } else if (!is.null(saved_results$scripts[["stats_not_normal_paired"]])) {
+        paste(capture.output(saved_results$scripts[["stats_not_normal_paired"]]$result), collapse = "\n")
+        } else if (!is.null(saved_results$scripts[["stats_normal_unpaired"]])) {
+            paste(capture.output(saved_results$scripts[["stats_normal_unpaired"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_normal_paired"]])) {
+            paste(capture.output(saved_results$scripts[["stats_normal_paired"]]$result), collapse = "\n")
+            } else {
+            "No statistical scripts found."
+            }
+})
+
+
+effect_size_content_reactive <- reactive({
+req(!is.null(saved_results$scripts[["stats_normal_paired_effect_size"]]) ||
+        !is.null(saved_results$scripts[["stats_normal_unpaired_effect_size"]]) ||
+        !is.null(saved_results$scripts[["stats_not_normal_paired_effect_size"]]) ||
+        !is.null(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]])
+
+      )
+      
+      if (!is.null(saved_results$scripts[["stats_normal_paired_effect_size"]])) {
+            paste(capture.output(saved_results$scripts[["stats_normal_paired_effect_size"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_normal_unpaired_effect_size"]])) {
+            paste(capture.output(saved_results$scripts[["stats_normal_unpaired_effect_size"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_not_normal_paired_effect_size"]])) {
+            paste(capture.output(saved_results$scripts[["stats_not_normal_paired_effect_size"]]$result), collapse = "\n")
+            } else if (!is.null(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]])) {
+            paste(capture.output(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]]$result), collapse = "\n")
+            } else {
+            "No effect size scripts found."
+            }
+
+
+})
+
+stats_interpretation_content_reactive <- reactive({
+  req(!is.null(saved_results$user_writing[["stats_interpretation_text"]]))
+
+  if(!is.null(saved_results$user_writing[["stats_interpretation_text"]])) {
+    paste(capture.output(saved_results$user_writing[["stats_interpretation_text"]]), collapse = "\n")
+  } else {
+    "No interpretation text found."
+  }
+})
     
     
     output$saved_stats_results <- renderUI({
@@ -235,7 +291,35 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
     output$saved_stats_script <- renderText({
       stats_content_reactive()
     })
+
+    ##
+
+    output$saved_effect_size_results <- renderUI({
+      req(effect_size_content_reactive())
+      
+      tagList(
+        verbatimTextOutput(session$ns("saved_effect_size_script"))
+      )
+    })
     
+    output$saved_effect_size_script <- renderText({
+      effect_size_content_reactive()
+    })
+
+
+output$stats_interpretation <- renderUI({
+      req(stats_interpretation_content_reactive())
+      
+      tagList(
+        textOutput(session$ns("saved_stats_interpretation"))
+      )
+    })
+    
+    output$saved_stats_interpretation <- renderText({
+      stats_interpretation_content_reactive()
+    })
+
+
     # download_handler_server(
     #   "download_stats",
     #   content_reactive = stats_content_reactive,

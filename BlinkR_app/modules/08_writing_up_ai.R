@@ -9,6 +9,8 @@ writing_up_ai_ui <- function(id) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
+                                    includeMarkdown("markdown/08_writing_up/writing_up_ai_summary.Rmd")
+                                    
                                     
                                   ),
                                   box(
@@ -17,9 +19,10 @@ writing_up_ai_ui <- function(id) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    
-                                  )
+                                    includeMarkdown("markdown/08_writing_up/writing_up_ai_pitfalls.Rmd")
+                                  
                                   ),
+                                ),
                                   fluidRow(
                                     column(6,
                                     box(
@@ -28,13 +31,23 @@ writing_up_ai_ui <- function(id) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
+                                    markdown("AI can help catch grammar, spelling, and punctuation mistakes, but always clarify in your prompt that you *do not want new information added*.")
                                     ),
                                     box(
-                                    title = "✅ Formatting for Code-based text-editors",
+                                    title = "✅ Sentence Rewording & Clarity Improvements",
                                     id = "formatting",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
+                                    markdown("AI can suggest clearer ways to phrase sentences, but be cautious to ensure your original meaning remains intact.")
+                                    ),
+                                    box(
+                                    title = "✅ Brainstorming",
+                                    id = "brainstorming",
+                                    collapsible = TRUE,
+                                    width = 12,
+                                    solidHeader = FALSE,
+                                    markdown("AI can help with topic ideas, essay outlines, and brainstorming arguments, but the final content should always be your own.")
                                     )
                                     ),
                                     column(6,
@@ -44,6 +57,7 @@ writing_up_ai_ui <- function(id) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
+                                    markdown("AI does not have access to real-time or verified sources and can generate incorrect, outdated, or misleading facts, which can significantly weaken academic work.")
                                     ),
                                     box(
                                     title = "❌ Analysis",
@@ -51,6 +65,31 @@ writing_up_ai_ui <- function(id) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
+                                    markdown("AI cannot analyse data; relying on it can lead to data falsification, which is academic misconduct.")
+                                    ),
+                                    box(
+                                    title = "❌ References & Citations",
+                                    id = "references",
+                                    collapsible = TRUE,
+                                    width = 12,
+                                    solidHeader = FALSE,
+                                    markdown("AI frequently generates fake sources or incorrectly cites real ones, leading to plagiarism, which is a serious academic offense.")
+                                    ),
+                                    box(
+                                    title = "❌ Interpretation of Data",
+                                    id = "interpretation",
+                                    collapsible = TRUE,
+                                    width = 12,
+                                    solidHeader = FALSE,
+                                    markdown("AI often misinterprets studies or evidence, leading to incorrect conclusions and poor science, which can result in a low grade.")
+                                    ),
+                                    box(
+                                    title = "❌ Writing the Report",
+                                    id = "interpretation",
+                                    collapsible = TRUE,
+                                    width = 12,
+                                    solidHeader = FALSE,
+                                    markdown("AI-generated essays lack original thought, critical reasoning, and often contain factual errors, leading to academic dishonesty and potential plagiarism detection.")
                                     )
                                     )
                                   

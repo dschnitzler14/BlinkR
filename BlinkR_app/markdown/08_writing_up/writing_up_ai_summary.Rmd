@@ -1,0 +1,5 @@
+Generative AI tools, such as ChatGPT are designed to create new content based on the existing data that it has been trained on.
+
+When generating text, AI models predict that most likely next word in the sequence. 
+While it can generate coherent and contextually relevant text, it lacks reasoning, originality, and critical thinking—key components of strong academic writing.
+

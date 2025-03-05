@@ -52,8 +52,11 @@ files <- list(
   "BlinkR_protocols" = NULL,
   "BlinkR_Measurements" = NULL,
   "BlinkR_Combined_Class_Data" = c("Group", "Initials", "ID", "Stress_Status", 
-                                   "Technical_Replicate", "Blinks_Per_Minute", "Submission_ID"),  "BlinkR_Class_Protocol" = NULL,
-  "BlinkR Users" = c("Group", "Role", "Name", "Date", "Protocol", "Data")
+                                   "Technical_Replicate", "Blinks_Per_Minute", "Submission_ID"), 
+  "BlinkR_Class_Protocol" = NULL,
+  "BlinkR Users" = c("Group", "Role", "Name", "Date", "Protocol", "Data"),
+  "Feedback" = c("Timestamp", "Overall_Experience", "Clarity", "Clarity_Issues", "Bugs", "Bug_Details", "Experiment_Tools", 
+                  "Missing_Features", "Useful_Features", "Least_Useful_Features", "General_Feedback")
 )
 
 initial_entry_users <- data.frame(
