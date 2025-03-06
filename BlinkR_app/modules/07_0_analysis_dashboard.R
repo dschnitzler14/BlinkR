@@ -162,10 +162,10 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
   moduleServer(id, function(input, output, session) {
  
         observeEvent(input$back_page_analysis, {
-      updateTabItems(parent.session, "sidebar", "Raw_Data")
+      updateTabItems(parent.session, "sidebar", "Playground")
     })
       observeEvent(input$next_page_analysis, {
-      updateTabItems(parent.session, "sidebar", "Writing-Up")
+      updateTabItems(parent.session, "sidebar", "Prepare_Data")
     })
       
     #source("data/test_analysis.R")
@@ -174,7 +174,7 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
     
     summary_content_reactive <- reactive({
       req(saved_results$scripts[["summary"]])
-      paste(capture.output(saved_results$scripts[["summary"]]), collapse = "\n")
+      paste(capture.output(saved_results$scripts[["summary"]]$result), collapse = "\n")
     })
     
     output$saved_summary_results <- renderUI({

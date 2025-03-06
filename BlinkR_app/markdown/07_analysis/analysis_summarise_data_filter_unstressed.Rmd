@@ -9,4 +9,8 @@ unstressed_data <- average_trs %>%
     filter(Stress_Status == "Unstressed") 
 ```
 
+With this code, you are taking the column `Stress_Status` from the dataframe `average_trs` and filtering it to only contain "Unstressed" data.
+
+You are then saving this new view of the dataframe as a new variable, called `unstressed_data`.
+
 If you want to learn more about dplyr, check out the [Dplyr Cheatsheet](https://nyu-cdsc.github.io/learningr/assets/data-transformation.pdf).

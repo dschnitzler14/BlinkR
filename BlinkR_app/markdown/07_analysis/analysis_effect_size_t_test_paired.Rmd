@@ -1,3 +1,16 @@
+Now we can calculate the effect size.  
+
+The effect size is a measure of how strong the difference is between two groups. Unlike p-values, which tell us whether a difference exists, effect size tells us how meaningful that difference is.  
+
+A larger effect size means a bigger difference between groups, while a smaller effect size suggests a small or negligible difference.  
+
+A general rule for interpreting Cohen’s D:  
+- 0.2 → Small effect  
+- 0.5 → Medium effect  
+- 0.8 or higher → Large effect  
+
+Note that we also have to define that these results are paired.
+
 ```
 effect_size_paired_t <- average_trs %>%
   cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)

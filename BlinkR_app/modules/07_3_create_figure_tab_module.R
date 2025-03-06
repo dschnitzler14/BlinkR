@@ -36,13 +36,14 @@ analysis_create_figure_module_ui <- function(id) {
                                          "box plot" = "box"
                                          ),
                              selected = character(0)),
-                uiOutput(ns("figure_type_selector_output")),
-                uiOutput(ns("figure_editor_feedback"))
+                uiOutput(ns("figure_type_selector_output"))
+                
               ),
               column(
                 8,
                 div(class = "editor-container", uiOutput(ns("editor_ui"))),
-                uiOutput(ns("save_plot"))
+                uiOutput(ns("save_plot")),
+                uiOutput(ns("figure_editor_feedback"))
               )
             )
           ),
@@ -86,7 +87,33 @@ analysis_create_figure_module_ui <- function(id) {
             )
           )
 
-))))
+),
+fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_figure"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_figure"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
+)))
 
 }
 
@@ -174,10 +201,15 @@ predefined_code_boxplot <- read_file(
       })
       
       output$save_plot <- renderUI({
+        tagList(
+          div(
+            style = "display: flex; justify-content: center; align-items: center; width: 100%;",
         actionButton(
           session$ns("save_bar_plot"),
           label = tagList(icon("save"), "Save Plot to Dashboard"),
           class = "action-button custom-action"
+        )
+          )
         )
       })
     } else {
@@ -213,10 +245,15 @@ predefined_code_boxplot <- read_file(
       })
   
       output$save_plot <- renderUI({
+        tagList(
+          div(
+            style = "display: flex; justify-content: center; align-items: center; width: 100%;",
         actionButton(
           session$ns("save_box_plot"),
           label = tagList(icon("save"), "Save Plot to Dashboard"),
           class = "action-button custom-action"
+        )
+        )
         )
       })
     } else {
@@ -319,6 +356,13 @@ predefined_code_boxplot <- read_file(
 observeEvent(input$dashboard, {
   updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
 })
+
+observeEvent(input$back_page_figure, {
+        updateTabItems(parent.session, "sidebar", "Summarise_Data")
+      })
+      observeEvent(input$next_page_figure, {
+        updateTabItems(parent.session, "sidebar", "Statistical_Analysis")
+      })
 
 
   }

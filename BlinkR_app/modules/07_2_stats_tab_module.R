@@ -63,7 +63,32 @@ analysis_stats_module_ui <- function(id) {
             )
           )
           
-        )
+        ),
+        fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_stats"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_stats"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
     )
    )
 }
@@ -235,9 +260,11 @@ if(!is.null(normal_unpaired_result()$result)){
 
   
     output$hist_explainer_ui <- renderUI({
+      tagList(
+       includeMarkdown("markdown/07_analysis/analysis_hist_plot_explainer_output.Rmd"),
+
       div(
           style = "text-align: center;",
-      tagList(
       actionButton(session$ns("normal"), "👍 The Data is Normal", class = "fun-submit-button"),
       actionButton(session$ns("not_normal"), "👎 The Data is Not Normal", class = "fun-submit-button")
       )
@@ -271,12 +298,21 @@ observeEvent(input$normal, {
   }
 
     output$normal_output <- renderUI({
-      div(
-          style = "text-align: center;",
       tagList(
+        box(
+        id = "paired_unpaired_explainer_normal",
+              title = "2️⃣ Is the Data Paired or Unpaired?",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              width = 12,
+              solidHeader = TRUE,
+        includeMarkdown("markdown/07_analysis/analysis_paired_unpaired_explainer_output.Rmd"),
+      div(
+        style = "text-align: center;",
         actionButton(session$ns("unpaired_normal"), "☝️ The Data is Not Paired", class = "fun-submit-button"),
         actionButton(session$ns("paired_normal"), "✌️ The Data is Paired", class = "fun-submit-button")
         )
+      )
       )
     })
 })
@@ -309,9 +345,23 @@ observeEvent(input$not_normal, {
     output$not_normal_output <- renderUI({
 
       tagList(
-        actionButton(session$ns("unpaired_not_normal"), "The Data is Not Paired", class = "fun-submit-button"),
-        actionButton(session$ns("paired_not_normal"), "The Data is Paired", class = "fun-submit-button")
+        box(
+        id = "paired_unpaired_explainer",
+              title = "2️⃣ Is the Data Paired or Unpaired?",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              width = 12,
+              solidHeader = TRUE,
+        includeMarkdown("markdown/07_analysis/analysis_paired_unpaired_explainer_output.Rmd"),
+
+        div(
+              style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
+        actionButton(session$ns("unpaired_not_normal"), "☝️ The Data is Not Paired", class = "fun-submit-button"),
+        actionButton(session$ns("paired_not_normal"), "✌️ The Data is Paired", class = "fun-submit-button")
       )
+        )
+      )
+    
     })
 })
 
@@ -352,7 +402,7 @@ if(!is.null(normal_unpaired_result()$result)){
             12,
           box(
               id = "not_normal_unpaired",
-              title = " 2️⃣ Not Normal Unpaired: Wilcoxon Test",
+              title = "3️⃣ Not Normal Unpaired: Wilcoxon Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -388,11 +438,17 @@ observe({
           )
     })
       output$save_not_normal_unpaired <- renderUI({
+        tagList(
+            div(
+      style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_not_normal_unpaired_button"),
             label = tagList(icon("save"), "Save Results to Dashboard"),
-            class = "action-button custom-action"
+            class = "action-button custom-action",
+            `data-id` = "not_normal_unpaired_save"
           )
+            )
+        )
 
         })
         } else {
@@ -451,7 +507,7 @@ if(!is.null(normal_unpaired_result()$result)){
             12,
           box(
               id = "not_normal_paired",
-              title = "2️⃣ Not Normal Paired: Wilcoxon Test",
+              title = "3️⃣ Not Normal Paired: Wilcoxon Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -486,11 +542,19 @@ observe({
           )
         })
         output$save_not_normal_paired <- renderUI({
+          tagList(
+    div(
+      style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_not_normal_paired_button"),
             label = tagList(icon("save"), "Save Results to Dashboard"),
-            class = "action-button custom-action"
+            class = "action-button custom-action",
+            `data-id` = "not_normal_paired_save"
+
           )
+    )
+          )
+
 
         })
         } else {
@@ -549,7 +613,7 @@ if(!is.null(normal_unpaired_result()$result)){
             12,
           box(
               id = "normal_unpaired",
-              title = "2️⃣ Normal Unpaired: T-Test",
+              title = "3️⃣ Normal Unpaired: T-Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -584,10 +648,16 @@ observe({
           )
         })
         output$save_normal_unpaired <- renderUI({
+          tagList(
+            div(
+              style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_normal_unpaired_button"),
             label = tagList(icon("save"), "Save Results to Dashboard"),
-            class = "action-button custom-action"
+            class = "action-button custom-action",
+            `data-id` = "normal_unpaired_save"
+          )
+    )
           )
 
         })
@@ -644,7 +714,7 @@ observeEvent(input$paired_normal,{
             12,
           box(
               id = "normal_paired",
-              title = "2️⃣ Normal Paired: T-Test",
+              title = "3️⃣ Normal Paired: T-Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -679,10 +749,16 @@ observe({
           )
         })
         output$save_normal_paired <- renderUI({
+          tagList(
+            div(
+              style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_normal_paired_button"),
             label = tagList(icon("save"), "Save Results to Dashboard"),
-            class = "action-button custom-action"
+            class = "action-button custom-action",
+            `data-id` = "normal_paired_save"
+          )
+            )
           )
 
         })
@@ -728,7 +804,7 @@ observe({
             12,
           box(
               id = "effect_size_t_test_paired",
-              title = "3️⃣ Effect Size for Paired T-Test",
+              title = "4️⃣ Effect Size for Paired T-Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -764,10 +840,16 @@ observe({
           )
         })
         output$save_normal_paired_effect_size <- renderUI({
+          tagList(
+            div(
+            style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_normal_paired_effect_size_button"),
             label = tagList(icon("save"), "Save Results to Dashboard"),
-            class = "action-button custom-action"
+            class = "action-button custom-action",
+            `data-id` = "normal_paired_effect_save"
+          )
+            )
           )
 
         })
@@ -814,7 +896,7 @@ observe({
             12,
           box(
               id = "effect_size_t_test_unpaired",
-              title = "3️⃣ Effect Size for Unpaired T-Test",
+              title = "4️⃣ Effect Size for Unpaired T-Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -849,11 +931,18 @@ observe({
           )
         })
         output$save_normal_unpaired_effect_size <- renderUI({
+        tagList(
+          div(
+            style = "display: flex; justify-content: center; align-items: center; width: 100%;",
                   actionButton(
                     session$ns("save_normal_unpaired_effect_size_button"),
                     label = tagList(icon("save"), "Save Results to Dashboard"),
-                    class = "action-button custom-action"
+                    class = "action-button custom-action",
+                    `data-id` = "normal_unpaired_effect_save"
+
                   )
+          )
+        )
 
                 })
         } else {
@@ -899,7 +988,7 @@ observe({
             12,
           box(
               id = "effect_size_wilcoxon_paired",
-              title = "3️⃣ Effect Size for Paired Wilcoxon Test",
+              title = "4️⃣ Effect Size for Paired Wilcoxon Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -935,11 +1024,18 @@ observe({
           )
         })
         output$save_not_normal_paired_effect_size <- renderUI({
+            tagList(
+                  div(
+                    style = "display: flex; justify-content: center; align-items: center; width: 100%;",
                           actionButton(
                             session$ns("save_not_normal_paired_effect_size_button"),
                             label = tagList(icon("save"), "Save Results to Dashboard"),
-                            class = "action-button custom-action"
+                            class = "action-button custom-action",
+                            `data-id` = "not_normal_paired_effect_save"
+
                           )
+                  )
+            )
 
                         })
         } else {
@@ -984,7 +1080,7 @@ observe({
             12,
           box(
               id = "effect_size_wilcoxon_unpaired",
-              title = "3️⃣ Effect Size for Unpaired Wilcoxon Test",
+              title = "4️⃣ Effect Size for Unpaired Wilcoxon Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -1020,11 +1116,18 @@ observe({
           )
         })
         output$save_not_normal_unpaired_effect_size <- renderUI({
+            tagList(
+              div(
+                style = "display: flex; justify-content: center; align-items: center; width: 100%;",
                                   actionButton(
                                     session$ns("save_not_normal_unpaired_effect_size_button"),
                                     label = tagList(icon("save"), "Save Results to Dashboard"),
-                                    class = "action-button custom-action"
+                                    class = "action-button custom-action",
+                                    `data-id` = "not_normal_unpaired_effect_save"
+
                                   )
+              )
+            )
 
                                 })
         } else {
@@ -1145,7 +1248,7 @@ observe({
             12,
           box(
               id = "interpretation_quiz",
-              title = "4️⃣ Your Results",
+              title = "5️⃣ Your Results",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -1191,7 +1294,7 @@ observe({
             
             textInput(session$ns("interpretation_quiz_text_p_value"), "Interpret the p-value result in one sentence", value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", width = "100%"),
             textInput(session$ns("interpretation_quiz_text_effect_size"), "Summarise these results in one sentence", value = "An effect size of [effect size method]=[effect size] suggests that ______.", width = "100%"),
-            actionButton(session$ns("save_text_interpretation_button"), tagList(shiny::icon("floppy-disk"), "Save Notes"), class = "fun-save-button"),
+            actionButton(session$ns("save_text_interpretation_button"), tagList(shiny::icon("save"), "Save Notes"), class = "fun-save-button"),
             #uiOutput(session$ns("interpretation_quiz_text_input_feedback")),
             #uiOutput(session$ns("save_text_interpretation"))
             
@@ -1338,7 +1441,12 @@ observeEvent(input$save_text_interpretation_button, {
   
 # })
 
-
+observeEvent(input$back_page_stats, {
+        updateTabItems(parent.session, "sidebar", "Create_Figure")
+      })
+      observeEvent(input$next_page_stats, {
+        updateTabItems(parent.session, "sidebar", "Writing_Up_Advice")
+      })
 
 observeEvent(input$summarise, {
       updateTabItems(parent.session, "sidebar", "Summarise_Data")

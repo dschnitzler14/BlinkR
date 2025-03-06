@@ -56,7 +56,33 @@ analysis_summarise_data_module_ui <- function(id) {
             )
           )
           
-        )))}
+        ),
+        fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_summarise"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_summarise"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
+))}
 
 
 analysis_summarise_data_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
@@ -449,7 +475,7 @@ output$step6_box <- renderUI({
               id = "step6_box",
               title = "6️⃣ Use Dplyr to quickly summarise your data",
               collapsible = TRUE,
-              collapsed = FALSE,
+              collapsed = TRUE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
@@ -514,8 +540,7 @@ observe({
             label = "Can we tell from this if this is statistically significant?", 
             choices = list(
               "Yes" = "option1", 
-              "No" = "option2", 
-              "I don't know" = "option3"
+              "No" = "option2"
             ),
             selected = character(0)
           ),
@@ -525,13 +550,17 @@ observe({
 
     output$save_summary_result <- renderUI({
         tagList(
+          div(
+      style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_summary_results_button"),
             label = tagList(icon("save"), "Save Results to Dashboard"),
-            class = "action-button custom-action"
+            class = "action-button custom-action",
+            `data-id` = "summary_save"
+          )
           )
         )
-        })
+        }) 
         
     
   } else {
@@ -721,7 +750,15 @@ observeEvent(input$submit_sem_stressed_group_quiz_answer, {
     #home button
     observeEvent(input$dashboard, {
       updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
-    }) 
+    })
+
+    observeEvent(input$back_page_summarise, {
+        updateTabItems(parent.session, "sidebar", "Prepare_Data")
+      })
+      observeEvent(input$next_page_summarise, {
+        updateTabItems(parent.session, "sidebar", "Create_Figure")
+      })
+ 
     
   })
 }

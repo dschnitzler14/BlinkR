@@ -1,19 +1,45 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const buttons = document.querySelectorAll('.custom-action');
-
-  buttons.forEach(button => {
-    button.addEventListener('click', function () {
+  document.body.addEventListener('click', function (event) {
+    if (event.target.classList.contains('custom-action')) {
+      const button = event.target;
       const groupId = button.getAttribute('data-id');
 
       const groupButtons = document.querySelectorAll(`.custom-action[data-id="${groupId}"]`);
       groupButtons.forEach(groupButton => {
         if (!groupButton.classList.contains('checked')) {
-          groupButton.innerHTML += ' &#x2705;';
+          groupButton.innerHTML += ' ✅'; // Unicode checkmark
           groupButton.classList.add('checked');
         }
       });
-    });
+    }
   });
+});
+
+// Ensure Shiny elements work when dynamically inserted
+document.addEventListener('shiny:bound', function () {
+  document.body.addEventListener('click', function (event) {
+    if (event.target.classList.contains('custom-action')) {
+      const button = event.target;
+      const groupId = button.getAttribute('data-id');
+
+      const groupButtons = document.querySelectorAll(`.custom-action[data-id="${groupId}"]`);
+      groupButtons.forEach(groupButton => {
+        if (!groupButton.classList.contains('checked')) {
+          groupButton.innerHTML += ' ✅'; // Unicode checkmark
+          groupButton.classList.add('checked');
+        }
+      });
+    }
+  });
+});
+
+
+// Run on page load for initially rendered elements
+document.addEventListener('DOMContentLoaded', addCheckmarkToButtons);
+
+// Run whenever new elements are bound by Shiny
+document.addEventListener('shiny:bound', addCheckmarkToButtons);
+
 
   // Add file input reset handler
   Shiny.addCustomMessageHandler('resetFileInput', function(message) {

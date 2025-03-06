@@ -42,11 +42,11 @@ hypothesis_module_ui <- function(id) {
           width = 12,
           solidHeader = TRUE,
           markdown("#### What is your hypothesis in plain language?"),
-          text_area_module_UI(ns("hypothesis"), text_label = "Hypothesis", text_value = "", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes")),
+          text_area_module_UI(ns("hypothesis"), text_label = "Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes")),
           markdown("#### What is your null hypothesis?"),
-          text_area_module_UI(ns("null_hypothesis"), text_label = "Null Hypothesis", text_value = "", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes")),
+          text_area_module_UI(ns("null_hypothesis"), text_label = "Null Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes")),
           markdown("#### What is your alterative hypothesis?"),
-          text_area_module_UI(ns("alt_hypothesis"), text_label = "Alternative Hypothesis", text_value = "", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
+          text_area_module_UI(ns("alt_hypothesis"), text_label = "Alternative Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes"))
         )
       ),
       fluidRow(

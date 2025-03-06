@@ -1,4 +1,7 @@
-Now it's your turn. Using the code snipptets provided above, calculate the following:
+Now it's your turn.
+
+Using the code snipptets provided above, calculate the following summary statistics for the **Stressed** group:
+
 - mean
 - standard deviation (sd)
 - number of observerations (n)
@@ -6,3 +9,4 @@ Now it's your turn. Using the code snipptets provided above, calculate the follo
 
 Just like we did for the unstressed group, you need to start with the full, unfiltered dataset, which is called `average_trs`.
 
+If you get stuck, try scrolling up to see what we did for the unstressed data.

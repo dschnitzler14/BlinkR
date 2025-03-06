@@ -44,7 +44,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                       ),
                     ),
                   column(6, 
-                        text_area_module_UI(ns("introduction"), "Introduction", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
+                        text_area_module_UI(ns("introduction"), "Introduction", button_label = tagList(shiny::icon("save"), "Save Notes"))
                         ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_intro.Rmd"),
@@ -70,7 +70,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        text_area_module_UI(ns("methods"), "Methods", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
+                        text_area_module_UI(ns("methods"), "Methods", button_label = tagList(shiny::icon("save"), "Save Notes"))
 
                   ),
                   column(6,
@@ -96,7 +96,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        text_area_module_UI(ns("results"), "Results", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
+                        text_area_module_UI(ns("results"), "Results", button_label = tagList(shiny::icon("save"), "Save Notes"))
 
                   ),
                   column(6,
@@ -116,7 +116,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      text_area_module_UI(ns("discussion"), "Discussion", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
+                      text_area_module_UI(ns("discussion"), "Discussion", button_label = tagList(shiny::icon("save"), "Save Notes"))
                   ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_discussion.Rmd")
@@ -130,7 +130,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      text_area_module_UI(ns("future_work"), "Future Work", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
+                      text_area_module_UI(ns("future_work"), "Future Work", button_label = tagList(shiny::icon("save"), "Save Notes"))
 
                   ),
                   column(6,
@@ -201,11 +201,11 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
   })
 
     observeEvent(input$back_page_write, {
-      updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
+      updateTabItems(parent.session, "sidebar", "AI")
     })
     
     observeEvent(input$next_page_write, {
-      updateTabItems(parent.session, "sidebar", "Feedback")
+      updateTabItems(parent.session, "sidebar", "Upload_Report")
     })
       
       text_area_module_server("introduction", auth, "Intro")

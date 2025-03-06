@@ -95,12 +95,50 @@ writing_up_advice_ui <- function(id) {
                                     solidHeader = TRUE,
                                     includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_together.Rmd")
                                     )
-                                )
+                                ),
+    fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_advice"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_advice"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
                               )
   )
     }
 
-writing_up_advice_server <- function(input, output, session) {
-    #ns <- session$ns
+writing_up_advice_server <- function(id, parent.session) {
+  moduleServer(
+    id,
+    function(input, output, session){
+
+    observeEvent(input$back_page_advice, {
+        updateTabItems(parent.session, "sidebar", "Statistical_Analysis")
+      })
+      observeEvent(input$next_page_advice, {
+        updateTabItems(parent.session, "sidebar", "AI")
+      })
+
+    }
+  )
+
 }
 

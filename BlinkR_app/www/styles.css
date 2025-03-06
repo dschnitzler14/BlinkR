@@ -240,22 +240,80 @@ a:hover {
   color: white !important;             /* White text */
 }
 
+/* Base style for all buttons */
+.custom-button {
+  color: #ffffff;
+  /* White text */
+  border: none;
+  /* Remove border */
+  font-weight: bold;
+  /* Make text bold */
+  border-radius: 5px;
+  /* Slightly rounded corners */
+  padding: 8px 15px;
+  /* Padding around text */
+  display: inline-flex;
+  /* Aligns emoji and text properly */
+  align-items: center;
+  /* Centers items vertically */
+  justify-content: center;
+  /* Ensures text stays centered */
+  gap: 8px;
+  /* Spacing between icon and text */
+  cursor: pointer;
+  /* Cursor changes to pointer */
+  transition: all 0.2s ease;
+  /* Smooth transition */
+  min-width: 160px;
+  /* Ensures all buttons have the same width */
+  max-width: 160px;
+  /* Prevents buttons from stretching */
+  height: 40px;
+  /* Consistent button height */
+  text-align: center;
+  margin: 5px;
+  /* Adds space around each button */
+}
 
+/* Individual button colors */
 .custom-run-button {
-  background-color: #28a745; /* Green background */
-  color: #ffffff;           /* White text */
-  border: none;             /* Remove border */
-  font-weight: bold;        /* Make text bold */
-  border-radius: 5px;       /* Slightly rounded corners */
-  padding: 8px 15px;        /* Padding around text */
-  display: inline-flex;     /* Aligns emoji and text properly */
-  align-items: center;      /* Centers items vertically */
-  gap: 8px;                 /* Spacing between emoji and text */
-  cursor: pointer;          /* Cursor changes to pointer */
+  background-color: #28a745;
+  /* Green */
 }
 
 .custom-run-button:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #218838;
+  /* Darker green on hover */
+}
+
+.custom-clear-button {
+  background-color: #6fcf97;
+  /* Light green */
+}
+
+.custom-clear-button:hover {
+  background-color: #5bbf85;
+  /* Slightly darker green on hover */
+}
+
+.custom-clear-button:active {
+  background-color: #4e9c71;
+  /* Even darker on click */
+}
+
+.custom-send-button {
+  background-color: #f4b400;
+  /* Warm golden yellow */
+}
+
+.custom-send-button:hover {
+  background-color: #d99a00;
+  /* Slightly darker yellow on hover */
+}
+
+.custom-send-button:active {
+  background-color: #b78400;
+  /* Even darker yellow on click */
 }
 
 .fun-save-button {

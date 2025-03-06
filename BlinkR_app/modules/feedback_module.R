@@ -2,6 +2,7 @@ feedback_module_ui <- function(id) {
   ns <- NS(id)
   feedback_tab <- tabItem(tabName = "feedback",
           fluidPage(
+            fluidRow(
       sliderInput(ns("overall_experience"), 
       "Overall, how would you rate your experience using this app?", 
       min = 1, max = 5, value = 3, step = 1, ticks = FALSE),
@@ -53,10 +54,31 @@ feedback_module_ui <- function(id) {
       actionButton(ns("submit_feedback"), "Send Feedback"),
       uiOutput(ns("submission_feedback"))
           )
+          ),
+          fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_feedback"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
   )
 }
 
-feedback_module_server <- function(id, feedback_data) {
+feedback_module_server <- function(id, feedback_data, parent.session) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns 
     
@@ -88,5 +110,10 @@ feedback_module_server <- function(id, feedback_data) {
       sheet_append(updated_feedback, ss = feedback_sheet, sheet = 1)
     })
     
+    observeEvent(input$back_page_feedback, {
+        updateTabItems(parent.session, "sidebar", "Upload_Report")
+      })
+      
+
   })
 }

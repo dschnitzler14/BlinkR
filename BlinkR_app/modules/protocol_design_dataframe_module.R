@@ -6,7 +6,7 @@ experimental_design_module_ui <- function(id, label = "Protocol Planning Notes",
       label = label,
       placeholder = placeholder
     ),
-    actionButton(ns("submit_protocol_notes"), tagList(shiny::icon("floppy-disk"), "Save Notes"), class = "fun-save-button")
+    actionButton(ns("submit_protocol_notes"), tagList(shiny::icon("save"), "Save Notes"), class = "fun-save-button")
     )
 }
 

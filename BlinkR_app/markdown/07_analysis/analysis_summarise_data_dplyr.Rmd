@@ -11,3 +11,7 @@ data_summary <- average_trs %>%
     )
 ```
 
+Using this code, you can quickly calculate all the summary statistics for both groups.
+
+The table that is then stored in the `data_summary` variable gives you a good overview of the summary of both groups.
+

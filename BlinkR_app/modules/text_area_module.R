@@ -6,7 +6,10 @@ text_area_module_UI <- function(id, text_label = "Type Your Notes Here", text_va
       label = text_label,
       value = text_value
     ),
-    actionButton(ns("inputTextButton"), label = button_label, class = "fun-save-button"
+    div(
+      style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+    actionButton(ns("inputTextButton"), label = button_label, class = tagList(icon("save"), "fun-save-button")
+    )
 ),
     uiOutput(ns("submission_feedback"))
   )

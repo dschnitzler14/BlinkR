@@ -111,7 +111,32 @@ analysis_prepare_data_module_ui <- function(id) {
             )
           )
           
-        )
+        ),
+        fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_prepare"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_prepare"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
       )
     )
   )
@@ -241,6 +266,13 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
       })
     })
     
+    observeEvent(input$back_page_prepare, {
+        updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
+      })
+      observeEvent(input$next_page_prepare, {
+        updateTabItems(parent.session, "sidebar", "Summarise_Data")
+      })
+
     
     ## next step buttons
     observeEvent(input$summarise, {

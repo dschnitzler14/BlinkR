@@ -1,4 +1,10 @@
-Now, it's your turn! Why don't you try changing the colour of the bars or boxes to something more interesting that grey? 
+Now, it's your turn! 
+
+First, have a look at the figure and check that everything is there.
+
+Next, you can start adjusting the code yourself.
+
+Why don't you try changing the colour of the bars or boxes to something more interesting that grey? 
 
 Check out this link to a list of all the possible colours: [COLOURS](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)!
 

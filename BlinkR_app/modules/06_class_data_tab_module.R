@@ -77,7 +77,7 @@ class_data_module_server <- function(
         updateTabItems(parent.session, "sidebar", "Measurements")
       })
       observeEvent(input$next_page_data, {
-        updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
+        updateTabItems(parent.session, "sidebar", "Playground")
       })
       
       view_permission = auth()$user_info$Data

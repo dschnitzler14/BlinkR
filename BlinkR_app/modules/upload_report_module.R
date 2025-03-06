@@ -37,12 +37,37 @@ upload_report_module_ui <- function(id) {
           h4("Files uploaded in this session:"),
           uiOutput(ns("uploaded_files_list"))
         )
+      ),
+      fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_upload"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_upload"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
       )
+    )
+  )
+)
     )
   )
 }
 
-upload_report_module_server <- function(id, auth, base_group_files_url, final_reports_folder_id) {
+upload_report_module_server <- function(id, auth, base_group_files_url, final_reports_folder_id, parent.session) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -98,6 +123,16 @@ upload_report_module_server <- function(id, auth, base_group_files_url, final_re
           "No files uploaded yet."
         }
       })
+
+
+      observeEvent(input$back_page_upload, {
+        updateTabItems(parent.session, "sidebar", "Writing-Up")
+      })
+      observeEvent(input$next_page_upload, {
+        updateTabItems(parent.session, "sidebar", "Feedback")
+      })
+
+
     }
   )
 }

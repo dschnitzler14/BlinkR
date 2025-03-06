@@ -18,22 +18,22 @@ editor_module_ui <- function(id) {
     ),
     actionButton(
       ns("send_code_to_editor"),
-      label = tagList(icon("arrow-right"), "Send Code to Editor"),
-      class = "custom-run-button"           
+      label = tagList(icon("arrow-right"), "Code to Editor"),
+      class = "custom-button custom-send-button"           
     ),
     actionButton(
       ns("run_code"),
-      label = tagList("\U1F3C3", "Run Code"),
-      class = "custom-run-button"           
+      label = tagList(icon("code"), "Run Code"),
+      class = "custom-button custom-run-button"           
     ),
     actionButton(
       ns("clear_console"),
       label = tagList(icon("trash"), "Clear Console"),
-      class = "custom-run-button"
+      class = "custom-button custom-clear-button"
     ),
     div(
       style = "margin-top: 20px;",
-      withSpinner(uiOutput(ns("dynamic_console")), type = 8, color = "#ff69b4", size = 2)
+      withSpinner(uiOutput(ns("dynamic_console")), type = 8, color = "#28a745", size = 2)
       #uiOutput(ns("dynamic_console"))
 
     )

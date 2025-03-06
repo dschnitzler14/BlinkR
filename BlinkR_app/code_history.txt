@@ -944,3 +944,442 @@ average_trs <- data %>%
 unstressed_data <- average_trs %>%
   filter(Stress_Status == "Unstressed")
 
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "X AXIS",
+         y = "Y AXIS",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "green"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "Blinks per Minute",
+         y = "Condition",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#View Data Code
+head(data)
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+#type your code in here!
+
+head(average_trs)
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+#type your code in here!
+
+head(average_trs)
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "X AXIS",
+         y = "Y AXIS",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "X AXIS",
+    y = "Y AXIS",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+
+#Step 1: Summarise Data
+unstressed_data <- average_trs %>%
+  filter(Stress_Status == "Unstressed")
+
+#Step 2: Summarise Data
+unstressed_mean <- mean(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE) 
+
+#Step 2: Summarise Data
+unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
+
+#Step 4: Summarise Data
+unstressed_n <- nrow(unstressed_data)
+unstressed_sem <- unstressed_sd / sqrt(unstressed_n)
+
+#Step 5: Summarise Data
+#type your code in here!
+
+average_trs
+
+#Step 6: Summarise Data with Dplyr
+data_summary <- average_trs %>%
+      group_by(Stress_Status) %>%
+      summarise(
+        n = n(),
+        mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+        sem = sd / sqrt(n)
+      )
+
+#Create Bar Plot Code
+data_summary <- average_trs %>%
+    group_by(Stress_Status) %>%
+    summarise(
+      n = n(),
+      mean = mean(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sd = sd(Average_Blinks_Per_Minute, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary$Stress_Status <- factor(data_summary$Stress_Status, levels = c("Unstressed", "Stressed"))
+  
+  barplot <- ggplot(data_summary, aes(x = Stress_Status, y = mean, fill = Stress_Status)) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+    labs(x = "X AXIS",
+         y = "Y AXIS",
+         title = "Mean Blinks/Minute by Stress Status") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+#Create Box Plot Code
+average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+
+boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs, 
+    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  labs(
+    x = "X AXIS",
+    y = "Y AXIS",
+    title = "Blinks/Minute by Stress Status"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  )
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+
+#Statistical Analysis: Not Normal Paired
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Unpaired
+t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+                data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE)
+
+
+#Statistical Analysis: Normal Paired
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide$Stressed,
+  average_trs_paired_wide$Unstressed,
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired_t <- average_trs %>%
+  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+
+#Statistical Analysis: Not Normal Paired
+wilcox_test_paired <- wilcox.test(
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Stressed"], 
+  average_trs$Average_Blinks_Per_Minute[average_trs$Stress_Status == "Unstressed"], 
+  paired = TRUE
+)
+
+#Statistical Analysis: Effect Size for Paired T-Test
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status, paired = TRUE)
+
+
