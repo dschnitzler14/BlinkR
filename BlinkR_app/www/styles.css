@@ -88,12 +88,14 @@ body {
   background-color: #e1f5e6;
   color: #2e7d32;
   border: 2px solid #66bb6a;
+  text-align: center;
 }
 
 .error-box {
   background-color: #ffebee;
   color: #c62828;
   border: 2px solid #e57373;
+  text-align: center;
 }
 
 .yellow-box {
@@ -256,28 +258,94 @@ a:hover {
   background-color: #218838; /* Darker green on hover */
 }
 
-.fun-submit-button {
+.fun-save-button {
   background-color: #ff69b4; /* Hot pink background */
   color: #ffffff;           /* White text */
   font-weight: bold;        /* Bold text */
   font-size: 16px;          /* Slightly larger text */
   border: none;             /* No border */
   border-radius: 25px;      /* Fully rounded edges for a pill shape */
-  padding: 10px 20px;       /* Padding for size */
+  padding: 10px 20px;  
+  margin-bottom: 10px;     /* Padding for size */
   cursor: pointer;          /* Pointer cursor on hover */
   transition: all 0.3s ease; /* Smooth animation */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
 }
 
-.fun-submit-button:hover {
+.fun-save-button:hover {
   background-color: #ff1493; /* Darker pink on hover */
   transform: scale(1.1);     /* Slight zoom-in effect */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft hover shadow */
 }
 
-.fun-submit-button:active {
+.fun-save-button:active {
   background-color: #c71585; /* Even darker pink on click */
   transform: scale(1.0);     /* Return to normal size */
+}
+
+.fun-generate-button {
+  background-color: #f4d03f;
+  color: #333333;
+  font-weight: 600;
+  /* Medium-bold text */
+  font-size: 14px;
+  /* Reduced from 16px */
+  border: none;
+  /* No border */
+  border-radius: 12px;
+  /* Less rounded than 25px */
+  padding: 8px 16px;
+  /* Smaller padding */
+  margin-bottom: 10px;
+  /* Space below button */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: all 0.3s ease;
+  /* Smooth animation */
+  text-shadow: none;
+  /* Remove the heavier text shadow */
+}
+
+.fun-generate-button:hover {
+  background-color: #f4d03f;
+  transform: scale(1.05);
+  /* Subtler zoom than 1.1 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Light hover shadow */
+}
+
+.fun-generate-button:active {
+  background-color: #f4d03f;
+  transform: scale(1.0);
+}
+
+.fun-submit-button {
+  background-color: #78d94c;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  /* Slightly larger text than 12px */
+  border: none;
+  border-radius: 10px;
+  /* A bit more rounding */
+  padding: 8px 14px;
+  /* Increased padding for a medium footprint */
+  margin-bottom: 10px;
+  /* Space below the button */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-shadow: none;
+}
+
+.fun-submit-button:hover {
+  background-color: #78d94c;
+  transform: scale(1.03);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.fun-submit-button:active {
+  background-color: #78d94c;
+  transform: scale(1.0);
 }
 
 .fun-delete-button {
@@ -302,6 +370,47 @@ a:hover {
 .fun-delete-button:active {
   background-color: #bd2130; /* Even darker red on click */
   transform: scale(1.0);     /* Return to normal size */
+}
+
+.fun-nav-button {
+  background-color: #80bc28;
+  /* Green background */
+  color: #ffffff;
+  /* White text */
+  font-weight: 600;
+  /* Semi-bold text */
+  font-size: 13px;
+  /* Reduced from 14px to 13px */
+  border: none;
+  /* No border */
+  border-radius: 8px;
+  /* Less rounded corners */
+  padding: 5px 10px;
+  /* Smaller padding */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: all 0.2s ease;
+  /* Smooth hover transition */
+  box-shadow: none;
+  /* Minimal default shadow */
+  text-shadow: none;
+  /* No text shadow */
+}
+
+.fun-nav-button:hover {
+  background-color: #80bc28;
+  /* Slightly adjust if you want a distinct hover color */
+  transform: scale(1.03);
+  /* Subtle zoom effect */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  /* Light hover shadow */
+}
+
+.fun-nav-button:active {
+  background-color: #80bc28;
+  /* Optionally darken further on click */
+  transform: scale(1.0);
+  /* Reset size on click */
 }
 
 .fun-download-button {
@@ -466,38 +575,30 @@ a:hover {
   .action-button.custom-action.clicked,
   .custom-box:hover,
   .custom-dark-yellow:hover,
-  .fun-submit-button:hover,
+  .fun-save-button:hover,
   .fun-delete-button:hover,
   .fun-download-button:hover,
   .skin-blue .sidebar-menu>li:hover>a,
   .skin-blue .main-header .navbar .sidebar-toggle:hover {
     transform: none !important;
     box-shadow: none !important;
-    /* You can keep a smaller shadow if you’d like, but large shadows can cause overflow issues on some devices. */
   }
 
   /* 2) Make large buttons smaller */
-     .action-button.custom-action,
-     .fun-submit-button,
-     .fun-delete-button,
-     .fun-download-button,
-     .custom-dark-yellow,
-     .custom-run-button {
-       display: block !important;
-       /* Stack each button on its own row */
-       width: 100% !important;
-       /* Full width on mobile */
-       margin-bottom: 10px !important;
-       /* Spacing between stacked buttons */
-       font-size: 14px !important;
-       /* Smaller text */
-       padding: 8px 10px !important;
-       /* Less padding so text fits nicely */
-       white-space: normal !important;
-       /* Allow text to wrap onto multiple lines */
-       text-align: center;
-       /* Center the text/emoji for aesthetics */
-     }
+  .action-button.custom-action,
+  .fun-save-button,
+  .fun-delete-button,
+  .fun-download-button,
+  .custom-dark-yellow,
+  .custom-run-button {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 10px !important;
+    font-size: 14px !important;
+    padding: 8px 10px !important;
+    white-space: normal !important;
+    text-align: center;
+  }
 
   /* 3) Tighten margins/padding on box elements so they fit screens better */
   .custom-box,
@@ -508,15 +609,13 @@ a:hover {
     padding: 15px 10px !important;
   }
 
-     .btn-group,
-     .row-of-buttons,
-     .shiny-html-output {
-       display: flex !important;
-       flex-wrap: wrap !important;
-       /* or flex-direction: column; if you prefer */
-       justify-content: center;
-       /* center them if you like */
-     }
+  /* Only apply flex to button groups, not all .shiny-html-output */
+  .btn-group,
+  .row-of-buttons {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center;
+  }
 
   /* 4) Scale down headings so they don’t push layout */
   .custom-box .box-title {
@@ -539,10 +638,9 @@ a:hover {
 /* For phones and very narrow screens (~480px) */
 @media (max-width: 480px) {
 
-  /* Further reduce transforms, fonts, padding */
   .action-button.custom-action,
   .custom-dark-yellow,
-  .fun-submit-button,
+  .fun-save-button,
   .fun-delete-button,
   .fun-download-button,
   .custom-run-button {
@@ -566,4 +664,52 @@ a:hover {
   .markdown-body h3 {
     font-size: 1.0em !important;
   }
+}
+
+/* --- Editor Container Overrides --- */
+
+/* Ensure the editor container is rendered as a block 
+   (not flex) at ALL screen sizes. */
+.editor-container.shiny-html-output {
+  display: block !important;
+  flex-wrap: nowrap !important;
+  /* override any flex wrap from higher-level rules */
+  justify-content: flex-start !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+}
+
+.page-title-box {
+  background-color: #80bc28;
+  /* Green background */
+  color: #ffffff;
+  /* White text */
+  border: none;
+  /* No border */
+  border-radius: 0px;
+  /* Remove rounded corners to avoid button look */
+  padding: 8px 0;
+  /* Minimal vertical padding for a header feel */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  /* Center text */
+  font-weight: bold;
+  /* Make it stand out */
+  display: block;
+  /* Ensure full-width alignment */
+}
+
+.page-title-box h2 {
+  margin: 0;
+  /* Remove extra margin */
+  padding: 0;
+  font-size: 22px;
+  /* Larger font to look like a heading */
+  font-weight: bold;
+  text-transform: uppercase;
+  /* Optional: Make it feel like a real section title */
+  letter-spacing: 1px;
+  /* Slight letter spacing for readability */
 }

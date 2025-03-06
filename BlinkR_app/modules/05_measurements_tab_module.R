@@ -4,8 +4,18 @@ measurements_module_ui <- function(id) {
     tabName = "Measurements",
     fluidPage(
       fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("ruler"), "Measurements")
+                )
+      )
+    )),
+      fluidRow(
         box(
-          title = "Add Students",
+          title = tagList(shiny::icon("circle-plus"), "Add Students"),
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
@@ -16,7 +26,7 @@ measurements_module_ui <- function(id) {
           group_info_module_ui(ns("add_students"))
         ),
         box(
-          title = "Measurements",
+          title = tagList(shiny::icon("ruler"), "Measurements"),
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
@@ -39,17 +49,30 @@ measurements_module_ui <- function(id) {
         )
       ),
       fluidRow(
-        column(
-          width = 12,
-          div(
-            style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-            actionButton(ns("back_page_measure"),
-                         label = tagList(icon("arrow-left"), "Back")),
-            actionButton(ns("next_page_measure"), 
-                         label = tagList("Next", icon("arrow-right")))
-          )
-        ),
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_measure"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
       ),
+      actionButton(
+        ns("next_page_measure"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
     )
   )
 }
@@ -146,7 +169,7 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
               
               student_ids(setdiff(student_ids(), student_ID))
               
-              showNotification(paste("Deleted student with ID:", student_ID), type = "message")
+              showNotification(paste("Deleted student with ID:", student_ID), type = "message", duration = 3)
             }, ignoreInit = TRUE)
           }
           

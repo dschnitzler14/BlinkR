@@ -6,9 +6,22 @@ analysis_prepare_data_module_ui <- function(id) {
     fluidPage(
       fluidRow(
         column(
+          width = 12,
+          div(
+            class = "page-title-box",
+            tags$h2(
+              tagList(shiny::icon("magnifying-glass"), "Analyis: Prepare Your Data")
+            )
+  )
+)
+
+      ),
+
+      fluidRow(
+        column(
           12,
           shinydashboard::box(
-            title = "Step 1: View Data",
+            title = "1️⃣ View Data",
             collapsible = TRUE,
             width = 12,
             solidHeader = TRUE,
@@ -28,7 +41,7 @@ analysis_prepare_data_module_ui <- function(id) {
             )
           ),
           shinydashboard::box(
-            title = "Step 2: Prepare Data",
+            title = "2️⃣ Prepare Data",
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -139,10 +152,18 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
               label = "How many subjects (students) can you see in this slice of data?",
               placeholder = "Type your answer here",
               ),
-              actionButton(
-                session$ns("interpret_head_results_submit"),
-                label = "Submit",
-                class = "action-button custom-action"
+              # actionButton(
+              #   session$ns("interpret_head_results_submit"),
+              #   label = "Submit",
+              #   class = "fun-submit-button"
+              # ),
+              div(
+                style = "text-align: center;",
+                actionButton(
+                  session$ns("interpret_head_results_submit"),
+                  label = "Submit",
+                  class = "fun-submit-button"
+                )
               ),
               uiOutput(session$ns("feedback_head")),
             radioButtons(
@@ -236,17 +257,6 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
       updateTabItems(parent.session, "sidebar", "Analysis_Dashboard")
     })  
     
-    # observeEvent(input$trs_interpreting_R_quiz, {
-    #   feedback <- if (input$trs_interpreting_R_quiz == "option1") {
-    #     div(class = "success-box", "\U1F64C Correct!")
-    #   } else {
-    #     div(class = "error-box", "\U1F914 Not quite - try again!")
-    #   }
-    #   
-    #   output$average_technical_replicates_quiz_feedback <- renderUI({
-    #     feedback
-    #   })
-    # })
 
   })
 }

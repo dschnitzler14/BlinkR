@@ -3,9 +3,9 @@
 - **Group Comparisons**: Clearly indicate how the descriptive statistics compare across groups.
 - **Relevance**: Highlight how these statistics relate to the hypotheses or objectives of the study.
 
-## Data Visualization
+## Data Visualisation
 - **Clarity**: Present data in a way that both groups can be directly compared.
-- **Graphs**: Use appropriate visualizations like histograms or box plots to represent the distribution of data for both groups.
+- **Graphs**: Use appropriate visualisations like histograms or box plots to represent the distribution of data for both groups.
 - **Labels**: Ensure all axes are clearly labeled and any legends are informative.
 
 ## Hypothesis Testing

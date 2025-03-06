@@ -5,11 +5,21 @@ analysis_create_figure_module_ui <- function(id) {
     tabName = "Create_Figure",
     fluidPage(
       fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("chart-simple"), "Analysis: Create Figure")
+                )
+      )
+    )),
+      fluidRow(
         column(
           12,
           
           box(
-            title = "Creating a Figure",
+            title = "1️⃣ Creating a Figure",
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -31,9 +41,8 @@ analysis_create_figure_module_ui <- function(id) {
               ),
               column(
                 8,
-                uiOutput(ns("editor_ui")),
+                div(class = "editor-container", uiOutput(ns("editor_ui"))),
                 uiOutput(ns("save_plot"))
-                
               )
             )
           ),
@@ -154,7 +163,7 @@ predefined_code_boxplot <- read_file(
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
           includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
-          box(title = "Open me for a hint",
+          box(title = "💡 Open me for a hint",
               collapsible = TRUE,
               collapsed = TRUE,
               width = 12,
@@ -193,7 +202,7 @@ predefined_code_boxplot <- read_file(
           div(class = "success-box", "\U1F64C Great Job!"),
           includeMarkdown("markdown/07_analysis/change_axis.Rmd"),
           includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
-          box(title = "Open me for a hint",
+          box(title = "💡 Open me for a hint",
               collapsible = TRUE,
               collapsed = TRUE,
               width = 12,
@@ -233,7 +242,7 @@ predefined_code_boxplot <- read_file(
         } else if (inherits(figure_editor_bar_plot()$result, "recordedplot")) {
             saved_results$plots[[key]] <- figure_editor_bar_plot()$result
         } else {
-            showNotification("Invalid plot type. Unable to save.", type = "error")
+            showNotification("Invalid plot type. Unable to save.", type = "error", duration = 3)
             return()
         }
 
@@ -258,9 +267,9 @@ predefined_code_boxplot <- read_file(
         )
 
         unlink(temp_file)
-        showNotification("Plot saved successfully", type = "message")
+        showNotification("Plot saved successfully", type = "message", duration = 3)
     } else {
-        showNotification("No plot to save. Please create a plot first.", type = "error")
+        showNotification("No plot to save. Please create a plot first.", type = "error", duration = 3)
     }
 })
 
@@ -291,9 +300,9 @@ predefined_code_boxplot <- read_file(
     )
 
     unlink(temp_file)
-    showNotification("Plot saved successfully.", type = "message")
+    showNotification("Plot saved successfully.", type = "message", duration = 3)
   } else {
-    showNotification("No valid plot to save.", type = "error")
+    showNotification("No valid plot to save.", type = "error", duration = 3)
   }
 })
 

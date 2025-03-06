@@ -5,48 +5,75 @@ hypothesis_module_ui <- function(id) {
     tabName = "Hypothesis",
     fluidPage(
       fluidRow(
+        column(
+          width = 12,
+          div(
+            class = "page-title-box",
+            tags$h2(
+              tagList(shiny::icon("pen-to-square"), "Hypothesis")
+            )
+  )
+)
+
+      ),
+      fluidRow(
         box(
-          title = "What is a hypothesis?",
+          title = tagList(shiny::icon("question-circle"), "What is a hypothesis?"),
           id = "hypothesis_box1",
-          collapsible = FALSE,
+          collapsible = TRUE,
+          collapsed = TRUE,
           width = 12,
           solidHeader = TRUE,
           includeMarkdown("markdown/03_hypothesis/what_is_a_hypothesis.Rmd")
         ),
         box(
-          title = "Tips for Writing Your Hypothesis",
+          title = tagList(shiny::icon("pen"), "Tips for Writing Your Hypothesis"),
           id = "hypothesis_box2",
-          collapsible = FALSE,
+          collapsible = TRUE,
+          collapsed = TRUE,
           width = 12,
           solidHeader = TRUE,
           includeMarkdown("markdown/03_hypothesis/hypothesis_tips.Rmd")
         ),
         box(
-          title = "What is your hypothesis?",
+          title = tagList(shiny::icon("lightbulb"), "What is your hypothesis?"),
           id = "hypothesis_box3",
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          markdown("### What is your hypothesis in plain language?"),
-          text_area_module_UI(ns("hypothesis"), text_label = "Hypothesis", text_value = ""),
-          markdown("### What is your null hypothesis?"),
-          text_area_module_UI(ns("null_hypothesis"), text_label = "Null Hypothesis", text_value = ""),
-          markdown("### What is your alterative hypothesis?"),
-          text_area_module_UI(ns("alt_hypothesis"), text_label = "Alternative Hypothesis", text_value = "")
+          markdown("#### What is your hypothesis in plain language?"),
+          text_area_module_UI(ns("hypothesis"), text_label = "Hypothesis", text_value = "", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes")),
+          markdown("#### What is your null hypothesis?"),
+          text_area_module_UI(ns("null_hypothesis"), text_label = "Null Hypothesis", text_value = "", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes")),
+          markdown("#### What is your alterative hypothesis?"),
+          text_area_module_UI(ns("alt_hypothesis"), text_label = "Alternative Hypothesis", text_value = "", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
         )
       ),
       fluidRow(
-      column(
-      width = 12,
-      div(
-        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page_hypo"),
-                     label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page_hypo"), 
-              label = tagList("Next", icon("arrow-right")))
-          )
-        ),
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_hypo"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
       ),
+      actionButton(
+        ns("next_page_hypo"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
     )
   )
 }

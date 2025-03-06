@@ -116,7 +116,7 @@ sidebar <- dashboardSidebar(
         menuItem("Writing Up", tabName = "Writing-Up-menu",icon = icon("pen"),
           menuItem("Write Up Advice", tabName = "Writing_Up_Advice", icon = icon("circle-question")),
           menuItem("AI", tabName = "AI", icon = icon("wand-magic-sparkles")),
-          menuItem("Write Notes", tabName = "Writing-Up", icon = icon("pen")),
+          menuItem("Write Up", tabName = "Writing-Up", icon = icon("pen")),
           menuItem("Upload Final Report", tabName = "Upload_Report", icon = icon("upload"))
           ),
         # menuItem("Simulated Experiment", tabName = "Simulated_Experiment", icon = icon("microscope"),

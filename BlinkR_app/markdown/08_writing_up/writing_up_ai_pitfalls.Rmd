@@ -2,13 +2,13 @@
 AI often generates false or misleading details, including made-up facts, sources, or quotes, making it unreliable for research-based writing.
 
 #### 2. Lack of Critical Thinking
-AI does not analyze or interpret information; it simply predicts words based on patterns, leading to shallow arguments without real insight or reasoning.
+AI does not analyse or interpret information; it simply predicts words based on patterns, leading to shallow arguments without real insight or reasoning.
 
 #### 3. Generic & Repetitive Writing
 AI-generated essays often sound formulaic, repetitive, and lacking originality, failing to meet academic standards for depth and engagement.
 
 #### 4. Inability to Form a Strong Argument
-AI struggles with complex reasoning, logical argumentation, and synthesizing diverse viewpoints, resulting in weak or contradictory claims.
+AI struggles with complex reasoning, logical argumentation, and synthesising diverse viewpoints, resulting in weak or contradictory claims.
 
 #### 5. Bias & Unverified Sources
 AI reflects biases present in its training data and may pull from unreliable or outdated sources without proper citation.

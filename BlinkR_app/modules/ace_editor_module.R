@@ -33,8 +33,8 @@ editor_module_ui <- function(id) {
     ),
     div(
       style = "margin-top: 20px;",
-      #withSpinner(uiOutput(ns("dynamic_console")), type = 6)
-      uiOutput(ns("dynamic_console"))
+      withSpinner(uiOutput(ns("dynamic_console")), type = 8, color = "#ff69b4", size = 2)
+      #uiOutput(ns("dynamic_console"))
 
     )
   )
@@ -54,8 +54,6 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
 
       code <- input$editor
       temp_env <- new.env(parent = globalenv())
-
-      #assign(variable_name, data(), envir = temp_env)
 
       if (is.list(data) && length(variable_name) == length(data)) {
         for (i in seq_along(data)) {
@@ -89,7 +87,10 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
 
       current_code(code)
 
-       output$dynamic_console <- renderUI({
+    }, ignoreInit = TRUE)
+
+output$dynamic_console <- renderUI({
+        req(input$run_code)
     if (values$is_plot) {
       plotOutput(session$ns("plot_output"))
     } else if (!is.null(values$result)) {
@@ -98,26 +99,7 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
       NULL
     }
   })
- 
-    }, ignoreInit = TRUE)
 
-    # output$dynamic_console <- renderUI({
-    #   if (values$is_plot) {
-    #     plotOutput(session$ns("plot_output"))
-    #   } else {
-    #     verbatimTextOutput(session$ns("text_output"))
-    #   }
-    # })
-
-#     output$dynamic_console <- renderUI({
-#   if (values$is_plot) {
-#     plotOutput(session$ns("plot_output"))
-#   } else if (!is.null(values$result)) {
-#     verbatimTextOutput(session$ns("text_output"))
-#   } else {
-#     NULL 
-#   }
-# })
 
     output$plot_output <- renderPlot({
   req(values$is_plot, values$result)
@@ -158,9 +140,7 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
       
       code_to_save <- current_code()
       current_code(NULL)
-      
-      # showNotification("Uploading code to Google Drive…", type = "message")
-      
+            
       future({
       file_name <- "code_history.txt"
       header <- paste0("#", save_header)
@@ -181,12 +161,12 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
       
       TRUE
       }) %...>% {
-      showNotification("Saved to Code History", type = "message")
+      showNotification("Saved to Code History", type = "message", duration = 2)
       } %...!% {
         err <- .
         showNotification(
           paste("Error uploading code to Google Drive:", err$message),
-          type = "error"
+          type = "error", duration = 3
         )
       }
       #current_code(NULL)

@@ -38,9 +38,9 @@ combine_sheets_module_server <- function(id, group_data_file_id, parent.session)
 
         googlesheets4::gs4_create("BlinkR_Combined_Class_Data", sheets = list(combined_class_data = combined_data))
        }) %...>% {
-         showNotification("Data successfully combined and written to BlinkR_Combined_Class_Data", type = "message")
+         showNotification("Data successfully combined and written to BlinkR_Combined_Class_Data", type = "message", duration = 3)
       } %...!% {
-        showNotification("An error occurred while combining data.", type = "error")
+        showNotification("An error occurred while combining data.", type = "error", duration = 3)
       } %>% finally({
         output$loader_ui <- renderUI({
           NULL

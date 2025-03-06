@@ -50,7 +50,7 @@ share_to_groups_admin_module_server <- function(id, user_base_google_sheet, colu
     
     observeEvent(input$share_to_selected_groups, {
       if (is.null(input$group_input) || length(input$group_input) == 0) {
-        showNotification("No groups selected to share.", type = "warning")
+        showNotification("No groups selected to share.", type = "warning", duration = 3)
         return()
       }
       
@@ -67,12 +67,12 @@ share_to_groups_admin_module_server <- function(id, user_base_google_sheet, colu
         )
       }
       
-      showNotification("Data shared!", type = "message")
+      showNotification("Data shared!", type = "message", duration = 3)
     })
     
     observeEvent(input$hide_from_selected_groups, {
       if (is.null(input$group_input) || length(input$group_input) == 0) {
-        showNotification("No groups selected to share.", type = "warning")
+        showNotification("No groups selected to share.", type = "warning", duration = 3)
         return()
       }
       
@@ -89,7 +89,7 @@ share_to_groups_admin_module_server <- function(id, user_base_google_sheet, colu
         )
       }
       
-      showNotification("Data hidden!", type = "message")
+      showNotification("Data hidden!", type = "message", duration = 3)
     })
     
     

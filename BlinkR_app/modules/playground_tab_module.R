@@ -1,7 +1,19 @@
 playground_module_ui <- function(id) {
     ns <- NS(id)
     tabItem(tabName = "Playground",
-      fluidPage(fluidRow(column(
+      fluidPage(
+        fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("hand"), "Playground")
+                )
+      )
+    )),
+        fluidRow(
+          column(
       12,
       box(
         title = "Writing R Code",

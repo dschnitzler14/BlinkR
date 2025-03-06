@@ -3,10 +3,21 @@ writing_up_ai_ui <- function(id) {
     simulated_experiment_measurements <- tabItem(tabName = "AI",
                               fluidPage(
                                 fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("wand-magic-sparkles"), "Writing Up: AI")
+                )
+      )
+    )),
+                                fluidRow(
                                     box(
-                                    title = "Brief summary of how AI tools like ChatGPT work",
+                                    title = tagList(shiny::icon("robot"), "Brief summary of how AI tools like ChatGPT work"),
                                     id = "what_is_ai",
                                     collapsible = TRUE,
+                                    collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
                                     includeMarkdown("markdown/08_writing_up/writing_up_ai_summary.Rmd")
@@ -14,9 +25,10 @@ writing_up_ai_ui <- function(id) {
                                     
                                   ),
                                   box(
-                                    title = "AI Pitfalls",
+                                    title = tagList(shiny::icon("exclamation-triangle"), "AI Pitfalls"),
                                     id = "pitfalls",
                                     collapsible = TRUE,
+                                    collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
                                     includeMarkdown("markdown/08_writing_up/writing_up_ai_pitfalls.Rmd")

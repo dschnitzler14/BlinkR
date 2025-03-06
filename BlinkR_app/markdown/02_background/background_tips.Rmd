@@ -1,0 +1,10 @@
+- **Use quotation marks (" ")**: Surround phrases in quotes to search for exact matches (e.g., "blinking rate").
+- **Filter your results**: Use filters on PubMed to narrow down by publication date, type of study (e.g., clinical trial, meta-analysis), or population (e.g., humans, adults).
+- **Start broad, then narrow**: Begin with general terms, then add more specific ones as you understand the scope of research.
+- Reading existing studies will not only inform your hypothesis but also provide insights into methodologies you might adapt for your experiment. For instance, you might discover different ways to measure blinking rate or learn about specific stress-inducing tasks used in past research.
+- Keep organised, detailed notes on key findings.
+
+#### As you review studies, keep these questions in mind:
+- What is the current understanding of blinking rates under stress?
+- What gaps exist in the literature?
+- How do these findings relate to my hypothesis?

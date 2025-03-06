@@ -6,12 +6,11 @@ experimental_design_module_ui <- function(id, label = "Protocol Planning Notes",
       label = label,
       placeholder = placeholder
     ),
-    actionButton(ns("submit_protocol_notes"), "Save Notes", class = "fun-submit-button")
+    actionButton(ns("submit_protocol_notes"), tagList(shiny::icon("floppy-disk"), "Save Notes"), class = "fun-save-button")
     )
 }
-#
 
-experimental_design_module_server <- function(id, auth, protocol_file_id, sheet_name = "Protocol Notes", input_question = "Input Question") {
+experimental_design_module_server <- function(id, auth, protocol_file_id, sheet_name = "Protocol_Notes", input_question = "Input Question") {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -33,10 +32,11 @@ experimental_design_module_server <- function(id, auth, protocol_file_id, sheet_
       protocol_notes_db(updated_data)
       
       tryCatch({
-        sheet_append(data = new_entry, ss = protocol_file_id, sheet = sheet_name)
-        showNotification("Protocol notes submitted successfully!", type = "message")
+        print(new_entry)
+        sheet_write(data = new_entry, ss = protocol_file_id, sheet = sheet_name)
+        showNotification("Protocol notes submitted successfully!", type = "message", duration = 3)
       }, error = function(e) {
-        showNotification("Error saving protocol notes: Please try again.", type = "error")
+        showNotification("Error saving protocol notes: Please try again.", type = "error", duration = 3)
       })
     })
   })

@@ -50,7 +50,7 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
                  )
           )
         ),
-        #actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-submit-button"),
+        #actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-save-button"),
         conditionalPanel(
           condition = paste0("input['", ns("consent_check"), "'] == true"),
           actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-submit-button")
@@ -91,7 +91,6 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
           condition = paste0("input['", ns("consent_check"), "'] == true"),
           actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements", class = "fun-submit-button")
         )
-        #actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements", class = "fun-submit-button"),
       ),
     )
   )
@@ -122,7 +121,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
       add_measurement <- function(stress_status, inputs, submission_ID) {
         
         if (any(sapply(inputs, is.null)) || any(sapply(inputs, function(x) x == 0))) {
-          showNotification("Please enter all three measurements.", type = "error")
+          showNotification("Please enter all three measurements.", type = "error", duration = 3)
           return(FALSE)
         }
         
@@ -181,7 +180,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           state$stressed_ids <- unique(c(state$stressed_ids, submission_ID))
         }
         
-        showNotification("Success: Measurements saved.", type = "message")
+        showNotification("Success: Measurements saved.", type = "message", duration = 3)
       }
       
       observeEvent(input$Submit_Unstressed, {

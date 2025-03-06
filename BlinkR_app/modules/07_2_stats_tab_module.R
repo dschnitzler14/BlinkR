@@ -4,6 +4,17 @@ analysis_stats_module_ui <- function(id) {
    tabItem(
     tabName = "Statistical_Analysis",
     fluidPage(
+      fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("equals"), "Analysis: Statistical Analysis")
+                )
+      )
+    )),
+      fluidRow(
         uiOutput(ns("testing_assumptions")),
         uiOutput(ns("normal_output")),
         uiOutput(ns("not_normal_output")),
@@ -53,6 +64,7 @@ analysis_stats_module_ui <- function(id) {
           )
           
         )
+    )
    )
 }
 
@@ -113,7 +125,7 @@ average_trs_paired_wide <- reactive({
   )
     unlink(temp_file)
 
-  showNotification(paste0(name, " result saved successfully."), type = "message")
+  showNotification(paste0(name, " result saved successfully."), type = "message", duration = 3)
 }
 
 ### 
@@ -125,7 +137,7 @@ output$testing_assumptions <- renderUI({
             12,
           box(
               id = "testing_assumptions",
-              title = "Testing Assumptions",
+              title = "1️⃣ Testing Assumptions",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -133,7 +145,12 @@ output$testing_assumptions <- renderUI({
               fluidRow(
                   column(6,
                   includeMarkdown("markdown/07_analysis/analysis_hist_plot_explainer.Rmd"),
-                  actionButton(session$ns("run_hist_Plot"), "Generate Histogram to check for Normality", class = "fun-submit-button"),
+                  div(
+                  style = "text-align: center;",
+                  actionButton(session$ns("run_hist_Plot"), 
+                    tagList(shiny::icon("circle-plus"), "Generate Histogram to check for Normality"),
+                    class = "fun-generate-button")
+                  ),
                   uiOutput(session$ns("hist_explainer_ui")),
                   ),
                   column(6,
@@ -148,6 +165,25 @@ output$testing_assumptions <- renderUI({
         
       )
     })
+
+  
+  hist_plot_reactive <- eventReactive(input$run_hist_Plot, {
+  req(average_trs())
+  
+  hist(
+    average_trs()$Average_Blinks_Per_Minute,
+    main = "Distribution of Blinks/Minute",
+    xlab = "Average Blinks/Minute",
+    ylab = "Frequency",
+    col = "grey49", border = "black"
+  )
+  
+  recorded <- recordPlot()
+  saved_results$recorded_plots[["hist_plot"]] <- recorded
+  
+  recorded
+})
+
 
 observeEvent(input$run_hist_Plot, {
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -174,44 +210,37 @@ if(!is.null(normal_unpaired_result()$result)){
      not_normal_paired_result <- NULL
   }
 
-      req(average_trs())
-      
       output$hist_plot <- renderPlot({
-        hist(
-          average_trs()$Average_Blinks_Per_Minute,
-          main  = "Distribution of Blinks/Minute",
-          xlab  = "Average Blinks/Minute",
-          ylab  = "Frequency",
-          col   = "grey49",
-          border= "black"
-        )
-        saved_results$recorded_plots[["hist_plot"]] <- recordPlot()
-        
-        temp_file <- tempfile(fileext = ".png")
-        png(temp_file, width = 800, height = 600)
-        replayPlot(saved_results$recorded_plots[["hist_plot"]])
-        dev.off()
-        
-        path <- drive_get(as_id(session_folder_id))
-        
-        drive_upload(
-          media = temp_file,
-          path = path,
-          name = paste0("hist_plot.png"),
-          overwrite = TRUE
-        )
-        
-        recordPlot(NULL)
-        unlink(temp_file)
-        showNotification("Plot saved successfully.", type = "message")
-        
-      })
+      replayPlot(hist_plot_reactive())
 
-    output$hist_explainer_ui <- renderUI({
-      tagList(
+      temp_file <- tempfile(fileext = ".png")
+      png(temp_file, width = 800, height = 600)
+      replayPlot(saved_results$recorded_plots[["hist_plot"]])
+      dev.off()
       
-      actionButton(session$ns("normal"), "The Data is Normal", class = "fun-submit-button"),
-        actionButton(session$ns("not_normal"), "The Data is Not Normal", class = "fun-submit-button")
+      path <- drive_get(as_id(session_folder_id))
+      
+      drive_upload(
+        media = temp_file,
+        path = path,
+        name = paste0("hist_plot.png"),
+        overwrite = TRUE
+      )
+      
+      #recordPlot(NULL)
+      #saved_results$recorded_plots[["hist_plot"]] <- NULL
+      unlink(temp_file)
+      showNotification("Plot saved successfully.", type = "message", duration = 3)
+    })
+
+  
+    output$hist_explainer_ui <- renderUI({
+      div(
+          style = "text-align: center;",
+      tagList(
+      actionButton(session$ns("normal"), "👍 The Data is Normal", class = "fun-submit-button"),
+      actionButton(session$ns("not_normal"), "👎 The Data is Not Normal", class = "fun-submit-button")
+      )
       )
       })
 
@@ -242,10 +271,13 @@ observeEvent(input$normal, {
   }
 
     output$normal_output <- renderUI({
+      div(
+          style = "text-align: center;",
       tagList(
-        actionButton(session$ns("unpaired_normal"), "The Data is Not Paired", class = "fun-submit-button"),
-        actionButton(session$ns("paired_normal"), "The Data is Paired", class = "fun-submit-button")
+        actionButton(session$ns("unpaired_normal"), "☝️ The Data is Not Paired", class = "fun-submit-button"),
+        actionButton(session$ns("paired_normal"), "✌️ The Data is Paired", class = "fun-submit-button")
         )
+      )
     })
 })
 
@@ -320,7 +352,7 @@ if(!is.null(normal_unpaired_result()$result)){
             12,
           box(
               id = "not_normal_unpaired",
-              title = "Not Normal Unpaired: Wilcoxon Test",
+              title = " 2️⃣ Not Normal Unpaired: Wilcoxon Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -419,7 +451,7 @@ if(!is.null(normal_unpaired_result()$result)){
             12,
           box(
               id = "not_normal_paired",
-              title = "Not Normal Paired: Wilcoxon Test",
+              title = "2️⃣ Not Normal Paired: Wilcoxon Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -517,7 +549,7 @@ if(!is.null(normal_unpaired_result()$result)){
             12,
           box(
               id = "normal_unpaired",
-              title = "Normal Unpaired: T-Test",
+              title = "2️⃣ Normal Unpaired: T-Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -612,7 +644,7 @@ observeEvent(input$paired_normal,{
             12,
           box(
               id = "normal_paired",
-              title = "Normal Paired: T-Test",
+              title = "2️⃣ Normal Paired: T-Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -696,7 +728,7 @@ observe({
             12,
           box(
               id = "effect_size_t_test_paired",
-              title = "Effect Size for Paired T-Test",
+              title = "3️⃣ Effect Size for Paired T-Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -782,7 +814,7 @@ observe({
             12,
           box(
               id = "effect_size_t_test_unpaired",
-              title = "Effect Size for Unpaired T-Test",
+              title = "3️⃣ Effect Size for Unpaired T-Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -867,7 +899,7 @@ observe({
             12,
           box(
               id = "effect_size_wilcoxon_paired",
-              title = "Effect Size for Paired Wilcoxon Test",
+              title = "3️⃣ Effect Size for Paired Wilcoxon Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -952,7 +984,7 @@ observe({
             12,
           box(
               id = "effect_size_wilcoxon_unpaired",
-              title = "Effect Size for Unpaired Wilcoxon Test",
+              title = "3️⃣ Effect Size for Unpaired Wilcoxon Test",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -1113,7 +1145,7 @@ observe({
             12,
           box(
               id = "interpretation_quiz",
-              title = "Your Results",
+              title = "4️⃣ Your Results",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -1147,16 +1179,20 @@ observe({
           tagList(
             numericInput(session$ns("enter_p_value"), "What is the p-value?", value = 0),
             uiOutput(session$ns("enter_p_value_feedback")),
-            actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button"),
+            div(
+                style = "text-align: center;",
+            actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button")),
 
             numericInput(session$ns("enter_effect_size"), "What is the effect size?", value = 0),
             uiOutput(session$ns("enter_effect_size_feedback")),
-            actionButton(session$ns("enter_effect_size_submit"), "Submit", class = "fun-submit-button"),
+            div(
+                style = "text-align: center;",
+            actionButton(session$ns("enter_effect_size_submit"), "Submit", class = "fun-submit-button")),
             
             textInput(session$ns("interpretation_quiz_text_p_value"), "Interpret the p-value result in one sentence", value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", width = "100%"),
             textInput(session$ns("interpretation_quiz_text_effect_size"), "Summarise these results in one sentence", value = "An effect size of [effect size method]=[effect size] suggests that ______.", width = "100%"),
-            actionButton(session$ns("save_text_interpretation_button"), "Submit", class = "fun-submit-button"),
-            uiOutput(session$ns("interpretation_quiz_text_input_feedback")),
+            actionButton(session$ns("save_text_interpretation_button"), tagList(shiny::icon("floppy-disk"), "Save Notes"), class = "fun-save-button"),
+            #uiOutput(session$ns("interpretation_quiz_text_input_feedback")),
             #uiOutput(session$ns("save_text_interpretation"))
             
           )
@@ -1260,11 +1296,11 @@ observeEvent(input$save_text_interpretation_button, {
   req(nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size))
 
   if (nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size)) {
-      output$interpretation_quiz_text_input_feedback <- renderUI({
-          tagList(
-            div(class = "success-box", "\U1F64C Great!"),
-          )
-        })
+      # output$interpretation_quiz_text_input_feedback <- renderUI({
+      #     tagList(
+      #       div(class = "success-box", "\U1F64C Great!"),
+      #     )
+      #   })
 
         interpretation_text <- paste0(
     "Interpretation: ", input$interpretation_quiz_text_p_value, ". ", input$interpretation_quiz_text_effect_size, "."
@@ -1285,7 +1321,7 @@ observeEvent(input$save_text_interpretation_button, {
 
   unlink(temp_file)
 
-  showNotification("Interpretation saved successfully.", type = "message")
+  showNotification("Interpretation saved successfully.", type = "message", duration = 3)
   
 
     } else {

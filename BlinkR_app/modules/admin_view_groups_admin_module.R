@@ -13,17 +13,7 @@ view_groups_admin_module_server <- function(id, user_base_google_sheet) {
 
 
     user_base_data <- user_base_google_sheet()
-    
-    # observe({
-    #   user_base <- user_base_google_sheet
-    #   user_base_data(user_base)
-    # })
-    
-    # observeEvent(input$refresh_data, {
-    #   user_base <- user_base_data
-    #   user_base_data(user_base)
-    #   showNotification("Groups data refreshed!", type = "message")
-    # })
+  
     
     observe({
     output$user_table <- DT::renderDT({

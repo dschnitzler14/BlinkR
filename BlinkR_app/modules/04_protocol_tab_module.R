@@ -3,19 +3,31 @@ protocol_module_ui <- function(id){
   protocol_tab <- tabItem(tabName = "Protocol",
                           fluidPage(
                             fluidRow(
+                                  column(
+                                    width = 12,
+                                    div(
+                                      class = "page-title-box",
+                                      tags$h2(
+                                        tagList(shiny::icon("list"), "Protocol")
+                                      )
+                            )
+                          )
+
+                                ),
+                            fluidRow(
                               column(12,
                                 tabBox(
                                   width = 12,
                                   tabPanel(
                                     tabName = "Your Protocol",
-                                    title = "Your Protocol",
+                                    title =  tagList(shiny::icon("user"), "Your Protocol"),
                                     experimental_design_module_ui(ns("experimental_design_protocol"), "Experimental Design", "Think about some general ideas for the experiment here"),
                                     experimental_design_module_ui(ns("measurement_protocol"), "Measurement", "How will you record measurements?"),
                                     experimental_design_module_ui(ns("analysis_protocol"), "Analysis", "How will you analyse your results?")
                                     ),
                                   tabPanel(
                                     tabName = "Class Protocol",
-                                    title = "Class Protocol",
+                                    title = tagList(shiny::icon("users"), "Class Protocol"),
                                     DT::dataTableOutput(ns("class_protocol")),
                                     textOutput(ns("no_protocol_text"))
                                   )
@@ -23,18 +35,31 @@ protocol_module_ui <- function(id){
                               )
                               ),
       fluidRow(
-      column(
-      width = 12,
-      div(
-        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page_protocol"),
-                     label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page_protocol"), 
-              label = tagList("Next", icon("arrow-right")))
-          )
-        ),
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_protocol"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
       ),
-                          )
+      actionButton(
+        ns("next_page_protocol"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
+)
   )
 }
 

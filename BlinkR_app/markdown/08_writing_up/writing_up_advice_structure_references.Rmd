@@ -28,8 +28,8 @@ This is also how you can cite BlinkR.
 - In text: "Analysis was carried out using the BlinkR app (Schnitzler, 2024)".
 - In bibliography: Schnitzler, D. (2024). BlinkR, https://github.com/dschnitzler14/BlinkR
 
-WARNING 1: You must actually read what you cite.
-WARNING 2: You _cannot_ rely on AI to produce appropriate citations. It is your responsibility to ensure that your citations are correct.
+- ⚠️ WARNING 1: You must actually read what you cite.
+- ⚠️ WARNING 2: You _cannot_ rely on AI to produce appropriate citations. It is your responsibility to ensure that your citations are correct.
     - _AI has the tendency to hallucinate, and this can lead to articles that sounds real but do not actually exists._
-WARNING 3: You must not plagiarise. This means you must not copy someone else's work and present it as your own. You must always cite the original source.
+- ⚠️ WARNING 3: You must not plagiarise. This means you must not copy someone else's work and present it as your own. You must always cite the original source.
 

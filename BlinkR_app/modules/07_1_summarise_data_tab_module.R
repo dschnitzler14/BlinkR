@@ -4,13 +4,25 @@ analysis_summarise_data_module_ui <- function(id) {
   tabItem(
     tabName = "Summarise_Data",
     fluidPage(
+       fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("rectangle-list"), "Analysis: Summarise Data")
+                )
+      )
+    )),
+      fluidRow(
         useShinyjs(),
         uiOutput(ns("step1_box")),
         uiOutput(ns("step2_box")),
         uiOutput(ns("step3_box")),
         uiOutput(ns("step4_box")),
         uiOutput(ns("step5_box")),
-        uiOutput(ns("step6_box")),
+        uiOutput(ns("step6_box"))
+        ),
         fluidRow(
           column(
             width = 12,
@@ -150,7 +162,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
             12,
           box(
               id = "step1_box",
-              title = "Step 1: Filter to Unstressed Data",
+              title = "1️⃣ Filter to Unstressed Data",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -207,7 +219,7 @@ output$step2_box <- renderUI({
             12,
           box(
               id = "step2_box",
-              title = "Step 2: Calculate the Mean of Unstressed Data",
+              title = "2️⃣ Calculate the Mean of Unstressed Data",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -263,7 +275,7 @@ output$step3_box <- renderUI({
             12,
           box(
               id = "step3_box",
-              title = "Step 3: Calculate the Standard Deviation of Unstressed Data",
+              title = "3️⃣ Calculate the Standard Deviation of Unstressed Data",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -321,7 +333,7 @@ output$step4_box <- renderUI({
             12,
           box(
               id = "step4_box",
-              title = "Step 4: Calculate the Standard Error of the Mean of Unstressed Data",
+              title = "4️⃣ Calculate the Standard Error of the Mean of Unstressed Data",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -377,7 +389,7 @@ output$step5_box <- renderUI({
             12,
           box(
               id = "step5_box",
-              title = "Step 5: Your turn! Calculate the mean, sd, n, and sem for the stressed group.",
+              title = "5️⃣ Your turn! Calculate the mean, sd, n, and sem for the stressed group.",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -435,7 +447,7 @@ output$step6_box <- renderUI({
             12,
           box(
               id = "step6_box",
-              title = "Step 6: Use Dplyr to quickly summarise your data",
+              title = "6️⃣ Use Dplyr to quickly summarise your data",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -473,10 +485,13 @@ observe({
             min = 5,
             max = 60
           ),
+          div(
+          style = "text-align: center;",
           actionButton(
             session$ns("submit_mean_unstressed_group_quiz_answer"),
             label = "Submit",
             class = "fun-submit-button"
+          )
           ),
           uiOutput(session$ns("mean_unstressed_group_quiz_feedback")),
           numericInput(
@@ -486,11 +501,13 @@ observe({
             min = 5,
             max = 60
           ),
+          div(
+                style = "text-align: center;",
           actionButton(
             session$ns("submit_sem_stressed_group_quiz_answer"),
             label = "Submit",
             class = "fun-submit-button"
-          ),
+          )),
           uiOutput(session$ns("submit_sem_stressed_group_quiz_feedback")),
           radioButtons(
             session$ns("summary_result_interpretation_quiz"), 
@@ -686,9 +703,9 @@ observeEvent(input$submit_sem_stressed_group_quiz_answer, {
         
         unlink(temp_file)
         
-        showNotification("Summary script saved successfully & Uploaded to Drive.", type = "message")
+        showNotification("Summary script saved successfully & Uploaded to Drive.", type = "message", duration = 3)
       } else {
-        showNotification("No summary script to save.", type = "error")
+        showNotification("No summary script to save.", type = "error", duration = 3)
       }
     })
 

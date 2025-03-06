@@ -8,8 +8,8 @@ group_info_module_ui <- function(id) {
     ),
     actionButton(
       inputId = ns("generate_id"),
-      label = "Generate ID",
-      class = "fun-submit-button"
+      label = tagList(shiny::icon("circle-plus"),"Generate ID"),
+      class = "fun-generate-button"
     )
   )
 }
@@ -26,7 +26,7 @@ group_info_module_server <- function(id, db_student_table, auth) {
         initials <- trimws(input$student_initials)
 
         if (initials == "") {
-          showNotification("Please enter initials.", type = "error")
+          showNotification("Please enter initials.", type = "error", duration = 3)
           return()
         }
 
@@ -46,7 +46,7 @@ group_info_module_server <- function(id, db_student_table, auth) {
 
         updateTextInput(session, "student_initials", value = "")
 
-        showNotification("Student added to the database.", type = "message")
+        showNotification("Student added to the database.", type = "message", duration = 3)
       })
 
 

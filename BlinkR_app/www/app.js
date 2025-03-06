@@ -40,3 +40,17 @@ Shiny.addCustomMessageHandler("copyToClipboard", function(message) {
   );
 });
 
+$(document).ready(function() {
+    $(".clickable-box .box-header").on("click", function(event) {
+        // Prevent clicking the small collapse button from triggering twice
+        if ($(event.target).closest(".btn-box-tool").length > 0) {
+            return;
+        }
+
+        var box = $(this).closest(".box");
+        var collapseButton = box.find("[data-widget='collapse']"); // Find the actual collapse button
+
+        collapseButton.trigger("click"); // Simulate a click on the built-in collapse button
+    });
+});
+

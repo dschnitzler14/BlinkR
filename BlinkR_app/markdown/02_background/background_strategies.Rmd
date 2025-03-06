@@ -1,0 +1,7 @@
+When searching, it’s important to use Boolean operators (AND, OR, NOT) to refine your results. These operators help you combine or exclude specific terms to either broaden or narrow your search. Here’s a quick guide:
+
+- **AND**: Includes results that contain all specified terms (e.g., Stress AND blink* will return studies that mention both stress and blinking).
+- **OR**: Broadens your search to include results that contain any of the terms (e.g., stress OR anxiety).
+- **NOT**: Excludes results containing a specific term (e.g., stress NOT chronic will exclude studies on chronic stress).
+- **Parentheses ()**: Group terms to clarify relationships (e.g., (Stress OR anxiety) AND blink\*).
+- **Asterisk (\*)**: Adds a wildcard to your search to include variations of a term (e.g., blink* will search for blink, blinking, blinks, etc.).

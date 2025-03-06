@@ -1,6 +1,18 @@
 class_data_module_ui <- function(id) {
   ns <- NS(id)
   tagList(
+    fluidPage(
+      fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("database"), "Raw Data")
+                )
+      )
+    )),
+      fluidRow(
     tabBox(
       title = "Raw Data",
       id = ns("data_box"),
@@ -8,30 +20,44 @@ class_data_module_ui <- function(id) {
       side = "left",
       tabItem(
         tabName = "Your Group Data",
-        title = "Your Group Data",
+        title = tagList(shiny::icon("user"), "Your Group Data"),
         DT::dataTableOutput(ns("group_data"))
       ),
       tabItem(
         tabName = "Class Data",
-        title = "Class Data",
+        title = tagList(shiny::icon("users"), "Class Data"),
         DT::dataTableOutput(ns("class_data")),
         textOutput(ns("no_data_text"))
       )
     ),
-    fluidPage(
+    ),
     fluidRow(
-      column(
-      width = 12,
-      div(
-        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page_data"),
-                     label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page_data"), 
-              label = tagList("Next", icon("arrow-right")))
-          )
-        ),
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_data"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
       ),
+      actionButton(
+        ns("next_page_data"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
     )
+  )
+)
+    
+  )
   )
 }
 

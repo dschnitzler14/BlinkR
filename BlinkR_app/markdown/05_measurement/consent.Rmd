@@ -1,5 +1,5 @@
 **Purpose of the Activity**
-This activity involves running an experiment and analyzing the collected data using a Shiny app. The purpose is to enhance your understanding of experimental design, data collection, and analysis as part of your classwork.
+This activity involves running an experiment and analysing the collected data using a Shiny app. The purpose is to enhance your understanding of experimental design, data collection, and analysis as part of your classwork.
 
 **Voluntary Participation**
 Participation in this activity is voluntary. You may choose not to participate, and this will not affect your grade or standing in the course.

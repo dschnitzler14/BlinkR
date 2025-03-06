@@ -5,65 +5,100 @@ analysis_dashboard_module_ui <- function(id) {
     tabName = "Analysis_Dashboard",
     fluidPage(
       fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("dashboard"), "Analysis Dashboard")
+                )
+      )
+    )),
+      fluidRow(
         column(
           12,
           box(
-            title = "Step 1: Prepare Your Data",
+            title = tagList(shiny::icon("magnifying-glass"), "Step 1: Prepare Your Data"),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
             solidHeader = TRUE,
             column(12,
-            markdown("First, you need to prepare your data for analysis. Click the button below to start."),
+            div(
+                style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
                    actionButton(ns("prepare_data"), 
                                 label = tagList(icon("rectangle-list"), "Prepare the Data"), 
                                 class = "action-button custom-action",
                                 `data-id` = "prepare_data")
-                   )
+                   ))
           ),
           box(
-            title = "Step 2: Summarise Data",
+            title = tagList(shiny::icon("rectangle-list"), "Step 2: Summarise Data"),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
             solidHeader = TRUE,
-            column(6,
-                   actionButton(ns("summarise"), 
+            fluidRow(
+            column(12,
+            div(
+                style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+            actionButton(ns("summarise"), 
                                 label = tagList(icon("rectangle-list"), "Summarise the Data"), 
                                 class = "action-button custom-action",
                                 `data-id` = "summarise_data")
+            )
+            )
+            ),
+            column(6,
+                   
                    ),
             column(6,
                    uiOutput(ns("saved_summary_results"))
                    )
           ),
           box(
-            title = "Step 3: Figure",
+            title = tagList(shiny::icon("chart-simple"), "Step 3: Figure"),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
             solidHeader = TRUE,
-            column(6,
-                   actionButton(ns("figure"),
+            fluidRow(
+            column(12,
+            div(
+                style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+            actionButton(ns("figure"),
                                 label = tagList(icon("chart-simple"), "Create a Figure"),
                                 class = "action-button custom-action",
-                                `data-id` = "create_figure")            
+                                `data-id` = "create_figure")
+            )
+            )
+            ),
+            column(6,
+                               
                    ),
             column(6,
                    uiOutput(ns("saved_plot_results"))
             )
           ),
           box(
-            title = "Step 4: Statistical Analysis",
+            title = tagList(shiny::icon("equals"), "Step 4: Statistical Analysis"),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
             solidHeader = TRUE,
-            column(6,
-                   actionButton(ns("statistics"),
+            fluidRow(
+            column(12,
+            div(
+                style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+            actionButton(ns("statistics"),
                                 label = tagList(icon("equals"), "Run Statistical Analysis"),
                                 class = "action-button custom-action",
-                                `data-id` = "stats"),
+                                `data-id` = "stats")
+            )
+            )
+            ),
+            column(6,
+                   
                     uiOutput(ns("stats_interpretation"))
                    ),
             column(6,
@@ -87,23 +122,36 @@ analysis_dashboard_module_ui <- function(id) {
                 #download_handler_ui("download_script", "Download R Script")
                 actionButton(ns("link_to_drive"),
                              label = tagList(icon("google-drive"), "View on Google Drive"),
-                             class = "action-button custom-action"
+                             class = "btn-primary"
                 )
               )
             ),
           ),
-        fluidRow(
-      column(
-      width = 12,
-      div(
-        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page_analysis"),
-                     label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page_analysis"), 
-              label = tagList("Next", icon("arrow-right")))
-          )
-        ),
+      fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_analysis"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
       ),
+      actionButton(
+        ns("next_page_analysis"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
       )
     )
   )

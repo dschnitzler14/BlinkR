@@ -4,13 +4,23 @@ write_up_module_ui <- function(id, session_folder_url) {
     tabItem(tabName = "Writing-Up",
       fluidPage(
         fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("pen"), "Writing Up")
+                )
+      )
+    )),
+        fluidRow(
           column(
             width = 12,
             div(
               style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
               actionButton(ns("link_to_drive"),
                            label = tagList(icon("google-drive"), "View on Google Drive"),
-                           class = "action-button custom-action"
+                           class = "btn-primary"
               )
             )
           ),
@@ -18,7 +28,7 @@ write_up_module_ui <- function(id, session_folder_url) {
         fluidRow(
           column(
             12,
-              box(title = "Introduction",
+              box(title = tagList(shiny::icon("lightbulb"), "Introduction"),
                   collapsible = TRUE,
                   collapsed = FALSE,
                   width = 12,
@@ -34,7 +44,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                       ),
                     ),
                   column(6, 
-                        text_area_module_UI(ns("introduction"), "Introduction")
+                        text_area_module_UI(ns("introduction"), "Introduction", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
                         ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_intro.Rmd"),
@@ -53,14 +63,14 @@ write_up_module_ui <- function(id, session_folder_url) {
                   )
                   )
                 ),
-            box(title = "Methods",
+            box(title = tagList(shiny::icon("flask"), "Methods"),
                 collapsible = TRUE,
-                collapsed = FALSE,
+                collapsed = TRUE,
                 width = 12,
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        text_area_module_UI(ns("methods"), "Methods")
+                        text_area_module_UI(ns("methods"), "Methods", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
 
                   ),
                   column(6,
@@ -79,14 +89,14 @@ write_up_module_ui <- function(id, session_folder_url) {
                          )
                 )
             ),
-            box(title = "Results",
+            box(title = tagList(shiny::icon("chart-bar"), "Results"),
                 collapsible = TRUE,
-                collapsed = FALSE,
+                collapsed = TRUE,
                 width = 12,
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        text_area_module_UI(ns("results"), "Results")
+                        text_area_module_UI(ns("results"), "Results", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
 
                   ),
                   column(6,
@@ -99,28 +109,28 @@ write_up_module_ui <- function(id, session_folder_url) {
                          )
                 )
             ),
-            box(title = "Discussion",
+            box(title = tagList(shiny::icon("comments"), "Discussion"),
                 collapsible = TRUE,
-                collapsed = FALSE,
+                collapsed = TRUE,
                 width = 12,
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      text_area_module_UI(ns("discussion"), "Discussion")
+                      text_area_module_UI(ns("discussion"), "Discussion", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
                   ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_discussion.Rmd")
                          )
                 )
             ),
-            box(title = "Future Work",
+            box(title = tagList(shiny::icon("forward"), "Future Work"),
                 collapsible = TRUE,
-                collapsed = FALSE,
+                collapsed = TRUE,
                 width = 12,
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      text_area_module_UI(ns("future_work"), "Future Work")
+                      text_area_module_UI(ns("future_work"), "Future Work", button_label = tagList(shiny::icon("floppy-disk"), "Save Notes"))
 
                   ),
                   column(6,
@@ -139,18 +149,31 @@ write_up_module_ui <- function(id, session_folder_url) {
         )
       ),
     ),
-     fluidRow(
-      column(
-      width = 12,
-      div(
-        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-        actionButton(ns("back_page_write"),
-                     label = tagList(icon("arrow-left"), "Back")),
-        actionButton(ns("next_page_write"), 
-                     label = tagList("Next", icon("arrow-right")))
-      )
-        ),
+    fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_write"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
       ),
+      actionButton(
+        ns("next_page_write"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
   )
 )
 }

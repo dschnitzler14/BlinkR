@@ -2,9 +2,19 @@ introduction_module_ui <- function(id){
   ns <- NS(id)
   introduction_tab <- tabItem(tabName = "Introduction",
                               fluidPage(
+                                  fluidRow(
+                                      column(
+                                        width = 12,
+                                        div(
+                                          class = "page-title-box",
+                                          tags$h2(
+                                            tagList(shiny::icon("sun"), "Introduction")
+                                          )
+                                )
+                              )),
                                 fluidRow(
                                   box(
-                                    title = "Log in",
+                                    title = tagList(icon("right-to-bracket"), "Log in"),
                                     id = "introduction_box1",
                                     collapsible = TRUE,
                                     width = 12,
@@ -13,16 +23,7 @@ introduction_module_ui <- function(id){
                                   ),
                 
                                 ),
-                                fluidRow(
-                                  column(
-                                  width = 12,
-                                  div(
-                                    style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-                                    actionButton(ns("next_page_intro"), 
-                                                 label = tagList("Next", icon("arrow-right")))
-                                      )
-                                    ),
-                                  ),
+                                
                               )
   )
 }

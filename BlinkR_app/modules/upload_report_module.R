@@ -4,8 +4,18 @@ upload_report_module_ui <- function(id) {
     tabName = "Upload Report",
     fluidPage(
       fluidRow(
+            column(
+              width = 12,
+              div(
+                class = "page-title-box",
+                tags$h2(
+                  tagList(shiny::icon("upload"), "Upload Report")
+                )
+      )
+    )),
+      fluidRow(
         box(
-          title = "Upload Your Reports Here",
+          title = tagList(shiny::icon("upload"), "Upload Your Reports Here"),
           id = ns("upload_report_box1"),
           collapsible = TRUE,
           width = 12,
@@ -17,7 +27,7 @@ upload_report_module_ui <- function(id) {
           ),
           actionButton(
             ns("upload_button"),
-            "Upload Report to Drive",
+            tagList(shiny::icon("upload"), "Upload Report to Drive"),
             class = "btn btn-primary"
           ),
           br(),
