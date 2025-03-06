@@ -4,7 +4,7 @@
 - Reading existing studies will not only inform your hypothesis but also provide insights into methodologies you might adapt for your experiment. For instance, you might discover different ways to measure blinking rate or learn about specific stress-inducing tasks used in past research.
 - Keep organised, detailed notes on key findings.
 
-#### As you review studies, keep these questions in mind:
+**As you review studies, keep these questions in mind:**
 - What is the current understanding of blinking rates under stress?
 - What gaps exist in the literature?
 - How do these findings relate to my hypothesis?

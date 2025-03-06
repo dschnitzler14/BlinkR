@@ -1,26 +1,26 @@
-#### 1. Hallucinations & Incorrect Information
-AI often generates false or misleading details, including made-up facts, sources, or quotes, making it unreliable for research-based writing.
+**1. Hallucinations & Incorrect Information**
+AI often generates false or misleading details, including made-up facts or sources, making it unreliable for research-based writing.
 
-#### 2. Lack of Critical Thinking
+**2. Lack of Critical Thinking**
 AI does not analyse or interpret information; it simply predicts words based on patterns, leading to shallow arguments without real insight or reasoning.
 
-#### 3. Generic & Repetitive Writing
+**3. Generic & Repetitive Writing**
 AI-generated essays often sound formulaic, repetitive, and lacking originality, failing to meet academic standards for depth and engagement.
 
-#### 4. Inability to Form a Strong Argument
+**4. Inability to Form a Strong Argument**
 AI struggles with complex reasoning, logical argumentation, and synthesising diverse viewpoints, resulting in weak or contradictory claims.
 
-#### 5. Bias & Unverified Sources
+**5. Bias & Unverified Sources**
 AI reflects biases present in its training data and may pull from unreliable or outdated sources without proper citation.
 
-#### 6. Lack of Personal Voice & Style
+**6. Lack of Personal Voice & Style**
 Essays written by AI lack the unique perspective, creativity, and personal voice that make writing engaging and meaningful.
 
-#### 7. Poor Citation & Plagiarism Risk
+**7. Poor Citation & Plagiarism Risk**
 AI can generate fake or incorrect citations, and over-reliance on AI-generated content may lead to unintentional plagiarism or academic dishonesty.
 
-#### 8. Misinterpretation of Prompts
+**8. Misinterpretation of Prompts**
 AI does not truly "understand" the assignment, leading to off-topic, incomplete, or misaligned responses that fail to meet the essay requirements.
 
-#### 9. Inconsistencies & Logical Errors
+**9. Inconsistencies & Logical Errors**
 AI can contradict itself within an essay, mix up key details, or produce text that lacks coherence and logical flow.

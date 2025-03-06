@@ -42,7 +42,14 @@ background_module_ui <- function(id){
             width = 12,
             includeMarkdown("markdown/02_background/background_getting_started.Rmd")
           ),
-
+            box(
+            title = tagList(shiny::icon("lightbulb"), "Additional Tips for Effective Searches"),
+            solidHeader = FALSE,
+            collapsible = TRUE,
+            collapsed = TRUE,
+            width = 12,
+            includeMarkdown("markdown/02_background/background_tips.Rmd")
+          ),
           box(
             title = tagList(shiny::icon("file-lines"), "Advice for Reading a Paper"),
             solidHeader = FALSE,
@@ -50,15 +57,6 @@ background_module_ui <- function(id){
             collapsed = TRUE,
             width = 12,
             includeMarkdown("markdown/02_background/background_reading_paper.Rmd")
-          ),
-
-          box(
-            title = tagList(shiny::icon("lightbulb"), "Additional Tips for Effective Searches"),
-            solidHeader = FALSE,
-            collapsible = TRUE,
-            collapsed = TRUE,
-            width = 12,
-            includeMarkdown("markdown/02_background/background_tips.Rmd")
           )
     )
   ),

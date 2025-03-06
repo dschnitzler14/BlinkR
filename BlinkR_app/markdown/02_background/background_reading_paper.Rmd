@@ -6,41 +6,48 @@ Remember to focus on these questions:
 - **How?** How did they do it?
 - **Why?** Why did they do it?
 
-1. Start with the Abstract
+**1. Start with the Abstract**
 - The abstract provides a summary of the paper’s objectives, methods, key results, and conclusions.
 - Read it to get an overview of what the paper is about and decide if it’s relevant to your research.
 
-2. Skim the Introduction
+**2. Skim the Introduction**
 - Identify the research question: What is the study trying to find out?
 - Look for background information and why the study is important.
 - Take note of any key terms or concepts you are unfamiliar with and look them up.
 
-3. Look at Figures, Tables, and Captions
+**3. Look at Figures, Tables, and Captions**
 - Visuals often summarise key findings more clearly than reading paragraphs of text.
 - Check the axis labels and legends to ensure you understand the data presented.
 
-4. Read the Methods Section
+**4. Read the Methods Section**
 - If you need to understand how the research was conducted, review this section.
 - Look at how data was collected and analysed to evaluate the study’s reliability.
 - If you are just interested in the findings, you may skim this section.
 
-5. Focus on the Results and Discussion
-- Results: Identify the main findings—look for patterns, trends, or significant results.
-- Discussion: Understand what the results mean in a broader context and how they compare to previous research.
-- Look for any limitations or potential biases the authors mention.
+**5. Read the Results**
+- Identify the main findings—look for patterns, trends, or significant results.
+- Do the figures reflect what you are reading in the text?
+- Think about how these results could mean before you get to the discussion.
 
-6. Read the Conclusion
+
+**6. Read the Discussion**
+- Understand what the results mean in a broader context and how they compare to previous research.
+- Look for any limitations or potential biases the authors mention.
+- Do you agree with the author's interpretation?
+
+
+**7. Read the Conclusion**
 - The conclusion summarises the key takeaways and implications of the research.
 - Consider how this study fits into the bigger picture of the topic you are studying.
 
-7. Check References for Further Reading
+**8. Check References for Further Reading**
 - If the paper cites an interesting source, you may want to track it down for more context.
 - This is a great way to find related studies and expand your knowledge.
 
-8. Take Notes & Reflect
+**9. Take Notes & Reflect**
 - Summarise the paper in your own words to ensure you understand it.
 
-**Ask yourself:**
+**10. Ask yourself:**
 - What did I learn from this?
 - How does this connect to what I already know?
 - What are the study’s strengths and weaknesses?

@@ -1,35 +1,35 @@
 Collaborating on a report as a group can be a valuable experience, but it requires good communication, planning, and teamwork. To ensure a smooth process and avoid conflicts, follow these guidelines:
 
-1. Use a Collaborative Document Platform
+**1. Use a Collaborative Document Platform**
 - Use a shared document tool such as Google Docs, Microsoft OneDrive, or another collaborative writing platform.
 - This allows all group members to contribute, track changes, and provide feedback in real time.
 - Ensure that all members have access and understand how to use the platform.
 
-2. Plan the Structure Together
+**2. Plan the Structure Together**
 - Start by outlining the key sections of the report.
 - Use bullet points to draft ideas for each section and assign responsibilities before full writing begins.
 - Agree on the style and formatting to maintain consistency.
 
-3. Agree on How to Use AI Tools Ethically
+**3. Agree on How to Use AI Tools Ethically**
 - Agree on how and where you will use AI tools and ensure you are keeping within academic integrity rules to avoid plagiarism, data fabrication, or any other academic misconduct.
 - Decide on prompts and how you will verify and refine the output of generative AI tools to ensure accuracy and originality.
 
-4. Agree on a Timeline
+**4. Agree on a Timeline**
 - Set clear deadlines for each stage of the report, including drafting, revisions, and final submission.
 - Allocate time for reviewing and editing the document as a group before submission.
 - Make sure everyone is aware of these deadlines and commits to them.
 
-5. Have a Backup Plan for Issues
+**5. Have a Backup Plan for Issues**
 - If someone is struggling or falls ill, the group must have a plan in place to redistribute their workload.
 - Maintain regular check-ins to ensure that progress is being made and that any difficulties are addressed early.
 - If major problems arise, discuss solutions as a group rather than allowing tensions to build up.
 - Make a plan for what to do if problems arise and how you will handle these together as a group
 
-6. Take Responsibility as a Group
+**6. Take Responsibility as a Group**
 - This report is a shared responsibility, meaning all members must contribute fairly.
 - Each person should review the entire document before submission to ensure accuracy and consistency.
 - Do not assume that one person will correct mistakes or complete unfinished work.
 
-7. Final Agreement Before Submission
+**7. Final Agreement Before Submission**
 - Before submitting, all members must read through the final version and agree that they are happy with the content.
 - No one should submit the work on behalf of the group without ensuring that everyone has had the chance to approve it.

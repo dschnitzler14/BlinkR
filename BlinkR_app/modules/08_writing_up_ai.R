@@ -101,7 +101,7 @@ writing_up_ai_ui <- function(id) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI-generated essays lack original thought, critical reasoning, and often contain factual errors, leading to academic dishonesty and potential plagiarism detection.")
+                                    markdown("AI-generated essays lack original thought, critical reasoning, and often contain factual errors, leading to academic dishonesty and potential plagiarism.")
                                     )
                                     )
                                   
