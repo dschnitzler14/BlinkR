@@ -3,12 +3,19 @@ feedback_module_ui <- function(id) {
   feedback_tab <- tabItem(tabName = "feedback",
           fluidPage(
             fluidRow(
+              box(
+                title = "Feedback",
+                id = "feedback",
+                collapsible = FALSE,
+                width = 12,
+                solidHeader = TRUE,
+              
       sliderInput(ns("overall_experience"), 
-      "Overall, how would you rate your experience using this app?", 
+      "Overall, how would you rate your experience using this app? (1 is high, 5 is low)", 
       min = 1, max = 5, value = 3, step = 1, ticks = FALSE),
 
       sliderInput(ns("clarity"), 
-      "How easy was it to navigate the app and understand what to do at each step?", 
+      "How easy was it to navigate the app and understand what to do at each step? (1 is high, 5 is low)", 
       min = 1, max = 5, value = 3, step = 1, ticks = FALSE),
 
       conditionalPanel(
@@ -20,7 +27,7 @@ feedback_module_ui <- function(id) {
 
       radioButtons(ns("bugs"), 
       "Did you experience any technical issues or bugs while using the app?", 
-      choices = c("No" = "no", "Yes" = "yes"), 
+      choices = c("Yes" = "yes", "No" = "no"), 
       inline = TRUE),
 
       conditionalPanel(
@@ -51,9 +58,13 @@ feedback_module_ui <- function(id) {
       textAreaInput(ns("general_feedback"), 
       "Do you have any other suggestions for improving the app?", 
       placeholder = "Share any additional thoughts..."),
-      actionButton(ns("submit_feedback"), "Send Feedback"),
+      div(
+          style = "text-align: center;",
+      actionButton(ns("submit_feedback"), "Send Feedback", class = "fun-submit-button")
+      ),
       uiOutput(ns("submission_feedback"))
           )
+            )
           ),
           fluidRow(
   column(

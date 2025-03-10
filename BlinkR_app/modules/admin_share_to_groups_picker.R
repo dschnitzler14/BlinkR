@@ -5,21 +5,27 @@ share_to_groups_admin_module_ui <- function(id) {
     textOutput(ns("selection_output")),
     actionButton(ns("share_to_selected_groups"), 
                  label = tagList(icon("eye"), "Share to Selected Groups"),
-                 class = "action-button custom-action"
+                 class = "fun-save-button"
     ),
     actionButton(ns("hide_from_selected_groups"), 
                  label = tagList(icon("eye-slash"), "Hide from Selected Groups"),
-                 class = "action-button custom-action"
+                 class = "fun-save-button"
     ),
   )
 }
 
 
-share_to_groups_admin_module_server <- function(id, user_base_google_sheet, column) {
+share_to_groups_admin_module_server <- function(id, user_base_data, column, user_base_sheet_id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
-    user_base <- user_base_google_sheet
+
+    # observe({
+    #   req(user_base_data)
+    #   user_base <- as.data.frame(user_base_data)
+    # })
+
+    user_base <- user_base_data
     
     date_group_choices <- user_base %>%
       filter(!is.na(Date)) %>%   

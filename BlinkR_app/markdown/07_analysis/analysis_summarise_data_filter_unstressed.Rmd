@@ -2,7 +2,7 @@ In this step, we will summarise the data to obtain a mean, n, standard deviation
 
 I will show you how to calculate these for the unstressed group, but then you will need to calculate them for the stressed group.
 
-First, we will filter the data to only include the unstressed group. Go ahead and send this code to the console:
+First, we will filter the data to only include the unstressed group. Go ahead and send this code to the editor:
 
 ```
 unstressed_data <- average_trs %>%

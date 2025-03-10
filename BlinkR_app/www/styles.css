@@ -53,6 +53,38 @@ body {
   color: white !important;
 }
 
+.action-button.primary-action {
+  background-color: #4CAF50;
+  /* Green to signify starting point */
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  /* Slightly larger than other buttons */
+  border: none;
+  border-radius: 25px;
+  /* Rounded edges for a pill shape */
+  padding: 10px 20px;
+  /* Slightly bigger padding */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.action-button.primary-action:hover {
+  background-color: #43A047;
+  /* Darker green on hover */
+  transform: scale(1.15);
+  /* More pronounced hover effect */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.action-button.primary-action.clicked {
+  background-color: #2E7D32 !important;
+  /* Even darker green when clicked */
+  color: white !important;
+}
+
 /* Card-style container for visual appeal */
 .custom-box {
   border-radius: 15px; /* Rounded edges */
@@ -239,7 +271,7 @@ a:hover {
   background-color: #28a745 !important; /* Green background when clicked */
   color: white !important;             /* White text */
 }
-
+ 
 /* Base style for all buttons */
 .custom-button {
   color: #ffffff;
@@ -287,17 +319,17 @@ a:hover {
 }
 
 .custom-clear-button {
-  background-color: #6fcf97;
+  background-color: #2995b3;
   /* Light green */
 }
 
 .custom-clear-button:hover {
-  background-color: #5bbf85;
+  background-color: #24839d;
   /* Slightly darker green on hover */
 }
 
 .custom-clear-button:active {
-  background-color: #4e9c71;
+  background-color: #1d687d;
   /* Even darker on click */
 }
 
@@ -607,19 +639,6 @@ a:hover {
   color: #2ECC40; /* Green for values and variables */
 }
 
-.custom-login-button {
-  padding: 5px 10px;
-  font-size: 14px;
-  border-radius: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.custom-login-button:hover {
-  background-color: #0056b3;
-}
 
 /***********************************************/
 /* RESPONSIVE FIXES FOR SMALL SCREENS          */
@@ -657,7 +676,7 @@ a:hover {
     white-space: normal !important;
     text-align: center;
   }
-
+ 
   /* 3) Tighten margins/padding on box elements so they fit screens better */
   .custom-box,
   .success-box,
@@ -770,4 +789,243 @@ a:hover {
   /* Optional: Make it feel like a real section title */
   letter-spacing: 1px;
   /* Slight letter spacing for readability */
+}
+
+
+/* Custom login panel styles */
+/* Outer login panel */
+.custom-login-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Inner container should center elements without additional styling */
+#inner-container {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#login-signup-options {
+  margin-bottom: 100px !important;
+}
+
+#login_signup_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center !important; 
+  justify-content: center;
+}
+
+/* Remove panel styling from login/signup elements */
+#signup-panel {
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Constrain the width of paragraph text */
+#signup-panel p {
+  max-width: 300px;
+  /* Adjust width for best readability */
+  margin: 0 auto;
+  /* Ensures centering */
+}
+
+#login-panel {
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.fun-choice-button {
+  background-color: #ff69b4;
+  /* Hot pink background */
+  color: #ffffff;
+  /* White text */
+  font-weight: bold;
+  /* Bold text */
+  font-size: 16px;
+  /* Slightly larger text */
+  border: none;
+  /* No border */
+  border-radius: 25px;
+  /* Fully rounded edges for a pill shape */
+  padding: 10px 20px;
+  /* Good-sized padding */
+  margin-bottom: 10px;
+  /* Space below button */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: all 0.3s ease;
+  /* Smooth animation */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  /* Subtle text shadow */
+}
+
+.fun-choice-button:hover {
+  background-color: #ff1493;
+  /* Darker pink on hover */
+  transform: scale(1.1);
+  /* Slight zoom-in effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Soft hover shadow */
+}
+
+.fun-choice-button:active {
+  background-color: #c71585;
+  /* Even darker pink on click */
+  transform: scale(1.0);
+  /* Return to normal size */
+}
+
+.custom-login-button {
+  background-color: #007bff;
+  /* Primary blue background */
+  color: #ffffff;
+  /* White text */
+  font-weight: 600;
+  /* Semi-bold text */
+  font-size: 14px;
+  /* Stay relatively small */
+  border: none;
+  /* No border */
+  border-radius: 8px;
+  /* Slightly rounded corners */
+  padding: 8px 14px;
+  /* Light padding */
+  margin-bottom: 10px;
+  /* Space below button */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: all 0.2s ease;
+  /* Smooth hover transition */
+  text-shadow: none;
+  /* Remove heavy text shadow */
+}
+
+.custom-login-button:hover {
+  background-color: #0056b3;
+  /* Darker blue on hover */
+  transform: scale(1.03);
+  /* Subtle zoom effect */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  /* Light hover shadow */
+}
+
+.custom-login-button:active {
+  background-color: #004491;
+  /* Even darker blue on click */
+  transform: scale(1.0);
+  /* Return to normal size */
+}
+
+.custom-cancel-button {
+  background-color: #6c757d;
+  /* Gray background (Bootstrap secondary) */
+  color: #ffffff;
+  /* White text */
+  font-weight: 600;
+  /* Semi-bold text */
+  font-size: 14px;
+  /* Same size as login button */
+  border: none;
+  /* No border */
+  border-radius: 8px;
+  /* Matching corners */
+  padding: 8px 14px;
+  /* Same padding */
+  margin-bottom: 10px;
+  /* Space below button */
+  cursor: pointer;
+  /* Pointer on hover */
+  transition: all 0.2s ease;
+  /* Smooth transition */
+  text-shadow: none;
+  /* No heavy text shadow */
+}
+
+.custom-cancel-button:hover {
+  background-color: #5a6268;
+  /* Darker gray on hover */
+  transform: scale(1.03);
+  /* Subtle zoom effect */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  /* Light shadow */
+}
+
+.custom-cancel-button:active {
+  background-color: #545b62;
+  /* Slightly darker on click */
+  transform: scale(1.0);
+  /* Return to normal size */
+}
+
+/* Subtle link-style button */
+/* Small ghost button */
+.generate-id-button {
+  background-color: transparent;
+  color: #007bff;
+  border: 1px solid #007bff;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.generate-id-button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.generate-id-button:active {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.sidebar-menu li.conditional-admin {
+  font-size: 18px !important;
+  /* Ensure consistent font size */
+  padding: 10px 15px !important;
+  /* Match the padding of normal menu items */
+  text-align: left !important;
+  /* Ensure left alignment */
+  display: block !important;
+  /* Prevent shrinking */
+}
+
+.sidebar-menu li.conditional-admin>a {
+  color: white !important;
+  /* Match other sidebar items */
+  font-weight: normal !important;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-menu li.conditional-admin>a:hover {
+  background-color: #007bff !important;
+  /* Hover color matches */
+  color: white !important;
+}
+
+/* Ensure the lock icon aligns with other menu icons */
+.sidebar-menu li.conditional-admin i {
+  margin-right: 10px !important;
 }

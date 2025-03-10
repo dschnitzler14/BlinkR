@@ -11,7 +11,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 tags$h2(
                   tagList(shiny::icon("pen"), "Writing Up")
                 )
-      )
+              )
     )),
         fluidRow(
           column(
@@ -28,7 +28,12 @@ write_up_module_ui <- function(id, session_folder_url) {
         fluidRow(
           column(
             12,
-              box(title = tagList(shiny::icon("lightbulb"), "Introduction"),
+            div(
+                class = "yellow-box",
+                  tagList("Use this section to take notes as a group to plan your writing-up")
+                
+              ),
+              box(title = tagList(shiny::icon("paper-plane"), "Introduction"),
                   collapsible = TRUE,
                   collapsed = FALSE,
                   width = 12,

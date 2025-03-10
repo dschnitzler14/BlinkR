@@ -3,41 +3,44 @@ admin_area_module_ui <- function(id) {
   admin_area_tab <- tabItem(tabName = "admin_area",
                             fluidPage(
                               fluidRow(
+                                    column(
+                                      width = 12,
+                                      div(
+                                        style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+                                        actionButton(ns("open_google_drive"),
+                                                    label = tagList(icon("google-drive"), "Open Google Drive"),
+                                                    class = "btn-primary"
+                                        )
+                                      )
+                                    ),
+                                  ),
+                              fluidRow(
                                 column(
                                   12,
-                                  box(title = "Google Drive",
-                                      collapsible = FALSE,
-                                      collapsed = FALSE,
-                                      width = 12,
-                                      solidHeader = TRUE,
-                                      actionButton(ns("open_google_drive"),
-                                                   label = tagList(icon("google-drive"), "Open Google Drive"),
-                                                   class = "action-button custom-action"
-                                      )
-                                      ),
-                                  box(title = "View Groups",
+                                  
+                                  box(title = tagList(shiny::icon("users-viewfinder"),"View All Groups"),
                                       collapsible = TRUE,
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
                                       view_groups_admin_module_ui(ns("view_groups"))
                                   ),
-                                  box(title = "Class Protocol",
+                                  box(title = tagList(shiny::icon("users"), "Share Class Protocol"),
                                       collapsible = TRUE,
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
-                                      #share_to_groups_admin_module_ui(ns("share_protocol")),
+                                      share_to_groups_admin_module_ui(ns("share_protocol")),
                                   ),
-                                  box(title = "Class Data",
+                                  box(title = tagList(shiny::icon("circle-plus"), "Share Class Data"),
                                       collapsible = TRUE,
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
-                                      #share_to_groups_admin_module_ui(ns("share_data")),
+                                      share_to_groups_admin_module_ui(ns("share_data")),
                                       combine_sheets_module_ui(ns("combine_data")),
                                   ),
-                                  box(title = "Report Submission",
+                                  box(title = tagList(shiny::icon("upload"), "View Report Submission"),
                                       collapsible = TRUE,
                                       collapsed = FALSE,
                                       width = 12,
@@ -51,31 +54,45 @@ admin_area_module_ui <- function(id) {
 }
 
 
-admin_area_module_server <- function(id, group_data_file_id, parent.session, user_base_google_sheet, final_reports_folder_id) {
+admin_area_module_server <- function(id, group_data_file_id, parent.session, user_base, final_reports_folder_id, user_base_sheet_id, session_folder_id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
-    observeEvent(input$open_google_drive, {
-      runjs('window.open("https://drive.google.com/drive/u/0/folders/1uymxsry9EekJKAlCDVBtrZXUPou7Lu_H", "_blank");')
+    # observeEvent(input$open_google_drive, {
+    #   runjs('window.open("https://drive.google.com/drive/u/0/folders/1uymxsry9EekJKAlCDVBtrZXUPou7Lu_H", "_blank");')
       
+    # })
+
+    observeEvent(input$open_google_drive, {
+    req(session_folder_id)
+        
+    showModal(modalDialog(
+      title = "View Google Drive",
+      your_google_drive_module_ui(session$ns("admin_drive_module")),
+
+      easyClose = TRUE,
+      footer = modalButton("Close"),
+      size = "l" 
+    ))
+    
+    your_google_drive_module_server("admin_drive_module", session_folder_id)
+
+  })
+    
+    user_base_data_reactive <- reactiveVal()
+
+    observe({
+      user_base_data_reactive(read_sheet(user_base_sheet_id))
     })
     
-    #user_base <- read_sheet(user_base_google_sheet)
-     
-    #user_base <- user_base_google_sheet
+    user_base_static <- read_sheet(user_base_sheet_id)
 
-    #   user_base <- reactiveVal()
-
-    #   observe({
-    #   user_base(user_base_google_sheet)
-    # })
-    
     column_data_permissions <- paste("F")
     column_protocol_permissions <- paste("E")
     
-    #share_to_groups_admin_module_server("share_protocol", user_base, column = column_protocol_permissions)
-    #share_to_groups_admin_module_server("share_data", user_base, column = column_data_permissions)
-    view_groups_admin_module_server("view_groups", user_base_google_sheet)
+    share_to_groups_admin_module_server("share_protocol", user_base_static, column = column_protocol_permissions, user_base_sheet_id)
+    share_to_groups_admin_module_server("share_data", user_base_data = user_base_static, column = column_data_permissions, user_base_sheet_id)
+    view_groups_admin_module_server("view_groups", user_base_data_reactive())
     combine_sheets_module_server("combine_data", group_data_file_id, parent.session)
     view_report_submission_admin_module_server("report_submission_viewer", final_reports_folder_id)
     

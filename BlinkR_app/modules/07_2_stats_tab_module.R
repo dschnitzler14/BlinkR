@@ -1255,7 +1255,7 @@ observe({
               solidHeader = TRUE,
               fluidRow(
                   column(12,
-                  #includeMarkdown("markdown/07_analysis/analysis_effect_size_t_test_paired.Rmd"),
+                  #includeMarkdown("markdown/07_analysis/analysis_your_results.Rmd"),
                   uiOutput(session$ns("interpretation_quiz_feedback")),
                   )
               ),
@@ -1294,7 +1294,10 @@ observe({
             
             textInput(session$ns("interpretation_quiz_text_p_value"), "Interpret the p-value result in one sentence", value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", width = "100%"),
             textInput(session$ns("interpretation_quiz_text_effect_size"), "Summarise these results in one sentence", value = "An effect size of [effect size method]=[effect size] suggests that ______.", width = "100%"),
-            actionButton(session$ns("save_text_interpretation_button"), tagList(shiny::icon("save"), "Save Notes"), class = "fun-save-button"),
+            div(
+            style = "text-align: center;",
+            actionButton(session$ns("save_text_interpretation_button"), tagList(shiny::icon("save"), "Save Notes"), class = "fun-save-button")
+            ),
             #uiOutput(session$ns("interpretation_quiz_text_input_feedback")),
             #uiOutput(session$ns("save_text_interpretation"))
             

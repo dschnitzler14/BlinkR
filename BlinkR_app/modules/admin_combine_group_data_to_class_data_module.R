@@ -3,25 +3,27 @@ combine_sheets_module_ui <- function(id) {
   tagList(
     actionButton(ns("combine_sheets"),
                  label = tagList(icon("file-circle-plus"), "Combine Group Data"),
-                 class = "action-button custom-action"
+                 class = "fun-generate-button"
     ),
-    withSpinner(uiOutput(ns("loader_ui")), type = 2, color = "orange", color.background = "white")
+    #withSpinner(uiOutput(ns("loader_ui")), type = 2, color = "orange", color.background = "white")
   )
 }
+
 
 combine_sheets_module_server <- function(id, group_data_file_id, parent.session) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    output$loader_ui <- renderUI({
-      NULL
-    })
+    # output$loader_ui <- renderUI({
+    #   NULL
+    # })
 
     observeEvent(input$combine_sheets, {
+      req(input$combine_sheets)
 
-        output$loader_ui <- renderUI({
-        tags$div("Processing... Please wait.", style = "color: blue; font-weight: bold;")
-      })
+      #   output$loader_ui <- renderUI({
+      #   tags$div("Processing... Please wait.", style = "color: blue; font-weight: bold;")
+      # })
 
       future({
         sheet_names <- sheet_names(group_data_file_id)
@@ -42,9 +44,9 @@ combine_sheets_module_server <- function(id, group_data_file_id, parent.session)
       } %...!% {
         showNotification("An error occurred while combining data.", type = "error", duration = 3)
       } %>% finally({
-        output$loader_ui <- renderUI({
-          NULL
-        })
+        # output$loader_ui <- renderUI({
+        #   NULL
+        #})
       })
     })
   })

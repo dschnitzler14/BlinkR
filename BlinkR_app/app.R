@@ -83,8 +83,20 @@ header <- dashboardHeader(title = "BlinkR",
             )
 
 sidebar <- dashboardSidebar(
+    
+
   sidebarMenu(
     id = "sidebar",
+
+    
+  conditionalPanel(
+    condition = "output.user_auth",
+    div(
+    style = "padding: 10px; font-weight: bold; background-color: white; color: black; border-radius: 5px; text-align: center;",
+    textOutput("sidebar_group_name")
+    )
+),
+
     menuItem("Introduction", tabName = "Introduction", icon = icon("sun")),
 
     conditionalPanel(
@@ -94,8 +106,14 @@ sidebar <- dashboardSidebar(
     
     conditionalPanel(
     condition = "output.user_role === 'admin'",
-    menuItem("Admin Area", tabName = "admin_area", icon = icon("lock"))  
-    ),
+    div(
+      style = "padding: 10px; font-weight: bold; background-color: #ff9800; color: white !important; border-radius: 5px; text-align: left;",
+    tags$li(
+        #class = "conditional-admin",
+        menuItem("Admin Area", tabName = "admin_area", icon = icon("lock"))  
+    )
+    )
+),
     
     conditionalPanel(
       condition = "output.user_auth",
@@ -161,13 +179,13 @@ body <- dashboardBody(
       tabName = "Introduction",
       introduction_module_ui("introduction") 
     ),
-    # tabItem(
-    #   tabName = "admin_area",
-    #   conditionalPanel(
-    #     condition = "output.user_role === 'admin'",
-    #     admin_area_module_ui("admin_module")
-    #   )
-    # ),
+    tabItem(
+      tabName = "admin_area",
+      conditionalPanel(
+        condition = "output.user_role === 'admin'",
+        admin_area_module_ui("admin_module")
+      )
+    ),
     tabItem(
       tabName = "Background",
       conditionalPanel(
@@ -347,6 +365,20 @@ ui <- dashboardPage(header, sidebar, body)
 
 # server function ----
 server <- function(input, output, session) {
+  
+auth_status <- reactiveVal(FALSE)
+
+  observe({
+    req(auth())
+    auth_status(auth()$user_auth)
+  })
+
+  output$login_ui <- renderUI({
+    req(isolate(!auth_status()))
+    custom_login_ui("login_module")
+})
+
+outputOptions(output, "login_ui", suspendWhenHidden = FALSE)
 
 all_users <- reactiveVal()
 
@@ -388,10 +420,18 @@ saved_results <- reactiveValues(
   
   combined_class_data_read <- read_sheet(combined_class_data_sheet)
   
-  introduction_module_server("introduction", parent.session = session)
+  introduction_module_server("introduction", parent.session = session, auth_status)
 
   auth <- custom_login_server("login_module", user_base_google_sheet, all_users, base_group_files_url, external_logout_button = reactive(input$logout_button))
 
+  output$sidebar_group_name <- renderText({
+    req(auth()$user_auth)
+    paste("Group ID:", auth()$user_info$Group)
+  })
+
+  outputOptions(output, "sidebar_group_name", suspendWhenHidden = FALSE) 
+
+  output$group_id <- reactive({ auth()$user_info$Group })
   output$user_auth <- reactive({ auth()$user_auth })
   output$user_role <- reactive({ auth()$user_info$role })
   output$data_permission <- reactive({ auth()$user_info$data })
@@ -409,12 +449,11 @@ saved_results <- reactiveValues(
     })
   })
   
-  # admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base_google_sheet = all_users(), final_reports_folder_id = final_reports_folder_id)
   
-  # observeEvent(input$admin_area_button, {
-  #   req(auth()$user_info$role == "admin")
-  #   updateTabItems(session, "main_tabs", "admin_area")
-  # })
+  observeEvent(input$admin_area_button, {
+    req(auth()$user_info$role == "admin")
+    updateTabItems(session, "main_tabs", "admin_area")
+  })
   
   observeEvent(input$your_drive_button, {
     req(auth()$user_auth)
@@ -430,18 +469,12 @@ saved_results <- reactiveValues(
   })
   
   
-  #  observeEvent(input$logout_button, {
-  
-  #   })
-
-  
-
-  
   observe({
     req(auth()$user_auth)
     output$login_ui <- renderUI(NULL)
     session_folder_id = auth()$session_folder_id
     
+    admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base = all_users, final_reports_folder_id = final_reports_folder_id, user_base_google_sheet, session_folder_id = session_folder_id)
     background_module_server("background", parent.session = session)
     hypothesis_module_server("hypothesis", parent.session = session, auth = auth)
     protocol_module_server("protocol", auth = auth, parent.session = session, protocol_file_id = protocol_file_id)

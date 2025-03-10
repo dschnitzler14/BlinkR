@@ -2,7 +2,7 @@ view_report_submission_admin_module_ui <- function(id) {
   ns <- NS(id)
   tagList(
     DT::DTOutput(ns("submitted_reports")),
-    actionButton(ns("refresh_data"), "Refresh Submitted Reports Table"),
+    actionButton(ns("refresh_data"), "Refresh Submitted Reports Table", class = "fun-save-button"),
   )
   
 }

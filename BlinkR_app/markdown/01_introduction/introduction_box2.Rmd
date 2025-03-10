@@ -1,0 +1,6 @@
+A quick guide to BlinkR
+
+- use the sidebar on the left to navigate to different sections
+- view your group ID in the sidebar - remember to take a note of it of it so you can log-in next time!
+- use the outline of the app below to navigate quickly and get started.
+

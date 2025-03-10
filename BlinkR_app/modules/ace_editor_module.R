@@ -28,7 +28,7 @@ editor_module_ui <- function(id) {
     ),
     actionButton(
       ns("clear_console"),
-      label = tagList(icon("trash"), "Clear Console"),
+      label = tagList(icon("trash"), "Clear Code"),
       class = "custom-button custom-clear-button"
     ),
     div(
@@ -90,7 +90,11 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
     }, ignoreInit = TRUE)
 
 output$dynamic_console <- renderUI({
-        req(input$run_code)
+    req(input$run_code)
+
+     if (is.null(values$result)) {
+    return(NULL)
+  }
     if (values$is_plot) {
       plotOutput(session$ns("plot_output"))
     } else if (!is.null(values$result)) {
@@ -176,7 +180,7 @@ output$dynamic_console <- renderUI({
       values$result <- NULL
       values$is_plot <- FALSE
 
-      output$dynamic_console <- renderUI({ NULL })
+      #output$dynamic_console <- renderUI({ NULL })
 
       updateAceEditor(session, "editor", value = "")
     })

@@ -24,7 +24,7 @@ writing_up_advice_ui <- function(id) {
                                     includeMarkdown("markdown/08_writing_up/writing_up_advice_structure.Rmd")
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("lightbulb"), "Introduction"),
+                                    title = tagList(shiny::icon("paper-plane"), "Introduction"),
                                     id = "structure_introduction",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
