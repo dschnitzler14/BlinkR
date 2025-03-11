@@ -1,16 +1,6 @@
-Now we can calculate the effect size for paired data.  
-
-Effect size helps us understand how meaningful the difference is between two conditions, beyond just statistical significance.  
-
-Since we are using a Wilcoxon signed-rank test for unpaired data, we calculate the effect size using Wilcoxon’s r. This tells us how strong the difference is between the two related conditions.  
-
-A general guide for interpreting Wilcoxon’s r:  
-- 0.1 → Small effect  
-- 0.3 → Medium effect  
-- 0.5 or higher → Large effect  
+Given that the data is not-normal, we have to use a non-parametric test.
 
 ```
 wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, 
                                     data = average_trs)
 ````
-

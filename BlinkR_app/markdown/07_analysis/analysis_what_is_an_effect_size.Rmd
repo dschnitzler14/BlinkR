@@ -1,0 +1,22 @@
+### Understanding Effect Sizes  
+
+When analyzing data, we don’t just want to know if a result is statistically significant (p-value), but also how meaningful that result is. This is where effect size comes in.  
+Effect size is a measure of the magnitude of a difference or relationship, independent of sample size. While p-values only tell us whether an effect exists, effect sizes tell us how big or important that effect is.  
+
+### Why is Effect Size Important?  
+1. Goes Beyond Statistical Significance  
+   - A very small difference can be statistically significant with a large sample size, but it may not be meaningful.  
+   - Effect size helps us determine if the observed effect is practically relevant.  
+
+2. Allows Comparison Across Studies  
+   - Because effect sizes are standardized, they make it easier to compare results across different experiments.  
+   
+3. Helps with Study Design  
+   - Knowing expected effect sizes helps researchers determine the sample size needed for future studies (power analysis).  
+
+
+### Interpreting Effect Sizes  
+While the interpretation of effect sizes depends on context, some general guidelines are:  
+- Small effect: The difference exists, but it may not be meaningful in practice.  
+- Medium effect: A noticeable and likely meaningful difference.  
+- Large effect: A strong difference that is both statistically and practically important.  

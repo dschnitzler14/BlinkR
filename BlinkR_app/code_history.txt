@@ -1,0 +1,7 @@
+#Statistical Analysis: Not Normal Unpaired
+wilcox_test_unpaired <- wilcox.test(Average_Blinks_Per_Minute ~ Stress_Status, data = average_trs)
+
+#Statistical Analysis: Effect Size for Unpaired T-Test
+effect_size <- average_trs %>%
+  wilcox_effsize(Average_Blinks_Per_Minute ~ Stress_Status)
+

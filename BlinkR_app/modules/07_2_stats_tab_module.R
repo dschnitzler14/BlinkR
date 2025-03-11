@@ -1281,16 +1281,21 @@ observe({
         output$interpretation_quiz_feedback <- renderUI({
           tagList(
             numericInput(session$ns("enter_p_value"), "What is the p-value?", value = 0),
-            uiOutput(session$ns("enter_p_value_feedback")),
             div(
                 style = "text-align: center;",
             actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button")),
 
+            uiOutput(session$ns("enter_p_value_feedback")),
+            uiOutput(session$ns("null_hyp_display")),
+
             numericInput(session$ns("enter_effect_size"), "What is the effect size?", value = 0),
-            uiOutput(session$ns("enter_effect_size_feedback")),
             div(
                 style = "text-align: center;",
             actionButton(session$ns("enter_effect_size_submit"), "Submit", class = "fun-submit-button")),
+
+            uiOutput(session$ns("enter_effect_size_feedback")),
+            uiOutput(session$ns("effect_size_display")),
+            
             
             textInput(session$ns("interpretation_quiz_text_p_value"), "Interpret the p-value result in one sentence", value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", width = "100%"),
             textInput(session$ns("interpretation_quiz_text_effect_size"), "Summarise these results in one sentence", value = "An effect size of [effect size method]=[effect size] suggests that ______.", width = "100%"),
@@ -1344,6 +1349,20 @@ observeEvent(input$enter_effect_size_submit, {
     
     if (abs(user_answer_enter_effect_size - val_es) <= tolerance) {
       feedback <- div(class = "success-box", "\U1F64C Correct!")
+
+      output$effect_size_display <- renderUI({
+        tagList(
+          includeMarkdown("markdown/07_analysis/analysis_what_is_an_effect_size.Rmd"),
+          radioButtons(
+              inputId = (session$ns("understand_effect_size")),
+              label = "Do you think this effect size?",
+              choices = c("Negligible" = "negligible", "Small" = "small", "Medium" = "medium", "Large" = "large"),
+              selected = character(0)
+            ),
+          uiOutput(session$ns("understanding_effect_size_feedback"))
+        )
+       
+      })
     } else {
       feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
     }
@@ -1352,7 +1371,49 @@ observeEvent(input$enter_effect_size_submit, {
   output$enter_effect_size_feedback <- renderUI({
     feedback
   })
+
+  output$understanding_effect_size_feedback <- renderUI({
+    req(input$understand_effect_size)
+    
+  correct_answer <- ifelse(
+    user_answer_enter_effect_size < 0.2, "negligible",
+    ifelse(user_answer_enter_effect_size < 0.5, "small",
+           ifelse(user_answer_enter_effect_size < 0.8, "medium", "large")))
+      
+    if (input$understand_effect_size == correct_answer) {
+      div(class = "success-box", "\U1F64C Correct!")
+    } else {
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    }
+  })
+
 })
+
+
+  files_in_folder <- drive_ls(as_id(session_folder_id))
+
+  null_hyp_file <- files_in_folder[grepl("^Null Hypothesis", files_in_folder$name), ]
+
+  if (nrow(null_hyp_file) > 0) {
+    temp_file <- tempfile(fileext = ".txt")
+    drive_download(as_id(null_hyp_file$id), path = temp_file, overwrite = TRUE)
+    
+    submitted_null_hyp <- readLines(temp_file, warn = FALSE) %>% paste(collapse = "\n")
+  } else {
+    submitted_null_hyp <- "Please submit your null hypothesis in the hypothesis section."
+  }
+
+alt_hyp_file <- files_in_folder[grepl("^Alternative Hypothesis", files_in_folder$name), ]
+
+  if (nrow(alt_hyp_file) > 0) {
+    temp_file <- tempfile(fileext = ".txt")
+    drive_download(as_id(alt_hyp_file$id), path = temp_file, overwrite = TRUE)
+    
+    submitted_alt_hyp <- readLines(temp_file, warn = FALSE) %>% paste(collapse = "\n")
+  } else {
+    submitted_alt_hyp <- "Please submit your alternative hypothesis in the hypothesis section."
+  }
+
 
 
 observeEvent(input$enter_p_value_submit, {
@@ -1374,7 +1435,7 @@ observeEvent(input$enter_p_value_submit, {
   
   if (is.null(val_pv)) {
     output$enter_p_value_feedback <- renderUI({
-      div(class = "error-box", "\U1F914 We do not know the effect size yet!")
+      div(class = "error-box", "\U1F914 We do not know the p-value yet!")
     })
     return()
   }
@@ -1388,6 +1449,30 @@ observeEvent(input$enter_p_value_submit, {
     
     if (abs(user_answer_enter_p_value - val_pv) <= tolerance) {
       feedback <- div(class = "success-box", "\U1F64C Correct!")
+
+      output$null_hyp_display <- renderUI({
+        tagList(
+          includeMarkdown("markdown/07_analysis/analysis_what_is_a_p_value.Rmd"),
+          strong("For this experiment your null hypothesis was: "),
+          tags$br(),
+          submitted_null_hyp,
+          tags$br(),
+          strong("Your alternative hypothesis was: "),
+          tags$br(),
+          submitted_alt_hyp,
+          tags$br(),
+          tags$br(),
+          radioButtons(
+              inputId = (session$ns("reject_null")),
+              label = "Do you think we can reject the null hypothesis and accept the alternative hypothesis with this p-value?",
+              choices = c("Yes" = "yes", "No" = "no"),
+              selected = character(0)
+            ),
+          uiOutput(session$ns("reject_null_feedback"))
+        )
+       
+      })
+
     } else {
       feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
     }
@@ -1396,7 +1481,24 @@ observeEvent(input$enter_p_value_submit, {
   output$enter_p_value_feedback <- renderUI({
     feedback
   })
+
+  
+  output$reject_null_feedback <- renderUI({
+    req(input$reject_null)
+    
+    correct_answer <- ifelse(user_answer_enter_p_value < 0.05, "yes", "no")
+    
+    if (input$reject_null == correct_answer) {
+      div(class = "success-box", "\U1F64C Correct!")
+    } else {
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    }
+  })
+
+    
 })
+
+
 
 observeEvent(input$save_text_interpretation_button, {
   req(nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size))

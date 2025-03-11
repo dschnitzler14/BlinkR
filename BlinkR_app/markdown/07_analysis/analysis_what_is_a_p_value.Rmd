@@ -1,0 +1,29 @@
+### What is a p-value again?  
+
+A p-value is a number that helps us determine whether the results of our experiment are statistically significant. It tells us how likely we would get results as extreme as the ones we observed if the null hypothesis were true.  
+
+#### Breaking it down:
+- The null hypothesis (H₀) is the assumption that there is no real effect or no difference between groups.
+- The alternative hypothesis (H₁) suggests that there is a real effect or difference.
+- The p-value tells us how unusual our experimental results would be if H₀ were actually true.
+
+#### What does a p-value mean?  
+- A small p-value (typically < 0.05) means that our observed results are unlikely to have happened by random chance if the null hypothesis were true. This suggests that we may have evidence against H₀ and in favor of H₁.
+- A large p-value (≥ 0.05) suggests that our observed results could easily have occurred due to chance, meaning we do not have strong enough evidence to reject H₀.
+
+### So what?  
+
+With our p-value, we can decide whether we reject the null hypothesis and accept the alternative hypothesis, or if the null hypothesis was indeed correct.  
+
+- If p < 0.05, we reject the null hypothesis. This means our results are statistically significant, and we have evidence to support our alternative hypothesis.  
+- If p ≥ 0.05, we fail to reject the null hypothesis. This means we don’t have enough evidence to support the alternative hypothesis, and our results could be due to random chance.  
+
+#### Important points to remember:
+- A p-value does not prove anything—it only tells us the likelihood of our results assuming the null hypothesis is true.  
+- A low p-value does not mean the effect is large—it just means the effect is unlikely to be due to chance.  
+- Statistical significance is not the same as practical significance—even a very small effect can be statistically significant if the sample size is large enough.  
+- If p < 0.05, we reject H₀ and say our result is statistically significant.
+- If p ≥ 0.05, we fail to reject H₀, meaning we don’t have strong enough evidence to support H₁.
+- A p-value does not prove causation—it only helps us determine how strong our evidence is.  
+
+Understanding p-values is a crucial part of statistical analysis, helping researchers decide whether their findings are meaningful or just due to random variation.
