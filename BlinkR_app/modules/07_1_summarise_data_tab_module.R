@@ -21,7 +21,10 @@ analysis_summarise_data_module_ui <- function(id) {
         uiOutput(ns("step3_box")),
         uiOutput(ns("step4_box")),
         uiOutput(ns("step5_box")),
-        uiOutput(ns("step6_box"))
+        uiOutput(ns("step6_box")),
+        uiOutput(ns("step7_box")),
+        uiOutput(ns("step8_box")),
+        uiOutput(ns("step9_box"))
         ),
         fluidRow(
           column(
@@ -400,10 +403,11 @@ observe({
     
   }
 })
-# step5: your turn with stressed data
 
 
-predefined_code_step5 = read_file("markdown/07_analysis/predefined_code_calculate_stressed.txt")
+# step5: your turn with stressed data - filter
+
+predefined_code_step5 = read_file("markdown/07_analysis/predefined_code_calculate_filter_stressed.txt")
 summarise_result_step5 <- editor_module_server("step5_editor", average_trs, "average_trs", predefined_code = predefined_code_step5, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
 
 
@@ -415,14 +419,14 @@ output$step5_box <- renderUI({
             12,
           box(
               id = "step5_box",
-              title = "5️⃣ Your turn! Calculate the mean, sd, n, and sem for the stressed group.",
+              title = "5️⃣ Your turn! First, filter the data to the STRESSED group",
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_stressed.Rmd"),
+                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_filter_stressed.Rmd"),
                   uiOutput(session$ns("summary_code_feedback_step5"))
                   ),
                   column(6,
@@ -439,7 +443,7 @@ output$step5_box <- renderUI({
 observe({
   req(!is.null(summarise_result_step5()), !is.null(summarise_result_step5()$result))
   
-  if ( !is.null(summarise_result_step5()$result)) {
+  if (tibble::is_tibble(summarise_result_step5()$result)) {
     
     output$summary_code_feedback_step5 <- renderUI({
       tagList(
@@ -447,7 +451,7 @@ observe({
         
       )
 
-
+ 
     })
     
   } else {
@@ -459,11 +463,10 @@ observe({
   }
 })
 
-    
+# step6: your turn with stressed data - mean
 
-# step6: dplyr shortcut
-    predefined_code_step6 = read_file("markdown/07_analysis/predefined_code_calculate_dplyr.txt")
-summarise_result_step6 <- editor_module_server("step6_editor",average_trs, "average_trs", predefined_code_step6, "result", session_folder_id, "Step 6: Summarise Data with Dplyr")
+predefined_code_step6 = read_file("markdown/07_analysis/predefined_code_calculate_mean_stressed.txt")
+summarise_result_step6 <- editor_module_server("step6_editor", stressed_data, "stressed_data", predefined_code = predefined_code_step6, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
 
 output$step6_box <- renderUI({
   req(!is.null(summarise_result_step5()), !is.null(summarise_result_step5()$result))
@@ -473,18 +476,236 @@ output$step6_box <- renderUI({
             12,
           box(
               id = "step6_box",
+              title = "6️⃣ Your turn! Calculate the mean for the stressed group.",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              width = 12,
+              solidHeader = TRUE,
+              fluidRow(
+                  column(6,
+                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_mean_stressed.Rmd"),
+                  uiOutput(session$ns("summary_code_feedback_step6"))
+                  ),
+                  column(6,
+                  editor_module_ui(session$ns("step6_editor"))
+                  )
+              )
+            )
+          ),
+          
+        )
+      )
+    })
+
+
+observe({
+  req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
+  
+  #mean_value <- as.numeric(summarise_result_step6()$result[[1]])
+  stressed_mean_value <- as.numeric(stressed_mean())
+
+if (!is.null(summarise_result_step6()$result[[1]]) &&
+    is.numeric(summarise_result_step6()$result[[1]]) &&
+    length(summarise_result_step6()$result[[1]]) == 1 &&
+    (summarise_result_step6()$result[[1]] == stressed_mean_value)) {
+    
+    output$summary_code_feedback_step6 <- renderUI({
+      tagList(
+        div(class = "success-box", "\U1F64C Great!"),
+        
+      )
+
+ 
+    })
+    
+  } else {
+    
+    output$summary_code_feedback_step6 <- renderUI({
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+    
+  }
+})
+
+
+# step7: your turn with stressed data - sd
+
+predefined_code_step7 = read_file("markdown/07_analysis/predefined_code_calculate_sd_stressed.txt")
+summarise_result_step7 <- editor_module_server("step7_editor", stressed_data, "stressed_data", predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+
+
+output$step7_box <- renderUI({
+  req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
+  tagList(
+    fluidRow(
+        column(
+            12,
+          box(
+              id = "step7_box",
+              title = "7️⃣ Your turn! Calculate the sd for the stressed group.",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              width = 12,
+              solidHeader = TRUE,
+              fluidRow(
+                  column(6,
+                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_sd_stressed.Rmd"),
+                  uiOutput(session$ns("summary_code_feedback_step7"))
+                  ),
+                  column(6,
+                  editor_module_ui(session$ns("step7_editor"))
+                  )
+              )
+            )
+          ),
+          
+        )
+      )
+    })
+
+observe({
+  req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
+  
+  #sd_value <- as.numeric(summarise_result_step7()$result[[1]])
+  stressed_sd_value <- as.numeric(stressed_sd())
+
+if (!is.null(summarise_result_step7()$result[[1]]) &&
+    is.numeric(summarise_result_step7()$result[[1]]) &&
+    length(summarise_result_step7()$result[[1]]) == 1 &&
+    (summarise_result_step7()$result[[1]] == stressed_sd_value)) {
+    
+    output$summary_code_feedback_step7 <- renderUI({
+      tagList(
+        div(class = "success-box", "\U1F64C Great!"),
+        
+      )
+
+ 
+    })
+    
+  } else {
+    
+    output$summary_code_feedback_step7 <- renderUI({
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+    
+  }
+})
+
+# step8: your turn with stressed data - n and sem
+
+predefined_code_step8 = read_file("markdown/07_analysis/predefined_code_calculate_sem_stressed.txt")
+summarise_result_step8 <- editor_module_server("step8_editor", list(stressed_data, stressed_n, stressed_sd), c("stressed_data", "stressed_n", "stressed_sd"), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+
+
+output$step8_box <- renderUI({
+  req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
+  tagList(
+    fluidRow(
+        column(
+            12,
+          box(
+              id = "step8_box",
+              title = "8️⃣ Your turn! Calculate the n and sem for the stressed group.",
+              collapsible = TRUE,
+              collapsed = FALSE,
+              width = 12,
+              solidHeader = TRUE,
+              fluidRow(
+                  column(6,
+                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_sem_stressed.Rmd"),
+                  uiOutput(session$ns("summary_code_feedback_step8"))
+                  ),
+                  column(6,
+                  editor_module_ui(session$ns("step8_editor"))
+                  )
+              )
+            )
+          ),
+          
+        )
+      )
+    })
+
+observe({
+  req(!is.null(summarise_result_step8()), !is.null(summarise_result_step8()$result))
+  
+  #sem_value <- as.numeric(summarise_result_step8()$result[[1]])
+  #n_value <- as.numeric(summarise_result_step8()$result[[1]])
+  stressed_n_value <- as.numeric(stressed_n())
+  stressed_sem_value <- as.numeric(stressed_sem())
+  stressed_sd_value <- as.numeric(stressed_sd())
+
+if (!is.null(summarise_result_step8()$result) &&
+    is.numeric(summarise_result_step8()$result) &&
+    length(summarise_result_step8()$result) == 1 &&
+    (summarise_result_step8()$result[[1]] == stressed_n_value)) {
+    
+    output$summary_code_feedback_step8 <- renderUI({
+      tagList(
+        div(class = "success-box", "\U1F64C Great!"),
+        strong("Now, now you have the n, you can calculate the sem")
+      )
+    })
+
+  } else if (!is.null(summarise_result_step8()$result) &&
+    is.numeric(summarise_result_step8()$result) &&
+    length(summarise_result_step8()$result) == 1 &&
+    (summarise_result_step8()$result[[1]] == stressed_sem_value)) {
+    
+    output$summary_code_feedback_step8 <- renderUI({
+      tagList(
+        div(class = "success-box", "\U1F64C Great!")
+      )
+    })
+
+  } else if (!is.null(summarise_result_step8()$result) &&
+    is.numeric(summarise_result_step8()$result) &&
+    length(summarise_result_step8()$result) == 1 &&
+    (summarise_result_step8()$result[[1]] == stressed_sd_value)) {
+    
+    output$summary_code_feedback_step8 <- renderUI({
+      tagList(
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+      )
+    })
+
+  } else {
+    
+    output$summary_code_feedback_step8 <- renderUI({
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+    
+  }
+})
+
+
+
+
+# step9: dplyr shortcut
+predefined_code_step9 = read_file("markdown/07_analysis/predefined_code_calculate_dplyr.txt")
+summarise_result_step9 <- editor_module_server("step9_editor", average_trs, "average_trs", predefined_code_step9, "result", session_folder_id, "Step 6: Summarise Data with Dplyr")
+
+output$step9_box <- renderUI({
+  req(!is.null(summarise_result_step8()), !is.null(summarise_result_step8()$result))
+  tagList(
+    fluidRow(
+        column(
+            12,
+          box(
+              id = "step9_box",
               title = "6️⃣ Use Dplyr to quickly summarise your data",
               collapsible = TRUE,
-              collapsed = TRUE,
+              collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
                   includeMarkdown("markdown/07_analysis/analysis_summarise_data_dplyr.Rmd"),
-                  uiOutput(session$ns("summary_code_feedback_step6"))
+                  uiOutput(session$ns("summary_code_feedback_step9"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step6_editor")),
+                  editor_module_ui(session$ns("step9_editor")),
                   uiOutput(session$ns("save_summary_result"))
                   )
               )
@@ -496,11 +717,11 @@ output$step6_box <- renderUI({
     })
 
 observe({
-  req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
+  req(!is.null(summarise_result_step9()), !is.null(summarise_result_step9()$result))
   
-  if (tibble::is_tibble(summarise_result_step6()$result)) {
+  if (tibble::is_tibble(summarise_result_step9()$result)) {
     
-    output$summary_code_feedback_step6 <- renderUI({
+    output$summary_code_feedback_step9 <- renderUI({
       tagList(
         div(class = "success-box", "\U1F64C Great!"),
         markdown("Next let's take a look at the result."),
@@ -565,7 +786,7 @@ observe({
     
   } else {
     
-    output$summary_code_feedback_step6 <- renderUI({
+    output$summary_code_feedback_step9 <- renderUI({
       div(class = "error-box", "\U1F914 Not quite - try again!")
     })
     
@@ -576,7 +797,7 @@ observe({
 })
     
     unstressed_mean <- reactive({
-      sr <- summarise_result_step6()
+      sr <- summarise_result_step9()
       
       if (is.null(sr) || is.null(sr$result)) {
         return(NULL)
@@ -638,7 +859,7 @@ observeEvent(input$submit_mean_unstressed_group_quiz_answer, {
 
     #for stressed sem
     stressed_sem <- reactive({
-  sr <- summarise_result_step6()
+  sr <- summarise_result_step9()
 
   if (is.null(sr) || is.null(sr$result)) {
     return(NULL)
@@ -712,9 +933,9 @@ observeEvent(input$submit_sem_stressed_group_quiz_answer, {
     summary_updated <- reactiveVal(FALSE)
     
     observeEvent(input$save_summary_results_button, {
-      if (!is.null(summarise_result_step6())) {
+      if (!is.null(summarise_result_step9())) {
         key <- "summary"
-        saved_results$scripts[[key]] <- summarise_result_step6()
+        saved_results$scripts[[key]] <- summarise_result_step9()
         
         result_as_char <- capture.output(print(saved_results$scripts[[key]]))
         

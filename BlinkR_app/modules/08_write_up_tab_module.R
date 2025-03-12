@@ -213,11 +213,11 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
       updateTabItems(parent.session, "sidebar", "Upload_Report")
     })
       
-      text_area_module_server("introduction", auth, "Intro")
-      text_area_module_server("methods", auth, "Methods")
-      text_area_module_server("results", auth, "Results")
-      text_area_module_server("discussion", auth, "Discussion")
-      text_area_module_server("future", auth, "Future")
+      text_area_module_server("introduction", auth, "Intro", time = paste0("_", format(Sys.time(), "%d%m%y_%H-%M")))
+      text_area_module_server("methods", auth, "Methods", time = paste0("_", format(Sys.time(), "%d%m%y_%H-%M")))
+      text_area_module_server("results", auth, "Results", time = paste0("_", format(Sys.time(), "%d%m%y_%H-%M")))
+      text_area_module_server("discussion", auth, "Discussion", time = paste0("_", format(Sys.time(), "%d%m%y_%H-%M")))
+      text_area_module_server("future", auth, "Future", time = paste0("_", format(Sys.time(), "%d%m%y_%H-%M")))
 
       observeEvent(input$background, {
         updateTabItems(parent.session, "sidebar", "Background")

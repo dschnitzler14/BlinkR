@@ -1,10 +1,22 @@
-simulated_experiment_background_module_ui <- function(id) {
+simulated_experiment_background_module_ui <- function(id) { 
     ns <- NS(id)
     simulated_experiment_background <- tabItem(tabName = "Simulated_Experiment_Background",
                               fluidPage(
                                 fluidRow(
+                                        column(
+                                          width = 12,
+                                          div(
+                                            class = "page-title-box",
+                                            tags$h2(
+                                              tagList(shiny::icon("book-open"), "Simulated Experiment: Background")
+                                            )
+                                  )
+                                )
+
+                                      ),
+                                fluidRow(
                                   box(
-                                    title = "What do we know?",
+                                    title = tagList(shiny::icon("circle-question"),"What do we know?"),
                                     id = "simulated_background1",
                                     collapsible = TRUE,
                                     width = 12,
@@ -13,7 +25,7 @@ simulated_experiment_background_module_ui <- function(id) {
                                     
                                   ),
                                   box(
-                                    title = "What don't we know?",
+                                    title = tagList(shiny::icon("circle-question"), "What don't we know?"),
                                     id = "simulated_background2",
                                     collapsible = TRUE,
                                     width = 12,
@@ -22,7 +34,7 @@ simulated_experiment_background_module_ui <- function(id) {
                                     
                                   ),
                                   box(
-                                    title = "Why is this important?",
+                                    title = tagList(shiny::icon("circle-question"), "Why is this important?"),
                                     id = "simulated_background3",
                                     collapsible = TRUE,
                                     width = 12,

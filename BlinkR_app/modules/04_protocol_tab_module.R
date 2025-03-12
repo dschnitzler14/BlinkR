@@ -13,7 +13,7 @@ protocol_module_ui <- function(id){
                             )
                           )
 
-                                ),
+                                ), 
                             fluidRow(
                               column(12,
                                 tabBox(

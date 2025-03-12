@@ -15,42 +15,35 @@ text_area_module_UI <- function(id, text_label = "Type Your Notes Here", text_va
   )
 }
 
-text_area_module_server <- function(id, auth, filename = "Filename") {
+text_area_module_server <- function(id, auth, filename = "Filename", time = "") {
   moduleServer(
     id,
     function(input, output, session) {
       observeEvent(input$inputTextButton, {
         
-        output$submission_feedback <- renderUI({NULL})
 
         text_to_save <- input$text_input
+
         temp_file <- tempfile(fileext = ".txt")
         writeLines(text_to_save, temp_file)
 
-        Group <- auth()$user_info$Group
+        Group = auth()$user_info$Group
+
         pathname <- paste0("BlinkR_text_results/", Group)
 
-        name <- paste0(filename, ".txt")
+        name <- paste0(
+          filename,
+          time,
+          ".txt"
+        )
 
-        upload_and_overwrite <- function(temp_file, pathname, name) {
-          
-          existing_files <- drive_ls(path = pathname)
-
-          existing_file <- existing_files %>%
-            dplyr::filter(name == name)
-          
-          if (nrow(existing_file) > 0) {
-            drive_rm(as_id(existing_file$id))
-          }
-          
-          drive_upload(
-            media = temp_file,
-            path = pathname,
-            name = name
-          )
-        }
-
-        upload_and_overwrite(temp_file = temp_file, pathname = pathname, name = name)
+       
+        drive_upload(
+          media = temp_file,
+          path = pathname,
+          name = name,
+          overwrite = TRUE
+        )
 
         output$submission_feedback <- renderUI({
           div(class = "success-box", "\U1F64C Your notes have been saved!")
@@ -60,3 +53,4 @@ text_area_module_server <- function(id, auth, filename = "Filename") {
     }
   )
 }
+

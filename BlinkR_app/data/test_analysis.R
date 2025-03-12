@@ -69,7 +69,7 @@ hist <- hist(average_trs$Average_Blinks_Per_Minute,
              main = "Distribution of Blinks/Minute",
              xlab = "Average Blinks/Minute",
              ylab = "Frequency",
-             col = "grey49",Average_Blinks_Per_Minute
+             col = "grey49",
              border = "black")
 
 t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, data = average_trs)
