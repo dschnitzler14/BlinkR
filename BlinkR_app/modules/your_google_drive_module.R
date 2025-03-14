@@ -52,28 +52,35 @@ your_google_drive_module_server <- function(id, session_folder_id) {
         )
       })
 
-      output$download_files <- downloadHandler(
-        filename = function() {
-          paste0("Selected_Files_", Sys.Date(), ".zip")
-        },
-        content = function(file) {
-          req(input$selected_files)
-          
-          temp_dir <- tempdir()
-          zip_file <- file.path(temp_dir, "selected_files.zip")
-          
-          file_paths <- c()
-          for (file_id in input$selected_files) {
-            file_info <- files_in_folder()[files_in_folder()$id == file_id, ]
-            local_path <- file.path(temp_dir, file_info$name)
-            drive_download(as_id(file_id), path = local_path, overwrite = TRUE)
-            file_paths <- c(file_paths, local_path)
-          }
-          
-          zip(zip_file, files = file_paths)
-          file.copy(zip_file, file)
-        }
-      )
+output$download_files <- downloadHandler(
+  filename = function() {
+    paste0("BlinkR_Downloads_", format(Sys.time(), "%H-%M_%S_%Y-%m-%d"), ".zip")
+  },
+  content = function(file) {
+    req(input$selected_files)
+    
+    temp_dir <- tempdir()
+    folder_name <- paste0("BlinkR_Downloads_", format(Sys.time(), "%H-%M_%S_%Y-%m-%d"))
+    download_folder <- file.path(temp_dir, folder_name)
+    dir.create(download_folder, showWarnings = FALSE)
+    
+    for (file_id in input$selected_files) {
+      file_info <- files_in_folder()[files_in_folder()$id == file_id, ]
+      local_path <- file.path(download_folder, file_info$name)
+      drive_download(as_id(file_id), path = local_path, overwrite = TRUE)
+    }
+    
+    zip_file <- file.path(temp_dir, paste0(folder_name, ".zip"))
+    old_wd <- getwd()
+    setwd(temp_dir)
+
+    zip(zip_file, files = folder_name, flags = "-r")
+
+    setwd(old_wd)
+
+    file.copy(zip_file, file)
+  }
+)
     }
   )
 }

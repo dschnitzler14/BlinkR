@@ -40,7 +40,7 @@ editor_module_ui <- function(id) {
   )
 }
 
-editor_module_server <- function(id, data, variable_name = "ace_editor_data", predefined_code = "", return_type = "", session_folder_id, save_header = "Code Header") {
+editor_module_server <- function(id, data, variable_name = "ace_editor_data", predefined_code = "", return_type = "", session_folder_id, save_header = "Code Header", code_history = TRUE) {
   moduleServer(id, function(input, output, session) {
     values <- reactiveValues(result = NULL, is_plot = FALSE)
     current_code <- reactiveVal(NULL)
@@ -138,6 +138,7 @@ output$dynamic_console <- renderUI({
       }
     })
     
+    if (code_history) { 
     observeEvent(current_code(), {
       req(session_folder_id)
       req(current_code())
@@ -175,6 +176,7 @@ output$dynamic_console <- renderUI({
       }
       #current_code(NULL)
     }, ignoreInit = TRUE)
+    }
     
     observeEvent(input$clear_console, {
       values$result <- NULL

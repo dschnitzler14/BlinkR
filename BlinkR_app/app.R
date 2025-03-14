@@ -396,6 +396,14 @@ saved_results <- reactiveValues(
   user_writing = list()
 )
   
+  caf_data_path <- "data/Caf_Dummy_Data.csv"
+
+  caf_data_read_csv <- read.csv(caf_data_path, header = TRUE)
+
+  caf_data_read <- as.data.frame(caf_data_read_csv)
+
+
+
   reload_trigger <- reactiveValues(reload = 0)
 
   db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), Submission_ID = character(), stringsAsFactors = FALSE))
@@ -496,8 +504,8 @@ saved_results <- reactiveValues(
     simulated_experiment_hypothesis_module_server("simulated_experiment_hypothesis")
     simulated_experiment_protocol_module_server("simulated_experiment_protocol")
     simulated_experiment_measurements_module_server("simulated_experiment_measurements")
-    simulated_experiment_raw_data_module_server("simulated_experiment_raw_data")
-    simulated_experiment_analysis_module_server("simulated_experiment_analysis")
+    simulated_experiment_raw_data_module_server("simulated_experiment_raw_data", caf_data_read = caf_data_read)
+    simulated_experiment_analysis_module_server("simulated_experiment_analysis", caf_data_read = caf_data_read)
     simulated_experiment_writing_up_module_server("simulated_experiment_writing_up")
     feedback_module_server("feedback", feedback_data, parent.session = session)
     your_google_drive_module_server("your_drive_module", session_folder_id = session_folder_id)

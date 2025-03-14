@@ -735,3 +735,16 @@ stressed_n
 #Step 5: Summarise Data
 stressed_sd
 
+#View Data Code
+head(data)
+
+#Pre-Process Data Code
+average_trs <- data %>%
+  group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+
+#Pre-Process Data Code
+average_trs <- data %>%
+      group_by(ID, Stress_Status) %>%
+      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
+

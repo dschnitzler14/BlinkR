@@ -151,7 +151,7 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
     view_data_read <- results_data %>%
       select(-"Group", -"Initials", -"Submission_ID")
     
-
+ 
     view_data <- reactive({ view_data_read })
     
     # Step 1: View Data
@@ -177,11 +177,6 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
               label = "How many subjects (students) can you see in this slice of data?",
               placeholder = "Type your answer here",
               ),
-              # actionButton(
-              #   session$ns("interpret_head_results_submit"),
-              #   label = "Submit",
-              #   class = "fun-submit-button"
-              # ),
               div(
                 style = "text-align: center;",
                 actionButton(
@@ -240,11 +235,12 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
       })
     })
     
+        # Step 2: Pre-Process Data
+
     predefined_code_pre_process_data <- "average_trs <- data %>%
-  group_by(ID, Stress_Status) %>%
+      group_by(ID, Stress_Status) %>%
       summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')"
       
-    # Step 2: Pre-Process Data
     average_trs_result <- editor_module_server("average_trs_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
     
     observe({

@@ -28,17 +28,14 @@ simulated_experiment_raw_data_module_ui <- function(id) {
 
  
 
-simulated_experiment_raw_data_module_server <- function(id) {
+simulated_experiment_raw_data_module_server <- function(id, caf_data_read) {
     moduleServer(
     id,
     function(input, output, session){
 
-      file_path <- "data/Caf_Dummy_Data.csv"
-
-      data <- read.csv(file_path, header = TRUE)
 
       output$hr_data <- renderDT({
-        DT::datatable(data, options = list(pageLength = 10))
+        DT::datatable(caf_data_read, options = list(pageLength = 10))
       })
     })
 }

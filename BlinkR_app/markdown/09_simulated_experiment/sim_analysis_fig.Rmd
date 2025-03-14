@@ -1,0 +1,21 @@
+caf_summary$Caffeine_Status <- factor(caf_summary$Caffeine_Status, levels = c("No-Caf", "Caf"))
+average_trs_caf$Caffeine_Status <- factor(average_trs_caf$Caffeine_Status, levels = c("No-Caf", "Caf"))
+
+boxplot <- ggplot(average_trs_caf, aes(x = Caffeine_Status, y = Average_HR, fill = Caffeine_Status)) + 
+  geom_boxplot(outlier.shape = NA, width = 0.5) + 
+  geom_jitter(
+    data = average_trs_caf, 
+    aes(x = Caffeine_Status, y = Average_HR), 
+    width = 0.2, 
+    size = 2, 
+    color = "maroon"
+  ) +
+  scale_fill_manual(values = c("No-Caf" = "grey49", "Caf" = "lightgrey")) +
+  labs(
+    x = "Caffeine Status",
+    y = "Average Beats per Minute (BPM)",
+    title = "BPM by Caffeine Status"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  ylim(70, max(caf_summary$mean + caf_summary$sem) * 1.2)

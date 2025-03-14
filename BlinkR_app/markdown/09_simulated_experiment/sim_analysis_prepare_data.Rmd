@@ -1,0 +1,3 @@
+average_trs_caf <- caf_data %>%
+          group_by(ID, Caffeine_Status) %>%
+          summarise(Average_HR = mean(HR, na.rm = TRUE), .groups = 'drop')

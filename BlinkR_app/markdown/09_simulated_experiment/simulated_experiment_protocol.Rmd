@@ -14,8 +14,8 @@ In order to test the hypothesis that chewing caffeine-containing gum has a signi
 - in order to take any individual heart rate variability into account, this experiment will be a paired design
 - this means that each participant will chew both the caffeine gum and the control gum with measurements taken for each
 - in order to account for error, each measurement will be taken 3 times (technical replicates)
-- according to the manufacturers, caffeine-containing gums take effect within 5 minutes
-- therefore, participants will chew each gum for 5 minutes, after which point measurements are taken
+- according to the manufacturers, caffeine-containing gums take effect within 15 minutes
+- therefore, participants will chew each gum for 15 minutes, after which point measurements are taken
 - given the long-lasting effects of caffeine, the experiment will be carried out over 2 days: Monday and Wednesday.
 - No further instructions will be given to the participants regarding personal caffeine intake (coffee, tea, etc.)
 - particpants will be blinded to which gum they are given to chew first
@@ -30,9 +30,3 @@ In order to test the hypothesis that chewing caffeine-containing gum has a signi
 ## Statistical Analysis
 - data will be analysed using R
 - the normality of the data will be examined in order to deterime if a paramtric or non-parametric test will be carried out
-
-## Initial Limitations
-- cannot determine prior or long-term caffeine use in participants
-- individual mental state or health, or medication use at the time of measurment, which may impact heart rate
-- chews/ minute may impact how much caffeine is released
-- individual metabolism

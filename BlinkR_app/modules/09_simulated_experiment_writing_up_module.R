@@ -28,7 +28,7 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     column(6, 
-                                    p("Text")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_intro_body.Rmd")
                                     ),
                                     column(6,
                                     p("Advice")
