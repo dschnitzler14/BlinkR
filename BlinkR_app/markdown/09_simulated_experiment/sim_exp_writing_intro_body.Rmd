@@ -1,0 +1,24 @@
+Caffeine is one of the most widely consumed stimulants affecting the CNS (Frary et al., 2005). When consumed as a beverage, it is rapidly absorbed through the gastrointestinal tract. However, when absorbed from caffeine-containing gum, it can enter the bloodstream faster via the oral mucosa. Caffeine reaches peak plasma concentration between 15 and 120 minutes following ingestion, likely dependent on gastric empyting rate (when ingested). Conversely, this rate increases to 5 minutes for caffeine-containing gum (Kamimori et al., 2002, Institute of Medicine (US) Committee on Military Nutrition Research). 
+
+This stimulant has numerous system effects, including to the renal, respiratory, nervous, and cardiovascular systems. In addition, there are a number of cognitive and behavioural effects of caffeine (Institute of Medicine (US) Committee on Military Nutrition Research; Smith et al., 2009)
+
+Caffeine is through to act via distinct mechanisms, depending on its target: 1. inhibition of adenosine receptors, 2. increase in cAMP, 3. increase in intracellular calcium mobilisation, 4. inhibition of benzodiazepine GABA receptors.
+
+Within the nervous system, caffeine inhibits the binding of adenosine receptors through competitive binding of both caffeine itself and its metabolite paraxanthine. Due to the blocking of the inhibitory effects of adenosine receptors, caffeine indirectly modulates the release of further neuroactive agents, such as norepinephrine, GABA, dopamine, etc. (Institute of Medicine (US) Committee on Military Nutrition Research).
+
+In addition, to inhibition of adenosine receptors, caffeine also increases intracellular concentrations of cAMP by inhibiting phosphodiesterase enzymes in skeletal muscle and adipose tissues. This promotes lipolysis, leading to increased glycogen availability in skeletal muscle. Increase cAMP could also increases in circulating catecholamines. Notably, while the inhibition of the phosphodiesterase enzymes may be too weak to be associated with behavioural effects, this action has been linked to the cardiostimulatory and antiasthmatic effects of caffeine (Institute of Medicine (US) Committee on Military Nutrition Research). 
+
+While at high concentrations (1-10mM) caffeine has been shown to interfere with the uptake and storage of calcium in the sarcoplasmic reticulum of striated muscle, at lower concentrations (250uM) has been shown to mobilise calcium release from intracellular storage pools in skeletal and cardiac muscle. However, the concentration required in vivo for cardiac stimulation is significantly lower (50uM), suggesting that this effect may be physiologically irrelevant (Institute of Medicine (US) Committee on Military Nutrition Research).
+
+Finally, caffeine has antagonistic effects on benzodiazepine (GABA) receptors, however this only occurs at high concentrations of caffeine (Institute of Medicine (US) Committee on Military Nutrition Research).
+
+The cardiovascular effects of caffeine are thought to be mediated via adenosine receptor inhibition, however further mechanisms have also been suggested, such as inhibition of monoamine oxidase (leading to increases in monoamines such as dopamine, epinephrine, norepinephrine, and serotonin) as well as inhibition of acetylcholinesterase, increases acetylcholine availability (Zulli et al., 2016).
+
+The rapid effects of caffeine absorbed via the oral mucosa, e.g. from chewing gum versus the gastrointestinal absorption from liquid ingestion, has been studied in some groups, particularly in relation to exercise, given the advantage caffeine appears to confer to athletes (Paton et al., 2015; Bellar et al., 2011).
+
+Given the apparent rapid absorption of caffeine from chewing gum, any increase in heart rate may be more rapid and intense, making this an important factor in provide patient advice to those with cardiovascular disease.
+
+Therefore, this study aims to examine the effects of caffeine-containing chewing gum on heart rate in a healthy cohort of participants.
+
+The null hypothesis is therefore that chewing caffeine-containing gum does not increase heart rate significantly more than chewing caffeine-free gum.
+The alternative hypothesis is that chewing caffeine-containing gum increases heart rate significantly more than chewing caffeine-free gum.

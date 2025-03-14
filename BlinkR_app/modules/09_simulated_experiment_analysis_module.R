@@ -19,7 +19,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_analysis_box1.Rmd")
                                   ),
                                   box(
                                     title = tagList(shiny::icon("magnifying-glass"), "Prepare the Data"),
@@ -29,6 +29,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                     solidHeader = TRUE,
                                     fluidRow(
                                       column(6,
+                                      markdown("First, let's prepare the data by generating an average of each technical replicate."),
                                       uiOutput(ns("average_trs_caf_feedback")),
                                       ),
                                       column(6,
@@ -44,6 +45,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                     solidHeader = TRUE,
                                     fluidRow(
                                       column(6,
+                                      markdown("Now, let's work out the summary statistics"),
                                       uiOutput(ns("summarise_caf_feedback")),
                                       ),
                                       column(6,
@@ -60,6 +62,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                     solidHeader = TRUE,
                                     fluidRow(
                                       column(6,
+                                      markdown("In this next step, we will create a figure"),
                                       uiOutput(ns("caf_figure_editor_feedback"))
                                       ),
                                       column(6,
@@ -76,6 +79,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                     solidHeader = TRUE,
                                     fluidRow(
                                       column(6,
+                                      markdown("In order to decide on which statistical test we will carry out, let's check if our data is normally distributed."),
                                        actionButton(ns("caf_run_hist_Plot"), 
                                           tagList(shiny::icon("circle-plus"), "Generate Histogram to check for Normality"),
                                           class = "fun-generate-button")
@@ -86,6 +90,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                     ),
                                     fluidRow(
                                       column(6, 
+                                      markdown("Now, we can run the statistical analysis."),
                                        uiOutput(ns("caf_t_test_feedback"))
                                       ),
                                       column(6,
@@ -94,6 +99,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                     ),
                                     fluidRow(
                                       column(6, 
+                                      markdown("Finally, let's calculate the effect size."),
                                        uiOutput(ns("caf_effect_size_feedback"))
                                       ),
                                       column(6,

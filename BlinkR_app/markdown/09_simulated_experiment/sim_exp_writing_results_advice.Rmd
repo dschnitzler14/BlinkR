@@ -1,0 +1,13 @@
+## Descriptive Statistics
+- **Key Measures**: Include the mean and standard deviation for both groups, along with the total number of participants in each group.
+- **Group Comparisons**: Clearly indicate how the descriptive statistics compare across groups.
+- **Relevance**: Highlight how these statistics relate to the hypotheses or objectives of the study.
+
+## Data Visualisation
+- **Clarity**: Present data in a way that both groups can be directly compared.
+- **Graphs**: Use appropriate visualisations like histograms or box plots to represent the distribution of data for both groups.
+- **Labels**: Ensure all axes are clearly labeled and any legends are informative.
+
+## Hypothesis Testing
+- **Reporting Results**: Clearly provide the results of the hypothesis test, including the p-value and effect size.
+- **Interpretation**: Relate the test results to the original hypothesis, formulating clear and logical conclusions.

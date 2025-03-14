@@ -19,7 +19,7 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    
+                                    includeMarkdown("markdown/09_simulated_experiment/som_exp_writing_up_first.Rmd")
                                   ),
                                   box(
                                     title = "Introduction",
@@ -31,7 +31,7 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_intro_body.Rmd")
                                     ),
                                     column(6,
-                                    p("Advice")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_intro_advice.Rmd")
                                     )
                                   ),
                                   box(
@@ -41,10 +41,19 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     column(6, 
-                                    p("Text")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_methods_body.Rmd"),
+                                    tags$figure(
+                                        class = "centerFigure",
+                                        tags$img(
+                                          src = "caf_hist.png",
+                                          width = "80%",
+                                          alt = "Histogram"
+                                        ),
+                                        tags$figcaption("Fig.1: Histogram of bpm measurements")
+                                      )
                                     ),
                                     column(6,
-                                    p("Advice")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_methods_advice.Rmd")
                                     )
                                   ),
                                   box(
@@ -54,10 +63,19 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     column(6, 
-                                    p("Text")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_results_body.Rmd"),
+                                    tags$figure(
+                                        class = "centerFigure",
+                                        tags$img(
+                                          src = "caf_box.png",
+                                          width = "80%",
+                                          alt = "Boxplot"
+                                        ),
+                                        tags$figcaption("Fig.2: Boxplot of bpm measurements for caffeine-free and caffeine-containing groups.")
+                                      )
                                     ),
                                     column(6,
-                                    p("Advice")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_results_advice.Rmd")
                                     )
                                   ),
                                   box(
@@ -67,10 +85,10 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     column(6, 
-                                    p("Text")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_discussion_body.Rmd")
                                     ),
                                     column(6,
-                                    p("Advice")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_discussion_advice.Rmd")
                                     )
                                   ),
                                   box(
@@ -80,10 +98,10 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     column(6, 
-                                    p("Text")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_future_body.Rmd")
                                     ),
                                     column(6,
-                                    p("Advice")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_future_advice.Rmd")
                                     )
                                   ),
                                   box(
@@ -93,10 +111,10 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     column(6, 
-                                    p("Text")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_references_body.Rmd")
                                     ),
                                     column(6,
-                                    p("Advice")
+                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_references_advice.Rmd")
                                     )
                                   ),
                                   box(

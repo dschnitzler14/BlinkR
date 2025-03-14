@@ -1,0 +1,31 @@
+Allen, A.P., Jacob, T.J.C., Smith, A.P., 2014. Effects and after-effects of chewing gum on vigilance, heart rate, EEG and mood. Physiol Behav 133, 244–251. [https://doi.org/10.1016/j.physbeh.2014.05.009](https://doi.org/10.1016/j.physbeh.2014.05.009)
+
+Bellar, D., Judge, L.W., Craig, B.W., 2011. Use of Caffeinated Chewing Gum as an Ergogenic Aid. Strength & Conditioning Journal 33, 66. [https://doi.org/10.1519/SSC.0b013e31821b1308](https://doi.org/10.1519/SSC.0b013e31821b1308)
+
+Committee on Military Nutrition Research, Food and Nutrition Board, 2001. Pharmacology of Caffeine, in: Caffeine for the Sustainment of Mental Task Performance: Formulations for Military Operations. National Academies Press (US).
+
+Ferré, S., 2008. An update on the mechanisms of the psychostimulant effects of caffeine. Journal of Neurochemistry 105, 1067–1079. [https://doi.org/10.1111/j.1471-4159.2007.05196.x](https://doi.org/10.1111/j.1471-4159.2007.05196.x)
+
+Frary, C.D., Johnson, R.K., Wang, M.Q., 2005. Food sources and intakes of caffeine in the diets of persons in the United States. Journal of the American Dietetic Association 105, 110–113. [https://doi.org/10.1016/j.jada.2004.10.027](https://doi.org/10.1016/j.jada.2004.10.027)
+
+Geethavani, G., Rameswarudu, M., Reddy, R.R., n.d. Effect of Caffeine on Heart Rate and Blood Pressure.
+
+Green, P.J., Kirby, R., Suls, J., 1996. The effects of caffeine on blood pressure and heart rate: A review. Ann Behav Med 18, 201–216. [https://doi.org/10.1007/BF02883398](https://doi.org/10.1007/BF02883398)
+
+Hasegawa, Y., Sakagami, J., Ono, T., Hori, K., Zhang, M., Maeda, Y., 2009. Circulatory response and autonomic nervous activity during gum chewing. European Journal of Oral Sciences 117, 470–473. [https://doi.org/10.1111/j.1600-0722.2009.00637.x](https://doi.org/10.1111/j.1600-0722.2009.00637.x)
+
+Kamimori, G.H., Karyekar, C.S., Otterstetter, R., Cox, D.S., Balkin, T.J., Belenky, G.L., Eddington, N.D., 2002. The rate of absorption and relative bioavailability of caffeine administered in chewing gum versus capsules to normal healthy volunteers. Int J Pharm 234, 159–167. [https://doi.org/10.1016/s0378-5173(01)00958-9](https://doi.org/10.1016/s0378-5173\(01\)00958-9)
+
+Navarro D (2015). _Learning statistics with R: A tutorial for psychology students and other beginners. (Version 0.6)_. University of New South Wales, Sydney, Australia. R package version 0.5.1, [https://learningstatisticswithr.com](https://learningstatisticswithr.com/).
+
+Notarius, C.F., Floras, J.S., 2012. Caffeine Enhances Heart Rate Variability in Middle-Aged Healthy, But Not Heart Failure Subjects. Journal of Caffeine Research 2, 77–82. [https://doi.org/10.1089/jcr.2012.0010](https://doi.org/10.1089/jcr.2012.0010)
+
+Paton, C., Costa, V., Guglielmo, L., 2015. Effects of caffeine chewing gum on race performance and physiology in male and female cyclists. Journal of Sports Sciences 33, 1076–1083. [https://doi.org/10.1080/02640414.2014.984752](https://doi.org/10.1080/02640414.2014.984752)
+
+Schnitzler, D. BlinkR (Version 1.0) [Computer software]. https://github.com/dschnitzler14/BlinkR
+
+Smith, A., 2009. Effects of caffeine in chewing gum on mood and attention. Human Psychopharmacology: Clinical and Experimental 24, 239–247. [https://doi.org/10.1002/hup.1020](https://doi.org/10.1002/hup.1020)
+
+Sondermeijer, H.P., Marle, A.G.J. van, Kamen, P., Krum, H., 2002. Acute effects of caffeine on heart rate variability. American Journal of Cardiology 90, 906–907. [https://doi.org/10.1016/S0002-9149(02)02725-X](https://doi.org/10.1016/S0002-9149\(02\)02725-X)
+
+Zulli, A., Smith, R.M., Kubatka, P., Novak, J., Uehara, Y., Loftus, H., Qaradakhi, T., Pohanka, M., Kobyliak, N., Zagatina, A., Klimas, J., Hayes, A., La Rocca, G., Soucek, M., Kruzliak, P., 2016. Caffeine and cardiovascular diseases: critical review of current research. Eur J Nutr 55, 1331–1343. [https://doi.org/10.1007/s00394-016-1179-z](https://doi.org/10.1007/s00394-016-1179-z)
