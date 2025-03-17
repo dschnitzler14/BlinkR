@@ -871,6 +871,7 @@ observeEvent(input$save_normal_paired_effect_size_button, {
   )
 })
 
+
 #6. effect size t-test unpaired
   predefined_code_t_test_effect_size_unpaired = read_file("markdown/07_analysis/predefined_t_test_effect_size_unpaired.txt")
   t_test_effect_size_unpaired_result <- editor_module_server("t_test_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")

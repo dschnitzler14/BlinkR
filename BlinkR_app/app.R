@@ -28,6 +28,7 @@ library(evaluate)
 library(rstatix)
 library(coin)
 library(rsconnect)
+library(cookies)
 
 options(
   gargle_oauth_email = TRUE,
