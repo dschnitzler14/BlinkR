@@ -36,6 +36,8 @@ custom_login_server <- function(id, user_base_sheet_id, all_users, base_group_fi
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
+    #cookie_name <- "blinkr_group_id"
+
     user_base <- reactiveVal()
 
 
@@ -126,8 +128,6 @@ observeEvent(input$cancel_sign_up, {
   })
 })
 
-
-
   credentials <- reactiveValues(
   user_auth = FALSE,
   info = list(Group = NULL, role = NULL, date = NULL, protocol = NULL, data = NULL),
@@ -135,6 +135,66 @@ observeEvent(input$cancel_sign_up, {
   session_folder_url = NULL,
   session_folder_id = NULL
   )
+
+
+  #cookies
+   #observeEvent(session, {
+    #   req(!credentials$user_auth)
+      
+    #   stored_group_id <- get_cookie(cookie_name)  
+    #   if (!is.null(stored_group_id)) {
+    #     user <- user_base() %>% 
+    #       filter(Group == stored_group_id) %>% 
+    #       slice(1)
+        
+    #     if (nrow(user) == 1) {
+    #       credentials$user_auth <- TRUE
+    #       credentials$info <- user
+    #       credentials$info$role <- user$Role
+    #       credentials$info$data <- user$Data
+    #       credentials$info$protocol <- user$Protocol
+          
+    #       parent_folder_name <- "BlinkR_text_results"
+    #       parent_folder <- googledrive::drive_get(parent_folder_name)
+    #       if (nrow(parent_folder) == 0) {
+    #         parent_folder <- googledrive::drive_mkdir(parent_folder_name)
+    #       }
+          
+    #       if (credentials$info$role != "admin") {
+    #         group_name <- stored_group_id
+    #         session_folder_name <- group_name
+            
+    #         existing_folder <- googledrive::drive_ls(
+    #           path = googledrive::as_id(parent_folder$id),
+    #           pattern = session_folder_name
+    #         )
+            
+    #         if (nrow(existing_folder) == 0) {
+    #           new_folder <- googledrive::drive_mkdir(
+    #             name = session_folder_name,
+    #             path = googledrive::as_id(parent_folder$id)
+    #           )
+    #           folder_id <- new_folder$id
+    #           credentials$session_folder <- new_folder
+    #         } else {
+    #           credentials$session_folder <- existing_folder
+    #           folder_id <- existing_folder$id
+    #         }
+    #         drive_share_anyone(as_id(folder_id))
+    #         credentials$session_folder_id <- folder_id
+    #         folder_url <- paste0(base_group_files_url, folder_id)
+    #         credentials$session_folder_url <- folder_url
+    #       } else {
+    #         credentials$session_folder <- parent_folder
+    #         credentials$session_folder_id <- parent_folder$id
+    #         credentials$session_folder_url <- paste0(base_group_files_url, parent_folder$id)
+    #       }
+          
+    #       output$error <- renderText("Welcome back! You have been auto-logged in via cookie.")
+    #     }
+    #   }
+    # }, once = TRUE)
+    # ####
 
 observeEvent(input$generate_random_ID, {
   existing_ids <- user_base()$Group
@@ -166,6 +226,13 @@ observeEvent(input$generate_random_ID, {
   credentials$info$protocol <- user$Protocol
   output$error <- renderText("")
 
+# #cookies
+#  set_cookie(
+#           cookie_name,      # the cookie name we defined
+#           input$group_name, # store the Group ID in the cookie
+#           expiration = 1    # store for 1 day
+#         )
+# ###
   parent_folder_name <- "BlinkR_text_results"
   parent_folder <- googledrive::drive_get(parent_folder_name)
 
@@ -174,7 +241,6 @@ observeEvent(input$generate_random_ID, {
   }
 
   if (credentials$info$role != "admin") {
-    # Non-admin users get a session folder inside BlinkR_text_results
     group_name <- input$group_name
     session_folder_name <- group_name
 
@@ -259,6 +325,14 @@ observeEvent(input$generate_random_ID, {
           output$sign_up_status <- renderUI(paste("Error: ", e$message))
         })
 
+# #cookies
+#          set_cookie(
+#           cookie_name,
+#           input$sign_up_group_name,
+#           expiration = 1 
+#         )
+#         ####
+
         if (credentials$info$role != "admin") {
           parent_folder_name <- "BlinkR_text_results"
           parent_folder <- googledrive::drive_get(parent_folder_name)
@@ -319,6 +393,10 @@ observeEvent(input$generate_random_ID, {
       credentials$session_folder <- NULL
       credentials$session_folder_id <- NULL
       credentials$session_folder_url <- NULL
+
+      # #cookies
+      # remove_cookie(cookie_name)
+      # ####
 
       output$error <- renderText("Logged out successfully.")
         user_base(read_sheet(user_base_sheet_id))

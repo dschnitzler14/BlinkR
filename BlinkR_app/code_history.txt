@@ -748,3 +748,10 @@ average_trs <- data %>%
       group_by(ID, Stress_Status) %>%
       summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
 
+#View Data Code
+head(data)
+
+#Playground1
+name <- NULL
+print(paste0("Hello ", name))
+

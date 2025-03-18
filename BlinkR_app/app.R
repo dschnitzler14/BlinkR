@@ -363,7 +363,8 @@ body <- dashboardBody(
 
 
 # ui combined ----
-ui <- dashboardPage(header, sidebar, body)
+ui <- add_cookie_handlers(dashboardPage(header, sidebar, body))
+
 
 # server function ----
 server <- function(input, output, session) {
@@ -535,7 +536,6 @@ saved_results <- reactiveValues(
     )
   })
 
-  
 }
 
 # runapp ----
