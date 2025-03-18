@@ -1,1 +1,4 @@
+BlinkR is a webapp created by Danny Schnitzler. Many thanks to everyone in the Stefan lab who helped with feedback, testing, optimising, and support. 
+In particular I would like to thank Melanie I. Stefan, Patricia Rubisch, and Kira Lampert.
+
 Schnitzler, D. (2024) BlinkR. Available at: "https://github.com/dschnitzler14/BlinkR"

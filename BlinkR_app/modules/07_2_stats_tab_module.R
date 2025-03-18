@@ -224,6 +224,8 @@ observeEvent(input$run_hist_Plot, {
   output$enter_effect_size_feedback <- renderUI({NULL})
   output$enter_p_value_feedback <- renderUI({NULL})
 
+  p_value_reactive <- reactive({NULL})
+  effect_size_reactive <- reactive({NULL})
 
 if(!is.null(normal_unpaired_result()$result)){
     normal_unpaired_result <- NULL
@@ -287,6 +289,9 @@ observeEvent(input$normal, {
     output$effect_size_wilcoxon_unpaired <- renderUI({NULL})
     output$interpretation_quiz <- renderUI({NULL})
 
+  p_value_reactive <- reactive({NULL})
+  effect_size_reactive <- reactive({NULL})
+
   if(!is.null(normal_unpaired_result()$result)){
     normal_unpaired_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
@@ -331,6 +336,8 @@ observeEvent(input$not_normal, {
   output$effect_size_wilcoxon_unpaired <- renderUI({NULL})
   output$interpretation_quiz <- renderUI({NULL})
 
+  p_value_reactive <- reactive({NULL})
+  effect_size_reactive <- reactive({NULL})
 
   if(!is.null(normal_unpaired_result()$result)){
     normal_unpaired_result <- NULL
@@ -383,6 +390,8 @@ observeEvent(input$unpaired_not_normal,{
   output$enter_effect_size_feedback <- renderUI({NULL})
   output$enter_p_value_feedback <- renderUI({NULL})
 
+  p_value_reactive <- reactive({NULL})
+  effect_size_reactive <- reactive({NULL})
 
 if(!is.null(normal_unpaired_result()$result)){
     normal_unpaired_result <- NULL
@@ -487,6 +496,9 @@ observeEvent(input$paired_not_normal,{
   output$interpretation_quiz <- renderUI({NULL})
   output$enter_effect_size_feedback <- renderUI({NULL})
   output$enter_p_value_feedback <- renderUI({NULL})
+
+  p_value_reactive <- reactive({NULL})
+  effect_size_reactive <- reactive({NULL})
 
 
 if(!is.null(normal_unpaired_result()$result)){
@@ -594,6 +606,8 @@ observeEvent(input$unpaired_normal,{
   output$enter_effect_size_feedback <- renderUI({NULL})
   output$enter_p_value_feedback <- renderUI({NULL})
 
+  p_value_reactive <- reactive({NULL})
+  effect_size_reactive <- reactive({NULL})
 
 if(!is.null(normal_unpaired_result()$result)){
     normal_unpaired_result <- NULL
@@ -697,6 +711,10 @@ observeEvent(input$paired_normal,{
   output$enter_effect_size_feedback <- renderUI({NULL})
   output$enter_p_value_feedback <- renderUI({NULL})
 
+  p_value_reactive <- reactive({NULL})
+  effect_size_reactive <- reactive({NULL})
+
+
   if(!is.null(normal_unpaired_result()$result)){
     normal_unpaired_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
@@ -784,7 +802,7 @@ observe({
   t_test_effect_size_paired_result <- editor_module_server("t_test_effect_size_paired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
 
 observe({
-  req(!is.null(normal_paired_result()), !is.null(normal_paired_result()$result))
+  req(!is.null(normal_paired_result()), !is.null(normal_paired_result()$result),  p_value_reactive() < 0.05)
 
   output$not_normal_unpaired_ui <- renderUI({NULL})
   output$not_normal_paired_ui <- renderUI({NULL})
@@ -796,6 +814,8 @@ observe({
   output$effect_size_wilcoxon_paired <- renderUI({NULL})
   output$effect_size_wilcoxon_unpaired <- renderUI({NULL})
   output$interpretation_quiz <- renderUI({NULL})
+
+  effect_size_reactive <- reactive({NULL})
 
   output$effect_size_t_test_paired <- renderUI({
     tagList(
@@ -877,7 +897,7 @@ observeEvent(input$save_normal_paired_effect_size_button, {
   t_test_effect_size_unpaired_result <- editor_module_server("t_test_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
 
 observe({
-    req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result))
+    req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result), p_value_reactive() < 0.05)
 
   output$not_normal_unpaired_ui <- renderUI({NULL})
   output$not_normal_paired_ui <- renderUI({NULL})
@@ -889,6 +909,8 @@ observe({
   output$effect_size_wilcoxon_paired <- renderUI({NULL})
   output$effect_size_wilcoxon_unpaired <- renderUI({NULL})
   output$interpretation_quiz <- renderUI({NULL})
+
+  effect_size_reactive <- reactive({NULL})
 
   output$effect_size_t_test_unpaired <- renderUI({
     tagList(
@@ -969,7 +991,7 @@ observe({
   wilcoxon_effect_size_paired_result <- editor_module_server("wilcoxon_effect_size_paired", average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
 
 observe({
-  req(!is.null(not_normal_paired_result()), !is.null(not_normal_paired_result()$result))
+  req(!is.null(not_normal_paired_result()), !is.null(not_normal_paired_result()$result), p_value_reactive() < 0.05)
 
   output$not_normal_unpaired_ui <- renderUI({NULL})
   #output$not_normal_paired_ui <- renderUI({NULL})
@@ -981,6 +1003,9 @@ observe({
   #output$effect_size_wilcoxon_paired <- renderUI({NULL})
   output$effect_size_wilcoxon_unpaired <- renderUI({NULL})
   output$interpretation_quiz <- renderUI({NULL})
+
+  effect_size_reactive <- reactive({NULL})
+
 
   output$effect_size_wilcoxon_paired <- renderUI({
     tagList(
@@ -1061,7 +1086,7 @@ observe({
   wilcoxon_effect_size_unpaired_result <- editor_module_server("wilcoxon_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
 
 observe({
-  req(!is.null(not_normal_unpaired_result()), !is.null(not_normal_unpaired_result()$result))
+  req(!is.null(not_normal_unpaired_result()), !is.null(not_normal_unpaired_result()$result), p_value_reactive() < 0.05)
 
   #output$not_normal_unpaired_ui <- renderUI({NULL})
   output$not_normal_paired_ui <- renderUI({NULL})
@@ -1073,6 +1098,8 @@ observe({
   output$effect_size_wilcoxon_paired <- renderUI({NULL})
   #output$effect_size_wilcoxon_unpaired <- renderUI({NULL})
   output$interpretation_quiz <- renderUI({NULL})
+
+  effect_size_reactive <- reactive({NULL})
 
   output$effect_size_wilcoxon_paired <- renderUI({
     tagList(
@@ -1199,6 +1226,7 @@ p_value_reactive <- reactive({
     if (!is.null(normal_unpaired_result()) && 
       !is.null(normal_unpaired_result()$result)) {
     sr <- normal_unpaired_result()
+
   } else if (!is.null(normal_paired_result()) && 
              !is.null(normal_paired_result()$result)) {
     sr <- normal_paired_result()
@@ -1213,9 +1241,10 @@ p_value_reactive <- reactive({
       if (is.null(sr) || is.null(sr$result)) {
         return(NULL)
       }
-      if (!"p.value" %in% names(sr$result)) {
+      if (!("p.value" %in% names(sr$result))) {
         return(NULL)
       }
+
       p_value <- sr$result$p.value
       
       if (is.null(p_value)) {
@@ -1235,12 +1264,23 @@ p_value_reactive <- reactive({
 # 9. interpretation quiz
 observe({
 
-  req(
-    (!is.null(t_test_effect_size_paired_result()) && !is.null(t_test_effect_size_paired_result()$result)) ||
-    (!is.null(t_test_effect_size_unpaired_result()) && !is.null(t_test_effect_size_unpaired_result()$result)) ||
-    (!is.null(wilcoxon_effect_size_paired_result()) && !is.null(wilcoxon_effect_size_paired_result()$result)) ||
-    (!is.null(wilcoxon_effect_size_unpaired_result()) && !is.null(wilcoxon_effect_size_unpaired_result()$result))
-  )
+req(!is.null(p_value_reactive()))
+
+    if (p_value_reactive() < 0.05) {
+    req(
+      (!is.null(t_test_effect_size_paired_result()) && !is.null(t_test_effect_size_paired_result()$result)) ||
+      (!is.null(t_test_effect_size_unpaired_result()) && !is.null(t_test_effect_size_unpaired_result()$result)) ||
+      (!is.null(wilcoxon_effect_size_paired_result()) && !is.null(wilcoxon_effect_size_paired_result()$result)) ||
+      (!is.null(wilcoxon_effect_size_unpaired_result()) && !is.null(wilcoxon_effect_size_unpaired_result()$result))
+    )
+  } else {
+    req(
+      (!is.null(normal_paired_result()) && !is.null(normal_paired_result()$result)) ||
+      (!is.null(normal_unpaired_result()) && !is.null(normal_unpaired_result()$result)) ||
+      (!is.null(not_normal_paired_result()) && !is.null(not_normal_paired_result()$result)) ||
+      (!is.null(not_normal_unpaired_result()) && !is.null(not_normal_unpaired_result()$result))
+    )
+  }
 
   output$interpretation_quiz <- renderUI({
     tagList(
@@ -1271,50 +1311,96 @@ observe({
 })
 
 observe({
-    req(
-    (!is.null(t_test_effect_size_paired_result()) && !is.null(t_test_effect_size_paired_result()$result)) ||
-    (!is.null(t_test_effect_size_unpaired_result()) && !is.null(t_test_effect_size_unpaired_result()$result)) ||
-    (!is.null(wilcoxon_effect_size_paired_result()) && !is.null(wilcoxon_effect_size_paired_result()$result)) ||
-    (!is.null(wilcoxon_effect_size_unpaired_result()) && !is.null(wilcoxon_effect_size_unpaired_result()$result))
-  )
 
-      if (!is.null(t_test_effect_size_paired_result()) || !is.null(t_test_effect_size_unpaired_result()) || !is.null(wilcoxon_effect_size_paired_result()) || !is.null(wilcoxon_effect_size_unpaired_result()) ) {
-        output$interpretation_quiz_feedback <- renderUI({
-          tagList(
-            numericInput(session$ns("enter_p_value"), "What is the p-value?", value = 0),
-            div(
-                style = "text-align: center;",
-            actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button")),
+  req(!is.null(p_value_reactive()))
 
-            uiOutput(session$ns("enter_p_value_feedback")),
-            uiOutput(session$ns("null_hyp_display")),
+  effect_size_exists <- 
+    !is.null(t_test_effect_size_paired_result()$result) ||
+    !is.null(t_test_effect_size_unpaired_result()$result) ||
+    !is.null(wilcoxon_effect_size_paired_result()$result) ||
+    !is.null(wilcoxon_effect_size_unpaired_result()$result)
 
-            numericInput(session$ns("enter_effect_size"), "What is the effect size?", value = 0),
-            div(
-                style = "text-align: center;",
-            actionButton(session$ns("enter_effect_size_submit"), "Submit", class = "fun-submit-button")),
+  normality_results_exist <- 
+    !is.null(normal_paired_result()$result) ||
+    !is.null(normal_unpaired_result()$result) ||
+    !is.null(not_normal_paired_result()$result) ||
+    !is.null(not_normal_unpaired_result()$result)
 
-            uiOutput(session$ns("enter_effect_size_feedback")),
-            uiOutput(session$ns("effect_size_display")),
-            
-            
-            textInput(session$ns("interpretation_quiz_text_p_value"), "Interpret the p-value result in one sentence", value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", width = "100%"),
-            textInput(session$ns("interpretation_quiz_text_effect_size"), "Summarise these results in one sentence", value = "An effect size of [effect size method]=[effect size] suggests that ______.", width = "100%"),
-            div(
+  if (p_value_reactive() < 0.05) {
+    req(effect_size_exists)
+  } else {
+    req(normality_results_exist)
+  }
+
+  if (effect_size_exists) {
+    output$interpretation_quiz_feedback <- renderUI({
+      tagList(
+        numericInput(session$ns("enter_p_value"), "What is the p-value?", value = 0),
+        div(
             style = "text-align: center;",
-            actionButton(session$ns("save_text_interpretation_button"), tagList(shiny::icon("save"), "Save Notes"), class = "fun-save-button")
-            ),
-            #uiOutput(session$ns("interpretation_quiz_text_input_feedback")),
-            #uiOutput(session$ns("save_text_interpretation"))
-            
-          )
-        })
+            actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button")
+        ),
+        uiOutput(session$ns("enter_p_value_feedback")),
+        uiOutput(session$ns("null_hyp_display")),
 
-        } else {
-        output$interpretation_quiz_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
-        })
-        }
+        numericInput(session$ns("enter_effect_size"), "What is the effect size?", value = 0),
+        div(
+            style = "text-align: center;",
+            actionButton(session$ns("enter_effect_size_submit"), "Submit", class = "fun-submit-button")
+        ),
+        uiOutput(session$ns("enter_effect_size_feedback")),
+        uiOutput(session$ns("effect_size_display")),
+        
+        textInput(session$ns("interpretation_quiz_text_p_value"), 
+                  "Interpret the p-value result in one sentence", 
+                  value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", 
+                  width = "100%"),
+        
+        textInput(session$ns("interpretation_quiz_text_effect_size"), 
+                  "Summarise these results in one sentence", 
+                  value = "An effect size of [effect size method]=[effect size] suggests that ______.", 
+                  width = "100%"),
+
+        div(
+            style = "text-align: center;",
+            actionButton(session$ns("save_text_interpretation_button"), 
+                         tagList(shiny::icon("save"), "Save Notes"), 
+                         class = "fun-save-button")
+        )
+      )
+    })
+  
+  } else if (normality_results_exist) {
+    output$interpretation_quiz_feedback <- renderUI({
+      tagList(
+        numericInput(session$ns("enter_p_value"), "What is the p-value?", value = 0),
+        div(
+            style = "text-align: center;",
+            actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button")
+        ),
+        uiOutput(session$ns("enter_p_value_feedback")),
+        uiOutput(session$ns("null_hyp_display")),
+        
+        textInput(session$ns("interpretation_quiz_text_p_value"), 
+                  "Interpret the p-value result in one sentence", 
+                  value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", 
+                  width = "100%"),
+
+        div(
+            style = "text-align: center;",
+            actionButton(session$ns("save_text_interpretation_button"), 
+                         tagList(shiny::icon("save"), "Save Notes"), 
+                         class = "fun-save-button")
+        )
+      )
+    })
+  
+  } else {
+    output$interpretation_quiz_feedback <- renderUI({
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+  }
+
 })
 
 observeEvent(input$enter_effect_size_submit, {

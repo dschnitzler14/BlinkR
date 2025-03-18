@@ -11,7 +11,11 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                               tags$h2(
                                                 tagList(shiny::icon("pen"), "Simulated Experiment: Writing Up")
                                               )
-                                    )
+                                    ),
+                                    div(
+                                        class = "yellow-box",
+                                          tagList("Remember, this is a simulated experiment. The data you see here is not real.")
+                                      ),
                                   )),
                                   box(
                                     title = "Writing Up",

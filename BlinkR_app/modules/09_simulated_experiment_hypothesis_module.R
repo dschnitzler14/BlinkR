@@ -10,7 +10,11 @@ simulated_experiment_hypothesis_module_ui <- function(id) {
                                             tags$h2(
                                             tagList(shiny::icon("pen-to-square"), "Simulated Experiment: Hypothesis")
                                             )
-                                )
+                                ),
+                                div(
+                                        class = "yellow-box",
+                                          tagList("Remember, this is a simulated experiment. The data you see here is not real.")
+                                      ),
                                 )
 
                                     ),

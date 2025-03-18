@@ -80,6 +80,14 @@ writing_up_ai_ui <- function(id) {
                                     markdown("AI cannot analyse data; relying on it can lead to data falsification, which is academic misconduct.")
                                     ),
                                     box(
+                                    title = "❌ Data Visualisation",
+                                    id = "analysis",
+                                    collapsible = TRUE,
+                                    width = 12,
+                                    solidHeader = FALSE,
+                                    markdown("AI cannot generate figures from a given dataset; It lacks access to the data and will produce entirely fabricated visualizsations, which is also considered data fabrication.")
+                                    ),
+                                    box(
                                     title = "❌ References & Citations",
                                     id = "references",
                                     collapsible = TRUE,

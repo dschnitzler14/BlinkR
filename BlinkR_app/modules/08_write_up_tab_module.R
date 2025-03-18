@@ -15,11 +15,21 @@ write_up_module_ui <- function(id, session_folder_url) {
     )),
         fluidRow(
           column(
-            width = 12,
+            width = 6,
             div(
               style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
               actionButton(ns("link_to_drive"),
                            label = tagList(icon("google-drive"), "View on Google Drive"),
+                           class = "btn-primary"
+              )
+            )
+          ),
+          column(
+            width = 6,
+            div(
+              style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
+              downloadButton(ns("download_instructions"),
+                           label = "Download pdf of instructions",
                            class = "btn-primary"
               )
             )
@@ -44,7 +54,6 @@ write_up_module_ui <- function(id, session_folder_url) {
                         width = 12,
                         div(
                           style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-                          #download_handler_ui("download_script", "Download R Script")
                         )
                       ),
                     ),
@@ -204,6 +213,17 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
     your_google_drive_module_server("your_drive_module_write_up", session_folder_id)
 
   })
+
+  output$download_instructions <- downloadHandler(
+    filename = function() {
+      "BlinkR_writing_up_advice.pdf"
+    },
+    content = function(file) {
+      file.copy("www/BlinkR_writing_up_advice.pdf", file)
+    },
+    contentType = "application/pdf"
+  )
+
 
     observeEvent(input$back_page_write, {
       updateTabItems(parent.session, "sidebar", "AI")
