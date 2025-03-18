@@ -33,12 +33,12 @@ simulated_experiment_hypothesis_module_ui <- function(id) {
                                         
                                         div(style = "border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;",
                                             markdown("**What is the null hypothesis?**"),
-                                            markdown("Chewing caffeine-containing gum does not increase heart rate significantly more than chewing caffeine-free gum")
+                                            markdown("Chewing caffeine-containing gum does not affect heart rate significantly more than chewing caffeine-free gum")
                                         ),
                                         
                                         div(style = "border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;",
                                             markdown("**What is the alternative hypothesis?**"),
-                                            markdown("Chewing caffeine-containing gum increases heart rate significantly more than chewing caffeine-free gum")
+                                            markdown("Chewing caffeine-containing gum has an effect on heart rate significantly more than chewing caffeine-free gum")
                                         )
                                       )
 

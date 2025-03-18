@@ -20,5 +20,5 @@ Given the apparent rapid absorption of caffeine from chewing gum, any increase i
 
 Therefore, this study aims to examine the effects of caffeine-containing chewing gum on heart rate in a healthy cohort of participants.
 
-The null hypothesis is therefore that chewing caffeine-containing gum does not increase heart rate significantly more than chewing caffeine-free gum.
-The alternative hypothesis is that chewing caffeine-containing gum increases heart rate significantly more than chewing caffeine-free gum.
+The null hypothesis is therefore that chewing caffeine-containing gum does not affect heart rate significantly more than chewing caffeine-free gum.
+The alternative hypothesis is that chewing caffeine-containing gum has an effect on heart rate significantly more than chewing caffeine-free gum.
