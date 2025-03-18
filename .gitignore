@@ -6,3 +6,5 @@
 .newsecrets
 .notes
 .testanalysis
+.vscode
+#**/.DS_Store
