@@ -18,6 +18,8 @@ your_google_drive_module_server <- function(id, session_folder_id) {
   moduleServer(
     id,
     function(input, output, session) {
+            vars <- get_experiment_vars()
+
       ns <- session$ns
       
       path <- paste0("https://drive.google.com/embeddedfolderview?id=", session_folder_id, "#list")  

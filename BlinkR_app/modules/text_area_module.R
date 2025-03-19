@@ -19,6 +19,8 @@ text_area_module_server <- function(id, auth, filename = "Filename", time = "") 
   moduleServer(
     id,
     function(input, output, session) {
+            vars <- get_experiment_vars()
+
       observeEvent(input$inputTextButton, {
         
 

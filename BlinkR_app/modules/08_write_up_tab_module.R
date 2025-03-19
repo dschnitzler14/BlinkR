@@ -196,7 +196,8 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
   moduleServer(
     id,
     function(input, output, session){
-      
+            vars <- get_experiment_vars()
+
 
   observeEvent(input$link_to_drive, {
     req(session_folder_id)

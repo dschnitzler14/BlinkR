@@ -1,77 +1,12 @@
 library(shiny)
-library(bslib)
-library(shinydashboard)
-library(markdown)
-library(DT)
-library(shinyAce)
-library(shinyauthr)
-library(dplyr)
-library(ggplot2)
-library(car)
-library(tidyr)
-library(utils)
-library(googlesheets4)
-library(googledrive)
-library(readr)
-library(markdownInput)
-library(knitr)
-library(shinycssloaders)
-library(future)
-library(promises)
-library(shinyWidgets)
-library(tibble)
-library(stringr)
-library(shinyjs)
-library(jsonlite)
-library(datasets)
-library(evaluate)
-library(rstatix)
-library(coin)
-library(rsconnect)
-library(cookies)
 
-options(
-  gargle_oauth_email = TRUE,
-  gargle_oauth_cache = "BlinkR_app/.secrets"
-)
+source("global.R")
 
-#only run once:
-#gs4_auth(email = "appdemo41@gmail.com", cache = "BlinkR_app/.secrets")
-#drive_auth(email = "appdemo41@gmail.com", cache = "BlinkR_app/.secrets")
-
-
-googlesheets4::gs4_auth()
-googledrive::drive_auth()
-
-
-user_base_google_sheet <- drive_get("BlinkR Users")$id
-
-user_base_read <- read_sheet(user_base_google_sheet)
-
-
-base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
-
-final_reports_folder_id <- drive_get("BlinkR_final_reports")$id
-
-group_data_file_id <- drive_get("BlinkR_Measurements")$id
-
-protocol_file_id <- drive_get("BlinkR_protocols")$id
-
-BlinkR_measurement_sheet <- drive_get("BlinkR_Measurements")$id
-
-
-#load all modules in modules/ directory ----
+### load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
 sapply(module_files, source)
 
-# variable to point to css ----
-css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
-                      tags$script(src = "app.js"),
-                      tags$script("hljs.highlightAll();"),
-                      tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
-                      )
-
-# header ----
+### header ----
 header <- dashboardHeader(title = "BlinkR",
             tags$li(
       class = "dropdown",
@@ -110,7 +45,6 @@ sidebar <- dashboardSidebar(
     div(
       style = "padding: 10px; font-weight: bold; background-color: #ff9800; color: white !important; border-radius: 5px; text-align: left;",
     tags$li(
-        #class = "conditional-admin",
         menuItem("Admin Area", tabName = "admin_area", icon = icon("lock"))  
     )
     )
@@ -366,7 +300,7 @@ body <- dashboardBody(
 ui <- add_cookie_handlers(dashboardPage(header, sidebar, body))
 
 
-# server function ----
+#server function ----
 server <- function(input, output, session) {
   
 auth_status <- reactiveVal(FALSE)
@@ -398,38 +332,13 @@ saved_results <- reactiveValues(
   user_writing = list()
 )
   
-  caf_data_path <- "data/Caf_Dummy_Data.csv"
-
-  caf_data_read_csv <- read.csv(caf_data_path, header = TRUE)
-
-  caf_data_read <- as.data.frame(caf_data_read_csv)
-
-
-
   reload_trigger <- reactiveValues(reload = 0)
 
-  db_measurement <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), Submission_ID = character(), stringsAsFactors = FALSE))
+  db_measurement <- reactiveVal(db_measurement_dataframe)
   
-  db_student_table <- reactiveVal(data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), Submission_ID = character(), stringsAsFactors = FALSE))
+  db_student_table <- reactiveVal(db_student_table_dataframe)
   
-  feedback_data <- reactiveVal(data.frame(
-    timestamp = character(),
-    overall_experience = numeric(),
-    clarity = numeric(),
-    clarity_issues = character(),
-    bugs = character(),
-    bug_details = character(),
-    experiment_tools = character(),
-    missing_features = character(),
-    useful_features = character(),
-    least_useful_features = character(),
-    general_feedback = character(),
-    stringsAsFactors = FALSE
-  ))
-
-  combined_class_data_sheet <- drive_get("BlinkR_Combined_Class_Data")$id
-  
-  combined_class_data_read <- read_sheet(combined_class_data_sheet)
+  feedback_data <- reactiveVal(feedback_data_dataframe)
   
   introduction_module_server("introduction", parent.session = session, auth_status)
 
@@ -540,3 +449,4 @@ saved_results <- reactiveValues(
 
 # runapp ----
 shinyApp(ui = ui, server = server)
+

@@ -8,6 +8,8 @@ view_groups_admin_module_ui <- function(id) {
 
 view_groups_admin_module_server <- function(id, user_base_data) {
   moduleServer(id, function(input, output, session) {
+          vars <- get_experiment_vars()
+
     ns <- session$ns
 
     observe({

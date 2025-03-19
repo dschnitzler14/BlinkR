@@ -66,6 +66,8 @@ fluidRow(
 
 playground_module_server <- function(id, session_folder_id, parent.session) {
   moduleServer(id, function(input, output, session) {
+          vars <- get_experiment_vars()
+
     
 data <- iris
 

@@ -94,6 +94,9 @@ background_module_server <- function(id, parent.session){
   moduleServer(
     id,
     function(input, output, server){
+
+    vars <- get_experiment_vars()
+
       
        observeEvent(input$back_page_background, {
       updateTabItems(parent.session, "sidebar", "Introduction")

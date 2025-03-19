@@ -12,6 +12,8 @@ combine_sheets_module_ui <- function(id) {
 
 combine_sheets_module_server <- function(id, group_data_file_id, parent.session) {
   moduleServer(id, function(input, output, session) {
+          vars <- get_experiment_vars()
+
     ns <- session$ns
 
     # output$loader_ui <- renderUI({

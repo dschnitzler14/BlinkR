@@ -36,10 +36,11 @@ introduction_module_server <- function(id, parent.session, auth_status){
     id,
     function(input, output, session){
       
-      observeEvent(input$next_page_intro, {
-        updateTabItems(parent.session, "sidebar", "Background")
-      })
-      
+      vars <- get_experiment_vars()
+
+      rmd_content <- readLines("markdown/01_introduction/introduction_box2.Rmd")
+      processed_rmd <- whisker.render(paste(rmd_content, collapse = "\n"), vars)
+
       output$action_buttons_ui <- renderUI({
         req(auth_status())
         tagList(
@@ -47,8 +48,8 @@ introduction_module_server <- function(id, parent.session, auth_status){
           solidHeader = TRUE,
           width = 12,
           collapsible = TRUE,
-          includeMarkdown("markdown/01_introduction/introduction_box2.Rmd")
-
+          HTML(markdownToHTML(text = processed_rmd, fragment.only = TRUE))
+          #includeMarkdown("markdown/01_introduction/introduction_box2.Rmd")
           ),
         box(
           title = "Research Roadmap",
@@ -122,6 +123,10 @@ introduction_module_server <- function(id, parent.session, auth_status){
       )
       })
 
+      observeEvent(input$next_page_intro, {
+        updateTabItems(parent.session, "sidebar", "Background")
+      })
+      
       observeEvent(input$background, { updateTabItems(parent.session, "sidebar", "Background") })
       observeEvent(input$hypothesis, { updateTabItems(parent.session, "sidebar", "Hypothesis") })
       observeEvent(input$protocol, { updateTabItems(parent.session, "sidebar", "Protocol") })

@@ -18,6 +18,8 @@ group_info_module_server <- function(id, db_student_table, auth) {
   moduleServer(
     id,
     function(input, output, session) {
+            vars <- get_experiment_vars()
+
       ns <- session$ns
 
       next_id <- reactiveVal(1)

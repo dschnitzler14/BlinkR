@@ -12,6 +12,8 @@ experimental_design_module_ui <- function(id, label = "Protocol Planning Notes",
 
 experimental_design_module_server <- function(id, auth, protocol_file_id, sheet_name = "Protocol_Notes", input_question = "Input Question") {
   moduleServer(id, function(input, output, session) {
+          vars <- get_experiment_vars()
+
     ns <- session$ns
     
     protocol_notes_db <- reactiveVal(data.frame())

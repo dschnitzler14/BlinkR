@@ -56,6 +56,8 @@ admin_area_module_ui <- function(id) {
 
 admin_area_module_server <- function(id, group_data_file_id, parent.session, user_base, final_reports_folder_id, user_base_sheet_id, session_folder_id) {
   moduleServer(id, function(input, output, session) {
+          vars <- get_experiment_vars()
+
     ns <- session$ns
     
     # observeEvent(input$open_google_drive, {

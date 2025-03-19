@@ -82,6 +82,8 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
   moduleServer(
     id,
     function(input, output, session) {
+            vars <- get_experiment_vars()
+
       ns <- session$ns
       
       observeEvent(input$back_page_measure, {

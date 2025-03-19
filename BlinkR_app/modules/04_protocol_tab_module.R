@@ -67,7 +67,8 @@ protocol_module_server <- function(id, auth, parent.session, protocol_file_id){
   moduleServer(
     id,
     function(input, output, server){
-      
+            vars <- get_experiment_vars()
+
    
       experimental_design_module_server("experimental_design_protocol", auth, protocol_file_id, "Experimental Design", "What is your general design?")
       experimental_design_module_server("measurement_protocol", auth, protocol_file_id, "Measurement", "How will you record measurements?")

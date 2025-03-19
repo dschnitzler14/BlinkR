@@ -17,6 +17,9 @@ share_to_groups_admin_module_ui <- function(id) {
 
 share_to_groups_admin_module_server <- function(id, user_base_data, column, user_base_sheet_id) {
   moduleServer(id, function(input, output, session) {
+          vars <- get_experiment_vars()
+
+
     ns <- session$ns
     
 

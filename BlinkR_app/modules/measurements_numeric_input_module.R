@@ -100,6 +100,8 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
   moduleServer(
     id,
     function(input, output, session) {
+            vars <- get_experiment_vars()
+
       
       ns <- session$ns
       

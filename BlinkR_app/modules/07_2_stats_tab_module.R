@@ -95,7 +95,8 @@ analysis_stats_module_ui <- function(id) {
 
 analysis_stats_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
-    
+          vars <- get_experiment_vars()
+
     average_trs <- reactive({
       NULL
     })

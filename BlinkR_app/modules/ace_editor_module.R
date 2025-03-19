@@ -42,6 +42,8 @@ editor_module_ui <- function(id) {
 
 editor_module_server <- function(id, data, variable_name = "ace_editor_data", predefined_code = "", return_type = "", session_folder_id, save_header = "Code Header", code_history = TRUE) {
   moduleServer(id, function(input, output, session) {
+    vars <- get_experiment_vars()
+
     values <- reactiveValues(result = NULL, is_plot = FALSE)
     current_code <- reactiveVal(NULL)
 

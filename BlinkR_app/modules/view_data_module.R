@@ -7,6 +7,8 @@ view_data_module_ui <- function(id) {
 
 view_data_module_server <- function(id, database, enable_remove = FALSE) {
   moduleServer(id, function(input, output, session) {
+          vars <- get_experiment_vars()
+
     ns <- session$ns
     
     reactive_data <- reactiveVal({

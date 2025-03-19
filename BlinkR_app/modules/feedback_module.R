@@ -91,6 +91,8 @@ feedback_module_ui <- function(id) {
 
 feedback_module_server <- function(id, feedback_data, parent.session) {
   moduleServer(id, function(input, output, session) {
+          vars <- get_experiment_vars()
+
     ns <- session$ns 
     
     feedback_sheet <- drive_get("Feedback")$id

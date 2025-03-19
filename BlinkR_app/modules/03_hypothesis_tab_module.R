@@ -83,6 +83,8 @@ hypothesis_module_server <- function(id, parent.session, auth) {
   moduleServer(
     id,
     function(input, output, session) {
+            vars <- get_experiment_vars()
+
       
       text_area_module_server("hypothesis", auth, "Hypothesis")
       text_area_module_server("null_hypothesis", auth, "Null Hypothesis")

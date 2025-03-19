@@ -9,6 +9,9 @@ view_report_submission_admin_module_ui <- function(id) {
 
 view_report_submission_admin_module_server <- function(id, final_reports_folder_id) {
   moduleServer(id, function(input, output, session) {
+    vars <- get_experiment_vars()
+
+
     ns <- session$ns
     table_data <- reactiveVal(NULL)
     load_data <- function() {

@@ -71,6 +71,8 @@ class_data_module_server <- function(
   moduleServer(
     id,
     function(input, output, session) {
+      vars <- get_experiment_vars()
+
       ns <- session$ns
   
       observeEvent(input$back_page_data, {

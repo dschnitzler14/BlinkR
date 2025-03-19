@@ -145,6 +145,9 @@ analysis_prepare_data_module_ui <- function(id) {
 
 analysis_prepare_data_module_server <- function(id, results_data, parent.session, session_folder_id) {
   moduleServer(id, function(input, output, session) {
+
+          vars <- get_experiment_vars()
+
     # Load data
     view_data <- reactive({ NULL })
     

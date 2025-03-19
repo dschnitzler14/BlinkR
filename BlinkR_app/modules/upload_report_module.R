@@ -71,6 +71,8 @@ upload_report_module_server <- function(id, auth, base_group_files_url, final_re
   moduleServer(
     id,
     function(input, output, session) {
+            vars <- get_experiment_vars()
+
       uploaded_files <- reactiveVal(list())
       
       observeEvent(input$upload_button, {

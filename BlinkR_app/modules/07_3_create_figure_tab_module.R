@@ -120,7 +120,8 @@ fluidRow(
 analysis_create_figure_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
 
-    
+          vars <- get_experiment_vars()
+
   average_trs <- reactive({ NULL })
     
   average_trs_results <- results_data %>%

@@ -146,7 +146,7 @@ simulated_experiment_analysis_module_server <- function(id, caf_data_read) {
 
   caf_summary <- reactive({ caf_summary_results })
 
-# Step1: Prepare Data
+# Step1: Prepare Data 
     predefined_code_prepare_caf_data <- read_file("markdown/09_simulated_experiment/sim_analysis_prepare_data.Rmd")
       
     prepare_caf_data_result <- editor_module_server("average_trs_caf_editor", data = caf_data, variable_name = "caf_data", predefined_code = predefined_code_prepare_caf_data, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)

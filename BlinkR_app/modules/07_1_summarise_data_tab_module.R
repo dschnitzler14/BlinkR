@@ -90,7 +90,8 @@ analysis_summarise_data_module_ui <- function(id) {
 
 analysis_summarise_data_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
-  
+        vars <- get_experiment_vars()
+
   #step1 data prep
     average_trs <- reactive({ NULL })
     

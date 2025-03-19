@@ -160,7 +160,8 @@ analysis_dashboard_module_ui <- function(id) {
 
 analysis_dashboard_module_server <- function(id, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
- 
+       vars <- get_experiment_vars()
+
         observeEvent(input$back_page_analysis, {
       updateTabItems(parent.session, "sidebar", "Playground")
     })
