@@ -101,16 +101,16 @@ analysis_stats_module_server <- function(id, results_data, parent.session, saved
       NULL
     })
     
-    average_trs_data <- results_data %>%
+    average_trs_results <- results_data %>%
       select(-"Group", -"Initials", -"Submission_ID") %>%
-      dplyr::group_by(ID, Stress_Status) %>%
+      dplyr::group_by(ID, all_of(vars$levels_variable_name)) %>%
       dplyr::summarise(
-        Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
+        Average_Measurement = mean(all_of(vars$measurement_variable_name), na.rm = TRUE),
         .groups = 'drop'
       )
     
     average_trs <- reactive({
-      average_trs_data
+      average_trs_results
     })
 
 
@@ -118,16 +118,9 @@ average_trs_paired_wide <- reactive({
       NULL
     })
     
-    # average_trs_data <- results_data %>%
-    #   select(-"Group", -"Initials", -"Submission_ID") %>%
-    #   dplyr::group_by(ID, Stress_Status) %>%
-    #   dplyr::summarise(
-    #     Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
-    #     .groups = 'drop'
-    #   )
 
-      average_trs_paired_wide_data <- average_trs()%>%
-        pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+    average_trs_paired_wide_data <- average_trs()%>%
+      pivot_wider(names_from = all_of(vars$levels_variable_name), values_from = Average_Measurement)
     
     average_trs_paired_wide <- reactive({
       average_trs_paired_wide_data
@@ -197,9 +190,9 @@ output$testing_assumptions <- renderUI({
   req(average_trs())
   
   hist(
-    average_trs()$Average_Blinks_Per_Minute,
-    main = "Distribution of Blinks/Minute",
-    xlab = "Average Blinks/Minute",
+    average_trs()$Average_Measurement,
+    main = sprintf("Distribution of %s", vars$measurement_text_name),
+    xlab = sprintf("Average of Technical Replicates for %s", vars$measurement_text_name),
     ylab = "Frequency",
     col = "grey49", border = "black"
   )

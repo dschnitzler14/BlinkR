@@ -1,8 +1,0 @@
-Next, we can calculate the standard deviation (sd) using this code:
-
-```
-unstressed_sd <- sd(unstressed_data$Average_Blinks_Per_Minute, na.rm = TRUE)
-```
-
-Just like with the mean, you are defining a new variable `unstressed_sd` to store the standard deviation calculation in.
-

@@ -1,7 +1,7 @@
 library(googlesheets4)
 library(googledrive)
 
-source("STEP1_define_variables.R")
+source("BlinkR_app/STEP1_define_variables.R")
 
 #enter your gmail address here
 email_address = "appdemo41@gmail.com"
@@ -53,8 +53,8 @@ check_and_create_file <- function(file_name, headers = NULL, initial_entry = NUL
 files <- list(
   "BlinkR_protocols" = NULL,
   "BlinkR_Measurements" = NULL,
-  "BlinkR_Combined_Class_Data" = c("Group", "Initials", "ID", "levels_variable_name", 
-                                   "Technical_Replicate", "measurement_variable_name", "Submission_ID"), 
+  "BlinkR_Combined_Class_Data" = c("Group", "Initials", "ID", experiment_variables$levels_variable_name, 
+                                   "Technical_Replicate", experiment_variables$measurement_variable_name, "Submission_ID"), 
   "BlinkR_Class_Protocol" = NULL,
   "BlinkR Users" = c("Group", "Role", "Name", "Date", "Protocol", "Data"),
   "Feedback" = c("Timestamp", "Overall_Experience", "Clarity", "Clarity_Issues", "Bugs", "Bug_Details", "Experiment_Tools", 
@@ -107,9 +107,9 @@ read_combined_class_data <- function(file_name) {
         Group = as.character(Group),
         Initials = as.character(Initials),
         ID = as.character(ID),
-        Stress_Status = as.character(Stress_Status),
+        experiment_variables$levels_variable_name = as.character(experiment_variables$levels_variable_name),
         Technical_Replicate = as.character(Technical_Replicate),
-        Blinks_Per_Minute = as.numeric(Blinks_Per_Minute),
+        experiment_variables$measurement_variable_name = as.numeric(experiment_variables$measurement_variable_name),
         Submission_ID = as.character(Submission_ID)
       )
     return(combined_class_data)

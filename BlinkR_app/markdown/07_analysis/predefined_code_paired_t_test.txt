@@ -1,8 +1,8 @@
 average_trs_paired_wide <- average_trs %>%
-      pivot_wider(names_from = Stress_Status, values_from = Average_Blinks_Per_Minute)
+      pivot_wider(names_from = {{levels_variable_name}}, values_from = Average_Measurement)
     
 t_test_paired <- t.test(
-  average_trs_paired_wide$Stressed,
-  average_trs_paired_wide$Unstressed,
+  average_trs_paired_wide$level_a_variable_name,
+  average_trs_paired_wide$level_b_variable_name,
   paired = TRUE
 )

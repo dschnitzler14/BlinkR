@@ -1,2 +1,2 @@
-t_test <- t.test(Average_Blinks_Per_Minute ~ Stress_Status, var.equal = TRUE, 
+t_test <- t.test(Average_Measurement ~ {{levels_variable_name}}, var.equal = TRUE, 
                 data = average_trs)

@@ -1,0 +1,1 @@
+{{level_b_variable_name}}_sd <- sd({{level_b_variable_name}}_data$Average_Measurement, na.rm = TRUE)

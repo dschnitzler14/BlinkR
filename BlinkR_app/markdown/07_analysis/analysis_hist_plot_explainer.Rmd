@@ -3,9 +3,9 @@
 
 - This is the code used to create the histogram in the BlinkR app:
   ```
-  hist <- hist(average_trs$Average_Blinks_per_Minute,
-                 main = "Distribution of Blinks/Minute",
-                 xlab = "Average Blinks/Minute",
+  hist <- hist(average_trs$Average_Measurement,
+                 main = "Distribution of {{measurement_text_name}}",
+                 xlab = "Average {{measurement_text_name}}",
                  ylab = "Frequency",
                  col = "grey49",
                  border = "black")

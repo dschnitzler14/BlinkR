@@ -6,12 +6,12 @@ In this bit of code, we used a package called `dplyr`. This package is like a co
 
 - **`%>%`**: This is called the \"pipe\" operator. It tells R that we're chaining commands together. It's like saying, \"and then do this...\" to continue the sentence.
 
-- **`group_by(id, stress_status)`**: This organises the data into groups based on the columns `id` and `stress_status`. It’s like putting data into labeled boxes so we can work on each group separately.
+- **`group_by(id, {{levels_variable_name}})`**: This organises the data into groups based on the columns `id` and `{{levels_variable_name}}`. It’s like putting data into labeled boxes so we can work on each group separately.
 
 - **`summarise`**: This creates a new summary column. In this case:
-  - `average_blinks_per_minute`: This is the name of the new column.
-  - `mean(blinks_per_minute, na.rm = TRUE)`: This calculates the average (`mean`) of the `blinks_per_minute` column for each group. The part `na.rm = TRUE` means to ignore any missing values (\"NA\") when calculating the average.
+  - `Average_Measurement`: This is the name of the new column.
+  - `mean({{measurement_variable_name}}, na.rm = TRUE)`: This calculates the average (`mean`) of the `{{measurement_variable_name}}` column for each group. The part `na.rm = TRUE` means to ignore any missing values (\"NA\") when calculating the average.
 
 - **`.groups = 'drop'`**: This tells R to remove any grouping created by the `group_by` step after finishing the summarisation. This gives us a clean, ungrouped dataset at the end.
 
-So, the result is a new dataset, `average_trs`, with the average number of blinks per minute for each group of `id` and `stress_status`, ignoring any missing values.
+So, the result is a new dataset, `average_trs`, with the average number of your measurements for each group of `id` and `{{levels_variable_name}}`, ignoring any missing values.

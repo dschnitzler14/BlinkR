@@ -1,4 +1,4 @@
 Let's first take a look at the code. We are telling R to use the cookbook `stats` (which I loaded in the background for you), and from that book, to use the recipe `t.test`. The ingredients for this recipe are:
-- **`average_blinks_per_minute ~ stress_status`**: It is best practice to order this command `dependent variable ~ independent variable` or `numerical~categorical`. 
+- **`Average_Measurement ~ {{levels_variable_name}}`**: It is best practice to order this command `dependent variable ~ independent variable` or `numerical~categorical`. 
 - **`var.equal = TRUE`**: This ingredient tells R that the variances are equal, as we confirmed in the previous step
 - **`data = average_trs`**: Finally, we need to tell R which data to use

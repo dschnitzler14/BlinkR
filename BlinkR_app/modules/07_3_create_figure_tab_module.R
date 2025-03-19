@@ -125,12 +125,12 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
   average_trs <- reactive({ NULL })
     
   average_trs_results <- results_data %>%
-    select(-"Group", -"Initials", -"Submission_ID") %>%
-    dplyr::group_by(ID, Stress_Status) %>%
-    dplyr::summarise(
-      Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
-      .groups = 'drop'
-    )
+      select(-"Group", -"Initials", -"Submission_ID") %>%
+      dplyr::group_by(ID, all_of(vars$levels_variable_name)) %>%
+      dplyr::summarise(
+        Average_Measurement = mean(all_of(vars$measurement_variable_name), na.rm = TRUE),
+        .groups = 'drop'
+      )
   
   average_trs <- reactive({ average_trs_results })
   

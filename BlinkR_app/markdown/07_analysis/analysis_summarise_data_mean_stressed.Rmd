@@ -1,1 +1,0 @@
-Now we need to calculate the mean for the stressed group.

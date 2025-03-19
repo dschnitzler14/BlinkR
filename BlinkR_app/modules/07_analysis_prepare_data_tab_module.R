@@ -49,20 +49,7 @@ analysis_prepare_data_module_ui <- function(id) {
             fluidRow(
               column(
                 4,
-                markdown(
-                  "Time to average out the technical replicates for each student. Try the following code:"
-                ),
-                wellPanel(
-                  markdown(
-                  "
-                  ```
-                  average_trs <- data %>%
-                    group_by(ID, Stress_Status) %>%
-                        summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')
-                  ``` 
-                  "
-                  )
-                ),
+                uiOutput(ns("average_technical_replicates_code")),
                 uiOutput(ns("average_technical_replicates_code_result")),
               ),
               column(
@@ -193,7 +180,7 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
               session$ns("analysis_step2_quiz"), 
               label = "What do you think we need to do to our data?", 
               choices = list(
-                "Get average blinks/minute for each condition?" = "option1", 
+                "Get the average for each condition?" = "option1", 
                 "Get average from technical replicates for each subject?" = "option2", 
                 "Do statistical analysis?" = "option3"
               ),
@@ -240,9 +227,17 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
     
         # Step 2: Pre-Process Data
 
-    predefined_code_pre_process_data <- "average_trs <- data %>%
-      group_by(ID, Stress_Status) %>%
-      summarise(Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE), .groups = 'drop')"
+  rmd_content_analysis_pre_process_data_code <- readLines("markdown/07_analysis/analysis_pre_process_data_code.Rmd")
+  processed_rmd_analysis_pre_process_data_code <- whisker.render(paste(rmd_content_analysis_pre_process_data_code, collapse = "\n"), vars)
+
+    output$average_technical_replicates_code <- renderUI({
+      HTML(markdownToHTML(text = processed_rmd_analysis_pre_process_data_code, fragment.only = TRUE))
+    })
+
+    predefined_code_pre_process_data <- whisker.render(
+    read_file("markdown/07_analysis/predefined_code_pre_process_data.txt"),
+    vars
+    )
       
     average_trs_result <- editor_module_server("average_trs_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
     

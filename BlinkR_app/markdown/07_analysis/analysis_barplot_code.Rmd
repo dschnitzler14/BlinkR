@@ -1,17 +1,17 @@
 ```r
-  average_trs$stress_status <- factor(average_trs$stress_status, levels = c("unstressed", "stressed"))
+  average_trs${{levels_variable_name}} <- factor(average_trs${{levels_variable_name}}, levels = c("{{level_b_variable_name}}", "{{level_a_variable_name}}"))
 
   variance_boxplot <- boxplot(
-    average_blinks_per_minute ~ stress_status,
+    Average_Measurement ~ {{levels_variable_name}},
     data = average_trs,
-    xlab = "Stress Status",
-    ylab = "Blinks Per Minute",
-    main = "Variance: Blinks/Minute by Stress Status",
+    xlab = levels_text_name,
+    ylab = measurement_text_name,
+    main = sprintf("Variance: %s by %s", {{measurement_text_name}}, {{levels_text_name}}), 
     col = c("grey49", "lightgrey")
   )
 
   variance_boxplot <- stripchart(
-    average_blinks_per_minute ~ stress_status,
+    Average_Measurement ~ {{levels_variable_name}},
     data = average_trs,
     add = TRUE,
     vertical = TRUE,

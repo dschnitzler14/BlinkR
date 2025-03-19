@@ -1,2 +1,0 @@
-unstressed_n <- nrow(unstressed_data)
-unstressed_sem <- unstressed_sd / sqrt(unstressed_n)

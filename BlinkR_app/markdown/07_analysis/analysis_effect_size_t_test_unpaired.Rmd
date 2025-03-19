@@ -6,7 +6,7 @@ A larger effect size means a bigger difference between groups, while a smaller e
 
 ```
 effect_size_t <- average_trs %>%
-  cohens_d(Average_Blinks_Per_Minute ~ Stress_Status)
+  cohens_d(Average_Measurement ~ {{levels_variable_name}})
 ```
 
 A general rule for interpreting Cohen’s D:  

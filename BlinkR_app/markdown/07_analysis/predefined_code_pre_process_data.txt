@@ -1,0 +1,3 @@
+average_trs <- data %>%
+    group_by(ID, {{levels_variable_name}}) %>%
+    summarise(Average_Measurement = mean({{measurement_variable_name}}, na.rm = TRUE), .groups = 'drop')

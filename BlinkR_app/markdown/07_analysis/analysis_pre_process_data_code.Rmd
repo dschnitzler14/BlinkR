@@ -1,0 +1,7 @@
+Time to average out the technical replicates for each student. Try the following code:
+
+```
+average_trs <- data %>%
+    group_by(ID, {{levels_variable_name}}) %>%
+    summarise(Average_Measurement = mean({{measurement_variable_name}}, na.rm = TRUE), .groups = 'drop')
+```

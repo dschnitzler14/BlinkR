@@ -1,9 +1,9 @@
 Let's first take a look at the code. 
 First, we had to restructure our data so we could pass it to the paired t-test function.
 - **`average_trs_paired_wide <- average_trs_paired %>%`**: again, using a cookbook called `tidyr`, we started our \"sentence\" with the command to create a new dataset called `average_trs_paired_wide` using the dataset `average_trs`
-- **`pivot_wider(names_from = stress_status, values_from = average_blinks_per_minute)`**: using the `pivot_wider`command, we next told R to move the names from the `stress_status` into their own columns (you can check back to the viewing our data section to see the current data structure) and to populate these new columns with the corresponding values found in `average_blinks_per_minute`.
+- **`pivot_wider(names_from = {{levels_variable_name}}, values_from = Average_Measurements)`**: using the `pivot_wider`command, we next told R to move the names from the `{{levels_variable_name}}` into their own columns (you can check back to the viewing our data section to see the current data structure) and to populate these new columns with the corresponding values found in `Average_Measurement`.
 
 In the next step, we run our paired t-test using the cookbook `stats` (which I loaded in the background for you), and from that book, to use the recipe `t.test`. The ingredients for this recipe are:
-- **`average_trs_paired_wide$stressed`**: Values from the column `stressed`.
-- **`average_trs_paired_wide$unstressed`**: Values from the column `unstressed`.
+- **`average_trs_paired_wide${{level_a_variable_name}}`**: Values from the column `{{level_a_variable_name}}`.
+- **`average_trs_paired_wide${{level_b_variable_name}}`**: Values from the column `{{level_b_variable_name}}`.
 - **`paired = TRUE`**: This tells R that the data is paired and to run a paired t-test.

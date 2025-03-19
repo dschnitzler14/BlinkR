@@ -1,5 +1,7 @@
 measurement_input_module_ui <- function(id, student_name, student_ID, db_student_table){
   ns <- NS(id)
+  vars <- get_experiment_vars()
+
   tagList(
     tabBox(
       title = paste("Student:", student_name, " | ID: ", student_ID),
@@ -20,12 +22,12 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
         )
       ),
       tabPanel(
-        title = "Unstressed Measurements",
+        title = (sprintf("%s - Measurements", vars$level_b_text_name)),
         fluidRow(
           column(4,
                  numericInput(
-                   inputId = ns("unstressed_input1"),
-                   label = "Blinks/ Minute Technical Replicate 1",
+                   inputId = ns("level_b_input1"),
+                   label = "Technical Replicate 1",
                    value = 0,
                    min = 0,
                    max = 100
@@ -33,8 +35,8 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
           ),
           column(4,
                  numericInput(
-                   inputId = ns("unstressed_input2"),
-                   label = "Blinks/ Minute Technical Replicate 2",
+                   inputId = ns("level_b_input2"),
+                   label = "Technical Replicate 2",
                    value = 0,
                    min = 0,
                    max = 100
@@ -42,27 +44,26 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
           ),
           column(4,
                  numericInput(
-                   inputId = ns("unstressed_input3"),
-                   label = "Blinks/ Minute Technical Replicate 3",
+                   inputId = ns("level_b_input3"),
+                   label = "Technical Replicate 3",
                    value = 0,
                    min = 0,
                    max = 100
                  )
           )
         ),
-        #actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-save-button"),
         conditionalPanel(
           condition = paste0("input['", ns("consent_check"), "'] == true"),
-          actionButton(ns("Submit_Unstressed"), "Submit Unstressed Measurements", class = "fun-submit-button")
+          actionButton(ns("Submit_Level_B"), "Submit Measurements", class = "fun-submit-button")
         )
       ),
       tabPanel(
-        title = "Stressed Measurements",
+        title = (sprintf("%s - Measurements", vars$level_a_text_name)),
         fluidRow(
           column(4,
                  numericInput(
-                   inputId = ns("stressed_input1"),
-                   label = "Blinks/ Minute Technical Replicate 1",
+                   inputId = ns("level_a_input1"),
+                   label = "Technical Replicate 1",
                    value = 0,
                    min = 0,
                    max = 100
@@ -70,8 +71,8 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
           ),
           column(4,
                  numericInput(
-                   inputId = ns("stressed_input2"),
-                   label = "Blinks/ Minute Technical Replicate 2",
+                   inputId = ns("level_a_input2"),
+                   label = "Technical Replicate 2",
                    value = 0,
                    min = 0,
                    max = 100
@@ -79,8 +80,8 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
           ),
           column(4,
                  numericInput(
-                   inputId = ns("stressed_input3"),
-                   label = "Blinks/ Minute Technical Replicate 3",
+                   inputId = ns("level_a_input3"),
+                   label = "Technical Replicate 3",
                    value = 0,
                    min = 0,
                    max = 100
@@ -89,7 +90,7 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
         ),
         conditionalPanel(
           condition = paste0("input['", ns("consent_check"), "'] == true"),
-          actionButton(ns("Submit_Stressed"), "Submit Stressed Measurements", class = "fun-submit-button")
+          actionButton(ns("Submit_Level_A"), "Submit Measurements", class = "fun-submit-button")
         )
       ),
     )
@@ -116,22 +117,22 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
       })
       
       state <- reactiveValues(
-        unstressed_ids = list(),
-        stressed_ids = list()
+        level_b_id = list(),
+        level_a_id = list()
       )
       
-      add_measurement <- function(stress_status, inputs, submission_ID) {
+      add_measurement <- function(level, inputs, submission_ID) {
         
         if (any(sapply(inputs, is.null)) || any(sapply(inputs, function(x) x == 0))) {
           showNotification("Please enter all three measurements.", type = "error", duration = 3)
           return(FALSE)
         }
         
-        existing_list <- if (stress_status == "Unstressed") state$unstressed_ids else state$stressed_ids
+        existing_list <- if (level == vars$level_b_variable_name) state$level_b_id else state$level_a_id
         if (submission_ID %in% existing_list) {
           showModal(modalDialog(
             title = "Overwrite Confirmation",
-            paste("Data for", stress_status, "measurements already exists. Do you want to overwrite it?"),
+            paste("Data for", level, "measurements already exists. Do you want to overwrite it?"),
             footer = tagList(
               modalButton("Cancel"),
               actionButton(ns("confirm_overwrite"), "Overwrite")
@@ -140,30 +141,32 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           
           observeEvent(input$confirm_overwrite, {
             removeModal()
-            save_measurement(stress_status, inputs, submission_ID, overwrite = TRUE)
+            save_measurement(level, inputs, submission_ID, overwrite = TRUE)
           }, once = TRUE, ignoreInit = TRUE)
           
           return(FALSE)
         }
         
-        save_measurement(stress_status, inputs, submission_ID, overwrite = FALSE)
+        save_measurement(level, inputs, submission_ID, overwrite = FALSE)
         
         return(TRUE)
       }
       
-      save_measurement <- function(stress_status, inputs, submission_ID, overwrite = FALSE) {
+      save_measurement <- function(level, inputs, submission_ID, overwrite = FALSE) {
         
         new_data <- data.frame(
           Group = as.character(group_name),
           Initials = as.character(student_name),
           ID = as.integer(student_ID),
-          Stress_Status = as.character(stress_status),
+          #vars$levels_variable_name = as.character(level),
           Technical_Replicate = as.integer(1:length(inputs)),
-          Blinks_Per_Minute = as.integer(unlist(inputs)),
+          #vars$measurement_variable_name = as.integer(unlist(inputs)),
           Submission_ID = as.character(submission_ID),
           stringsAsFactors = FALSE
         )
-        
+        new_data[[vars$levels_variable_name]] <- as.character(level)
+        new_data[[vars$measurement_variable_name]] <- as.integer(unlist(inputs))
+
         current_data <- db_measurement()
         
         if(overwrite) {
@@ -176,31 +179,31 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         db_measurement(updated_data)
         
         
-        if (stress_status == "Unstressed") {
-          state$unstressed_ids <- unique(c(state$unstressed_ids, submission_ID))
+        if (level == vars$level_b_variable_name) {
+          state$level_b_id <- unique(c(state$level_b_id, submission_ID))
         } else {
-          state$stressed_ids <- unique(c(state$stressed_ids, submission_ID))
+          state$level_a_id <- unique(c(state$level_a_id, submission_ID))
         }
         
         showNotification("Success: Measurements saved.", type = "message", duration = 3)
       }
       
-      observeEvent(input$Submit_Unstressed, {
+      observeEvent(input$Submit_Level_B, {
         inputs <- list(
-          input$unstressed_input1,
-          input$unstressed_input2,
-          input$unstressed_input3
+          input$level_b_input1,
+          input$level_b_input2,
+          input$level_b_input3
         )
-        add_measurement("Unstressed", inputs, submission_ID)
+        add_measurement(vars$level_b_variable_name, inputs, submission_ID)
       })
       
-      observeEvent(input$Submit_Stressed, {
+      observeEvent(input$Submit_Level_A, {
         inputs <- list(
-          input$stressed_input1,
-          input$stressed_input2,
-          input$stressed_input3
+          input$level_a_input1,
+          input$level_a_input2,
+          input$level_a_input3
         )
-        add_measurement("Stressed", inputs, submission_ID)
+        add_measurement(vars$level_a_variable_name, inputs, submission_ID)
       })
     }
   )

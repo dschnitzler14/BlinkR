@@ -1,0 +1,13 @@
+Next, we can calculate the standard error of the mean (sem) using this code:
+
+```
+{{level_b_variable_name}}_n <- nrow({{level_b_variable_name}}_data)
+{{level_b_variable_name}}_sem <- {{level_b_variable_name}}_sd / sqrt({{level_b_variable_name}}_n)
+```
+
+In order to calculate the standard error of the mean (SEM), you need to calculate the number of observations (`n`).
+
+So, you define the variable `{{level_b_variable_name}}_n` to store the number of rows in the `{{level_b_variable_name}}_data` dataframe.
+
+You can now use this new variable, `{{level_b_variable_name}}_n` along with the variable `{{level_b_variable_name}}_sd`, which you defined above, to calculate the SEM.
+

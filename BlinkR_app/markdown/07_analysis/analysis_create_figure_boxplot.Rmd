@@ -1,21 +1,21 @@
 ```r
 
-average_trs$Stress_Status <- factor(average_trs$Stress_Status, levels = c("Unstressed", "Stressed"))
+average_trs${{levels_variable_name}} <- factor(average_trs${{levels_variable_name}}, levels = c("{{level_b_variable_name}}", "{{level_a_variable_name}}"))
 
-boxplot <- ggplot(average_trs, aes(x = Stress_Status, y = Average_Blinks_Per_Minute, fill = Stress_Status)) + 
+boxplot <- ggplot(average_trs, aes(x = {{levels_variable_name}}, y = Average_Measurement, fill = {{levels_variable_name}})) + 
   geom_boxplot(outlier.shape = NA, width = 0.5) + 
   geom_jitter(
     data = average_trs, 
-    aes(x = Stress_Status, y = Average_Blinks_Per_Minute), 
+    aes(x = {{levels_variable_name}}, y = Average_Measurement), 
     width = 0.2, 
     size = 2, 
     color = "maroon"
   ) +
-  scale_fill_manual(values = c("Unstressed" = "grey49", "Stressed" = "lightgrey")) +
+  scale_fill_manual(values = c("{{level_b_variable_name}}" = "grey49", "{{level_a_variable_name}}" = "lightgrey")) +
   labs(
     x = "X AXIS",
     y = "Y AXIS",
-    title = "Blinks/Minute by Stress Status"
+    title = "TITLE"
   ) +
   theme_minimal() +
   theme(

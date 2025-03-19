@@ -90,100 +90,106 @@ analysis_summarise_data_module_ui <- function(id) {
 
 analysis_summarise_data_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
-        vars <- get_experiment_vars()
+  vars <- get_experiment_vars()
 
   #step1 data prep
     average_trs <- reactive({ NULL })
     
     average_trs_results <- results_data %>%
       select(-"Group", -"Initials", -"Submission_ID") %>%
-      dplyr::group_by(ID, Stress_Status) %>%
+      dplyr::group_by(ID, all_of(vars$levels_variable_name)) %>%
       dplyr::summarise(
-        Average_Blinks_Per_Minute = mean(Blinks_Per_Minute, na.rm = TRUE),
+        Average_Measurement = mean(all_of(vars$measurement_variable_name), na.rm = TRUE),
         .groups = 'drop'
       )
     
     average_trs <- reactive({ average_trs_results })
   
   #step1 calculation
-    unstressed_data <- reactive({ NULL })
+    level_b_data <- reactive({ NULL })
 
-    unstressed_data_result <- average_trs() %>%
-      filter(Stress_Status == "Unstressed")
+    level_b_data_result <- average_trs() %>%
+      filter(all_of(vars$levels_variable_name) == vars$level_b_variable_name)
     
-    unstressed_data <- reactive({ unstressed_data_result })
+    level_b_data <- reactive({ level_b_data_result })
 
   #step2 calculation
-    unstressed_mean <- reactive({ NULL })
+    level_b_mean <- reactive({ NULL })
 
-    unstressed_mean_result <- mean(unstressed_data()$Average_Blinks_Per_Minute, na.rm = TRUE) 
+    level_b_mean_result <- mean(level_b_data()$Average_Measurement, na.rm = TRUE) 
     
-    unstressed_mean <- reactive({ unstressed_mean_result })
+    level_b_mean <- reactive({ level_b_mean_result })
 
   #step3 calculation
 
-    unstressed_sd <- reactive({ NULL })
+    level_b_sd <- reactive({ NULL })
 
-    unstressed_sd_result <- sd(unstressed_data()$Average_Blinks_Per_Minute, na.rm = TRUE)
+    level_b_sd_result <- sd(level_b_data()$Average_Measurement, na.rm = TRUE)
 
-    unstressed_sd <- reactive({ unstressed_sd_result })
+    level_b_sd <- reactive({ level_b_sd_result })
 
   #step4 calculation
   
-    unstressed_n <- reactive({ NULL })
+    level_b_n <- reactive({ NULL })
 
-    unstressed_n_result <- nrow(unstressed_data())
+    level_b_n_result <- nrow(level_b_data())
 
-    unstressed_n <- reactive({ unstressed_n_result })
+    level_b_n <- reactive({ level_b_n_result })
 
-    unstressed_se <- reactive({ NULL })
+    level_b_se <- reactive({ NULL })
 
-    unstressed_se_result <- unstressed_sd() / sqrt(unstressed_n())
+    level_b_se_result <- level_b_sd() / sqrt(level_b_n())
 
-    unstressed_se <- reactive({ unstressed_se_result })
+    level_b_se <- reactive({ level_b_se_result })
 
-## stressed reactive values
+## level_a reactive values
 #step1 calculation
-    stressed_data <- reactive({ NULL })
+    level_a_data <- reactive({ NULL })
 
-    stressed_data_result <- average_trs() %>%
-      filter(Stress_Status == "Stressed")
+    level_a_data_result <- average_trs() %>%
+      filter(all_of(vars$levels_variable_name) == vars$level_a_variable_name)
     
-    stressed_data <- reactive({ stressed_data_result })
+    level_a_data <- reactive({ level_a_data_result })
 
   #step2 calculation
-    stressed_mean <- reactive({ NULL })
+    level_a_mean <- reactive({ NULL })
 
-    stressed_mean_result <- mean(stressed_data()$Average_Blinks_Per_Minute, na.rm = TRUE) 
+    level_a_mean_result <- mean(level_a_data()$Average_Measurement, na.rm = TRUE) 
     
-    stressed_mean <- reactive({ stressed_mean_result })
+    level_a_mean <- reactive({ level_a_mean_result })
 
   #step3 calculation
 
-    stressed_sd <- reactive({ NULL })
+    level_a_sd <- reactive({ NULL })
 
-    stressed_sd_result <- sd(stressed_data()$Average_Blinks_Per_Minute, na.rm = TRUE)
+    level_a_sd_result <- sd(level_a_data()$Average_Measurement, na.rm = TRUE)
 
-    stressed_sd <- reactive({ stressed_sd_result })
+    level_a_sd <- reactive({ level_a_sd_result })
 
   #step4 calculation
   
-    stressed_n <- reactive({ NULL })
+    level_a_n <- reactive({ NULL })
 
-    stressed_n_result <- nrow(stressed_data())
+    level_a_n_result <- nrow(level_a_data())
 
-    stressed_n <- reactive({ stressed_n_result })
+    level_a_n <- reactive({ level_a_n_result })
 
-    stressed_se <- reactive({ NULL })
+    level_a_se <- reactive({ NULL })
 
-    stressed_se_result <- stressed_sd() / sqrt(stressed_n())
+    level_a_se_result <- level_a_sd() / sqrt(level_a_n())
 
-    stressed_se <- reactive({ stressed_se_result })
+    level_a_se <- reactive({ level_a_se_result })
 
-# step1: filter to unstressed
+# step1: filter to level_b
 
-  predefined_code_step1 = read_file("markdown/07_analysis/predefined_code_summarise_filter_unstressed.txt")
+  predefined_code_step1 <- whisker.render(
+  read_file("markdown/07_analysis/predefined_code_summarise_filter_level_b.txt"),
+  vars
+  )
   summarise_result_step1 <- editor_module_server("step1_editor", average_trs, "average_trs", predefined_code = predefined_code_step1, return_type = "result", session_folder_id, save_header = "Step 1: Summarise Data")
+
+  rmd_content_introduction_box2 <- readLines("markdown/07_analysis/analysis_summarise_data_filter_level_b.Rmd")
+  processed_rmd_introduction_box2 <- whisker.render(paste(rmd_content_introduction_box2, collapse = "\n"), vars)
 
   output$step1_box <- renderUI({
   tagList(
@@ -192,14 +198,14 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
             12,
           box(
               id = "step1_box",
-              title = "1️⃣ Filter to Unstressed Data",
+              title = sprintf("1️⃣ Filter to %s Data", vars$level_b_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_filter_unstressed.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd__introduction_box2, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step1"))
                   ),
                   column(6,
@@ -233,10 +239,19 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
       })
 
 
-# step2: mean of unstressed
+# step2: mean of level_b
 
-  predefined_code_step2 = read_file("markdown/07_analysis/predefined_code_calculate_mean_unstressed.txt")
-  summarise_result_step2 <- editor_module_server("step2_editor", unstressed_data, "unstressed_data", predefined_code = predefined_code_step2, return_type = "result", session_folder_id, save_header = "Step 2: Summarise Data")
+  level_b_data_name <- paste0(vars$level_b_variable_name, "_data")
+  predefined_code_step2 <- whisker.render(
+  read_file("markdown/07_analysis/predefined_code_calculate_mean_level_b.txt"),
+  vars
+  )
+  summarise_result_step2 <- editor_module_server("step2_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step2, return_type = "result", session_folder_id, save_header = "Step 2: Summarise Data")
+
+
+rmd_content_summarise_data_mean_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_mean_level_b.Rmd")
+processed_rmd_summarise_data_mean_level_b <- whisker.render(paste(rmd_content_summarise_data_mean_level_b, collapse = "\n"), vars)
+
 
 output$step2_box <- renderUI({
     req(
@@ -249,14 +264,14 @@ output$step2_box <- renderUI({
             12,
           box(
               id = "step2_box",
-              title = "2️⃣ Calculate the Mean of Unstressed Data",
+              title = sprintf("2️⃣ Calculate the Mean of %s Data", vars$level_b_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_mean_unstressed.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd_summarise_data_mean_level_b, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step2"))
                   ),
                   column(6,
@@ -292,10 +307,16 @@ observe({
 })
 
 
-# step3: sd of unstressed
+# step3: sd of level_b
 
-  predefined_code_step3 = read_file("markdown/07_analysis/predefined_code_calculate_sd_unstressed.txt")
-  summarise_result_step3 <- editor_module_server("step3_editor", unstressed_data, "unstressed_data", predefined_code = predefined_code_step3, return_type = "result", session_folder_id, save_header = "Step 2: Summarise Data")
+predefined_code_step3 <- whisker.render(
+read_file("markdown/07_analysis/predefined_code_calculate_sd_level_b.txt"),
+vars
+)
+summarise_result_step3 <- editor_module_server("step3_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step3, return_type = "result", session_folder_id, save_header = "Step 2: Summarise Data")
+
+rmd_content_summarise_data_sd_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_sd_level_b.Rmd")
+processed_rmd_summarise_data_sd_level_b <- whisker.render(paste(rmd_content_summarise_data_sd_level_b, collapse = "\n"), vars)
 
 output$step3_box <- renderUI({
       req(!is.null(summarise_result_step2()), !is.null(summarise_result_step2()$result))
@@ -305,14 +326,14 @@ output$step3_box <- renderUI({
             12,
           box(
               id = "step3_box",
-              title = "3️⃣ Calculate the Standard Deviation of Unstressed Data",
+              title = sprintf("3️⃣ Calculate the Standard Deviation of %s Data", vars$level_b_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_sd_unstressed.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd_summarise_data_sd_level_b, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step3"))
                   ),
                   column(6,
@@ -347,13 +368,23 @@ observe({
   }
 })
 
-# step4: n and sem of unstressed
+# step4: n and sem of level_b
 
-predefined_code_step4 = read_file("markdown/07_analysis/predefined_code_calculate_sem_unstressed.txt")
+level_b_sd_name <- paste0(vars$level_b_variable_name, "_sd")
+
+predefined_code_step4 <- whisker.render(
+  read_file("markdown/07_analysis/predefined_code_calculate_sem_level_b.txt"),
+  vars
+  )
+
 summarise_result_step4 <- editor_module_server("step4_editor",list(
-    unstressed_data = unstressed_data,
-    unstressed_sd   = unstressed_sd
-  ), c("unstressed_data", "unstressed_sd"), predefined_code_step4, "result", session_folder_id, "Step 4: Summarise Data")
+    level_b_data = level_b_data,
+    level_b_sd   = level_b_sd
+  ), c(level_b_data_name, level_b_sd_name), predefined_code_step4, "result", session_folder_id, "Step 4: Summarise Data")
+
+rmd_content_summarise_data_sem_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_sem_level_b.Rmd")
+processed_rmd_summarise_data_sem_level_b <- whisker.render(paste(rmd_content_summarise_data_sem_level_b, collapse = "\n"), vars)
+
 
 output$step4_box <- renderUI({
       req(!is.null(summarise_result_step3()), !is.null(summarise_result_step3()$result))
@@ -363,14 +394,14 @@ output$step4_box <- renderUI({
             12,
           box(
               id = "step4_box",
-              title = "4️⃣ Calculate the Standard Error of the Mean of Unstressed Data",
+              title = sprintf("4️⃣ Calculate the Standard Error of the Mean of %s Data", vars$level_b_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_sem_unstressed.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd_summarise_data_sem_level_b, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step4"))
                   ),
                   column(6,
@@ -406,10 +437,17 @@ observe({
 })
 
 
-# step5: your turn with stressed data - filter
+# step5: your turn with level_a data - filter
 
-predefined_code_step5 = read_file("markdown/07_analysis/predefined_code_calculate_filter_stressed.txt")
+predefined_code_step5 <- whisker.render(
+  read_file("markdown/07_analysis/predefined_code_calculate_filter_level_a.txt"),
+  vars
+  )
+
 summarise_result_step5 <- editor_module_server("step5_editor", average_trs, "average_trs", predefined_code = predefined_code_step5, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+
+rmd_content_summarise_data_filter_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_filter_level_a.Rmd")
+processed_rmd_summarise_data_filter_level_a <- whisker.render(paste(rmd_content_summarise_data_filter_level_a, collapse = "\n"), vars)
 
 
 output$step5_box <- renderUI({
@@ -420,14 +458,14 @@ output$step5_box <- renderUI({
             12,
           box(
               id = "step5_box",
-              title = "5️⃣ Your turn! First, filter the data to the STRESSED group",
+              title = sprintf("5️⃣ Your turn! First, filter the data to the %s group", vars$level_a_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_filter_stressed.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd_summarise_data_filter_level_a, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step5"))
                   ),
                   column(6,
@@ -464,10 +502,21 @@ observe({
   }
 })
 
-# step6: your turn with stressed data - mean
+# step6: your turn with level_a data - mean
 
-predefined_code_step6 = read_file("markdown/07_analysis/predefined_code_calculate_mean_stressed.txt")
-summarise_result_step6 <- editor_module_server("step6_editor", stressed_data, "stressed_data", predefined_code = predefined_code_step6, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+level_a_data_name <- paste0(vars$level_a_variable_name, "_data")
+level_a_sd_name <- paste0(vars$level_a_variable_name, "_sd")
+level_a_n_name <- paste0(vars$level_a_variable_name, "_n")
+
+predefined_code_step6 <- whisker.render(
+  read_file("markdown/07_analysis/predefined_code_calculate_mean_level_a.txt"),
+  vars
+  )
+summarise_result_step6 <- editor_module_server("step6_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step6, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+
+rmd_content_summarise_data_mean_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_mean_level_a.Rmd")
+processed_rmd_summarise_data_mean_level_a <- whisker.render(paste(rmd_content_summarise_data_mean_level_a, collapse = "\n"), vars)
+
 
 output$step6_box <- renderUI({
   req(!is.null(summarise_result_step5()), !is.null(summarise_result_step5()$result))
@@ -477,14 +526,14 @@ output$step6_box <- renderUI({
             12,
           box(
               id = "step6_box",
-              title = "6️⃣ Your turn! Calculate the mean for the stressed group.",
+              title = sprintf("6️⃣ Your turn! Calculate the mean for the  %s group", vars$level_a_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_mean_stressed.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd_summarise_data_mean_level_a, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step6"))
                   ),
                   column(6,
@@ -503,12 +552,12 @@ observe({
   req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
   
   #mean_value <- as.numeric(summarise_result_step6()$result[[1]])
-  stressed_mean_value <- as.numeric(stressed_mean())
+  level_a_mean_value <- as.numeric(level_a_mean())
 
 if (!is.null(summarise_result_step6()$result[[1]]) &&
     is.numeric(summarise_result_step6()$result[[1]]) &&
     length(summarise_result_step6()$result[[1]]) == 1 &&
-    (summarise_result_step6()$result[[1]] == stressed_mean_value)) {
+    (summarise_result_step6()$result[[1]] == level_a_mean_value)) {
     
     output$summary_code_feedback_step6 <- renderUI({
       tagList(
@@ -529,11 +578,16 @@ if (!is.null(summarise_result_step6()$result[[1]]) &&
 })
 
 
-# step7: your turn with stressed data - sd
+# step7: your turn with level_a data - sd
 
-predefined_code_step7 = read_file("markdown/07_analysis/predefined_code_calculate_sd_stressed.txt")
-summarise_result_step7 <- editor_module_server("step7_editor", stressed_data, "stressed_data", predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+predefined_code_step7 <- whisker.render(
+  read_file("markdown/07_analysis/predefined_code_calculate_sd_level_a.txt"),
+  vars
+  )
+summarise_result_step7 <- editor_module_server("step7_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
 
+rmd_content_summarise_data_sd_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_sd_level_a.Rmd")
+processed_rmd_summarise_data_sd_level_a <- whisker.render(paste(rmd_content_summarise_data_sd_level_a, collapse = "\n"), vars)
 
 output$step7_box <- renderUI({
   req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
@@ -543,14 +597,14 @@ output$step7_box <- renderUI({
             12,
           box(
               id = "step7_box",
-              title = "7️⃣ Your turn! Calculate the sd for the stressed group.",
+              title = sprintf("7️⃣ Your turn! Calculate the sd for the %s group", vars$level_a_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_sd_stressed.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd_summarise_data_sd_level_a, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step7"))
                   ),
                   column(6,
@@ -568,12 +622,12 @@ observe({
   req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
   
   #sd_value <- as.numeric(summarise_result_step7()$result[[1]])
-  stressed_sd_value <- as.numeric(stressed_sd())
+  level_a_sd_value <- as.numeric(level_a_sd())
 
 if (!is.null(summarise_result_step7()$result[[1]]) &&
     is.numeric(summarise_result_step7()$result[[1]]) &&
     length(summarise_result_step7()$result[[1]]) == 1 &&
-    (summarise_result_step7()$result[[1]] == stressed_sd_value)) {
+    (summarise_result_step7()$result[[1]] == level_a_sd_value)) {
     
     output$summary_code_feedback_step7 <- renderUI({
       tagList(
@@ -593,10 +647,17 @@ if (!is.null(summarise_result_step7()$result[[1]]) &&
   }
 })
 
-# step8: your turn with stressed data - n and sem
+# step8: your turn with level_a data - n and sem
 
-predefined_code_step8 = read_file("markdown/07_analysis/predefined_code_calculate_sem_stressed.txt")
-summarise_result_step8 <- editor_module_server("step8_editor", list(stressed_data, stressed_n, stressed_sd), c("stressed_data", "stressed_n", "stressed_sd"), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+predefined_code_step8 <- whisker.render(
+  read_file("markdown/07_analysis/predefined_code_calculate_sem_level_a.txt"),
+  vars
+  )
+
+summarise_result_step8 <- editor_module_server("step8_editor", list(level_a_data, level_a_n, level_a_sd), c(level_a_data_name, level_a_n_name, level_a_sd_name), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+
+rmd_content_summarise_data_sem_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_sem_level_a.Rmd")
+processed_rmd_summarise_data_sem_level_a <- whisker.render(paste(rmd_content_summarise_data_sem_level_a, collapse = "\n"), vars)
 
 
 output$step8_box <- renderUI({
@@ -607,14 +668,14 @@ output$step8_box <- renderUI({
             12,
           box(
               id = "step8_box",
-              title = "8️⃣ Your turn! Calculate the n and sem for the stressed group.",
+              title = sprintf("8️⃣ Your turn! Calculate the n and sem for the %s group", vars$level_a_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_sem_stressed.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd_summarise_data_sem_level_a, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step8"))
                   ),
                   column(6,
@@ -633,14 +694,14 @@ observe({
   
   #sem_value <- as.numeric(summarise_result_step8()$result[[1]])
   #n_value <- as.numeric(summarise_result_step8()$result[[1]])
-  stressed_n_value <- as.numeric(stressed_n())
-  stressed_sem_value <- as.numeric(stressed_sem())
-  stressed_sd_value <- as.numeric(stressed_sd())
+  level_a_n_value <- as.numeric(level_a_n())
+  level_a_sem_value <- as.numeric(level_a_sem())
+  level_a_sd_value <- as.numeric(level_a_sd())
 
 if (!is.null(summarise_result_step8()$result) &&
     is.numeric(summarise_result_step8()$result) &&
     length(summarise_result_step8()$result) == 1 &&
-    (summarise_result_step8()$result[[1]] == stressed_n_value)) {
+    (summarise_result_step8()$result[[1]] == level_a_n_value)) {
     
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
@@ -652,7 +713,7 @@ if (!is.null(summarise_result_step8()$result) &&
   } else if (!is.null(summarise_result_step8()$result) &&
     is.numeric(summarise_result_step8()$result) &&
     length(summarise_result_step8()$result) == 1 &&
-    (summarise_result_step8()$result[[1]] == stressed_sem_value)) {
+    (summarise_result_step8()$result[[1]] == level_a_sem_value)) {
     
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
@@ -663,7 +724,7 @@ if (!is.null(summarise_result_step8()$result) &&
   } else if (!is.null(summarise_result_step8()$result) &&
     is.numeric(summarise_result_step8()$result) &&
     length(summarise_result_step8()$result) == 1 &&
-    (summarise_result_step8()$result[[1]] == stressed_sd_value)) {
+    (summarise_result_step8()$result[[1]] == level_a_sd_value)) {
     
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
@@ -684,8 +745,16 @@ if (!is.null(summarise_result_step8()$result) &&
 
 
 # step9: dplyr shortcut
-predefined_code_step9 = read_file("markdown/07_analysis/predefined_code_calculate_dplyr.txt")
+predefined_code_step9 <- whisker.render(
+  read_file("markdown/07_analysis/predefined_code_calculate_dplyr.txt"),
+  vars
+  )
+
 summarise_result_step9 <- editor_module_server("step9_editor", average_trs, "average_trs", predefined_code_step9, "result", session_folder_id, "Step 6: Summarise Data with Dplyr")
+
+rmd_content_summarise_data_dplyr <- readLines("markdown/07_analysis/analysis_summarise_data_dplyr.Rmd")
+processed_rmd_summarise_data_dplyr <- whisker.render(paste(rmd_content_summarise_data_dplyr, collapse = "\n"), vars)
+
 
 output$step9_box <- renderUI({
   req(!is.null(summarise_result_step8()), !is.null(summarise_result_step8()$result))
@@ -702,7 +771,7 @@ output$step9_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  includeMarkdown("markdown/07_analysis/analysis_summarise_data_dplyr.Rmd"),
+                  HTML(markdownToHTML(text = processed_rmd_summarise_data_dplyr, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step9"))
                   ),
                   column(6,
@@ -727,8 +796,8 @@ observe({
         div(class = "success-box", "\U1F64C Great!"),
         markdown("Next let's take a look at the result."),
           numericInput(
-            inputId = session$ns("mean_unstressed_group_quiz"),
-            label = "What is the mean of the unstressed group?",
+            inputId = session$ns("mean_level_b_variable_group_quiz"),
+            label = sprintf("What is the mean of the %s group", vars$level_b_variable_name),
             value = 0,
             min = 5,
             max = 60
@@ -736,15 +805,15 @@ observe({
           div(
           style = "text-align: center;",
           actionButton(
-            session$ns("submit_mean_unstressed_group_quiz_answer"),
+            session$ns("submit_mean_level_b_variable_group_quiz_answer"),
             label = "Submit",
             class = "fun-submit-button"
           )
           ),
-          uiOutput(session$ns("mean_unstressed_group_quiz_feedback")),
+          uiOutput(session$ns("mean_level_b_variable_group_quiz_feedback")),
           numericInput(
-            inputId = session$ns("sem_stressed_group_quiz"),
-            label = "What is the standard error of the mean (sem) of the stressed group?",
+            inputId = session$ns("sem_level_a_group_quiz"),
+            label = sprintf("What is the standard error of the mean (sem) of the %s group", vars$level_a_variable_name),
             value = 0,
             min = 5,
             max = 60
@@ -752,11 +821,11 @@ observe({
           div(
                 style = "text-align: center;",
           actionButton(
-            session$ns("submit_sem_stressed_group_quiz_answer"),
+            session$ns("submit_sem_level_a_group_quiz_answer"),
             label = "Submit",
             class = "fun-submit-button"
           )),
-          uiOutput(session$ns("submit_sem_stressed_group_quiz_feedback")),
+          uiOutput(session$ns("submit_sem_level_a_group_quiz_feedback")),
           radioButtons(
             session$ns("summary_result_interpretation_quiz"), 
             label = "Can we tell from this if this is statistically significant?", 
@@ -797,7 +866,7 @@ observe({
   }
 })
     
-    unstressed_mean <- reactive({
+    level_b_mean <- reactive({
       sr <- summarise_result_step9()
       
       if (is.null(sr) || is.null(sr$result)) {
@@ -806,60 +875,60 @@ observe({
       if (!tibble::is_tibble(sr$result)) {
         return(NULL)
       }
-      if (!all(c("Stress_Status", "mean") %in% names(sr$result))) {
+      if (!all(c(vars$levels_variable_name, "mean") %in% names(sr$result))) {
         return(NULL)
       }
       
-      df_unstressed <- sr$result %>%
-        dplyr::filter(Stress_Status == "Unstressed")
+      df_level_b <- sr$result %>%
+        dplyr::filter(all_of(vars$levels_variable_name) == vars$level_b_variable_name)
       
-      if (nrow(df_unstressed) == 0) {
+      if (nrow(df_level_b) == 0) {
         return(NULL)
       }
       
-      df_unstressed$mean[1]
+      df_level_b$mean[1]
     })
 
 
-    unstressed_mean_round <- reactive({
-    unstressed_mean_round_val <- unstressed_mean()
-    if (is.null(unstressed_mean_round_val)) return(NULL)
-    round(unstressed_mean_round_val, 2)
+    level_b_mean_round <- reactive({
+    level_b_mean_round_val <- level_b_mean()
+    if (is.null(level_b_mean_round_val)) return(NULL)
+    round(level_b_mean_round_val, 2)
   })
 
  
     
-observeEvent(input$submit_mean_unstressed_group_quiz_answer, {
-  val <- unstressed_mean_round()
+observeEvent(input$submit_mean_level_b_variable_group_quiz_answer, {
+  val <- level_b_mean_round()
 
   if (is.null(val)) {
-    output$mean_unstressed_group_quiz_feedback <- renderUI({
+    output$mean_level_b_variable_group_quiz_feedback <- renderUI({
       div(class = "error-box", "\U1F914 We do not have a valid mean yet!")
     })
     return()
   }
 
-  user_answer_mean_unstressed <- as.numeric(input$mean_unstressed_group_quiz)
+  user_answer_mean_level_b <- as.numeric(input$mean_level_b_variable_group_quiz)
 
-  if (is.na(user_answer_mean_unstressed)) {
+  if (is.na(user_answer_mean_level_b)) {
     feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
   } else {
     tolerance <- 0.5
     
-    if (abs(user_answer_mean_unstressed - val) <= tolerance) {
+    if (abs(user_answer_mean_level_b - val) <= tolerance) {
       feedback <- div(class = "success-box", "\U1F64C Correct!")
     } else {
       feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
     }
   }
 
-  output$mean_unstressed_group_quiz_feedback <- renderUI({
+  output$mean_level_b_variable_group_quiz_feedback <- renderUI({
     feedback
   })
 })
 
-    #for stressed sem
-    stressed_sem <- reactive({
+    #for level_a sem
+    level_a_sem <- reactive({
   sr <- summarise_result_step9()
 
   if (is.null(sr) || is.null(sr$result)) {
@@ -868,51 +937,51 @@ observeEvent(input$submit_mean_unstressed_group_quiz_answer, {
   if (!tibble::is_tibble(sr$result)) {
     return(NULL)
   }
-  if (!all(c("Stress_Status", "sem") %in% names(sr$result))) {
+  if (!all(c(vars$levels_variable_name, "sem") %in% names(sr$result))) {
     return(NULL)
   }
 
-  df_stressed <- sr$result %>%
-    dplyr::filter(Stress_Status == "Stressed")
+  df_level_a <- sr$result %>%
+    dplyr::filter(all_of(vars$levels_variable_name) == vars$level_a_variable_name)
 
-  if (nrow(df_stressed) == 0) {
+  if (nrow(df_level_a) == 0) {
     return(NULL)
   }
 
-  df_stressed$sem[1]
+  df_level_a$sem[1]
 })
 
-stressed_sem_round <- reactive({
-  val <- stressed_sem()
+level_a_sem_round <- reactive({
+  val <- level_a_sem()
   if (is.null(val)) return(NULL)
   round(val, 2)
 })
 
-observeEvent(input$submit_sem_stressed_group_quiz_answer, {
-  val <- stressed_sem_round()
+observeEvent(input$submit_sem_level_a_group_quiz_answer, {
+  val <- level_a_sem_round()
   
   if (is.null(val)) {
-    output$submit_sem_stressed_group_quiz_feedback <- renderUI({
+    output$submit_sem_level_a_group_quiz_feedback <- renderUI({
       div(class = "error-box", "\U1F914 We do not have a valid SEM yet!")
     })
     return()
   }
   
-  user_answer_sem_stressed <- as.numeric(input$sem_stressed_group_quiz)
+  user_answer_sem_level_a <- as.numeric(input$sem_level_a_group_quiz)
   
-  if (is.na(user_answer_sem_stressed)) {
+  if (is.na(user_answer_sem_level_a)) {
     feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
   } else {
     tolerance <- 0.1
     
-    if (abs(user_answer_sem_stressed - val) <= tolerance) {
+    if (abs(user_answer_sem_level_a - val) <= tolerance) {
       feedback <- div(class = "success-box", "\U1F64C Correct!")
     } else {
       feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
     }
   }
   
-  output$submit_sem_stressed_group_quiz_feedback <- renderUI({
+  output$submit_sem_level_a_group_quiz_feedback <- renderUI({
     feedback
   })
 })

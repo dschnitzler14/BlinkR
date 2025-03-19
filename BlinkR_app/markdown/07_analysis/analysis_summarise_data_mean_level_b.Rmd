@@ -1,0 +1,10 @@
+Next, we can calculate the mean using this code:
+
+```
+{{level_b_variable_name}}_mean <- mean({{level_b_variable_name}}_data$Average_Measurement, na.rm = TRUE) 
+```
+
+With this code you are creating a new variable `{{level_b_variable_name}}_mean`.
+
+By using the command `mean` you calculating the mean of all the values contained in the dataframe `{{level_b_variable_name}}_data`, specifically the column (`$`) `Average_Measurement`.
+
