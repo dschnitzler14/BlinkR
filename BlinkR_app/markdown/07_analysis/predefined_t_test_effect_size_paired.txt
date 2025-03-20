@@ -1,2 +1,2 @@
 effect_size_paired_t <- average_trs %>%
-  cohens_d(Average_Measurement ~ {{levels_variable_name}}, paired = TRUE)
+  cohens_d(average_measurement ~ {{levels_variable_name}}, paired = TRUE)

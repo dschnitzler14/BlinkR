@@ -1,7 +1,7 @@
 Let's first take a look at the code. 
 First, we had to restructure our data so we could pass it to the paired t-test function.
 - **`average_trs_paired_wide <- average_trs_paired %>%`**: again, using a cookbook called `tidyr`, we started our \"sentence\" with the command to create a new dataset called `average_trs_paired_wide` using the dataset `average_trs`
-- **`pivot_wider(names_from = {{levels_variable_name}}, values_from = Average_Measurements)`**: using the `pivot_wider`command, we next told R to move the names from the `{{levels_variable_name}}` into their own columns (you can check back to the viewing our data section to see the current data structure) and to populate these new columns with the corresponding values found in `Average_Measurement`.
+- **`pivot_wider(names_from = {{levels_variable_name}}, values_from = average_measurements)`**: using the `pivot_wider`command, we next told R to move the names from the `{{levels_variable_name}}` into their own columns (you can check back to the viewing our data section to see the current data structure) and to populate these new columns with the corresponding values found in `average_measurement`.
 
 In the next step, we run our paired t-test using the cookbook `stats` (which I loaded in the background for you), and from that book, to use the recipe `t.test`. The ingredients for this recipe are:
 - **`average_trs_paired_wide${{level_a_variable_name}}`**: Values from the column `{{level_a_variable_name}}`.

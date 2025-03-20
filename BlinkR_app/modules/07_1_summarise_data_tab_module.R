@@ -96,10 +96,10 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
     average_trs <- reactive({ NULL })
     
     average_trs_results <- results_data %>%
-      select(-"Group", -"Initials", -"Submission_ID") %>%
-      dplyr::group_by(ID, all_of(vars$levels_variable_name)) %>%
+      select(-"group", -"initials", -"submission_id") %>%
+      dplyr::group_by(id, !!sym(vars$levels_variable_name)) %>%
       dplyr::summarise(
-        Average_Measurement = mean(all_of(vars$measurement_variable_name), na.rm = TRUE),
+        average_measurement = mean(!!sym(vars$measurement_variable_name), na.rm = TRUE),
         .groups = 'drop'
       )
     
@@ -109,14 +109,14 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
     level_b_data <- reactive({ NULL })
 
     level_b_data_result <- average_trs() %>%
-      filter(all_of(vars$levels_variable_name) == vars$level_b_variable_name)
+      filter(!!sym(vars$levels_variable_name) == vars$level_b_variable_name)
     
     level_b_data <- reactive({ level_b_data_result })
 
   #step2 calculation
     level_b_mean <- reactive({ NULL })
 
-    level_b_mean_result <- mean(level_b_data()$Average_Measurement, na.rm = TRUE) 
+    level_b_mean_result <- mean(level_b_data()$average_measurement, na.rm = TRUE) 
     
     level_b_mean <- reactive({ level_b_mean_result })
 
@@ -124,7 +124,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
 
     level_b_sd <- reactive({ NULL })
 
-    level_b_sd_result <- sd(level_b_data()$Average_Measurement, na.rm = TRUE)
+    level_b_sd_result <- sd(level_b_data()$average_measurement, na.rm = TRUE)
 
     level_b_sd <- reactive({ level_b_sd_result })
 
@@ -147,14 +147,14 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
     level_a_data <- reactive({ NULL })
 
     level_a_data_result <- average_trs() %>%
-      filter(all_of(vars$levels_variable_name) == vars$level_a_variable_name)
+      filter(!!sym(vars$levels_variable_name) == vars$level_a_variable_name)
     
     level_a_data <- reactive({ level_a_data_result })
 
   #step2 calculation
     level_a_mean <- reactive({ NULL })
 
-    level_a_mean_result <- mean(level_a_data()$Average_Measurement, na.rm = TRUE) 
+    level_a_mean_result <- mean(level_a_data()$average_measurement, na.rm = TRUE) 
     
     level_a_mean <- reactive({ level_a_mean_result })
 
@@ -162,7 +162,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
 
     level_a_sd <- reactive({ NULL })
 
-    level_a_sd_result <- sd(level_a_data()$Average_Measurement, na.rm = TRUE)
+    level_a_sd_result <- sd(level_a_data()$average_measurement, na.rm = TRUE)
 
     level_a_sd <- reactive({ level_a_sd_result })
 
@@ -188,8 +188,8 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
   )
   summarise_result_step1 <- editor_module_server("step1_editor", average_trs, "average_trs", predefined_code = predefined_code_step1, return_type = "result", session_folder_id, save_header = "Step 1: Summarise Data")
 
-  rmd_content_introduction_box2 <- readLines("markdown/07_analysis/analysis_summarise_data_filter_level_b.Rmd")
-  processed_rmd_introduction_box2 <- whisker.render(paste(rmd_content_introduction_box2, collapse = "\n"), vars)
+  rmd_content_analysis_summarise_data_filter_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_filter_level_b.Rmd")
+  processed_rmd_analysis_summarise_data_filter_level_b <- whisker.render(paste(rmd_content_analysis_summarise_data_filter_level_b, collapse = "\n"), vars)
 
   output$step1_box <- renderUI({
   tagList(
@@ -205,7 +205,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd__introduction_box2, fragment.only = TRUE)),
+                  HTML(markdownToHTML(text = processed_rmd_analysis_summarise_data_filter_level_b, fragment.only = TRUE)),
                   uiOutput(session$ns("summary_code_feedback_step1"))
                   ),
                   column(6,
@@ -264,7 +264,7 @@ output$step2_box <- renderUI({
             12,
           box(
               id = "step2_box",
-              title = sprintf("2️⃣ Calculate the Mean of %s Data", vars$level_b_variable_name),
+              title = sprintf("2️⃣ Calculate the Mean of %s Data", vars$level_b_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -326,7 +326,7 @@ output$step3_box <- renderUI({
             12,
           box(
               id = "step3_box",
-              title = sprintf("3️⃣ Calculate the Standard Deviation of %s Data", vars$level_b_variable_name),
+              title = sprintf("3️⃣ Calculate the Standard Deviation of %s Data", vars$level_b_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -394,7 +394,7 @@ output$step4_box <- renderUI({
             12,
           box(
               id = "step4_box",
-              title = sprintf("4️⃣ Calculate the Standard Error of the Mean of %s Data", vars$level_b_variable_name),
+              title = sprintf("4️⃣ Calculate the Standard Error of the Mean of %s Data", vars$level_b_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -526,7 +526,7 @@ output$step6_box <- renderUI({
             12,
           box(
               id = "step6_box",
-              title = sprintf("6️⃣ Your turn! Calculate the mean for the  %s group", vars$level_a_variable_name),
+              title = sprintf("6️⃣ Your turn! Calculate the mean for the  %s group", vars$level_a_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -597,7 +597,7 @@ output$step7_box <- renderUI({
             12,
           box(
               id = "step7_box",
-              title = sprintf("7️⃣ Your turn! Calculate the sd for the %s group", vars$level_a_variable_name),
+              title = sprintf("7️⃣ Your turn! Calculate the sd for the %s group", vars$level_a_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -668,7 +668,7 @@ output$step8_box <- renderUI({
             12,
           box(
               id = "step8_box",
-              title = sprintf("8️⃣ Your turn! Calculate the n and sem for the %s group", vars$level_a_variable_name),
+              title = sprintf("8️⃣ Your turn! Calculate the n and sem for the %s group", vars$level_a_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -698,6 +698,13 @@ observe({
   level_a_sem_value <- as.numeric(level_a_sem())
   level_a_sd_value <- as.numeric(level_a_sd())
 
+  print(level_a_n_value)
+  print(level_a_sem_value)
+  print(level_a_sd_value)
+
+  result_values <- summarise_result_step8()$result
+  print(result_values)
+
 if (!is.null(summarise_result_step8()$result) &&
     is.numeric(summarise_result_step8()$result) &&
     length(summarise_result_step8()$result) == 1 &&
@@ -711,9 +718,10 @@ if (!is.null(summarise_result_step8()$result) &&
     })
 
   } else if (!is.null(summarise_result_step8()$result) &&
-    is.numeric(summarise_result_step8()$result) &&
-    length(summarise_result_step8()$result) == 1 &&
-    (summarise_result_step8()$result[[1]] == level_a_sem_value)) {
+           is.numeric(summarise_result_step8()$result) &&
+           length(summarise_result_step8()$result) == 2 &&
+           all.equal(summarise_result_step8()$result, c(level_a_n_value, level_a_sem_value))) {
+
     
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
@@ -880,7 +888,7 @@ observe({
       }
       
       df_level_b <- sr$result %>%
-        dplyr::filter(all_of(vars$levels_variable_name) == vars$level_b_variable_name)
+        dplyr::filter(!!sym(vars$levels_variable_name) == vars$level_b_variable_name)
       
       if (nrow(df_level_b) == 0) {
         return(NULL)
@@ -942,7 +950,7 @@ observeEvent(input$submit_mean_level_b_variable_group_quiz_answer, {
   }
 
   df_level_a <- sr$result %>%
-    dplyr::filter(all_of(vars$levels_variable_name) == vars$level_a_variable_name)
+    dplyr::filter(!!sym(vars$levels_variable_name) == vars$level_a_variable_name)
 
   if (nrow(df_level_a) == 0) {
     return(NULL)

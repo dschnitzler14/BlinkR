@@ -5,8 +5,8 @@ data_summary <- average_trs %>%
     group_by({{levels_variable_name}}) %>%
     summarise(
         n = n(),
-        mean = mean(Average_Measurement, na.rm = TRUE),
-        sd = sd(Average_Measurement, na.rm = TRUE),
+        mean = mean(average_measurement, na.rm = TRUE),
+        sd = sd(average_measurement, na.rm = TRUE),
         sem = sd / sqrt(n)
     )
 ```

@@ -104,14 +104,14 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
           output$please_add_students <- renderText(
             NULL
           )
-          current_ids <- db_student_table()$ID
+          current_ids <- db_student_table()$id
           
           new_students <- setdiff(current_ids, student_ids())
           
           for (student_ID in new_students) {
-            student_row <- db_student_table() %>% filter(ID == student_ID)
-            student_name <- student_row$Initials
-            group_name <- student_row$Group
+            student_row <- db_student_table() %>% filter(id == student_ID)
+            student_name <- student_row$initials
+            group_name <- student_row$group
             
             generate_random_id <- function() {
               sprintf("%06d", sample(0:999999, 1))
@@ -119,13 +119,13 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
             
             submission_id_value <- paste0(student_ID, "_", generate_random_id())
             
-            if (!"submission_ID" %in% colnames(db_student_table())) {
+            if (!"submission_id" %in% colnames(db_student_table())) {
               db_student_table <- db_student_table() %>%
-                mutate(submission_ID = NA_character_)
+                mutate(submission_id = NA_character_)
             }
             
             db_student_table <- db_student_table %>%
-              mutate(submission_ID = ifelse(ID == student_ID, submission_id_value, submission_ID))
+              mutate(submission_id = ifelse(id == student_ID, submission_id_value, submission_id))
             
             insertUI(
               selector = paste0("#", ns("students_ui")),
@@ -155,16 +155,16 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
               student_name = student_name,
               student_ID = student_ID,
               group_name = group_name,
-              submission_ID = submission_id_value,
+              submission_id = submission_id_value,
               db_measurement = db_measurement,
               db_student_table = db_student_table
             )
             
             observeEvent(input[[paste0("delete_student_", student_ID)]], {
-              updated_students <- db_student_table() %>% filter(ID != student_ID)
+              updated_students <- db_student_table() %>% filter(id != student_ID)
               db_student_table(updated_students)
               
-              updated_measurements <- db_measurement() %>% filter(ID != student_ID)
+              updated_measurements <- db_measurement() %>% filter(id != student_ID)
               db_measurement(updated_measurements)
               
               removeUI(selector = paste0("#", ns(paste0("row_", student_ID))))

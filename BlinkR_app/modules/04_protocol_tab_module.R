@@ -34,7 +34,20 @@ protocol_module_ui <- function(id){
                                 )
                               )
                               ),
-      fluidRow(
+                              fluidRow(
+  column(12,
+  box(
+    title = tagList(icon("triangle-exclamation"), "Data Hazards"),
+    id = "data_hazards",
+    collapsible = TRUE,
+    width = 12,
+    solidHeader = TRUE,
+    includeMarkdown("markdown/04_protocol/protocol_data_hazards.Rmd"),
+    bucketListModuleUI(ns("bucket_list"))
+  )
+  ),
+  ),
+  fluidRow(
   column(
     width = 12,
     div(
@@ -58,18 +71,21 @@ protocol_module_ui <- function(id){
       )
     )
   )
+),
+
 )
 )
-  )
+  #)
 }
 
-protocol_module_server <- function(id, auth, parent.session, protocol_file_id){
+protocol_module_server <- function(id, auth, parent.session, protocol_file_id, session_folder_id){
   moduleServer(
     id,
-    function(input, output, server){
-            vars <- get_experiment_vars()
+    function(input, output, session){
+      vars <- get_experiment_vars()
+    
+      bucketListModuleServer("bucket_list", auth = auth, session_folder_id = session_folder_id)
 
-   
       experimental_design_module_server("experimental_design_protocol", auth, protocol_file_id, "Experimental Design", "What is your general design?")
       experimental_design_module_server("measurement_protocol", auth, protocol_file_id, "Measurement", "How will you record measurements?")
       experimental_design_module_server("analysis_protocol", auth, protocol_file_id, "Experimental Design", "How will you analyse your results?")

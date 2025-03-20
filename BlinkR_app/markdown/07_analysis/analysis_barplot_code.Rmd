@@ -2,7 +2,7 @@
   average_trs${{levels_variable_name}} <- factor(average_trs${{levels_variable_name}}, levels = c("{{level_b_variable_name}}", "{{level_a_variable_name}}"))
 
   variance_boxplot <- boxplot(
-    Average_Measurement ~ {{levels_variable_name}},
+    average_measurement ~ {{levels_variable_name}},
     data = average_trs,
     xlab = levels_text_name,
     ylab = measurement_text_name,
@@ -11,7 +11,7 @@
   )
 
   variance_boxplot <- stripchart(
-    Average_Measurement ~ {{levels_variable_name}},
+    average_measurement ~ {{levels_variable_name}},
     data = average_trs,
     add = TRUE,
     vertical = TRUE,

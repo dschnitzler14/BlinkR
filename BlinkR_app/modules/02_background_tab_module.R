@@ -33,15 +33,6 @@ background_module_ui <- function(id){
             width = 12,
             includeMarkdown("markdown/02_background/background_strategies.Rmd")
           ),
-
-          box(
-            title = tagList(shiny::icon("play-circle"), "Getting Started with Search Terms"),
-            solidHeader = FALSE,
-            collapsible = TRUE,
-            collapsed = TRUE,
-            width = 12,
-            includeMarkdown("markdown/02_background/background_getting_started.Rmd")
-          ),
             box(
             title = tagList(shiny::icon("lightbulb"), "Additional Tips for Effective Searches"),
             solidHeader = FALSE,

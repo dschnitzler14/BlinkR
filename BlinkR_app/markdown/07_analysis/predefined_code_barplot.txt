@@ -2,8 +2,8 @@ data_summary <- average_trs %>%
     group_by({{levels_variable_name}}) %>%
     summarise(
       n = n(),
-      mean = mean(Average_Measurement, na.rm = TRUE),
-      sd = sd(Average_Measurement, na.rm = TRUE),
+      mean = mean(average_measurement, na.rm = TRUE),
+      sd = sd(average_measurement, na.rm = TRUE),
       sem = sd / sqrt(n)
     )
   
@@ -14,7 +14,7 @@ data_summary <- average_trs %>%
     geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
     geom_jitter(
       data = average_trs, 
-      aes(x = {{levels_variable_name}}, y = Average_Measurement), 
+      aes(x = {{levels_variable_name}}, y = average_measurement), 
       width = 0.2, 
       size = 2, 
       color = "maroon"

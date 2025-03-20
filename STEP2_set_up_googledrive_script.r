@@ -53,8 +53,8 @@ check_and_create_file <- function(file_name, headers = NULL, initial_entry = NUL
 files <- list(
   "BlinkR_protocols" = NULL,
   "BlinkR_Measurements" = NULL,
-  "BlinkR_Combined_Class_Data" = c("Group", "Initials", "ID", experiment_variables$levels_variable_name, 
-                                   "Technical_Replicate", experiment_variables$measurement_variable_name, "Submission_ID"), 
+  "BlinkR_Combined_Class_Data" = c("group", "initials", "id", experiment_variables$levels_variable_name, 
+                                   "technical_replicate", experiment_variables$measurement_variable_name, "submission_id"), 
   "BlinkR_Class_Protocol" = NULL,
   "BlinkR Users" = c("Group", "Role", "Name", "Date", "Protocol", "Data"),
   "Feedback" = c("Timestamp", "Overall_Experience", "Clarity", "Clarity_Issues", "Bugs", "Bug_Details", "Experiment_Tools", 
@@ -104,13 +104,13 @@ read_combined_class_data <- function(file_name) {
     combined_class_data <- read_sheet(sheet$id)
     combined_class_data <- combined_class_data %>%
       mutate(
-        Group = as.character(Group),
-        Initials = as.character(Initials),
-        ID = as.character(ID),
+        group = as.character(group),
+        initials = as.character(initials),
+        id = as.character(id),
         experiment_variables$levels_variable_name = as.character(experiment_variables$levels_variable_name),
-        Technical_Replicate = as.character(Technical_Replicate),
+        technical_replicate = as.character(technical_replicate),
         experiment_variables$measurement_variable_name = as.numeric(experiment_variables$measurement_variable_name),
-        Submission_ID = as.character(Submission_ID)
+        submission_id = as.character(submission_id)
       )
     return(combined_class_data)
   } else {

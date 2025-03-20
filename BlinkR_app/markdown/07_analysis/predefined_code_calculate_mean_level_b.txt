@@ -1,1 +1,1 @@
-{{level_b_variable_name}}_mean <- mean({{level_b_variable_name}}_data$Average_Measurement, na.rm = TRUE) 
+{{level_b_variable_name}}_mean <- mean({{level_b_variable_name}}_data$average_measurement, na.rm = TRUE) 

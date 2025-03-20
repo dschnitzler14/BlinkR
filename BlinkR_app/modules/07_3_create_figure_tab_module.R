@@ -125,10 +125,10 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
   average_trs <- reactive({ NULL })
     
   average_trs_results <- results_data %>%
-      select(-"Group", -"Initials", -"Submission_ID") %>%
-      dplyr::group_by(ID, all_of(vars$levels_variable_name)) %>%
+      select(-"group", -"initials", -"submission_id") %>%
+      dplyr::group_by(id, !!sym(vars$levels_variable_name)) %>%
       dplyr::summarise(
-        Average_Measurement = mean(all_of(vars$measurement_variable_name), na.rm = TRUE),
+        average_measurement = mean(!!sym(vars$measurement_variable_name), na.rm = TRUE),
         .groups = 'drop'
       )
   
@@ -137,11 +137,16 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
   
   #Make Figure
 
+rmd_content_analysis_create_figure_barplot <- readLines("markdown/07_analysis/analysis_create_figure_barplot.Rmd")
+processed_rmd_analysis_create_figure_barplot <- whisker.render(paste(rmd_content_analysis_create_figure_barplot, collapse = "\n"), vars)
+rmd_content_analysis_create_figure_boxplot <- readLines("markdown/07_analysis/analysis_create_figure_boxplot.Rmd")
+processed_rmd_analysis_create_figure_boxplot <- whisker.render(paste(rmd_content_analysis_create_figure_boxplot, collapse = "\n"), vars)
+
   observeEvent(input$figure_type_selector, {
     figure_type_selector_output <- if (input$figure_type_selector == "bar") {
-      includeMarkdown("markdown/07_analysis/analysis_create_figure_barplot.Rmd")
+      HTML(markdownToHTML(text = processed_rmd_analysis_create_figure_barplot, fragment.only = TRUE))
     } else {
-      includeMarkdown("markdown/07_analysis/analysis_create_figure_boxplot.Rmd")
+      HTML(markdownToHTML(text = processed_rmd_analysis_create_figure_boxplot, fragment.only = TRUE))
     }
     
     output$figure_type_selector_output <- renderUI({
@@ -169,13 +174,17 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
 })
 
 
-predefined_code_barplot <- read_file(
+predefined_code_barplot <- whisker.render(
+  read_file(
       "markdown/07_analysis/predefined_code_barplot.txt"
-    )
+    ),
+    vars)
 
-predefined_code_boxplot <- read_file(
+predefined_code_boxplot <- whisker.render(
+  read_file(
       "markdown/07_analysis/predefined_code_box_plot.txt"
-    )
+    ),
+    vars)
 
   figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_barplot, return_type = "result", session_folder_id, save_header = "Create Bar Plot Code")
   figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_boxplot, return_type = "result", session_folder_id, save_header = "Create Box Plot Code")
@@ -190,6 +199,7 @@ predefined_code_boxplot <- read_file(
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
+          includeMarkdown("markdown/07_analysis/change_axis.Rmd"),
           includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
           box(title = "💡 Open me for a hint",
               collapsible = TRUE,

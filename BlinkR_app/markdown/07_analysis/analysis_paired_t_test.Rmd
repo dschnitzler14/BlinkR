@@ -4,7 +4,7 @@ In order to analyse your data with a two-sample t-test, we first need to restruc
         
   ```
   average_trs_paired_wide <- average_trs %>%
-    pivot_wider(names_from = {{levels_variable_name}}, values_from = Average_Measurement)
+    pivot_wider(names_from = {{levels_variable_name}}, values_from = average_measurement)
             
   t_test_paired <- t.test(
     average_trs_paired_wide${{level_a_variable_name}},

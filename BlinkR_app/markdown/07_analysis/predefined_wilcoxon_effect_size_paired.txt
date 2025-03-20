@@ -1,2 +1,2 @@
 effect_size_paired <- average_trs %>%
-  wilcox_effsize(Average_Measurement ~ {{levels_variable_name}}, paired = TRUE)
+  wilcox_effsize(average_measurement ~ {{levels_variable_name}}, paired = TRUE)

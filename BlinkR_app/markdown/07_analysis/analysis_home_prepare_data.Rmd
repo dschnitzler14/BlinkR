@@ -9,7 +9,7 @@ In this bit of code, we used a package called `dplyr`. This package is like a co
 - **`group_by(id, {{levels_variable_name}})`**: This organises the data into groups based on the columns `id` and `{{levels_variable_name}}`. It’s like putting data into labeled boxes so we can work on each group separately.
 
 - **`summarise`**: This creates a new summary column. In this case:
-  - `Average_Measurement`: This is the name of the new column.
+  - `average_measurement`: This is the name of the new column.
   - `mean({{measurement_variable_name}}, na.rm = TRUE)`: This calculates the average (`mean`) of the `{{measurement_variable_name}}` column for each group. The part `na.rm = TRUE` means to ignore any missing values (\"NA\") when calculating the average.
 
 - **`.groups = 'drop'`**: This tells R to remove any grouping created by the `group_by` step after finishing the summarisation. This gives us a clean, ungrouped dataset at the end.

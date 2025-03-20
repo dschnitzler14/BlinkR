@@ -139,7 +139,7 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
     view_data <- reactive({ NULL })
     
     view_data_read <- results_data %>%
-      select(-"Group", -"Initials", -"Submission_ID")
+      select(-"group", -"initials", -"submission_id")
     
  
     view_data <- reactive({ view_data_read })
@@ -241,13 +241,16 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
       
     average_trs_result <- editor_module_server("average_trs_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
     
+  rmd_content_analysis_home_prepare_data <- readLines("markdown/07_analysis/analysis_home_prepare_data.Rmd")
+  processed_rmd_analysis_home_prepare_data <- whisker.render(paste(rmd_content_analysis_home_prepare_data, collapse = "\n"), vars)
+
     observe({
       req(!is.null(average_trs_result()), !is.null(average_trs_result()$result))
 
       feedback <- if (is.data.frame(average_trs_result()$result) && nrow(average_trs_result()$result) > 0) {
         tagList(
           div(class = "success-box", "\U1F64C Good Job!"),
-          includeMarkdown("markdown/07_analysis/analysis_home_prepare_data.Rmd")
+          HTML(markdownToHTML(text = processed_rmd_analysis_home_prepare_data, fragment.only = TRUE))
         )
       } else if (!is.null(average_trs_result())) {
         div(class = "error-box", "\U1F914 Not quite - try again!")

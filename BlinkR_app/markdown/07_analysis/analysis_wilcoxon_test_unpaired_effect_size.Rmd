@@ -11,6 +11,6 @@ A general guide for interpreting Wilcoxon’s r:
 
 ```
 effect_size <- average_trs %>%
-  wilcox_effsize(Average_Measurement ~ {{levels_variable_name}}
+  wilcox_effsize(average_measurement ~ {{levels_variable_name}}
 ````
 

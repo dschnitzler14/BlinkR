@@ -30,9 +30,14 @@ library(coin)
 library(rsconnect)
 library(cookies)
 library(whisker)
+library(sortable)
+library(grid)
+library(png)
+library(gridExtra)
 
 source("STEP3_google_drive_app_set_up.R")
 source("STEP1_define_variables.R")
+source("data_hazards_list.R")
 
 # fetch experimental variables
 experiment_vars <- experiment_variables
@@ -40,6 +45,7 @@ experiment_vars <- experiment_variables
 get_experiment_vars <- function() {
   return(experiment_vars)
 }
+
 
 ### load and read files from google drive ----
 ## user base data
@@ -68,9 +74,12 @@ caf_data_read <- as.data.frame(caf_data_read_csv)
 
 # dataframes for reactive values
 
-  db_measurement_dataframe <- data.frame(Group = character(), ID = integer(), Initials = character(), Stress_Status = character(), Technical_Replicate = integer(), Blinks_Per_Minute = integer(), Submission_ID = character(), stringsAsFactors = FALSE)
-  
-  db_student_table_dataframe <- data.frame(Group = character(), ID = integer(), Initials = character(), Remove = character(), Submission_ID = character(), stringsAsFactors = FALSE)
+  db_measurement_dataframe <- data.frame(group = character(), id = integer(), initials = character(), technical_replicate = integer(), submission_id = character(), stringsAsFactors = FALSE)
+  db_measurement_dataframe[[experiment_variables$levels_variable_name]] <- character()
+  db_measurement_dataframe[[experiment_variables$measurement_variable_name]] <- integer()
+
+
+  db_student_table_dataframe <- data.frame(group = character(), id = integer(), initials = character(), remove = character(), submission_id = character(), stringsAsFactors = FALSE)
   
   feedback_data_dataframe <- data.frame(
     timestamp = character(),

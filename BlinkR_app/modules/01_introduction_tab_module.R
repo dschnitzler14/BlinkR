@@ -1,5 +1,10 @@
 introduction_module_ui <- function(id){
   ns <- NS(id)
+  vars <- get_experiment_vars()
+
+  rmd_content_introduction_box1 <- readLines("markdown/01_introduction/introduction_box1.Rmd")
+  processed_rmd_introduction_box1 <- whisker.render(paste(rmd_content_introduction_box1, collapse = "\n"), vars)
+
   introduction_tab <- tabItem(tabName = "Introduction",
                               fluidPage(
                                 
@@ -20,13 +25,13 @@ introduction_module_ui <- function(id){
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/01_introduction/introduction_box1.Rmd")
-                                  ),
+                                    HTML(markdownToHTML(text = processed_rmd_introduction_box1, fragment.only = TRUE)                                  ),
                 
                                 ),
                         fluidRow(
                             uiOutput(ns("action_buttons_ui"))
                         )
+      )
     )
   )
 }
@@ -49,7 +54,6 @@ introduction_module_server <- function(id, parent.session, auth_status){
           width = 12,
           collapsible = TRUE,
           HTML(markdownToHTML(text = processed_rmd, fragment.only = TRUE))
-          #includeMarkdown("markdown/01_introduction/introduction_box2.Rmd")
           ),
         box(
           title = "Research Roadmap",

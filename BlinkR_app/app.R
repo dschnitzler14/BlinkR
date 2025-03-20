@@ -397,7 +397,7 @@ saved_results <- reactiveValues(
     admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base = all_users, final_reports_folder_id = final_reports_folder_id, user_base_google_sheet, session_folder_id = session_folder_id)
     background_module_server("background", parent.session = session)
     hypothesis_module_server("hypothesis", parent.session = session, auth = auth)
-    protocol_module_server("protocol", auth = auth, parent.session = session, protocol_file_id = protocol_file_id)
+    protocol_module_server("protocol", auth = auth, parent.session = session, protocol_file_id = protocol_file_id, session_folder_id = session_folder_id)
     measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session)
     class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session, auth = auth)
     playground_module_server("playground", session_folder_id = session_folder_id, parent.session = session)

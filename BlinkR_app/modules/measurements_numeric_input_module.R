@@ -97,7 +97,7 @@ measurement_input_module_ui <- function(id, student_name, student_ID, db_student
   )
 }
 
-measurement_input_module_server <- function(id, student_name, student_ID, group_name, submission_ID, db_measurement, db_student_table) {
+measurement_input_module_server <- function(id, student_name, student_ID, group_name, submission_id, db_measurement, db_student_table) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -121,7 +121,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         level_a_id = list()
       )
       
-      add_measurement <- function(level, inputs, submission_ID) {
+      add_measurement <- function(level, inputs, submission_id) {
         
         if (any(sapply(inputs, is.null)) || any(sapply(inputs, function(x) x == 0))) {
           showNotification("Please enter all three measurements.", type = "error", duration = 3)
@@ -129,7 +129,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         }
         
         existing_list <- if (level == vars$level_b_variable_name) state$level_b_id else state$level_a_id
-        if (submission_ID %in% existing_list) {
+        if (submission_id %in% existing_list) {
           showModal(modalDialog(
             title = "Overwrite Confirmation",
             paste("Data for", level, "measurements already exists. Do you want to overwrite it?"),
@@ -141,27 +141,27 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           
           observeEvent(input$confirm_overwrite, {
             removeModal()
-            save_measurement(level, inputs, submission_ID, overwrite = TRUE)
+            save_measurement(level, inputs, submission_id, overwrite = TRUE)
           }, once = TRUE, ignoreInit = TRUE)
           
           return(FALSE)
         }
         
-        save_measurement(level, inputs, submission_ID, overwrite = FALSE)
+        save_measurement(level, inputs, submission_id, overwrite = FALSE)
         
         return(TRUE)
       }
       
-      save_measurement <- function(level, inputs, submission_ID, overwrite = FALSE) {
+      save_measurement <- function(level, inputs, submission_id, overwrite = FALSE) {
         
         new_data <- data.frame(
-          Group = as.character(group_name),
-          Initials = as.character(student_name),
-          ID = as.integer(student_ID),
+          group = as.character(group_name),
+          initials = as.character(student_name),
+          id = as.integer(student_ID),
           #vars$levels_variable_name = as.character(level),
-          Technical_Replicate = as.integer(1:length(inputs)),
+          technical_replicate = as.integer(1:length(inputs)),
           #vars$measurement_variable_name = as.integer(unlist(inputs)),
-          Submission_ID = as.character(submission_ID),
+          submission_id = as.character(submission_id),
           stringsAsFactors = FALSE
         )
         new_data[[vars$levels_variable_name]] <- as.character(level)
@@ -171,7 +171,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         
         if(overwrite) {
           current_data <- current_data[
-            !(current_data$Submission_ID == submission_ID),
+            !(current_data$Submission_ID == submission_id),
           ]
         }
         
@@ -180,9 +180,9 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         
         
         if (level == vars$level_b_variable_name) {
-          state$level_b_id <- unique(c(state$level_b_id, submission_ID))
+          state$level_b_id <- unique(c(state$level_b_id, submission_id))
         } else {
-          state$level_a_id <- unique(c(state$level_a_id, submission_ID))
+          state$level_a_id <- unique(c(state$level_a_id, submission_id))
         }
         
         showNotification("Success: Measurements saved.", type = "message", duration = 3)
@@ -194,7 +194,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           input$level_b_input2,
           input$level_b_input3
         )
-        add_measurement(vars$level_b_variable_name, inputs, submission_ID)
+        add_measurement(vars$level_b_variable_name, inputs, submission_id)
       })
       
       observeEvent(input$Submit_Level_A, {
@@ -203,7 +203,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           input$level_a_input2,
           input$level_a_input3
         )
-        add_measurement(vars$level_a_variable_name, inputs, submission_ID)
+        add_measurement(vars$level_a_variable_name, inputs, submission_id)
       })
     }
   )
