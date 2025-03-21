@@ -5,6 +5,6 @@ account: ds1405
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13734198
-bundleId: 9943891
+bundleId: 9976563
 url: https://ds1405.shinyapps.io/blinkr_app/
 version: 1
