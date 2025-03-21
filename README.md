@@ -26,8 +26,6 @@ The full menu bar is available after authentication. At the top, the Group ID is
 https://github.com/user-attachments/assets/13a18c21-0278-4f52-93a3-c586577472e2
 
 
-[Menu Bar](README_Media/BlinkR_Sidebar_compressed.mov)
-
 ## 3 Introduction Log in
 
 On opening the app you will get to the "Introduction" page which contains the log in block, prompting you to log in with an existing group ID or signing up with a new one.
