@@ -22,6 +22,8 @@ The modal window that opens with the "View Google Drive" button also contains a 
 
 The full menu bar is available after authentication. At the top, the Group ID is displayed. This can be used for navigation and can be opened and closed using the "hamburger" icon in the top left. This also contains the log out button and a "View Google Drive" button. The latter opens a modal window that contains a link to the user's unique Google Drive folder (see above for more details).
 
+[Menu Bar](README_Media/BlinkR_Sidebar.mov)
+
 ## 3 Introduction Log in
 
 On opening the app you will get to the "Introduction" page which contains the log in block, prompting you to log in with an existing group ID or signing up with a new one.
