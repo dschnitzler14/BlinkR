@@ -19,6 +19,7 @@ All persistent storage of this app runs on google drive, to make it easier to ma
 The modal window that opens with the "View Google Drive" button also contains a dropdown selector and download button.
 
 ## Menu Bar
+
 <img width="339" alt="BlinkR_Sidebar" src="https://github.com/user-attachments/assets/a8e12597-eff5-4830-87f4-95c224876990" />
 
 https://github.com/user-attachments/assets/13a18c21-0278-4f52-93a3-c586577472e2
@@ -30,6 +31,7 @@ The full menu bar is available after authentication. At the top, the Group ID is
 On opening the app you will get to the "Introduction" page which contains the log in block, prompting you to log in with an existing group ID or signing up with a new one.
 
 ### Log in
+
 <img width="1565" alt="BlinkR_Intro_Log_in" src="https://github.com/user-attachments/assets/8c543237-a0a9-4a1e-ad3f-139e74f240c5" />
 
 https://github.com/user-attachments/assets/f417d055-1070-40d7-a967-6505af0f9478
@@ -61,7 +63,6 @@ https://github.com/user-attachments/assets/4f12a2b1-328d-4fed-82a9-9405f29a29a1
 This sections contains guides on how to write a hypothesis and three user input boxes. These input boxes are designed to enter the hypothesis in plain language, the null hypothesis, and the alternative hypothesis. On pressing "Save Notes", each box is saved to the users Google Drive folder.
 
 The content saved from these boxes is returned later in the app.
-
 
 ## Protocol
 
@@ -114,7 +115,6 @@ This area is designed to take three technical replicates.
 <img width="1659" alt="BlinkR_Raw_Data" src="https://github.com/user-attachments/assets/05c5f92e-eb3a-4666-af3b-19059464015f" />
 
 Similar to the "Protocol" tab, this contains two sections: "Your Group Data" and "Class Data".
-
 
 ### Your Group Data
 
@@ -230,6 +230,7 @@ This is an optional space for users to upload their final reports. It gets saved
 In order to provide more context for the practical experiment, this section contains a simulated experiment with "dummy data", walking them through each step with a concrete example. This also includes a final write-up and critique of an AI-Generated report. **Anything generated here is not saved to the Google Drive.**
 
 ## Feedback
+
 <img width="1659" alt="BlinkR_Feedback" src="https://github.com/user-attachments/assets/51291e0b-3d6c-4803-a077-8b3c7305422d" />
 
 This final section sends feedback to the Google Drive.
@@ -259,15 +260,79 @@ Even if you do not know how to code, I will break down the set up and deployment
 
 ## Step 1: Download or Clone this Repo
 
+To download BlinkR, you can scroll up to the green "Code" button and choose "Download as zip". Alternatively, on your computer, navigate to the directory (folder) you would like to save BlinkR in. Once there, open a terminal window in that directory and paste this
 
-## 23 Download R
+`git clone https://github.com/dschnitzler14/BlinkR.git`
 
-## 24 Google Drive and Google Sheets
+This is copy all the code from here on to you computer. This is now your version - you can't break anything in the original code and you can always download it again.
+
+## Step 2: Download R
+
+If you do not have R downloaded already, follow the instructions [here](https://www.r-project.org/).
+
+## Step 3: Download Code Editor
+
+For most R projects the recommended editor is "R Studio" which you can download [here](https://posit.co/downloads/). However, I find using something like VSCode easier to navigate a large complex shiny app like this one. You can download VSCode [here] (https://code.visualstudio.com/download), but note there is some additional set up for getting R running in VSCode - [here are the instructions](https://code.visualstudio.com/docs/languages/r).
+
+We're almost there, I promise.
+
+## Step 4: Set up Google Account
+
+You will need to connect a google account for this to work. I _strongly_ recommend creating a new account and linking that. Create a new google account [here](https://accounts.google.com/lifecycle/steps/signup/name?continue=https://myaccount.google.com?utm_source%3Daccount-marketing-page%26utm_medium%3Dcreate-account-button&dsh=S-1338933660:1742921807170809&flowEntry=SignUp&flowName=GlifWebSignIn&TL=ADBLaQCecUX0rZ6oJ9lYnhWib6A9BZ8DBxbVmeDemSHdAJwbVLDzjNgtUBNMaCc4).
+
+Now we are ready to get started.
+
+## Open the folder you downloaded in your code editor
+
+You are not just opening a single file here - you are opening the entire folder which will contain all the files of this project.
+
+## Run STEP0_install_packages.R
+
+First, open this file and find the little play or "run code" button in your code editor.
+You should see a whole bunch of packages downloading. You may be prompted to select a "CRAN mirror". Just select "0-Cloud" for this.
+
+You have now installed all the packages required to run the Shiny app locally on your computer.
+
+## Run STEP1_define_variables.R
+
+This is located inside the BlinkR*app folder. Before you run this, you need to define all the variables of your project. This allows the app to be flexible and specific to \_your* experiment.
+
+```
+experiment_variables <- list(
+  measurement_variable_name = "length_of_arm", # this should be lowercase and snake case (connected by "_"), this is the thing you are measuring: dependent variable
+  measurement_text_name = "Arm Length", # this should be how you would like it to appear in texts and descriptions. For example it might say "Take Measurements for **Arm Length**
+  levels_variable_name = "eye_colour", # this should be lowercase and snake case (connected by "_"), this is the independent variable name
+  levels_text_name = "Eye Colour", # text version of the independent variable name
+  level_a_variable_name = "blue", # level 1 of the independent variable
+  level_a_text_name = "Blue", #text version of level 1
+  level_b_variable_name = "brown", # level 2 of the independent variable RECOMMEND: this should be the control
+  level_b_text_name = "Brown" #text version of level 2
+)
+
+```
+
+Once you have completed defining your variable you can run this script as before.
+
+## Run STEP2_set_up_googledrive_script.r
+
+Open this file.
+
+Next, set the email address you wish to use. You need to do this twice - once for the the googlesheets (`gs4_auth`) and once for the google drive (`drive_auth`).
+
+Once you run this code, you will be sent to your browser to sign in and give permission. This will happen twice, once for each. Now you don't need to do this again, because you are saving your login details in the folder called `.secrets`. You can have a look at them after they have been created - they are just long strings, not just your password - don't worry.
+
+In addition to signing you in to google drive and google sheets, this script will generate all the files and folders you need for BlinkR to work. After it has finished running head over to your drive to see.
+
+## Google Drive and Google Sheets
+
+Using the script above, we generated all the folders and files needed to BlinkR.
+
+## Deployment
 
 # 💻 Code Strucutre Information
 
-## 25 Modular Approach
+## Modular Approach
 
-## 26 Ace Editor Module
+## Ace Editor Module
 
 # ➡️ PRs
