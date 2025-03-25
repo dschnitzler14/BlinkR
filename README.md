@@ -257,7 +257,8 @@ In this area, the admin can
 
 Even if you do not know how to code, I will break down the set up and deployment of this web app so you can use it with your own class!
 
-## 22 Download or Clone this Repo
+## Step 1: Download or Clone this Repo
+
 
 ## 23 Download R
 

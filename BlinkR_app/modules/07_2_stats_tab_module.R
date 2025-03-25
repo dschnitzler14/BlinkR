@@ -1632,17 +1632,40 @@ processed_rmd_analysis_what_is_a_p_value <- whisker.render(paste(rmd_content_ana
 
 
 
+# observeEvent(input$save_text_interpretation_button, {
+#   req(nzchar(input$interpretation_quiz_text_p_value) || nzchar(input$interpretation_quiz_text_effect_size))
+
+#   if (nzchar(input$interpretation_quiz_text_p_value) || nzchar(input$interpretation_quiz_text_effect_size)) {
+
 observeEvent(input$save_text_interpretation_button, {
-  req(nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size))
+  req(nzchar(input$interpretation_quiz_text_p_value) || nzchar(input$interpretation_quiz_text_effect_size))
 
-  if (nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size)) {
-      # output$interpretation_quiz_text_input_feedback <- renderUI({
-      #     tagList(
-      #       div(class = "success-box", "\U1F64C Great!"),
-      #     )
-      #   })
+  req(!is.null(p_value_reactive()))
 
-        interpretation_text <- paste0(
+  effect_size_exists <- 
+    !is.null(t_test_effect_size_paired_result()$result) ||
+    !is.null(t_test_effect_size_unpaired_result()$result) ||
+    !is.null(wilcoxon_effect_size_paired_result()$result) ||
+    !is.null(wilcoxon_effect_size_unpaired_result()$result)
+
+  normality_results_exist <- 
+    !is.null(normal_paired_result()$result) ||
+    !is.null(normal_unpaired_result()$result) ||
+    !is.null(not_normal_paired_result()$result) ||
+    !is.null(not_normal_unpaired_result()$result)
+
+  if (p_value_reactive() < 0.05) {
+    req(effect_size_exists)
+  } else {
+    req(normality_results_exist)
+  }
+
+  if (effect_size_exists &&
+  nzchar(input$interpretation_quiz_text_p_value) &&
+  nzchar(input$interpretation_quiz_text_effect_size)
+  ) {
+      
+  interpretation_text <- paste0(
     "Interpretation: ", input$interpretation_quiz_text_p_value, ". ", input$interpretation_quiz_text_effect_size, "."
   )
 
@@ -1664,10 +1687,37 @@ observeEvent(input$save_text_interpretation_button, {
   showNotification("Interpretation saved successfully.", type = "message", duration = 3)
   
 
+    } else if (normality_results_exist &&
+  nzchar(input$interpretation_quiz_text_p_value)) {
+    
+  interpretation_text <- paste0(
+  "Interpretation: ", input$interpretation_quiz_text_p_value, ". "
+  )
+
+  saved_results$user_writing[["stats_interpretation_text"]] <- interpretation_text
+
+  temp_file <- tempfile(fileext = ".txt")
+  writeLines(interpretation_text, con = temp_file)
+
+  path <- drive_get(as_id(session_folder_id))
+  drive_upload(
+    media = temp_file,
+    path = path,
+    name = "stats_interpretation_text.txt",
+    overwrite = TRUE
+  )
+
+  unlink(temp_file)
+
+  showNotification("Interpretation saved successfully.", type = "message", duration = 3)
+  
+
+
+
     } else {
-    output$interpretation_quiz_text_input_feedback <- renderUI({
-              div(class = "error-box", "\U1F914 Not quite - try again!")
-            })
+      output$interpretation_quiz_text_input_feedback <- renderUI({
+          div(class = "error-box", "\U1F914 Not quite - try again!")
+        })
     }
     
     })
