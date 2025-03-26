@@ -136,49 +136,43 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
 
     level_b_n <- reactive({ level_b_n_result })
 
-    level_b_se <- reactive({ NULL })
+    level_b_sem <- reactive({ NULL })
 
-    level_b_se_result <- level_b_sd() / sqrt(level_b_n())
+    level_b_sem_result <- level_b_sd() / sqrt(level_b_n())
 
-    level_b_se <- reactive({ level_b_se_result })
+    level_b_sem <- reactive({ level_b_sem_result })
 
 ## level_a reactive values
 #step1 calculation
-    level_a_data <- reactive({ NULL })
 
-    level_a_data_result <- average_trs() %>%
-      filter(!!sym(vars$levels_variable_name) == vars$level_a_variable_name)
-    
-    level_a_data <- reactive({ level_a_data_result })
+    level_a_data <- reactive({
+  average_trs() %>%
+    filter(
+      !!sym(vars$levels_variable_name) == vars$level_a_variable_name
+    )
+})
 
   #step2 calculation
-    level_a_mean <- reactive({ NULL })
 
-    level_a_mean_result <- mean(level_a_data()$average_measurement, na.rm = TRUE) 
-    
-    level_a_mean <- reactive({ level_a_mean_result })
+level_a_mean <- reactive({
+  mean(level_a_data()$average_measurement, na.rm = TRUE)
+})
 
   #step3 calculation
 
-    level_a_sd <- reactive({ NULL })
-
-    level_a_sd_result <- sd(level_a_data()$average_measurement, na.rm = TRUE)
-
-    level_a_sd <- reactive({ level_a_sd_result })
+level_a_sd <- reactive({
+  sd(level_a_data()$average_measurement, na.rm = TRUE)
+})
 
   #step4 calculation
-  
-    level_a_n <- reactive({ NULL })
 
-    level_a_n_result <- nrow(level_a_data())
+level_a_n <- reactive({
+  nrow(level_a_data())
+})
 
-    level_a_n <- reactive({ level_a_n_result })
-
-    level_a_se <- reactive({ NULL })
-
-    level_a_se_result <- level_a_sd() / sqrt(level_a_n())
-
-    level_a_se <- reactive({ level_a_se_result })
+level_a_sem <- reactive({
+  level_a_sd() / sqrt(level_a_n())
+})
 
 # step1: filter to level_b
 
@@ -507,6 +501,7 @@ observe({
 level_a_data_name <- paste0(vars$level_a_variable_name, "_data")
 level_a_sd_name <- paste0(vars$level_a_variable_name, "_sd")
 level_a_n_name <- paste0(vars$level_a_variable_name, "_n")
+level_a_sem_name <- paste0(vars$level_a_variable_name, "_sem")
 
 predefined_code_step6 <- whisker.render(
   read_file("markdown/07_analysis/predefined_code_calculate_mean_level_a.txt"),
@@ -691,66 +686,56 @@ output$step8_box <- renderUI({
 
 observe({
   req(!is.null(summarise_result_step8()), !is.null(summarise_result_step8()$result))
-  
-  #sem_value <- as.numeric(summarise_result_step8()$result[[1]])
-  #n_value <- as.numeric(summarise_result_step8()$result[[1]])
-  level_a_n_value <- as.numeric(level_a_n())
-  level_a_sem_value <- as.numeric(level_a_sem())
-  level_a_sd_value <- as.numeric(level_a_sd())
 
-  print(level_a_n_value)
-  print(level_a_sem_value)
-  print(level_a_sd_value)
+  level_a_n_value  <- as.numeric(level_a_n())
+  level_a_sem_value <- as.numeric(level_a_sem())
 
   result_values <- summarise_result_step8()$result
-  print(result_values)
+  
+  if (!is.numeric(result_values)) {
+    output$summary_code_feedback_step8 <- renderUI({
+      div(class = "error-box", "\U1F914 Not quite - try again!")
+    })
+    return()
+  }
 
-if (!is.null(summarise_result_step8()$result) &&
-    is.numeric(summarise_result_step8()$result) &&
-    length(summarise_result_step8()$result) == 1 &&
-    (summarise_result_step8()$result[[1]] == level_a_n_value)) {
-    
+  if (
+    length(result_values) == 1 &&
+    isTRUE(all.equal(result_values[[1]], level_a_n()))
+  ) {
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
         div(class = "success-box", "\U1F64C Great!"),
-        strong("Now, now you have the n, you can calculate the sem")
+        strong("Now you have the n. Next, calculate the sem!")
       )
     })
 
-  } else if (!is.null(summarise_result_step8()$result) &&
-           is.numeric(summarise_result_step8()$result) &&
-           length(summarise_result_step8()$result) == 2 &&
-           all.equal(summarise_result_step8()$result, c(level_a_n_value, level_a_sem_value))) {
-
-    
+  } else if (
+    length(result_values) == 1 &&
+    isTRUE(all.equal(result_values[[1]], level_a_sem()))
+  ) {
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
         div(class = "success-box", "\U1F64C Great!")
       )
     })
 
-  } else if (!is.null(summarise_result_step8()$result) &&
-    is.numeric(summarise_result_step8()$result) &&
-    length(summarise_result_step8()$result) == 1 &&
-    (summarise_result_step8()$result[[1]] == level_a_sd_value)) {
-    
+  } else if (
+    length(result_values) == 2 &&
+    isTRUE(all.equal(result_values, c(level_a_n(), level_a_sem())))
+  ) {
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "success-box", "\U1F64C Great!")
       )
     })
 
   } else {
-    
     output$summary_code_feedback_step8 <- renderUI({
       div(class = "error-box", "\U1F914 Not quite - try again!")
     })
-    
   }
 })
-
-
-
 
 # step9: dplyr shortcut
 predefined_code_step9 <- whisker.render(
@@ -936,7 +921,7 @@ observeEvent(input$submit_mean_level_b_variable_group_quiz_answer, {
 })
 
     #for level_a sem
-    level_a_sem <- reactive({
+  level_a_sem_step9 <- reactive({
   sr <- summarise_result_step9()
 
   if (is.null(sr) || is.null(sr$result)) {
@@ -959,14 +944,14 @@ observeEvent(input$submit_mean_level_b_variable_group_quiz_answer, {
   df_level_a$sem[1]
 })
 
-level_a_sem_round <- reactive({
-  val <- level_a_sem()
+level_a_sem_step9_round <- reactive({
+  val <- level_a_sem_step9()
   if (is.null(val)) return(NULL)
   round(val, 2)
 })
 
 observeEvent(input$submit_sem_level_a_group_quiz_answer, {
-  val <- level_a_sem_round()
+  val <- level_a_sem_step9_round()
   
   if (is.null(val)) {
     output$submit_sem_level_a_group_quiz_feedback <- renderUI({
