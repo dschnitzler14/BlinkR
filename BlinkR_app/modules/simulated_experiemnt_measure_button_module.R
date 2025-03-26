@@ -11,7 +11,7 @@ simulated_experiment_measure_button_module_server <- function(id, min = 75, max 
 output$measurement_button_ui <- renderUI({
   tagList(
     div(style = "display: flex; align-items: center;",
-        div(style = "border: 1px solid #ccc; padding: 6px 10px; margin-bottom: 20px; border-radius: 4px; width: 100px; background-color: #f8f9fa; text-align: center;",
+        div(style = "border: 1px solid #ccc; padding: 6px 10px; margin-bottom: 20px; border-radius: 4px; width: 100px; background-color: #f8f9fa; text-align: center; font-size: 14pt;  min-height: 1em;",
             textOutput(session$ns("measure_display"))
         )
     ),

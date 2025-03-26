@@ -111,12 +111,37 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                       )
                                     )
                                   ),
-                                )
+                                ),
+                                fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_raw_data"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_writing_up"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
                               )
     )
     }
  
-simulated_experiment_analysis_module_server <- function(id, caf_data_read) {
+simulated_experiment_analysis_module_server <- function(id, caf_data_read, parent.session) {
   moduleServer(id, function(input, output, session) {
 
   caf_data <- reactive({ NULL })
@@ -288,6 +313,12 @@ observe({
         }
       })
 
+observeEvent(input$back_page_raw_data, {
+        updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Raw_Data")
+      })
+      observeEvent(input$next_page_writing_up, {
+        updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Writing_Up")
+      })
 
 }
   )

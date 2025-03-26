@@ -25,14 +25,39 @@ simulated_experiment_raw_data_module_ui <- function(id) {
                                     solidHeader = TRUE,
                                     DT::dataTableOutput(ns("hr_data")),
                                   ),
-                                  )
+                                  ),
+                                  fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_measurements"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_analysis"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
                               )
     )
     }
 
  
 
-simulated_experiment_raw_data_module_server <- function(id, caf_data_read) {
+simulated_experiment_raw_data_module_server <- function(id, caf_data_read, parent.session) {
     moduleServer(
     id,
     function(input, output, session){
@@ -41,5 +66,13 @@ simulated_experiment_raw_data_module_server <- function(id, caf_data_read) {
       output$hr_data <- renderDT({
         DT::datatable(caf_data_read, options = list(pageLength = 10))
       })
+
+      observeEvent(input$back_page_measurements, {
+        updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Measurements")
+      })
+      observeEvent(input$next_page_analysis, {
+        updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Analysis")
+      })
+
     })
 }

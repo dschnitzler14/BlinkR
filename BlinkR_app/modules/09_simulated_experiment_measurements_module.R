@@ -33,13 +33,13 @@ simulated_experiment_measurements_module_ui <- function(id) {
                                       fluidRow(
                                         column(12,
                                       actionButton(ns("give_gum"), tagList(shiny::icon("circle-plus"), "Particpant Start Chewing"), class = "fun-generate-button"),
-                                      uiOutput(ns("timeprogress")),
+                                      withSpinner(uiOutput(ns("timeprogress")), type = 7, color = "#78d94c", size = 1),
                                         )
                                       ),
                                       fluidRow(
-                                        column(3, simulated_experiment_measure_button_module_ui(ns("measurement1"))),
-                                        column(3, simulated_experiment_measure_button_module_ui(ns("measurement2"))),
-                                        column(3, simulated_experiment_measure_button_module_ui(ns("measurement3")))
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement1"))),
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement2"))),
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement3")))
                                       ),
                                     ),
                                     tabPanel(
@@ -47,30 +47,64 @@ simulated_experiment_measurements_module_ui <- function(id) {
                                       title =  tagList(shiny::icon("stethoscope"), "Measurements Day 2"),
                                       fluidRow(
                                         column(12,
-                                      actionButton(ns("give_gum2"), "Particpant Start Chewing", class = "fun-generate-button"),
-                                      uiOutput(ns("timeprogress2")),
+                                      actionButton(ns("give_gum2"), tagList(shiny::icon("circle-plus"), "Particpant Start Chewing"), class = "fun-generate-button"),
+                                      withSpinner(uiOutput(ns("timeprogress2")), type = 7, color = "#78d94c", size = 1),
                                         )
                                       ),
                                       fluidRow(
-                                        column(3, simulated_experiment_measure_button_module_ui(ns("measurement4"))),
-                                        column(3, simulated_experiment_measure_button_module_ui(ns("measurement5"))),
-                                        column(3, simulated_experiment_measure_button_module_ui(ns("measurement6")))
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement4"))),
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement5"))),
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement6")))
                                       ),
                                     )
                                   )
-                              )
+                              ),
+                              fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_protocol"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_raw_data"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
     )
     )
     }
 
-simulated_experiment_measurements_module_server <- function(id) {
+simulated_experiment_measurements_module_server <- function(id, parent.session) {
   moduleServer(
     id,
     function(input, output, session){
     
+    output$timeprogress <- renderUI({ 
+    NULL
+  })
+
     observeEvent(input$give_gum, {
-  output$timeprogress <- renderUI({
-    })
+       output$timeprogress <- renderUI({
+        Sys.sleep(5)
+        tagList(
+          h4("Done!")
+        )
+      })
+      
   
   simulated_experiment_measure_button_module_server("measurement1", max = 80)
   simulated_experiment_measure_button_module_server("measurement2", max = 80)
@@ -79,8 +113,16 @@ simulated_experiment_measurements_module_server <- function(id) {
  
   })
 
+   output$timeprogress2 <- renderUI({ 
+    NULL
+  })
+
   observeEvent(input$give_gum2, {
   output$timeprogress2 <- renderUI({
+    Sys.sleep(5)
+        tagList(
+          h4("Done!")
+        )
     })
   
   simulated_experiment_measure_button_module_server("measurement4", min = 98)
@@ -89,5 +131,12 @@ simulated_experiment_measurements_module_server <- function(id) {
 
  
   })
+
+  observeEvent(input$back_page_protocol, {
+        updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Protocol")
+      })
+      observeEvent(input$next_page_raw_data, {
+        updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Raw_Data")
+      })
 })
 }

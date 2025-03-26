@@ -169,11 +169,45 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     )
                                   ),
 
-                                  )
+                                  ),
+                                  fluidRow(
+  column(
+    width = 12,
+    div(
+      style = "
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 10px;          
+        margin: 0; 
+        padding: 10px;
+      ",
+      actionButton(
+        ns("back_page_analysis"),
+        label = tagList(icon("arrow-left"), " Back"),
+        class = "fun-nav-button"
+      ),
+      actionButton(
+        ns("next_page_feedback"), 
+        label = tagList("Next ", icon("arrow-right")), 
+        class = "fun-nav-button"
+      )
+    )
+  )
+)
                               )
     )
     }
 
-simulated_experiment_writing_up_module_server <- function(input, output, session) {
-    #ns <- session$ns
+simulated_experiment_writing_up_module_server <- function(id,parent.session) {
+  moduleServer(id, function(input, output, session) {
+
+    observeEvent(input$back_page_analysis, {
+        updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Analysis")
+      })
+      observeEvent(input$next_page_feedback, {
+        updateTabItems(parent.session, "sidebar", "Feedback")
+      })
+}
+  )
 }
