@@ -7,4 +7,4 @@ experiment_variables <- list(
   level_a_text_name = "Stressed",
   level_b_variable_name = "unstressed", #control
   level_b_text_name = "unstressed" #control
-)
+  )

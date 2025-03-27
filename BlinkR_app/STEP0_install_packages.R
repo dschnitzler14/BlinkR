@@ -34,7 +34,7 @@ required_packages <- c(
   "sortable",
   "grid",
   "png",
-  "gridExtra"
+  "gridExtra",
 )
 
 installed_packages <- rownames(installed.packages())

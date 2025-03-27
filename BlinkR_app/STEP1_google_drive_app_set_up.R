@@ -4,7 +4,6 @@ library(googledrive)
 #enter your gmail address here
 email_address = "appdemo41@gmail.com"
 
-
 options(
   gargle_oauth_email = TRUE,
   gargle_oauth_cache = ".secrets"
