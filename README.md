@@ -1,377 +1,317 @@
-# Overview
+# BlinkR
 
-BlinkR is a web app written in Shiny for R designed to help students plan, run, and analyse an experiment. It is intended to help them understand the fundamentals of experimental design and good research practices, as well as the basics for statistical analysis in R.
+## Table of Contents
 
-It runs entirely on **R** and instead of using more complex databases such as SQL, it is far more accessible with **google sheets and google drive** providing persistent storage.
+- [Overview](#overview)
+- [How to Use BlinkR](#how-to-use-blinkr)
+  - [Google Drive Integration](#google-drive-integration)
+  - [Menu Bar](#menu-bar)
+  - [Introduction & Login](#introduction--login)
+- [Background](#background)
+- [Hypotheses](#hypotheses)
+- [Protocol](#protocol)
+  - [Your Protocol](#your-protocol)
+  - [Class Protocol](#class-protocol)
+  - [Data Hazards](#data-hazards)
+- [Measurements](#measurements)
+- [Raw Data](#raw-data)
+- [Playground](#playground)
+- [Analysis Dashboard](#analysis-dashboard)
+- [Prepare Data](#prepare-data)
+- [Summarise the Data](#summarise-the-data)
+- [Create a Figure](#create-a-figure)
+- [Statistical Analysis](#statistical-analysis)
+- [Writing Up Advice](#writing-up-advice)
+- [AI Use Guidance](#ai-use-guidance)
+- [Write Up](#write-up)
+- [Upload Final Report](#upload-final-report)
+- [Simulated Experiment](#simulated-experiment)
+- [Feedback](#feedback)
+- [Admin Area](#admin-area)
+- [Set Up and Deployment](#-set-up-and-deployment)
+- [Code Structure](#-code-structure)
+- [Final Notes](#-final-notes)
 
-Initially, the app was developed for an experiment that compared blinks per minute under stressed and control conditions, hence the name, however, changes have since been made allowing the different variables to be defined prior to starting, making it generalisable to any experiment that compares two groups.
+## Overview
 
-**BlinkR can be used for experiments that compare two groups via T-test or Wilcoxon signed-rank test, depending on normality, with 3 technical replicates. In addition, BlinkR can handle paired and non-paired data.**
+BlinkR is a web app written in **Shiny for R**, designed to help students plan, run, and analyse an experiment. It aims to teach the fundamentals of experimental design, good research practices, and basic statistical analysis in R.
 
-# 👁️ How to use BlinkR
+The app runs entirely in **R**, and instead of relying on complex databases like SQL, it uses **Google Sheets** and **Google Drive** for persistent storage—making it more accessible and easier to manage.
 
-You can view the demo app here: https://ds1405.shinyapps.io/blinkr_app/
+Originally developed for an experiment comparing blinks per minute under stressed and control conditions (hence the name), BlinkR is now generalizable to any experiment comparing two groups.
 
-## Google Drive
+**BlinkR can be used for experiments that compare two groups via a T-test or Wilcoxon signed-rank test (depending on normality), with three technical replicates. It supports both paired and unpaired data.**
 
-All persistent storage of this app runs on google drive, to make it easier to manage and more accessible. On log in, the unique 4-digit user ID is used to create a "session folder" within a google drive. This stores any text, code, analysis, or figures created within the app and can be viewed within BlinkR with the "View Google Drive" button. This serves two purposes: 1. backup of work carried out, 2. accessibility and ease of use. One key feature of BlinkR, is that is can be run on any device: computer, tablet, or smartphone. In cases where the computer is shared (e.g. computer lab or library) or where a mobile device is used, downloading can be difficult. As such, any data created within BlinkR is saved to a google drive and can be accessed at a later date for download.
+---
 
-The modal window that opens with the "View Google Drive" button also contains a dropdown selector and download button.
+## 👁️ How to Use BlinkR
 
-## Menu Bar
+View the demo app here: [BlinkR Demo](https://ds1405.shinyapps.io/blinkr_app/)
+
+### Google Drive Integration
+
+BlinkR uses **Google Drive** for persistent storage. Upon login, each group is assigned a unique 4-digit user ID, which is used to create a session folder within Google Drive. This folder stores text, code, analysis, and figures, and can be accessed via the **"View Google Drive"** button.
+
+This provides:
+
+1. Backup of all work completed
+2. Easy cross-device access (desktop, tablet, or smartphone)
+
+Especially useful in shared environments (e.g., computer labs), this system avoids the need for local downloads.
+
+The modal window that opens from the "View Google Drive" button contains a dropdown selector and download button.
+
+---
+
+### Menu Bar
 
 <img width="339" alt="BlinkR_Sidebar" src="https://github.com/user-attachments/assets/a8e12597-eff5-4830-87f4-95c224876990" />
 
 https://github.com/user-attachments/assets/13a18c21-0278-4f52-93a3-c586577472e2
 
-The full menu bar is available after authentication. At the top, the Group ID is displayed. This can be used for navigation and can be opened and closed using the "hamburger" icon in the top left. This also contains the log out button and a "View Google Drive" button. The latter opens a modal window that contains a link to the user's unique Google Drive folder (see above for more details).
+Once authenticated, users see the full menu bar. At the top, the Group ID is displayed. The sidebar can be opened and closed using the hamburger icon in the top left and includes a **Logout** button and **View Google Drive** button (described above).
 
-## Introduction Log in
+---
 
-On opening the app you will get to the "Introduction" page which contains the log in block, prompting you to log in with an existing group ID or signing up with a new one.
-
-### Log in
+### Introduction & Login
 
 <img width="1565" alt="BlinkR_Intro_Log_in" src="https://github.com/user-attachments/assets/8c543237-a0a9-4a1e-ad3f-139e74f240c5" />
 
 https://github.com/user-attachments/assets/f417d055-1070-40d7-a967-6505af0f9478
 
-If you select "I have a Group ID", you are prompted for your 4-digit group ID. If you wish to test the admin functions you can log-in with .
+On launching the app, users land on the **Introduction** tab with a login block:
 
-### Sign up
+- **Log in**: Select "I have a Group ID" and enter the 4-digit ID.
+- **Sign up**: Enter a unique 4-digit group ID and name, or generate one randomly. If the entered ID already exists, an error will be shown.
 
-If you have not signed up before, you can either enter your own 4-digit group ID and a name (or initial) or have a random number generated for you. This becomes your group ID with which you can log-in at later stages as well. If your group ID already exists in the user base you will receive an error, whereas the random number generator checks against the database to create a unique sequence.
+Once login or sign-up is complete, the login block disappears and the rest of the app becomes accessible.
 
-Once log in/ sign up is completed, this block removes itself and you are free to explore the rest of the app.
-
-### Introduction
-
-https://github.com/user-attachments/assets/2e136476-471f-4321-8ebd-fd86aa053afc
-
-Following authentication, the rest of this tab becomes visible to you. The "Research Roadmap" box contains shortcuts to the different tabs, with the prompted "Start Here" taking you to "Background".
+## https://github.com/user-attachments/assets/2e136476-471f-4321-8ebd-fd86aa053afc
 
 ## Background
 
-This sections contains guides on how to begin background reading and research, including advice on how to start searching research databases e.g. PubMed.
+This section guides students in starting background research, including how to search databases like PubMed.
 
-There is no user input in this section.
+> _No user input required._
+
+---
 
 ## Hypotheses
 
 https://github.com/user-attachments/assets/4f12a2b1-328d-4fed-82a9-9405f29a29a1
 
-This sections contains guides on how to write a hypothesis and three user input boxes. These input boxes are designed to enter the hypothesis in plain language, the null hypothesis, and the alternative hypothesis. On pressing "Save Notes", each box is saved to the users Google Drive folder.
+Guidance is provided for writing:
 
-The content saved from these boxes is returned later in the app.
+- A plain language hypothesis
+- A null hypothesis (H0)
+- An alternative hypothesis (HA)
+
+Users enter these in three input boxes and click **"Save Notes"**, which stores them in their Google Drive folder.
+
+---
 
 ## Protocol
 
 https://github.com/user-attachments/assets/c9f63872-bd88-43c8-9d2a-108fbf1f9538
 
-This section is split into two main subsections: "Your Protocol" and "Class Protocol".
+Split into:
 
 ### Your Protocol
 
-This tab contains multiple user input boxes for students to start brainstorming their ideas. The idea is that students can develop a protocol within their groups, which is then shared with the admin/ educator via a google sheet, who then combines the protocol for the whole class. Alternatively, this can be used to get students to think about a protocol, regardless if this is then used for the class protocol.
+Users can brainstorm their experimental design in input fields. This can be shared with an educator via Google Sheets or used independently.
 
 ### Class Protocol
 
-This section can be shared/ hidden to specific groups by the admin. This can be either done in the admin section (see below for more information) or directly in the user base by setting "Protocol" to TRUE. This populates the "Class Protocol" tab.
+Shared selectively by the admin (via user base or admin panel). When active, this appears as a read-only tab for users.
 
 ### Data Hazards
 
-Below the protocol box, there is an additional box prompting students to consider the data hazards associated with this project (learn more [here](https://datahazards.com/index.html)). Each hazard can be dragged from the left to the right "Selected Hazards" box, as they deem appropriate. Below this drag-and-drop feature is a "Submit" button, that upload a pdf to the user's Google Drive folder containing the selected hazards. **This can be overwritten.**
+Students are prompted to consider potential data hazards ([more info](https://datahazards.com/index.html)). Hazards can be dragged into a "Selected Hazards" box, then submitted as a PDF to Google Drive. This file can be overwritten.
+
+---
 
 ## Measurements
 
 https://github.com/user-attachments/assets/a0868a4b-0ed0-4283-b61a-6d0b7260fb63
 
-This section allows students to record the measurements of their experiment.
+Users add participants, generating unique IDs. Each participant has a "Measurements" box with three tabs:
 
-The first step allows subjects/ participants to be added, which generates a unique ID.
+1. **Consent Agreement** (must be ticked before submitting data)
+2. **Level 1 Measurement** (user-defined variable)
+3. **Level 2 Measurement** (user-defined variable)
 
-For each participant added, a new "Measurements" box is added to the UI, each with the unique ID and the entered initials. This can be deleted with the "Delete Student" button.
+Each measurement box supports three technical replicates. Data is submitted to a Google Sheet and can be overwritten with a warning.
 
 https://github.com/user-attachments/assets/68f81347-07e1-4b34-8ff2-e058aa6e8857
 
-Each Measurements box contains three tabs:
-
-1. **Consent Agreement**
-2. **Level 1 Measurement (defined variable)**
-3. **Level 2 Measurement (defined variable)**
-
 ---
-
-1. **Consent Agreement**
-   Participants must read and agree to the consent statement. **The "Submit" button on the measurements tabs is conditional to the consent box being ticked.**
-
-2. **Level 1 - Measurements** and **Level 2 - Measurements**
-   The title of these tabs depends on the variable defined for the levels (see "Set up"), making it dynamic to the specific experiment you are running. Both or either of the tabs can be completed, depending on the experimental design (both for paired design). On "Submit", the data entered into these fields is stored in a google sheet and returned in the "Raw Data" section. These fields can be overwritten and on re-submission you will get a warning that you are about to overwrite.
-
-This area is designed to take three technical replicates.
 
 ## Raw Data
 
 <img width="1659" alt="BlinkR_Raw_Data" src="https://github.com/user-attachments/assets/05c5f92e-eb3a-4666-af3b-19059464015f" />
 
-Similar to the "Protocol" tab, this contains two sections: "Your Group Data" and "Class Data".
+Two views:
 
-### Your Group Data
+- **Your Group Data**: Editable, showing only the group’s own entries
+- **Class Data**: Aggregated data from all groups, visible only if admin grants access
 
-This is a dynamic data table that is populated by the entries from the measurements tab. Users can only see data for their own group here.
-
-### Class Data
-
-This is a view of the combined class data. Permission to view this can be set in the "Admin" section (see below) or directly in the user base by setting "Data" to TRUE.
+---
 
 ## Playground
 
 https://github.com/user-attachments/assets/47222550-d012-457c-87c5-0d364be0acd7
 
-This section is the first introduction to the R coding elements throughout the analysis section.
+First exposure to R code, including:
 
-These elements are made up of:
+- Virtual code editor
+- Predefined code sender
+- Run and clear buttons
+- Dynamic console output
 
-1. **Code Editor:** Virtual R code editor
-2. **Send Code to Editor:** This sends a predefined code (usually what is displayed in the instructions) to the editor
-3. **Run Code:** Runs the code with a spinner
-4. **Clear Code:** Removes any code entered into the editor (and removes the console output)
-5. **Dynamic Console:** Prints the output of the editor
+Encourages users to practice basic R commands.
 
-In this section, students are encouraged to try some basic commands to understand the editor.
+---
 
 ## Analysis Dashboard
 
-This section is the beginning of the analysis section. Initially, it contains buttons to the different menu items (e.g. "Prepare Data" or "Statistical Analysis), but with use it becomes populated with results. It leads the user through the section step-by-step.
-
 <img width="1659" alt="BlinkR_Analysis_Dashboard_empty" src="https://github.com/user-attachments/assets/320ab7e5-0282-4136-935a-e2f6a3a22040" />
+
+Starts with shortcut buttons (e.g., "Prepare Data", "Statistical Analysis"). As results are generated, this dashboard becomes populated.
+
+---
 
 ## Prepare Data
 
 https://github.com/user-attachments/assets/87fc2f8e-c873-41c3-acf8-133b32a4c8be
 
-This section contains two elements to view the data and to prepare the data (average the technical replicates).
+1. **View Data**: Uses `head(data)` with comprehension checks.
+2. **Prepare Data**: Averages technical replicates using `dplyr`, based on user-defined variables.
 
-### View Data
-
-This is a simple beginning, where the data is viewed with `head(data)`. On correct output, feedback is generated which also contains text input boxes to check understanding and keep users engaged.
-
-### Prepare Data
-
-This section uses `dplyr`to calculate the averages of the technical replicates for each ID and "treatment group"/ level. The variables for the code and the text explanation are also pre-defined (see "Set up").
+---
 
 ## Summarise the Data
 
 https://github.com/user-attachments/assets/98c20120-6558-4f1f-8834-da44c65b914d
 
-This section walks users through generating summary statistics (mean, sd, n, and sem). This is done slowly, first by showing them how to do this for one group (suggested: control group - this is defined in the "Set up"). This is then followed by "Your turn" where users have to the code they just learned for the second group. Each element is dependent on the successful completion of the previous step. In the final step, user are shown how to generate this quickly with `dplyr`, with a quiz checking understanding.
+Users learn to calculate summary statistics (mean, SD, SEM, etc.) step-by-step using `dplyr`. Includes quizzes and comprehension checks. Final result is saved to the dashboard and Google Drive.
 
-The final summary step with `dplyr`also contains the button "Save to Dashboard", which saves this result to the analysis dashboard and uploads to the google drive.
-
-https://github.com/user-attachments/assets/4c51e0a9-fb91-40e1-bc18-c9dc0752e092
+## https://github.com/user-attachments/assets/4c51e0a9-fb91-40e1-bc18-c9dc0752e092
 
 ## Create a Figure
 
 https://github.com/user-attachments/assets/d5daa338-c34f-4bdb-988f-f263cba9103d
 
-Here, users have the option of creating a bar chart or a box plot (both with scatter). Upon creation, they are encouraged to check the plots and enter a title and axis-labels, as well as change the colours of the plot. When finished, this should also be saved to the "Analysis Dashboard" with the "Save to Analysis Dashboard" button, which also uploads the results to the Google Drive folder. As before, the variables are dependent on "Set up".
+Users can create a bar chart or box plot (with scatter), customize title/labels/colors, and save to dashboard + Google Drive.
+
+---
 
 ## Statistical Analysis
 
 https://github.com/user-attachments/assets/a8d35939-f1e9-4dbe-8364-5db8f9013692
 
-The first step here is to check for normality. A histogram is generated dynamically from the given class data and printed to the user with the "Generate Histogram to Check for Normality" button. Here too, the variables are dependent on "Set up".
+Step-by-step flow:
 
-The flow is as follows:
+1. Generate histogram for normality check
+2. Select "Normal" or "Not Normal"
+3. Select paired/unpaired
+4. Perform appropriate test:
+   - Normal Unpaired → T-test
+   - Normal Paired → Paired T-test
+   - Not Normal Unpaired → Wilcoxon rank-sum
+   - Not Normal Paired → Wilcoxon signed-rank
+5. Effect size (shown only if p ≤ 0.05)
+6. Interpretation box (p-value, effect size, one-sentence conclusion)
 
-1. **Generate Histogram** - prints the histogram
-2. **Decide if normal or not normal** - "Normal" selection initiates the T-Test flow, "Not Normal" initiates the Wilcoxon signed-rank flow
-3. **Decide if paired or not paired** - this determines the code for the respective statistical tests
-4. **Hypothesis testing** - depending on what was selected this will either return
-   - Normal Unpaired: T-Test
-   - Normal Paired: Paired T-Test
-   - Not Normal Unpaired: Wilcoxon signed-rank
-   - Not Normal Paired: Paired Wilcoxon signed rank
-5. **Effect size** - depending on the hypothesis test carried out this, the appropriate effect size analysis code is made available. **THIS ONLY APPEARS IF p≤0.05**
-6. **Interpretation** - user input boxes asking for p-value (and effect size if p≤0.05), returning the hypothesis entered in the "Hypothesis" section, a radio button quiz asking if H0 or HA is correct (feedback depends on p≤0.05), and a text box to enter a one sentence interpretation of the results
+All results are saved to dashboard + Google Drive.
 
-As before, the "Save to Dashboard" button saves the results and uploads them to the Google Drive folder.
+---
 
 ## Writing Up Advice
 
 <img width="1659" alt="BlinkR_Writing_Advice" src="https://github.com/user-attachments/assets/316bcb1e-5490-43ac-bd05-761c17129238" />
 
-This section contains guidance and advice on how to write up this experiment. In addition, there is further guidance on how to work together as a group and general tips and tricks.
+Provides advice on writing, collaboration, and general tips.
 
-There is no user input here.
+> _No user input required._
 
-## AI
+---
+
+## AI Use Guidance
 
 <img width="1659" alt="BlinkR_AI" src="https://github.com/user-attachments/assets/984defd0-7b9f-46a2-bd66-77ca27c700fa" />
 
-This sections contains guidance on what AI can and cannot be used for in writing up this report, stressing potential consequences (e.g. academic misconduct).
+Outlines appropriate and inappropriate use of AI for writing the report, including academic integrity warnings.
 
-There is no user input here.
+> _No user input required._
+
+---
 
 ## Write Up
 
 https://github.com/user-attachments/assets/0b4562b1-55ec-4af6-9a4c-8e4cea3a95b1
 
-This sections contains user input boxes to allow them to write notes and outline their report. All notes saved here are uploaded to the Google Drive folder. **They cannot be overwritten.**
+Provides user input boxes for report notes and outlines. All notes are saved to Google Drive.
+
+> _Notes cannot be overwritten._
+
+---
 
 ## Upload Final Report
 
 <img width="1659" alt="BlinkR_Upload" src="https://github.com/user-attachments/assets/605190da-4167-4415-bb99-4a54c6b6c441" />
 
-This is an optional space for users to upload their final reports. It gets saved using the group ID and date + time. The reports are uploaded to the Google Drive and can also be monitored in the "Admin" section.
+Optional area to upload final reports. Files are saved with group ID and timestamp to Google Drive. Admin can view submissions.
+
+---
 
 ## Simulated Experiment
 
-In order to provide more context for the practical experiment, this section contains a simulated experiment with "dummy data", walking them through each step with a concrete example. This also includes a final write-up and critique of an AI-Generated report. **Anything generated here is not saved to the Google Drive.**
+Walkthrough using dummy data, illustrating each step of an experiment. Includes AI-generated report critique.
+
+> _Nothing here is saved to Google Drive._
+
+---
 
 ## Feedback
 
 <img width="1659" alt="BlinkR_Feedback" src="https://github.com/user-attachments/assets/51291e0b-3d6c-4803-a077-8b3c7305422d" />
 
-This final section sends feedback to the Google Drive.
+Sends feedback to Google Drive.
 
-**Please feel free to share this feedback with me!!**
-
-## 21 Admin Area
-
-https://github.com/user-attachments/assets/fc510878-b4c8-4208-a7f1-cb37d908dce0
-
-This area is only visible to those with Admin roles. This can be set in the user base by setting Role to "admin".
-
-In this area, the admin can
-
-1. **View All Groups**: all groups and permissions
-2. **Share Class Protocol**: share or hide the class protocol to selected or all groups (can also be selected by date)
-3. **Share Class Data**: share or hide the class data
-4. **Combine Class Data**: This creates the "Shared Class Data" file in the Google Drive, combining each group's measurement result; existing files are renamed to "\_old_DATETIME"
-5. **View Report Submission**
-6. **View Google Drive**: this instance of this button allows the admin to view all groups' Google Drive folders.
+> _Please feel free to share your feedback!_
 
 ---
 
-# 👩‍💻 Set up and deployment
+## Admin Area
 
-Even if you do not know how to code, I will break down the set up and deployment of this web app so you can use it with your own class!
+https://github.com/user-attachments/assets/fc510878-b4c8-4208-a7f1-cb37d908dce0
 
-## Step 1: Download or Clone this Repo
+Only visible to users with "admin" role. Features include:
 
-To download BlinkR, you can scroll up to the green "Code" button and choose "Download as zip". Alternatively, on your computer, navigate to the directory (folder) you would like to save BlinkR in. Once there, open a terminal window in that directory and paste this
+1. View all groups and permissions
+2. Share/hide class protocol
+3. Share/hide class data
+4. Combine class data (creates a shared file in Google Drive; renames old files)
+5. View report submissions
+6. Access all group Google Drive folders
 
-`git clone https://github.com/dschnitzler14/BlinkR.git`
+---
 
-This is copy all the code from here on to you computer. This is now your version - you can't break anything in the original code and you can always download it again.
+## 👩‍💻 Set Up and Deployment
 
-## Step 2: Download R
+A step-by-step guide is included for non-coders to set up and run BlinkR, including Google account integration and package installation. Follow the instructions in:
 
-If you do not have R downloaded already, follow the instructions [here](https://www.r-project.org/).
+- `STEP0_install_packages.R`
+- `STEP1_set_up_googledrive_script.R`
+- `STEP2_define_variables.R`
+- `STEP3_set_up_googledrive_script.R`
 
-## Step 3: Download Code Editor
+Once set up, you can run `app.R` to try it out or deploy using [shinyapps.io](https://www.shinyapps.io/).
 
-For most R projects the recommended editor is "R Studio" which you can download [here](https://posit.co/downloads/). However, I find using something like VSCode easier to navigate a large complex shiny app like this one. You can download VSCode [here](https://code.visualstudio.com/download), but note there is some additional set up for getting R running in VSCode - [here are the instructions](https://code.visualstudio.com/docs/languages/r).
+---
 
-We're almost there, I promise.
+## 💻 Code Structure
 
-## Step 4: Set up Google Account
+This app uses a **modular Shiny** architecture. Learn more about Shiny modules [here](https://shiny.posit.co/r/articles/improve/modules/).
 
-You will need to connect a google account for this to work. I _strongly_ recommend creating a new account and linking that. Create a new google account [here](https://accounts.google.com/lifecycle/steps/signup/name?continue=https://myaccount.google.com?utm_source%3Daccount-marketing-page%26utm_medium%3Dcreate-account-button&dsh=S-1338933660:1742921807170809&flowEntry=SignUp&flowName=GlifWebSignIn&TL=ADBLaQCecUX0rZ6oJ9lYnhWib6A9BZ8DBxbVmeDemSHdAJwbVLDzjNgtUBNMaCc4).
-
-Now we are ready to get started.
-
-## Open the folder you downloaded in your code editor
-
-You are not just opening a single file here - you are opening the entire folder which will contain all the files of this project.
-
-## Run STEP0_install_packages.R
-
-First, open this file and find the little play or "run code" button in your code editor.
-You should see a whole bunch of packages downloading. You may be prompted to select a "CRAN mirror". Just select "0-Cloud" for this.
-
-You have now installed all the packages required to run the Shiny app locally on your computer.
-
-## Run STEP1_set_up_googledrive_script.r
-
-Open this file.
-
-```
-library(googlesheets4)
-library(googledrive)
-
-#enter your gmail address here
-email_address = "appdemo@gmail.com"
-
-
-options(
-  gargle_oauth_email = TRUE,
-  gargle_oauth_cache = ".secrets"
-)
-
-#only run once:
-# gs4_auth(email = email_address, cache = ".secrets")
-# drive_auth(email = email_address, cache = ".secrets")
-
-googlesheets4::gs4_auth()
-googledrive::drive_auth()
-```
-
-1. Set the email address you wish to use
-2. Uncomment these lines (remove the `#`):
-
-```
-gs4_auth(email = email_address, cache = ".secrets")
-drive_auth(email = email_address, cache = ".secrets")
-```
-
-3. Run the code
-
-Once you run this code, you will be sent to your browser to sign in and give permission. This will happen twice, once for the the googlesheets (`gs4_auth`) and once for the google drive (`drive_auth`). Now you don't need to do this again, because you are saving your login details in the folder called `.secrets`. You can have a look at them after they have been created - they are just long strings, not just your password - don't worry.
-
-4. You can re-comment these lines now
-
-## Run STEP2_define_variables.R
-
-This is located inside the BlinkR\_app folder. Before you run this, you need to define all the variables of your project. This allows the app to be flexible and specific to _your_ experiment.
-
-```
-experiment_variables <- list(
-  measurement_variable_name = "length_of_arm", # this should be lowercase and snake case (connected by "_"), this is the thing you are measuring: dependent variable
-  measurement_text_name = "Arm Length", # this should be how you would like it to appear in texts and descriptions. For example it might say "Take Measurements for **Arm Length**
-  levels_variable_name = "eye_colour", # this should be lowercase and snake case (connected by "_"), this is the independent variable name
-  levels_text_name = "Eye Colour", # text version of the independent variable name
-  level_a_variable_name = "blue", # level 1 of the independent variable
-  level_a_text_name = "Blue", #text version of level 1
-  level_b_variable_name = "brown", # level 2 of the independent variable RECOMMEND: this should be the control
-  level_b_text_name = "Brown" #text version of level 2
-)
-
-```
-
-Once you have completed defining your variable you can run this script as before.
-
-## Run STEP3_set_up_googledrive_script.R
-
-This final set up step uses the variables and the google authentication to create all the files and folder you need to run BlinkR. Once you have finished running the script, you may need to refresh your browser. You will find all the files you need, including the user base. In this, there will be one "admin" user already entered. You can keep this or change this as you with. New users that sign up will automatically be added to this spreadsheet.
-
-## Try it out
-
-Now, you are good to go. If you want to play around with BlinkR yourself first, open the file called "app.R" and run the code. This should open a window where you can play around.
-
-## Deployment
-
-Are you ready to deploy BlinkR to your students? For this there a number of different options that I will link [here](https://shiny.posit.co/r/deploy.html).
-
-Here is everything you need to deploy with [shinyapps.io](https://www.shinyapps.io/):
-
-First, navigate to [shinyapps.io](https://www.shinyapps.io/) and create an account. You can read the documentation for how to get your app deployed through shinyapps.io [here](https://shiny.posit.co/r/articles/share/shinyapps/). NOTE: `rsconnect` is one of the packages installed in STEP0.
-
-Now you can use BlinkR for your own class!
-
-** END SET UP **
-
-# 💻 Code Strucutre Information
-
-This app is built using a modular approach, making it more dynamic and flexible to changes and updates. You can learn more about a modular shiny approach [here](https://shiny.posit.co/r/articles/improve/modules/).
+---
