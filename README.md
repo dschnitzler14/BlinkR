@@ -272,7 +272,7 @@ If you do not have R downloaded already, follow the instructions [here](https://
 
 ## Step 3: Download Code Editor
 
-For most R projects the recommended editor is "R Studio" which you can download [here](https://posit.co/downloads/). However, I find using something like VSCode easier to navigate a large complex shiny app like this one. You can download VSCode [here] (https://code.visualstudio.com/download), but note there is some additional set up for getting R running in VSCode - [here are the instructions](https://code.visualstudio.com/docs/languages/r).
+For most R projects the recommended editor is "R Studio" which you can download [here](https://posit.co/downloads/). However, I find using something like VSCode easier to navigate a large complex shiny app like this one. You can download VSCode [here](https://code.visualstudio.com/download), but note there is some additional set up for getting R running in VSCode - [here are the instructions](https://code.visualstudio.com/docs/languages/r).
 
 We're almost there, I promise.
 
@@ -330,9 +330,11 @@ drive_auth(email = email_address, cache = ".secrets")
 
 Once you run this code, you will be sent to your browser to sign in and give permission. This will happen twice, once for the the googlesheets (`gs4_auth`) and once for the google drive (`drive_auth`). Now you don't need to do this again, because you are saving your login details in the folder called `.secrets`. You can have a look at them after they have been created - they are just long strings, not just your password - don't worry.
 
+4. You can re-comment these lines now
+
 ## Run STEP2_define_variables.R
 
-This is located inside the BlinkR*app folder. Before you run this, you need to define all the variables of your project. This allows the app to be flexible and specific to \_your* experiment.
+This is located inside the BlinkR\_app folder. Before you run this, you need to define all the variables of your project. This allows the app to be flexible and specific to _your_ experiment.
 
 ```
 experiment_variables <- list(
@@ -362,7 +364,7 @@ Now, you are good to go. If you want to play around with BlinkR yourself first, 
 
 Are you ready to deploy BlinkR to your students? For this there a number of different options that I will link [here](https://shiny.posit.co/r/deploy.html).
 
-For ease, I will walk you through how to deploy using [shinyapps.io](https://www.shinyapps.io/).
+Here is everything you need to deploy with [shinyapps.io](https://www.shinyapps.io/):
 
 First, navigate to [shinyapps.io](https://www.shinyapps.io/) and create an account. You can read the documentation for how to get your app deployed through shinyapps.io [here](https://shiny.posit.co/r/articles/share/shinyapps/). NOTE: `rsconnect` is one of the packages installed in STEP0.
 
