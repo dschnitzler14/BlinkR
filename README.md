@@ -248,7 +248,7 @@ In this area, the admin can
 1. **View All Groups**: all groups and permissions
 2. **Share Class Protocol**: share or hide the class protocol to selected or all groups (can also be selected by date)
 3. **Share Class Data**: share or hide the class data
-4. **Combine Class Data**: This creates the "Shared Class Data" file in the Google Drive, combining each group's measurement result
+4. **Combine Class Data**: This creates the "Shared Class Data" file in the Google Drive, combining each group's measurement result; existing files are renamed to "\_old_DATETIME"
 5. **View Report Submission**
 6. **View Google Drive**: this instance of this button allows the admin to view all groups' Google Drive folders.
 
@@ -293,7 +293,44 @@ You should see a whole bunch of packages downloading. You may be prompted to sel
 
 You have now installed all the packages required to run the Shiny app locally on your computer.
 
-## Run STEP1_define_variables.R
+## Run STEP1_set_up_googledrive_script.r
+
+Open this file.
+
+```
+library(googlesheets4)
+library(googledrive)
+
+#enter your gmail address here
+email_address = "appdemo@gmail.com"
+
+
+options(
+  gargle_oauth_email = TRUE,
+  gargle_oauth_cache = ".secrets"
+)
+
+#only run once:
+# gs4_auth(email = email_address, cache = ".secrets")
+# drive_auth(email = email_address, cache = ".secrets")
+
+googlesheets4::gs4_auth()
+googledrive::drive_auth()
+```
+
+1. Set the email address you wish to use
+2. Uncomment these lines (remove the `#`):
+
+```
+gs4_auth(email = email_address, cache = ".secrets")
+drive_auth(email = email_address, cache = ".secrets")
+```
+
+3. Run the code
+
+Once you run this code, you will be sent to your browser to sign in and give permission. This will happen twice, once for the the googlesheets (`gs4_auth`) and once for the google drive (`drive_auth`). Now you don't need to do this again, because you are saving your login details in the folder called `.secrets`. You can have a look at them after they have been created - they are just long strings, not just your password - don't worry.
+
+## Run STEP2_define_variables.R
 
 This is located inside the BlinkR*app folder. Before you run this, you need to define all the variables of your project. This allows the app to be flexible and specific to \_your* experiment.
 
@@ -313,26 +350,26 @@ experiment_variables <- list(
 
 Once you have completed defining your variable you can run this script as before.
 
-## Run STEP2_set_up_googledrive_script.r
+## Run STEP3_set_up_googledrive_script.R
 
-Open this file.
+This final set up step uses the variables and the google authentication to create all the files and folder you need to run BlinkR. Once you have finished running the script, you may need to refresh your browser. You will find all the files you need, including the user base. In this, there will be one "admin" user already entered. You can keep this or change this as you with. New users that sign up will automatically be added to this spreadsheet.
 
-Next, set the email address you wish to use. You need to do this twice - once for the the googlesheets (`gs4_auth`) and once for the google drive (`drive_auth`).
+## Try it out
 
-Once you run this code, you will be sent to your browser to sign in and give permission. This will happen twice, once for each. Now you don't need to do this again, because you are saving your login details in the folder called `.secrets`. You can have a look at them after they have been created - they are just long strings, not just your password - don't worry.
-
-In addition to signing you in to google drive and google sheets, this script will generate all the files and folders you need for BlinkR to work. After it has finished running head over to your drive to see.
-
-## Google Drive and Google Sheets
-
-Using the script above, we generated all the folders and files needed to BlinkR.
+Now, you are good to go. If you want to play around with BlinkR yourself first, open the file called "app.R" and run the code. This should open a window where you can play around.
 
 ## Deployment
 
+Are you ready to deploy BlinkR to your students? For this there a number of different options that I will link [here](https://shiny.posit.co/r/deploy.html).
+
+For ease, I will walk you through how to deploy using [shinyapps.io](https://www.shinyapps.io/).
+
+First, navigate to [shinyapps.io](https://www.shinyapps.io/) and create an account. You can read the documentation for how to get your app deployed through shinyapps.io [here](https://shiny.posit.co/r/articles/share/shinyapps/). NOTE: `rsconnect` is one of the packages installed in STEP0.
+
+Now you can use BlinkR for your own class!
+
+** END SET UP **
+
 # 💻 Code Strucutre Information
 
-## Modular Approach
-
-## Ace Editor Module
-
-# ➡️ PRs
+This app is built using a modular approach, making it more dynamic and flexible to changes and updates. You can learn more about a modular shiny approach [here](https://shiny.posit.co/r/articles/improve/modules/).

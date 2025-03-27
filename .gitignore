@@ -10,3 +10,4 @@ testanalysis/
 **/.DS_Store
 code_history.txt
 temp.R
+rsconnect/
