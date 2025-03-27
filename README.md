@@ -38,7 +38,7 @@ BlinkR is a web app written in **Shiny for R**, designed to help students plan, 
 
 The app runs entirely in **R**, and instead of relying on complex databases like SQL, it uses **Google Sheets** and **Google Drive** for persistent storage—making it more accessible and easier to manage.
 
-Originally developed for an experiment comparing blinks per minute under stressed and control conditions (hence the name), BlinkR is now generalizable to any experiment comparing two groups.
+Originally developed for an experiment comparing blinks per minute under stressed and control conditions (hence the name), BlinkR is now generalisable to any experiment comparing two groups.
 
 **BlinkR can be used for experiments that compare two groups via a T-test or Wilcoxon signed-rank test (depending on normality), with three technical replicates. It supports both paired and unpaired data.**
 
@@ -86,7 +86,7 @@ On launching the app, users land on the **Introduction** tab with a login block:
 
 Once login or sign-up is complete, the login block disappears and the rest of the app becomes accessible.
 
-## https://github.com/user-attachments/assets/2e136476-471f-4321-8ebd-fd86aa053afc
+https://github.com/user-attachments/assets/2e136476-471f-4321-8ebd-fd86aa053afc
 
 ## Background
 
@@ -195,13 +195,13 @@ https://github.com/user-attachments/assets/98c20120-6558-4f1f-8834-da44c65b914d
 
 Users learn to calculate summary statistics (mean, SD, SEM, etc.) step-by-step using `dplyr`. Includes quizzes and comprehension checks. Final result is saved to the dashboard and Google Drive.
 
-## https://github.com/user-attachments/assets/4c51e0a9-fb91-40e1-bc18-c9dc0752e092
+https://github.com/user-attachments/assets/4c51e0a9-fb91-40e1-bc18-c9dc0752e092
 
 ## Create a Figure
 
 https://github.com/user-attachments/assets/d5daa338-c34f-4bdb-988f-f263cba9103d
 
-Users can create a bar chart or box plot (with scatter), customize title/labels/colors, and save to dashboard + Google Drive.
+Users can create a bar chart or box plot (with scatter), customise title/labels/colors, and save to dashboard + Google Drive.
 
 ---
 
@@ -297,16 +297,161 @@ Only visible to users with "admin" role. Features include:
 
 ---
 
-## 👩‍💻 Set Up and Deployment
+Absolutely! Here's your improved **"Set up and Deployment"** section — rewritten for clarity, grammar, and tone while keeping it friendly and approachable. I’ve used consistent formatting, made instructions more concise, and cleaned up the structure so it's easier to follow in `.md` format:
 
-A step-by-step guide is included for non-coders to set up and run BlinkR, including Google account integration and package installation. Follow the instructions in:
+---
 
-- `STEP0_install_packages.R`
-- `STEP1_set_up_googledrive_script.R`
-- `STEP2_define_variables.R`
-- `STEP3_set_up_googledrive_script.R`
+# 👩‍💻 Set Up and Deployment
 
-Once set up, you can run `app.R` to try it out or deploy using [shinyapps.io](https://www.shinyapps.io/).
+Even if you’re not familiar with coding, don’t worry — this guide breaks down the setup and deployment process so you can use BlinkR with your class, step-by-step.
+
+---
+
+## 📥 Step 1: Download or Clone This Repository
+
+To get BlinkR on your computer, you have two options:
+
+- **Option 1 (No Git):** Click the green **"Code"** button at the top of the GitHub page and choose **“Download ZIP”**. Unzip the folder once downloaded.
+- **Option 2 (Using Git):** Open a terminal and navigate to the folder where you want to save the project. Then run:
+
+```bash
+git clone https://github.com/dschnitzler14/BlinkR.git
+```
+
+This creates your own copy of the BlinkR code. You can experiment freely — you won’t affect the original, and you can always re-download it if needed.
+
+---
+
+## 📦 Step 2: Install R
+
+If R isn’t already installed on your system, download and install it from the official site:  
+👉 [https://www.r-project.org/](https://www.r-project.org/)
+
+---
+
+## 💻 Step 3: Choose a Code Editor
+
+- The recommended editor for R projects is **RStudio**:  
+  👉 [Download RStudio](https://posit.co/downloads/)
+- For more complex apps like BlinkR, you might prefer **VSCode**, which offers better navigation:  
+  👉 [Download VSCode](https://code.visualstudio.com/download)  
+  ⚠️ Note: Additional setup is needed to run R in VSCode — follow these [instructions](https://code.visualstudio.com/docs/languages/r).
+
+---
+
+## 🔐 Step 4: Set Up a Google Account
+
+BlinkR uses Google Drive and Google Sheets for data storage. You’ll need a Google account for authentication.
+
+> ✅ **Recommended:** Create a new Google account dedicated to BlinkR  
+> 👉 [Create a Google Account](https://accounts.google.com/signup)
+
+---
+
+## 📂 Open the Project Folder in Your Editor
+
+Open the **entire BlinkR folder** (not just a file) in your code editor. This allows you to access all the components needed to run the app.
+
+---
+
+## 🚀 Step 5: Run `STEP0_install_packages.R`
+
+Open the file `STEP0_install_packages.R` and click the **Run** button in your editor. This installs all the required R packages.
+
+- You may be asked to choose a **CRAN mirror** — select `"0-Cloud"`.
+
+Once done, you're ready to start the app locally.
+
+---
+
+## 🔧 Step 6: Run `STEP1_set_up_googledrive_script.R`
+
+Open the file and edit this section:
+
+```r
+library(googlesheets4)
+library(googledrive)
+
+# Enter your Gmail address
+email_address = "appdemo@gmail.com"
+
+options(
+  gargle_oauth_email = TRUE,
+  gargle_oauth_cache = ".secrets"
+)
+
+# Only run these ONCE — remove the "#" to uncomment:
+# gs4_auth(email = email_address, cache = ".secrets")
+# drive_auth(email = email_address, cache = ".secrets")
+
+googlesheets4::gs4_auth()
+googledrive::drive_auth()
+```
+
+### Instructions:
+
+1. Replace `email_address` with the Google account you want to use.
+2. Uncomment the two `gs4_auth()` and `drive_auth()` lines.
+3. Run the script.
+
+You’ll be redirected in your browser to authorise access. This happens once for Sheets and once for Drive. Credentials are saved in a hidden `.secrets` folder, so you won’t need to do this again.
+
+4. (Optional) Re-comment the lines afterward for future clarity.
+
+---
+
+## 🧪 Step 7: Run `STEP2_define_variables.R`
+
+This file is in the `BlinkR_app` folder. Before running it, define the variables for your experiment:
+
+```r
+experiment_variables <- list(
+  measurement_variable_name = "blinks_per_minute",
+  measurement_text_name = "Blinks Per Minute",
+  levels_variable_name = "stress_status",
+  levels_text_name = "Stress Status",
+  level_a_variable_name = "stressed",
+  level_a_text_name = "Stressed",
+  level_b_variable_name = "unstressed",  # recommended: control group
+  level_b_text_name = "Unstressed"
+)
+```
+
+Once edited to reflect your experiment, run the script.
+
+---
+
+## 🛠️ Step 8: Run `STEP3_set_up_googledrive_script.R`
+
+This final setup step:
+
+- Uses the variables and Google credentials
+- Creates necessary files and folders in your linked Google Drive
+- Adds an “admin” user to the user base (you can change this later)
+
+You may need to refresh your Drive to see everything.
+
+---
+
+## 🧪 Try It Out!
+
+Ready to explore? Open the `app.R` file and run it. This will launch BlinkR locally so you can test everything before going live.
+
+---
+
+## 🚀 Deployment
+
+Want to deploy BlinkR for your students?
+
+There are several options — the most common is via **shinyapps.io**. Here's how to get started:
+
+1. Create an account at 👉 [shinyapps.io](https://www.shinyapps.io/)
+2. Follow this guide: 👉 [How to Deploy a Shiny App](https://shiny.posit.co/r/articles/share/shinyapps/)
+3. The `rsconnect` package (already installed in `STEP0`) handles deployment.
+
+Once deployed, your students can access BlinkR online from any device!
+
+**✅ You're all set. Happy experimenting!**
 
 ---
 
