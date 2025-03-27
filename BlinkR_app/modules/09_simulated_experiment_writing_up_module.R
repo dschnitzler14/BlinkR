@@ -121,54 +121,6 @@ simulated_experiment_writing_up_module_ui <- function(id) {
                                     includeMarkdown("markdown/09_simulated_experiment/sim_exp_writing_references_advice.Rmd")
                                     )
                                   ),
-                                  box(
-                                    title = "AI",
-                                    id = "simulated_writing_up7",
-                                    collapsible = TRUE,
-                                    width = 12,
-                                    solidHeader = TRUE,
-                                    fluidRow(
-                                    column(6, 
-                                    p("Intro AI")
-                                    ),
-                                    column(6,
-                                    p("Critique")
-                                    ),
-                                    ),
-                                    fluidRow(
-                                    column(6, 
-                                    p("Methods AI")
-                                    ),
-                                    column(6,
-                                    p("Critique")
-                                    ),
-                                    ),
-                                    fluidRow(
-                                    column(6, 
-                                    p("Results AI")
-                                    ),
-                                    column(6,
-                                    p("Critique")
-                                    ),
-                                    ),
-                                    fluidRow(
-                                    column(6, 
-                                    p("Discussion AI")
-                                    ),
-                                    column(6,
-                                    p("Critique")
-                                    ),
-                                    ),
-                                    fluidRow(
-                                    column(6, 
-                                    p("Future Direction AI")
-                                    ),
-                                    column(6,
-                                    p("Critique")
-                                    ),
-                                    )
-                                  ),
-
                                   ),
                                   fluidRow(
   column(
