@@ -1,15 +1,15 @@
 library(googlesheets4)
 library(googledrive)
 
-source("BlinkR_app/STEP1_define_variables.R")
+source("BlinkR_app/STEP2_define_variables.R")
 
-# options(
-#   gargle_oauth_email = TRUE,
-#   gargle_oauth_cache = "BlinkR_app/.secrets"
-# )
+options(
+  gargle_oauth_email = TRUE,
+  gargle_oauth_cache = "BlinkR_app/.secrets"
+)
 
-# googlesheets4::gs4_auth()
-# googledrive::drive_auth()
+googlesheets4::gs4_auth()
+googledrive::drive_auth()
 
 
 check_and_create_folder <- function(folder_name) {
@@ -76,43 +76,43 @@ lapply(names(files), function(file) {
   }
 })
 
-read_user_base <- function(file_name) {
-  sheet <- drive_find(pattern = file_name, type = "spreadsheet")
-  if (nrow(sheet) > 0) {
-    user_base <- read_sheet(sheet$id)
-    user_base <- user_base %>%
-      mutate(
-        group = as.character(group),
-        Role = as.character(Role),
-        Name = as.character(Name),
-        Date = as.Date(Date),
-        Protocol = as.logical(Protocol),
-        Data = as.logical(Data)
-      )
-    return(user_base)
-  } else {
-    stop("File not found.")
-  }
-}
+# read_user_base <- function(file_name) {
+#   sheet <- drive_find(pattern = file_name, type = "spreadsheet")
+#   if (nrow(sheet) > 0) {
+#     user_base <- read_sheet(sheet$id)
+#     user_base <- user_base %>%
+#       mutate(
+#         group = as.character(group),
+#         Role = as.character(Role),
+#         Name = as.character(Name),
+#         Date = as.Date(Date),
+#         Protocol = as.logical(Protocol),
+#         Data = as.logical(Data)
+#       )
+#     return(user_base)
+#   } else {
+#     stop("File not found.")
+#   }
+# }
 
-read_combined_class_data <- function(file_name) {
-  sheet <- drive_find(pattern = file_name, type = "spreadsheet")
-  if (nrow(sheet) > 0) {
-    combined_class_data <- read_sheet(sheet$id)
-    combined_class_data <- combined_class_data %>%
-      mutate(
-        group = as.character(group),
-        initials = as.character(initials),
-        id = as.character(id),
-        experiment_variables$levels_variable_name = as.character(experiment_variables$levels_variable_name),
-        technical_replicate = as.character(technical_replicate),
-        experiment_variables$measurement_variable_name = as.numeric(experiment_variables$measurement_variable_name),
-        submission_id = as.character(submission_id)
-      )
-    return(combined_class_data)
-  } else {
-    stop("File not found.")
-  }
-}
+# read_combined_class_data <- function(file_name) {
+#   sheet <- drive_find(pattern = file_name, type = "spreadsheet")
+#   if (nrow(sheet) > 0) {
+#     combined_class_data <- read_sheet(sheet$id)
+#     combined_class_data <- combined_class_data %>%
+#       mutate(
+#         group = as.character(group),
+#         initials = as.character(initials),
+#         id = as.character(id),
+#         experiment_variables$levels_variable_name = as.character(experiment_variables$levels_variable_name),
+#         technical_replicate = as.character(technical_replicate),
+#         experiment_variables$measurement_variable_name = as.numeric(experiment_variables$measurement_variable_name),
+#         submission_id = as.character(submission_id)
+#       )
+#     return(combined_class_data)
+#   } else {
+#     stop("File not found.")
+#   }
+# }
 
 message("Script execution completed.")

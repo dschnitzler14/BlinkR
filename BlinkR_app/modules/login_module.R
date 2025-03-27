@@ -310,18 +310,18 @@ observeEvent(input$generate_random_ID, {
     
    observeEvent(external_logout_button(), ignoreInit = TRUE, {
       req(credentials$user_auth)
-
-      if (!is.null(credentials$session_folder)) {
-        folder_files <- googledrive::drive_ls(credentials$session_folder)
-        if (nrow(folder_files) == 0) {
-          googledrive::drive_rm(credentials$session_folder)
-          output$error <- renderText("Session folder was empty and has been deleted.")
-        } else {
-          output$error <- renderText("Session folder contains files and was not deleted.")
-        }
+      
+      tryCatch({
+      folder_files <- googledrive::drive_ls(credentials$session_folder)
+      if (nrow(folder_files) == 0) {
+        googledrive::drive_rm(credentials$session_folder)
+        output$error <- renderText("Session folder was empty and has been deleted.")
       } else {
-        output$error <- renderText("Session folder does not exist.")
+        output$error <- renderText("Session folder contains files and was not deleted.")
       }
+    }, error = function(e) {
+      output$error <- renderText(paste("Error checking or deleting session folder:", e$message))
+    })
       
       credentials$user_auth <- FALSE
       credentials$info <- list(group = NULL, role = NULL, date = NULL, protocol = NULL, data = NULL)
@@ -329,9 +329,7 @@ observeEvent(input$generate_random_ID, {
       credentials$session_folder_id <- NULL
       credentials$session_folder_url <- NULL
 
-      # #cookies
-      # remove_cookie(cookie_name)
-      # ####
+      session$reload()
 
       output$error <- renderText("Logged out successfully.")
         user_base(read_sheet(user_base_sheet_id))
