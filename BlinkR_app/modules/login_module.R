@@ -136,7 +136,6 @@ observeEvent(input$cancel_sign_up, {
   )
 
 observeEvent(input$generate_random_ID, {
-  cat("generate_random_ID triggered\n")
   existing_ids <- user_base()$group
   
   repeat {
@@ -145,7 +144,6 @@ observeEvent(input$generate_random_ID, {
       break
     }
   }
-  cat("new_group_id", new_group_id, "\n")
   updateTextInput(session, "sign_up_group_name", value = new_group_id)
 })
     
@@ -215,8 +213,6 @@ observeEvent(input$generate_random_ID, {
 
     observeEvent(input$sign_up_button, {
       req(input$sign_up_group_name, input$name)
-      cat("sign_up_button triggered\n")
-      cat("group_name", input$sign_up_group_name, "\n")
 
       shinyjs::disable("sign_up_button")
 
