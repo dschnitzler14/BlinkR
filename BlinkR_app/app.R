@@ -325,6 +325,16 @@ observe({
   all_users(user_data)
 })
 
+### combined data
+combined_class_data_read_reactive <- reactiveVal()
+
+observe({
+  req(combined_class_data_sheet)
+  combined_class_data_sheet_observe <- googlesheets4::read_sheet(combined_class_data_sheet)
+  combined_class_data_read_reactive(combined_class_data_sheet_observe)
+})
+####
+
 saved_results <- reactiveValues(
   plots = list(),
   recorded_plots = list(),
@@ -402,10 +412,10 @@ saved_results <- reactiveValues(
     class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session, auth = auth)
     playground_module_server("playground", session_folder_id = session_folder_id, parent.session = session)
     analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results, session_folder_id = session_folder_id)
-    analysis_prepare_data_module_server("analysis_prepare_data", results_data = combined_class_data_read, parent.session = session, session_folder_id = session_folder_id)
-    analysis_summarise_data_module_server("summarise", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
-    analysis_stats_module_server("stats", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
-    analysis_create_figure_module_server("figure", results_data = combined_class_data_read, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    analysis_prepare_data_module_server("analysis_prepare_data", results_data = combined_class_data_read_reactive, parent.session = session, session_folder_id = session_folder_id)
+    analysis_summarise_data_module_server("summarise", results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    analysis_stats_module_server("stats", results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    analysis_create_figure_module_server("figure", results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
     writing_up_advice_server("writing_up_advice", parent.session = session)
     writing_up_ai_server("AI", parent.session = session)
     write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id)

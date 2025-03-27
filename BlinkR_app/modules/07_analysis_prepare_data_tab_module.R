@@ -133,15 +133,14 @@ analysis_prepare_data_module_ui <- function(id) {
 analysis_prepare_data_module_server <- function(id, results_data, parent.session, session_folder_id) {
   moduleServer(id, function(input, output, session) {
 
-          vars <- get_experiment_vars()
+      vars <- get_experiment_vars()
 
     # Load data
     view_data <- reactive({ NULL })
     
-    view_data_read <- results_data %>%
+    view_data_read <- results_data() %>%
       select(-"group", -"initials", -"submission_id")
     
- 
     view_data <- reactive({ view_data_read })
     
     # Step 1: View Data

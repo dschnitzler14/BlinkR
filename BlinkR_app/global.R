@@ -54,11 +54,10 @@ get_experiment_vars <- function() {
   return(experiment_vars)
 }
 
-
 ### load and read files from google drive ----
 ## user base data
 user_base_google_sheet <- drive_get("BlinkR Users")$id
-user_base_read <- read_sheet(user_base_google_sheet)
+#user_base_read <- read_sheet(user_base_google_sheet)
 
 ## base url for group files
 base_group_files_url <- paste0("https://drive.google.com/drive/u/0/folders/")
@@ -71,8 +70,7 @@ BlinkR_measurement_sheet <- drive_get("BlinkR_Measurements")$id
 ## admin operated files
 protocol_file_id <- drive_get("BlinkR_protocols")$id
 combined_class_data_sheet <- drive_get("BlinkR_Combined_Class_Data")$id
-combined_class_data_read <- read_sheet(combined_class_data_sheet)
-
+#combined_class_data_read <- read_sheet(combined_class_data_sheet)
 
 ## simulated experiment data
 caf_data_path <- "data/Caf_Dummy_Data.csv"

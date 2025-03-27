@@ -124,7 +124,7 @@ analysis_create_figure_module_server <- function(id, results_data, parent.sessio
 
   average_trs <- reactive({ NULL })
     
-  average_trs_results <- results_data %>%
+  average_trs_results <- results_data() %>%
       select(-"group", -"initials", -"submission_id") %>%
       dplyr::group_by(id, !!sym(vars$levels_variable_name)) %>%
       dplyr::summarise(
