@@ -346,12 +346,12 @@ saved_results <- reactiveValues(
 
   output$sidebar_group_name <- renderText({
     req(auth()$user_auth)
-    paste("Group ID:", auth()$user_info$Group)
+    paste("Group ID:", auth()$user_info$group)
   })
 
   outputOptions(output, "sidebar_group_name", suspendWhenHidden = FALSE) 
 
-  output$group_id <- reactive({ auth()$user_info$Group })
+  output$group_id <- reactive({ auth()$user_info$group })
   output$user_auth <- reactive({ auth()$user_auth })
   output$user_role <- reactive({ auth()$user_info$role })
   output$data_permission <- reactive({ auth()$user_info$data })

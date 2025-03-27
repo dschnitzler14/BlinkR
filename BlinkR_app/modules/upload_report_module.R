@@ -79,7 +79,7 @@ upload_report_module_server <- function(id, auth, base_group_files_url, final_re
         req(auth())
         req(input$file_upload)
         
-        Group <- auth()$user_info$Group
+        group <- auth()$user_info$group
         user_name <- input$your_name
         uploaded_file <- input$file_upload
         
@@ -92,11 +92,11 @@ upload_report_module_server <- function(id, auth, base_group_files_url, final_re
         drive_folder <- googledrive::drive_get(pathname)
         
         if (nrow(drive_folder) == 0) {
-          output$upload_status <- renderText("Error: Group folder not found on Google Drive.")
+          output$upload_status <- renderText("Error: group folder not found on Google Drive.")
           return()
         }
         
-        file_name <- paste0("Final Report - ", user_name, " - Group ", Group, ".", tools::file_ext(uploaded_file$name))
+        file_name <- paste0("Final Report - ", user_name, " - group ", group, ".", tools::file_ext(uploaded_file$name))
         
         tryCatch({
           drive_upload(

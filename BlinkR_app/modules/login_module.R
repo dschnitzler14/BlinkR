@@ -71,7 +71,6 @@ output$signup_panel <- renderUI({
       ),
       actionButton(ns("generate_random_ID"), "Generate New Group ID",  class = "generate-id-button"),
       textInput(ns("sign_up_group_name"), "Group ID", placeholder = "Enter a new Group ID"),
-      #actionButton(ns("generate_GroupID"), "Generate Group ID", class = "custom-login-button"),
       textInput(ns("name"), "Your First Name", placeholder = "Enter the First Name of Anyone in your Group"),
       div(class = "text-danger", uiOutput(ns("sign_uperror"), inline = TRUE)),
       actionButton(ns("sign_up_button"), tagList(shiny::icon("right-to-bracket"), "Sign Up"), class = "custom-login-button"),
@@ -130,74 +129,15 @@ observeEvent(input$cancel_sign_up, {
 
   credentials <- reactiveValues(
   user_auth = FALSE,
-  info = list(Group = NULL, role = NULL, date = NULL, protocol = NULL, data = NULL),
+  info = list(group = NULL, role = NULL, date = NULL, protocol = NULL, data = NULL),
   session_folder = NULL,
   session_folder_url = NULL,
   session_folder_id = NULL
   )
 
-
-  #cookies
-   #observeEvent(session, {
-    #   req(!credentials$user_auth)
-      
-    #   stored_group_id <- get_cookie(cookie_name)  
-    #   if (!is.null(stored_group_id)) {
-    #     user <- user_base() %>% 
-    #       filter(Group == stored_group_id) %>% 
-    #       slice(1)
-        
-    #     if (nrow(user) == 1) {
-    #       credentials$user_auth <- TRUE
-    #       credentials$info <- user
-    #       credentials$info$role <- user$Role
-    #       credentials$info$data <- user$Data
-    #       credentials$info$protocol <- user$Protocol
-          
-    #       parent_folder_name <- "BlinkR_text_results"
-    #       parent_folder <- googledrive::drive_get(parent_folder_name)
-    #       if (nrow(parent_folder) == 0) {
-    #         parent_folder <- googledrive::drive_mkdir(parent_folder_name)
-    #       }
-          
-    #       if (credentials$info$role != "admin") {
-    #         group_name <- stored_group_id
-    #         session_folder_name <- group_name
-            
-    #         existing_folder <- googledrive::drive_ls(
-    #           path = googledrive::as_id(parent_folder$id),
-    #           pattern = session_folder_name
-    #         )
-            
-    #         if (nrow(existing_folder) == 0) {
-    #           new_folder <- googledrive::drive_mkdir(
-    #             name = session_folder_name,
-    #             path = googledrive::as_id(parent_folder$id)
-    #           )
-    #           folder_id <- new_folder$id
-    #           credentials$session_folder <- new_folder
-    #         } else {
-    #           credentials$session_folder <- existing_folder
-    #           folder_id <- existing_folder$id
-    #         }
-    #         drive_share_anyone(as_id(folder_id))
-    #         credentials$session_folder_id <- folder_id
-    #         folder_url <- paste0(base_group_files_url, folder_id)
-    #         credentials$session_folder_url <- folder_url
-    #       } else {
-    #         credentials$session_folder <- parent_folder
-    #         credentials$session_folder_id <- parent_folder$id
-    #         credentials$session_folder_url <- paste0(base_group_files_url, parent_folder$id)
-    #       }
-          
-    #       output$error <- renderText("Welcome back! You have been auto-logged in via cookie.")
-    #     }
-    #   }
-    # }, once = TRUE)
-    # ####
-
 observeEvent(input$generate_random_ID, {
-  existing_ids <- user_base()$Group
+  cat("generate_random_ID triggered\n")
+  existing_ids <- user_base()$group
   
   repeat {
     new_group_id <- sample(1000:9999, 1)
@@ -205,7 +145,7 @@ observeEvent(input$generate_random_ID, {
       break
     }
   }
-  
+  cat("new_group_id", new_group_id, "\n")
   updateTextInput(session, "sign_up_group_name", value = new_group_id)
 })
     
@@ -215,7 +155,7 @@ observeEvent(input$generate_random_ID, {
 
       
       user <- user_base() %>% 
-        filter(Group == input$group_name) %>% 
+        filter(group == input$group_name) %>% 
         slice(1)
       
       if (nrow(user) == 1) {
@@ -226,13 +166,6 @@ observeEvent(input$generate_random_ID, {
   credentials$info$protocol <- user$Protocol
   output$error <- renderText("")
 
-# #cookies
-#  set_cookie(
-#           cookie_name,      # the cookie name we defined
-#           input$group_name, # store the Group ID in the cookie
-#           expiration = 1    # store for 1 day
-#         )
-# ###
   parent_folder_name <- "BlinkR_text_results"
   parent_folder <- googledrive::drive_get(parent_folder_name)
 
@@ -282,19 +215,21 @@ observeEvent(input$generate_random_ID, {
 
     observeEvent(input$sign_up_button, {
       req(input$sign_up_group_name, input$name)
+      cat("sign_up_button triggered\n")
+      cat("group_name", input$sign_up_group_name, "\n")
 
       shinyjs::disable("sign_up_button")
 
       current_users <- all_users()
 
       user <- current_users %>%
-        filter(Group == input$sign_up_group_name) %>%
+        filter(group == input$sign_up_group_name) %>%
         slice(1)
 
       if (nrow(user) < 1) {
         credentials$user_auth <- TRUE
         credentials$info <- list(
-          Group = input$sign_up_group_name,
+          group = input$sign_up_group_name,
           role = "group",
           date = format(Sys.Date(), "%d/%m/%y"),
           protocol = "FALSE",
@@ -303,7 +238,7 @@ observeEvent(input$generate_random_ID, {
         output$error <- renderText("")
 
         new_user <- data.frame(
-          Group = as.character(input$sign_up_group_name),
+          group = as.character(input$sign_up_group_name),
           Role = as.character("group"),
           Name = as.character(input$name),
           Date = credentials$info$date,
@@ -389,7 +324,7 @@ observeEvent(input$generate_random_ID, {
       }
       
       credentials$user_auth <- FALSE
-      credentials$info <- list(Group = NULL, role = NULL, date = NULL, protocol = NULL, data = NULL)
+      credentials$info <- list(group = NULL, role = NULL, date = NULL, protocol = NULL, data = NULL)
       credentials$session_folder <- NULL
       credentials$session_folder_id <- NULL
       credentials$session_folder_url <- NULL

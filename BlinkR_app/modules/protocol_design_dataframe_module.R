@@ -20,10 +20,10 @@ experimental_design_module_server <- function(id, auth, protocol_file_id, sheet_
     
     observeEvent(input$submit_protocol_notes, {
       text_to_save <- input$experimental_design
-      group_name <- auth()$user_info$Group
+      group_name <- auth()$user_info$group
       
       new_entry <- data.frame(
-        Group = group_name,
+        group = group_name,
         InputQuestion = input_question,
         Experimental_Design = text_to_save,
         stringsAsFactors = FALSE

@@ -29,9 +29,9 @@ text_area_module_server <- function(id, auth, filename = "Filename", time = "") 
         temp_file <- tempfile(fileext = ".txt")
         writeLines(text_to_save, temp_file)
 
-        Group = auth()$user_info$Group
+        group = auth()$user_info$group
 
-        pathname <- paste0("BlinkR_text_results/", Group)
+        pathname <- paste0("BlinkR_text_results/", group)
 
         name <- paste0(
           filename,

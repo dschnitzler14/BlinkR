@@ -17,7 +17,7 @@ view_report_submission_admin_module_server <- function(id, final_reports_folder_
     load_data <- function() {
       df <- googledrive::drive_ls(as_id(final_reports_folder_id))
       df$Name <- str_extract(df$name, "(?<=^Final Report - )[^-]+")
-      df$Group <- str_extract(df$name, "(?<=Group )\\d+(?=\\.)")
+      df$Group <- str_extract(df$name, "(?<=group )\\d+(?=\\.)")
       df
     }
     observeEvent(input$refresh_data, {

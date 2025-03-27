@@ -3,16 +3,13 @@ library(googledrive)
 
 source("BlinkR_app/STEP1_define_variables.R")
 
-#enter your gmail address here
-email_address = "appdemo41@gmail.com"
+# options(
+#   gargle_oauth_email = TRUE,
+#   gargle_oauth_cache = "BlinkR_app/.secrets"
+# )
 
-options(
-  gargle_oauth_email = TRUE,
-  gargle_oauth_cache = "BlinkR_app/.secrets"
-)
-
-gs4_auth(email = email_address, cache = "BlinkR_app/.secrets")
-drive_auth(email = email_address, cache = "BlinkR_app/.secrets")
+# googlesheets4::gs4_auth()
+# googledrive::drive_auth()
 
 
 check_and_create_folder <- function(folder_name) {
@@ -56,13 +53,13 @@ files <- list(
   "BlinkR_Combined_Class_Data" = c("group", "initials", "id", experiment_variables$levels_variable_name, 
                                    "technical_replicate", experiment_variables$measurement_variable_name, "submission_id"), 
   "BlinkR_Class_Protocol" = NULL,
-  "BlinkR Users" = c("Group", "Role", "Name", "Date", "Protocol", "Data"),
+  "BlinkR Users" = c("group", "Role", "Name", "Date", "Protocol", "Data"),
   "Feedback" = c("Timestamp", "Overall_Experience", "Clarity", "Clarity_Issues", "Bugs", "Bug_Details", "Experiment_Tools", 
                   "Missing_Features", "Useful_Features", "Least_Useful_Features", "General_Feedback")
 )
 
 initial_entry_users <- data.frame(
-  Group = "5767",
+  group = "5767",
   Role = "admin",
   Name = "Admin",
   Date = as.character(Sys.Date()),
@@ -85,7 +82,7 @@ read_user_base <- function(file_name) {
     user_base <- read_sheet(sheet$id)
     user_base <- user_base %>%
       mutate(
-        Group = as.character(Group),
+        group = as.character(group),
         Role = as.character(Role),
         Name = as.character(Name),
         Date = as.Date(Date),

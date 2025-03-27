@@ -39,6 +39,14 @@ source("STEP3_google_drive_app_set_up.R")
 source("STEP1_define_variables.R")
 source("data_hazards_list.R")
 
+options(
+  gargle_oauth_email = TRUE,
+  gargle_oauth_cache = ".secrets"
+)
+
+googlesheets4::gs4_auth()
+googledrive::drive_auth()
+
 # fetch experimental variables
 experiment_vars <- experiment_variables
 

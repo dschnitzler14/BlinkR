@@ -33,7 +33,7 @@ share_to_groups_admin_module_server <- function(id, user_base_data, column, user
     date_group_choices <- user_base %>%
       filter(!is.na(Date)) %>%   
       group_by(Date) %>%         
-      summarize(Groups = list(unlist(Group))) %>% 
+      summarize(Groups = list(unlist(group))) %>% 
       deframe()  
     
     output$group_picker <- renderUI(
@@ -64,7 +64,7 @@ share_to_groups_admin_module_server <- function(id, user_base_data, column, user
       }
       
       for (group in input$group_input) {
-        row_index <- which(user_base$Group == group)
+        row_index <- which(user_base$group == group)
         
         cell_range <- paste0(column, row_index + 1)
         
@@ -86,7 +86,7 @@ share_to_groups_admin_module_server <- function(id, user_base_data, column, user
       }
       
       for (group in input$group_input) {
-        row_index <- which(user_base$Group == group)
+        row_index <- which(user_base$group == group)
         
         cell_range <- paste0(column, row_index + 1)
         

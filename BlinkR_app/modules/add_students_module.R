@@ -35,7 +35,7 @@ group_info_module_server <- function(id, db_student_table, auth) {
         current_table <- db_student_table()
 
         new_entry <- data.frame(
-          group = as.character(auth()$user_info$Group),
+          group = as.character(auth()$user_info$group),
           id = as.integer(next_id()),
           initials = as.character(initials),
           remove = as.character("Remove"),

@@ -1,10 +1,10 @@
 experiment_variables <- list(
-  measurement_variable_name = "length_of_arm", #lowercase
-  measurement_text_name = "Arm Length",
-  levels_variable_name = "eye_colour",
-  levels_text_name = "Eye Colour",
-  level_a_variable_name = "blue",
-  level_a_text_name = "Blue",
-  level_b_variable_name = "brown", #control
-  level_b_text_name = "Brown" #control
+  measurement_variable_name = "blinks_per_minute", #lowercase
+  measurement_text_name = "Blinks Per Minute",
+  levels_variable_name = "stress_status",
+  levels_text_name = "Stress Status",
+  level_a_variable_name = "stressed",
+  level_a_text_name = "Stressed",
+  level_b_variable_name = "unstressed", #control
+  level_b_text_name = "Unstressed" #control
 )

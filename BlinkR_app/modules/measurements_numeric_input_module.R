@@ -171,7 +171,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
         
         if(overwrite) {
           current_data <- current_data[
-            !(current_data$Submission_ID == submission_id),
+            !(current_data$submission_id == submission_id),
           ]
         }
         

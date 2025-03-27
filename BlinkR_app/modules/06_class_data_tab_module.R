@@ -140,11 +140,12 @@ class_data_module_server <- function(
         )
       }, server = TRUE)
       
+      
       observe({
         measurement_data <- db_measurement()
         req(!is.null(measurement_data), nrow(measurement_data) > 0)
         
-        group_name <- unique(measurement_data$Group)[1]
+        group_name <- unique(measurement_data$group)[1]
         existing_sheets <- sheet_names(ss = BlinkR_measurement_sheet)
         sheet_name <- paste0(group_name, "_", Sys.Date())
         
@@ -163,4 +164,5 @@ class_data_module_server <- function(
     }
   )
 }
+
 
