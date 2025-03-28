@@ -61,8 +61,6 @@ introduction_module_server <- function(id, parent.session, auth_status){
           width = 12,
           collapsible = FALSE,
 
-        #fluidRow(
-          # Row 1: Start Here
           column(12,
             div(
               class = "roadmap-section",
@@ -75,7 +73,6 @@ introduction_module_server <- function(id, parent.session, auth_status){
             )
           ),
           
-          # Row 2: Research Steps
           column(12,
             div(
               class = "roadmap-section",
@@ -88,7 +85,6 @@ introduction_module_server <- function(id, parent.session, auth_status){
             )
           ),
 
-          # Row 3: Data Collection & Analysis
           column(12,
             div(
               class = "roadmap-section",
@@ -103,7 +99,6 @@ introduction_module_server <- function(id, parent.session, auth_status){
             )
           ),
 
-          # Row 4: Presentation & Writing
           column(12,
             div(
               class = "roadmap-section",
@@ -114,7 +109,6 @@ introduction_module_server <- function(id, parent.session, auth_status){
             )
           ),
 
-          # Row 5: Submission
           column(12,
             div(
               class = "roadmap-section",
@@ -122,7 +116,7 @@ introduction_module_server <- function(id, parent.session, auth_status){
               actionButton(session$ns("upload_report"), label = tagList(icon("upload"), "Upload Report"), class = "action-button custom-action", `data-id` = "Upload_Report")
             )
           )
-        #)
+        
       )
       )
       })

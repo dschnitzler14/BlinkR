@@ -78,7 +78,6 @@ hypothesis_module_ui <- function(id) {
   )
 }
 
-# Hypothesis Module Server
 hypothesis_module_server <- function(id, parent.session, auth) {
   moduleServer(
     id,

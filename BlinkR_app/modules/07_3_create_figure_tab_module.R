@@ -195,7 +195,6 @@ predefined_code_boxplot <- whisker.render(
     req(!is.null(input$figure_type_selector), input$figure_type_selector == "bar")
     req(!is.null(figure_editor_bar_plot()), !is.null(figure_editor_bar_plot()$result))
     if (isTRUE(figure_editor_bar_plot()$is_plot)) {
-    #if (inherits(barplot, "ggplot")) {
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),
@@ -239,7 +238,6 @@ predefined_code_boxplot <- whisker.render(
   req(!is.null(figure_editor_box_plot()), !is.null(figure_editor_box_plot()$result))
 
   if (isTRUE(figure_editor_box_plot()$is_plot) && inherits(figure_editor_box_plot()$result, "ggplot")) {
-    #if (inherits(boxplot, "ggplot")) {
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", "\U1F64C Great Job!"),

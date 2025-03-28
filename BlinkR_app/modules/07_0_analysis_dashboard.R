@@ -119,7 +119,6 @@ analysis_dashboard_module_ui <- function(id) {
               width = 12,
               div(
                 style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
-                #download_handler_ui("download_script", "Download R Script")
                 actionButton(ns("link_to_drive"),
                              label = tagList(icon("google-drive"), "View on Google Drive"),
                              class = "btn-primary"
@@ -169,7 +168,6 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
       updateTabItems(parent.session, "sidebar", "Prepare_Data")
     })
       
-    #source("data/test_analysis.R")
     
     # Summary Results
     
@@ -228,16 +226,6 @@ analysis_dashboard_module_server <- function(id, parent.session, saved_results, 
       req(saved_results$recorded_plots[["box_plot"]])
       replayPlot(saved_results$recorded_plots[["box_plot"]])
     })
-
-    #stats results
-    # output$saved_stats_results <- renderUI({
-    #   req(!is.null(saved_results$scripts[["stats_two_sample"]]) || !is.null(saved_results$scripts[["stats_paired"]]))
-      
-    #   tagList(
-    #     verbatimTextOutput(session$ns("saved_stats_script"))
-    #     #download_handler_ui(session$ns("download_stats"), "Download Stats Results")
-    #   )
-    # })
     
     
     stats_content_reactive <- reactive({
@@ -333,7 +321,6 @@ stats_interpretation_content_reactive <- reactive({
       
       tagList(
         verbatimTextOutput(session$ns("saved_stats_script"))
-        #download_handler_ui(session$ns("download_stats"), "Download Stats Results")
       )
     })
     
@@ -341,7 +328,6 @@ stats_interpretation_content_reactive <- reactive({
       stats_content_reactive()
     })
 
-    ##
 
     output$saved_effect_size_results <- renderUI({
       req(effect_size_content_reactive())
@@ -367,17 +353,6 @@ output$stats_interpretation <- renderUI({
     output$saved_stats_interpretation <- renderText({
       stats_interpretation_content_reactive()
     })
-
-
-    # download_handler_server(
-    #   "download_stats",
-    #   content_reactive = stats_content_reactive,
-    #   filename_generator = function() {
-    #     paste0("stats-results-", Sys.Date(), ".txt")
-    #   },
-    #   type = "text"
-    # )
-    
     
     # Figure
     
@@ -395,7 +370,6 @@ output$stats_interpretation <- renderUI({
             collapsed = FALSE,
             width = 12,
             plotOutput(session$ns(paste0("plot_", key)))
-            #download_handler_ui(ns_key, label = "Download This Plot")
           )
         })
       )
@@ -419,31 +393,9 @@ output$stats_interpretation <- renderUI({
           }
         })
         
-        # download_handler_server(
-        #   key,
-        #   content_reactive = reactive({
-        #     req(saved_results$plots[[key]])
-        #     saved_results$plots[[key]]
-        #   }),
-        #   filename_generator = function() {
-        #     paste0(key, "-plot-", Sys.Date(), ".png")
-        #   },
-        #   type = "plot"
-        # )
       })
     })
     
-    
-    # download_handler_server(
-    #   "download_script",
-    #   content_reactive = reactive({
-    #     "data/test_analysis.R"
-    #   }),
-    #   filename_generator = function() {
-    #     "test_analysis.R"
-    #   },
-    #   type = "file"
-    # )
     
 
   observeEvent(input$link_to_drive, {

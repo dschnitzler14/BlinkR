@@ -1,7 +1,7 @@
 /* Global styling adjustments */
 body {
-  font-family: Arial, sans-serif; /* Revert to original font */
-  background-color: #f9f9f9; /* Light gray background */
+  font-family: Arial, sans-serif; 
+  background-color: #f9f9f9;
   color: #333;
 }
 
@@ -30,20 +30,20 @@ body {
 
 /* Custom action buttons */
 .action-button.custom-action {
-  background-color: #ff9800; /* Fun orange */
+  background-color: #ff9800;
   color: white;
-  font-weight: bold;        /* Bold text */
-  font-size: 16px;          /* Slightly larger text */
-  border: none;             /* No border */
-  border-radius: 25px;      /* Fully rounded edges for a pill shape */
-  padding: 10px 20px;       /* Padding for size */
-  cursor: pointer;          /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth animation */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+  font-weight: bold;       
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .action-button.custom-action:hover {
-  background-color: #fb8c00; /* Slightly darker orange */
+  background-color: #fb8c00;
   transform: scale(1.1);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -55,16 +55,12 @@ body {
 
 .action-button.primary-action {
   background-color: #4CAF50;
-  /* Green to signify starting point */
   color: white;
   font-weight: bold;
   font-size: 18px;
-  /* Slightly larger than other buttons */
   border: none;
   border-radius: 25px;
-  /* Rounded edges for a pill shape */
   padding: 10px 20px;
-  /* Slightly bigger padding */
   cursor: pointer;
   transition: all 0.3s ease;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
@@ -73,22 +69,19 @@ body {
 
 .action-button.primary-action:hover {
   background-color: #43A047;
-  /* Darker green on hover */
   transform: scale(1.15);
-  /* More pronounced hover effect */
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .action-button.primary-action.clicked {
   background-color: #2E7D32 !important;
-  /* Even darker green when clicked */
   color: white !important;
 }
 
 /* Card-style container for visual appeal */
 .custom-box {
-  border-radius: 15px; /* Rounded edges */
-  background: linear-gradient(135deg, #ffffff, #f1f8e9); /* Soft gradient */
+  border-radius: 15px;
+  background: linear-gradient(135deg, #ffffff, #f1f8e9);
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -137,7 +130,7 @@ body {
 }
 
 .yellow-box::before {
-  content: "💡"; /* Lightbulb emoji */
+  content: "💡";
   font-size: 1.5em;
   margin-right: 5px;
 }
@@ -152,22 +145,18 @@ h3 {
 
 .markdown-body h1 {
   font-size: 1.8em;
-  /* Adjusted to be closer to the box title */
   color: #4caf50;
-  /* Bright green */
   text-align: center;
   margin-bottom: 0.5em;
 }
 
 .markdown-body h2 {
   font-size: 1.5em;
-  /* Matches the box title size */
   color: #ff9800;
 }
 
 .markdown-body h3 {
   font-size: 1.3em;
-  /* Slightly smaller for hierarchy consistency */
   color: #007bff;
 }
 
@@ -215,193 +204,159 @@ a:hover {
 .skin-blue .sidebar-menu > li.active > a {
   color: white !important;
   font-weight: bold;
-  border-left: 5px solid #333; /* Common border for active items */
+  border-left: 5px solid #333;
 }
 
 /* Active Sidebar Item */
 .skin-blue .sidebar-menu > li.active > a {
-  background-color: #80bc28 !important; /* Green matching the header */
-  color: white !important; /* White text */
+  background-color: #80bc28 !important;
+  color: white !important;
   font-weight: bold;
-  border-left: 5px solid #6ca322; /* Slightly darker green border for emphasis */
+  border-left: 5px solid #6ca322;
 }
 
 /* Sidebar Item Hover Effect */
 .skin-blue .sidebar-menu > li:hover > a {
-  background-color: #6ca322 !important; /* Slightly darker green on hover */
+  background-color: #6ca322 !important;
   color: white !important;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  transform: scale(1.03); /* Slight zoom-in effect */
+  transform: scale(1.03);
 }
 
 /* Submenu Items Under Sidebar */
 .skin-blue .sidebar-menu > li > ul > li > a {
-  color: white !important; /* White text for submenu items */
-  padding-left: 20px; /* Indentation for submenu items */
+  color: white !important;
+  padding-left: 20px;
   transition: color 0.3s ease-in-out;
 }
 
 .skin-blue .sidebar-menu > li > ul > li > a:hover {
-  color: #e0f2e9 !important; /* Light green text on hover */
-  background-color: #6ca322 !important; /* Slightly darker green background */
+  color: #e0f2e9 !important;
+  background-color: #6ca322 !important;
   transition: all 0.3s ease;
 }
 
 
 .custom-dark-yellow {
-  background-color: #D4AF37; /* Dark Yellow */
-  color: white;              /* White text */
-  font-weight: bold;        /* Bold text */
-  font-size: 16px;          /* Slightly larger text */
-  border: none;             /* No border */
-  border-radius: 25px;      /* Fully rounded edges for a pill shape */
-  padding: 10px 20px;       /* Padding for size */
-  cursor: pointer;          /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth animation */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+  background-color: #D4AF37;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none; 
+  border-radius: 25px;      
+  padding: 10px 20px;       
+  cursor: pointer;          
+  transition: all 0.3s ease; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
 }
 
 .custom-dark-yellow:hover {
-  background-color: #C99A2B; /* Slightly darker yellow on hover */
-  transform: scale(1.1);     /* Slight zoom-in */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add soft shadow */
+  background-color: #C99A2B;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .custom-dark-yellow.clicked {
-  background-color: #28a745 !important; /* Green background when clicked */
-  color: white !important;             /* White text */
+  background-color: #28a745 !important;
+  color: white !important;    
 }
  
 /* Base style for all buttons */
 .custom-button {
   color: #ffffff;
-  /* White text */
   border: none;
-  /* Remove border */
   font-weight: bold;
-  /* Make text bold */
   border-radius: 5px;
-  /* Slightly rounded corners */
   padding: 8px 15px;
-  /* Padding around text */
   display: inline-flex;
-  /* Aligns emoji and text properly */
   align-items: center;
-  /* Centers items vertically */
   justify-content: center;
-  /* Ensures text stays centered */
   gap: 8px;
-  /* Spacing between icon and text */
   cursor: pointer;
-  /* Cursor changes to pointer */
   transition: all 0.2s ease;
-  /* Smooth transition */
   min-width: 160px;
-  /* Ensures all buttons have the same width */
   max-width: 160px;
-  /* Prevents buttons from stretching */
   height: 40px;
-  /* Consistent button height */
   text-align: center;
   margin: 5px;
-  /* Adds space around each button */
 }
 
 /* Individual button colors */
 .custom-run-button {
   background-color: #28a745;
-  /* Green */
 }
 
 .custom-run-button:hover {
   background-color: #218838;
-  /* Darker green on hover */
 }
 
 .custom-clear-button {
   background-color: #2995b3;
-  /* Light green */
 }
 
 .custom-clear-button:hover {
   background-color: #24839d;
-  /* Slightly darker green on hover */
 }
 
 .custom-clear-button:active {
   background-color: #1d687d;
-  /* Even darker on click */
 }
 
 .custom-send-button {
   background-color: #f4b400;
-  /* Warm golden yellow */
 }
 
 .custom-send-button:hover {
   background-color: #d99a00;
-  /* Slightly darker yellow on hover */
 }
 
 .custom-send-button:active {
   background-color: #b78400;
-  /* Even darker yellow on click */
 }
 
 .fun-save-button {
-  background-color: #ff69b4; /* Hot pink background */
-  color: #ffffff;           /* White text */
-  font-weight: bold;        /* Bold text */
-  font-size: 16px;          /* Slightly larger text */
-  border: none;             /* No border */
-  border-radius: 25px;      /* Fully rounded edges for a pill shape */
+  background-color: #ff69b4;
+  color: #ffffff;         
+  font-weight: bold;        
+  font-size: 16px;         
+  border: none;             
+  border-radius: 25px;      
   padding: 10px 20px;  
-  margin-bottom: 10px;     /* Padding for size */
-  cursor: pointer;          /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth animation */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+  margin-bottom: 10px;    
+  cursor: pointer;          
+  transition: all 0.3s ease; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .fun-save-button:hover {
-  background-color: #ff1493; /* Darker pink on hover */
-  transform: scale(1.1);     /* Slight zoom-in effect */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft hover shadow */
+  background-color: #ff1493; 
+  transform: scale(1.1);     
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .fun-save-button:active {
-  background-color: #c71585; /* Even darker pink on click */
-  transform: scale(1.0);     /* Return to normal size */
+  background-color: #c71585; 
+  transform: scale(1.0);     
 }
 
 .fun-generate-button {
   background-color: #f4d03f;
   color: #333333;
   font-weight: 600;
-  /* Medium-bold text */
   font-size: 14px;
-  /* Reduced from 16px */
   border: none;
-  /* No border */
   border-radius: 12px;
-  /* Less rounded than 25px */
   padding: 8px 16px;
-  /* Smaller padding */
   margin-bottom: 10px;
-  /* Space below button */
   cursor: pointer;
-  /* Pointer on hover */
   transition: all 0.3s ease;
-  /* Smooth animation */
   text-shadow: none;
-  /* Remove the heavier text shadow */
 }
 
 .fun-generate-button:hover {
   background-color: #f4d03f;
   transform: scale(1.05);
-  /* Subtler zoom than 1.1 */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  /* Light hover shadow */
 }
 
 .fun-generate-button:active {
@@ -414,14 +369,10 @@ a:hover {
   color: #ffffff;
   font-weight: 600;
   font-size: 14px;
-  /* Slightly larger text than 12px */
   border: none;
   border-radius: 10px;
-  /* A bit more rounding */
   padding: 8px 14px;
-  /* Increased padding for a medium footprint */
   margin-bottom: 10px;
-  /* Space below the button */
   cursor: pointer;
   transition: all 0.2s ease;
   text-shadow: none;
@@ -439,129 +390,113 @@ a:hover {
 }
 
 .fun-delete-button {
-  background-color: #dc3545; /* Red background (Bootstrap danger color) */
-  color: #ffffff;           /* White text */
-  font-weight: bold;        /* Bold text */
-  font-size: 16px;          /* Slightly larger text */
-  border: none;             /* No border */
-  border-radius: 25px;      /* Fully rounded edges for a pill shape */
-  padding: 10px 20px;       /* Padding for size */
-  cursor: pointer;          /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth animation */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+  background-color: #dc3545;
+  color: #ffffff;           
+  font-weight: bold;        
+  font-size: 16px;          
+  border: none;             
+  border-radius: 25px;      
+  padding: 10px 20px;       
+  cursor: pointer;          
+  transition: all 0.3s ease; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .fun-delete-button:hover {
-  background-color: #c82333; /* Darker red on hover */
-  transform: scale(1.05);    /* Slight zoom-in effect */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft hover shadow */
+  background-color: #c82333; 
+  transform: scale(1.05);    
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .fun-delete-button:active {
-  background-color: #bd2130; /* Even darker red on click */
-  transform: scale(1.0);     /* Return to normal size */
+  background-color: #bd2130; 
+  transform: scale(1.0);     
 }
 
 .fun-nav-button {
   background-color: #80bc28;
-  /* Green background */
   color: #ffffff;
-  /* White text */
   font-weight: 600;
-  /* Semi-bold text */
   font-size: 13px;
-  /* Reduced from 14px to 13px */
   border: none;
-  /* No border */
   border-radius: 8px;
-  /* Less rounded corners */
   padding: 5px 10px;
-  /* Smaller padding */
   cursor: pointer;
-  /* Pointer on hover */
   transition: all 0.2s ease;
-  /* Smooth hover transition */
   box-shadow: none;
-  /* Minimal default shadow */
   text-shadow: none;
-  /* No text shadow */
 }
 
 .fun-nav-button:hover {
   background-color: #80bc28;
-  /* Slightly adjust if you want a distinct hover color */
   transform: scale(1.03);
-  /* Subtle zoom effect */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  /* Light hover shadow */
 }
 
 .fun-nav-button:active {
   background-color: #80bc28;
-  /* Optionally darken further on click */
   transform: scale(1.0);
-  /* Reset size on click */
 }
 
 .fun-download-button {
-  background-color: #6c757d; /* Grey background (Bootstrap secondary color) */
-  color: #ffffff;           /* White text */
-  font-weight: bold;        /* Bold text */
-  font-size: 16px;          /* Slightly larger text */
-  border: none;             /* No border */
-  border-radius: 25px;      /* Fully rounded edges for a pill shape */
-  padding: 10px 20px;       /* Padding for size */
-  cursor: pointer;          /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth animation */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Fun text shadow */
+  background-color: #6c757d; 
+  color: #ffffff;         
+  font-weight: bold;        
+  font-size: 16px;          
+  border: none;            
+  border-radius: 25px;      
+  padding: 10px 20px;       
+  cursor: pointer;          
+  transition: all 0.3s ease; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
 }
 
 .fun-download-button:hover {
-  background-color: #5a6268; /* Darker grey on hover */
-  transform: scale(1.05);    /* Slight zoom-in effect */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft hover shadow */
+  background-color: #5a6268;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .fun-download-button:active {
-  background-color: #545b62; /* Even darker grey on click */
-  transform: scale(1.0);     /* Return to normal size */
+  background-color: #545b62;
+  transform: scale(1.0);
 }
 
 /* Analysis Main Tab - Remains Active */
 .skin-blue .sidebar-menu > li:nth-child(6).active > a,
 .skin-blue .sidebar-menu > li:nth-child(6) > ul > li.active > a {
-  background-color: #80bc28 !important; /* Green matching header */
-  color: white !important; /* White text */
+  background-color: #80bc28 !important;
+  color: white !important;
   font-weight: bold;
-  border-left: 5px solid #6ca322; /* Slightly darker green border for emphasis */
+  border-left: 5px solid #6ca322;
 }
 
 /* Analysis Submenu Item - Active State */
 .skin-blue .sidebar-menu > li:nth-child(6) > ul > li.active > a {
-  color: #80bc28 !important; /* Green font for active submenu */
-  background-color: transparent !important; /* No background color */
+  color: #80bc28 !important;
+  background-color: transparent !important;
   font-weight: bold;
 }
 
 /* Analysis Submenu Hover Effect */
 .skin-blue .sidebar-menu > li:nth-child(6) > ul > li > a:hover {
-  color: #80bc28 !important; /* Green font on hover */
-  background-color: rgba(128, 188, 40, 0.1) !important; /* Light green background */
+  color: #80bc28 !important;
+  background-color: rgba(128, 188, 40, 0.1) !important;
   transition: all 0.3s ease;
 }
 
 /* Sidebar Hover Effect for Non-Active Submenu Items */
 .skin-blue .sidebar-menu > li:hover > a {
-  background-color: #6ca322 !important; /* Slightly darker green */
+  background-color: #6ca322 !important;
   color: white !important;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  transform: scale(1.03); /* Slight zoom-in effect */
+  transform: scale(1.03);
 }
 
 /* Submenu Indentation for Consistent Styling */
 .skin-blue .sidebar-menu > li > ul > li > a {
-  color: white !important; /* Default white font */
-  padding-left: 20px; /* Indentation for submenu items */
+  color: white !important;
+  padding-left: 20px;
   transition: color 0.3s ease-in-out;
 }
 
@@ -614,29 +549,29 @@ a:hover {
 
 /* General styling for the wellPanel containing R code */
 .r-code-block {
-  font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
-  font-size: 14px; /* Slightly smaller font */
-  background-color: #f5f5f5; /* Light grey background */
-  color: #333; /* Dark text color */
-  padding: 10px; /* Padding for readability */
-  border: 1px solid #ddd; /* Border around the block */
-  border-radius: 5px; /* Rounded corners */
-  overflow-x: auto; /* Horizontal scrolling for long lines */
-  white-space: pre-wrap; /* Preserve formatting */
-  line-height: 1.4; /* Spacing between lines */
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  line-height: 1.4;
 }
 
 /* Optional: Highlight R syntax (basic) */
 .r-code-block .function {
-  color: #0074D9; /* Blue for functions */
+  color: #0074D9;
 }
 
 .r-code-block .keyword {
-  color: #FF4136; /* Red for keywords like `%>%` */
+  color: #FF4136;
 }
 
 .r-code-block .value {
-  color: #2ECC40; /* Green for values and variables */
+  color: #2ECC40;
 }
 
 
@@ -750,7 +685,6 @@ a:hover {
 .editor-container.shiny-html-output {
   display: block !important;
   flex-wrap: nowrap !important;
-  /* override any flex wrap from higher-level rules */
   justify-content: flex-start !important;
   width: 100% !important;
   max-width: 100% !important;
@@ -759,36 +693,24 @@ a:hover {
 
 .page-title-box {
   background-color: #80bc28;
-  /* Green background */
   color: #ffffff;
-  /* White text */
   border: none;
-  /* No border */
   border-radius: 0px;
-  /* Remove rounded corners to avoid button look */
   padding: 8px 0;
-  /* Minimal vertical padding for a header feel */
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
-  /* Center text */
   font-weight: bold;
-  /* Make it stand out */
   display: block;
-  /* Ensure full-width alignment */
 }
 
 .page-title-box h2 {
   margin: 0;
-  /* Remove extra margin */
   padding: 0;
   font-size: 22px;
-  /* Larger font to look like a heading */
   font-weight: bold;
   text-transform: uppercase;
-  /* Optional: Make it feel like a real section title */
   letter-spacing: 1px;
-  /* Slight letter spacing for readability */
 }
 
 
@@ -841,9 +763,7 @@ a:hover {
 /* Constrain the width of paragraph text */
 #signup-panel p {
   max-width: 300px;
-  /* Adjust width for best readability */
   margin: 0 auto;
-  /* Ensures centering */
 }
 
 #login-panel {
@@ -854,125 +774,77 @@ a:hover {
 
 .fun-choice-button {
   background-color: #ff69b4;
-  /* Hot pink background */
   color: #ffffff;
-  /* White text */
   font-weight: bold;
-  /* Bold text */
   font-size: 16px;
-  /* Slightly larger text */
   border: none;
-  /* No border */
   border-radius: 25px;
-  /* Fully rounded edges for a pill shape */
   padding: 10px 20px;
-  /* Good-sized padding */
   margin-bottom: 10px;
-  /* Space below button */
   cursor: pointer;
-  /* Pointer on hover */
   transition: all 0.3s ease;
-  /* Smooth animation */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  /* Subtle text shadow */
 }
 
 .fun-choice-button:hover {
   background-color: #ff1493;
-  /* Darker pink on hover */
   transform: scale(1.1);
-  /* Slight zoom-in effect */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  /* Soft hover shadow */
 }
 
 .fun-choice-button:active {
   background-color: #c71585;
-  /* Even darker pink on click */
   transform: scale(1.0);
-  /* Return to normal size */
 }
 
 .custom-login-button {
   background-color: #007bff;
-  /* Primary blue background */
   color: #ffffff;
-  /* White text */
   font-weight: 600;
-  /* Semi-bold text */
   font-size: 14px;
-  /* Stay relatively small */
   border: none;
-  /* No border */
   border-radius: 8px;
-  /* Slightly rounded corners */
   padding: 8px 14px;
-  /* Light padding */
   margin-bottom: 10px;
-  /* Space below button */
   cursor: pointer;
-  /* Pointer on hover */
   transition: all 0.2s ease;
-  /* Smooth hover transition */
   text-shadow: none;
-  /* Remove heavy text shadow */
 }
 
 .custom-login-button:hover {
   background-color: #0056b3;
-  /* Darker blue on hover */
   transform: scale(1.03);
-  /* Subtle zoom effect */
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-  /* Light hover shadow */
 }
 
 .custom-login-button:active {
   background-color: #004491;
-  /* Even darker blue on click */
   transform: scale(1.0);
-  /* Return to normal size */
 }
 
 .custom-cancel-button {
   background-color: #6c757d;
-  /* Gray background (Bootstrap secondary) */
   color: #ffffff;
-  /* White text */
   font-weight: 600;
-  /* Semi-bold text */
   font-size: 14px;
-  /* Same size as login button */
   border: none;
-  /* No border */
   border-radius: 8px;
-  /* Matching corners */
   padding: 8px 14px;
-  /* Same padding */
   margin-bottom: 10px;
-  /* Space below button */
   cursor: pointer;
-  /* Pointer on hover */
   transition: all 0.2s ease;
-  /* Smooth transition */
   text-shadow: none;
-  /* No heavy text shadow */
 }
 
 .custom-cancel-button:hover {
   background-color: #5a6268;
-  /* Darker gray on hover */
   transform: scale(1.03);
-  /* Subtle zoom effect */
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-  /* Light shadow */
 }
 
 .custom-cancel-button:active {
   background-color: #545b62;
-  /* Slightly darker on click */
   transform: scale(1.0);
-  /* Return to normal size */
 }
 
 /* Subtle link-style button */
@@ -1002,18 +874,13 @@ a:hover {
 
 .sidebar-menu li.conditional-admin {
   font-size: 18px !important;
-  /* Ensure consistent font size */
   padding: 10px 15px !important;
-  /* Match the padding of normal menu items */
   text-align: left !important;
-  /* Ensure left alignment */
   display: block !important;
-  /* Prevent shrinking */
 }
 
 .sidebar-menu li.conditional-admin>a {
   color: white !important;
-  /* Match other sidebar items */
   font-weight: normal !important;
   display: flex;
   align-items: center;
@@ -1021,11 +888,9 @@ a:hover {
 
 .sidebar-menu li.conditional-admin>a:hover {
   background-color: #007bff !important;
-  /* Hover color matches */
   color: white !important;
 }
 
-/* Ensure the lock icon aligns with other menu icons */
 .sidebar-menu li.conditional-admin i {
   margin-right: 10px !important;
 }

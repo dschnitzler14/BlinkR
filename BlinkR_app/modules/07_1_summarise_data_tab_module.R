@@ -105,7 +105,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
     
     average_trs <- reactive({ average_trs_results })
   
-  #step1 calculation
+  #step1 calculation level b
     level_b_data <- reactive({ NULL })
 
     level_b_data_result <- average_trs() %>%
@@ -113,14 +113,14 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
     
     level_b_data <- reactive({ level_b_data_result })
 
-  #step2 calculation
+  #step2 calculation level b
     level_b_mean <- reactive({ NULL })
 
     level_b_mean_result <- mean(level_b_data()$average_measurement, na.rm = TRUE) 
     
     level_b_mean <- reactive({ level_b_mean_result })
 
-  #step3 calculation
+  #step3 calculation level b
 
     level_b_sd <- reactive({ NULL })
 
@@ -128,7 +128,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
 
     level_b_sd <- reactive({ level_b_sd_result })
 
-  #step4 calculation
+  #step4 calculation level b
   
     level_b_n <- reactive({ NULL })
 
@@ -143,7 +143,7 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
     level_b_sem <- reactive({ level_b_sem_result })
 
 ## level_a reactive values
-#step1 calculation
+#step1 calculation level a
 
     level_a_data <- reactive({
   average_trs() %>%
@@ -152,19 +152,19 @@ analysis_summarise_data_module_server <- function(id, results_data, parent.sessi
     )
 })
 
-  #step2 calculation
+  #step2 calculation level a
 
 level_a_mean <- reactive({
   mean(level_a_data()$average_measurement, na.rm = TRUE)
 })
 
-  #step3 calculation
+  #step3 calculation level a
 
 level_a_sd <- reactive({
   sd(level_a_data()$average_measurement, na.rm = TRUE)
 })
 
-  #step4 calculation
+  #step4 calculation level a
 
 level_a_n <- reactive({
   nrow(level_a_data())
@@ -546,7 +546,6 @@ output$step6_box <- renderUI({
 observe({
   req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
   
-  #mean_value <- as.numeric(summarise_result_step6()$result[[1]])
   level_a_mean_value <- as.numeric(level_a_mean())
 
 if (!is.null(summarise_result_step6()$result[[1]]) &&
@@ -616,7 +615,6 @@ output$step7_box <- renderUI({
 observe({
   req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
   
-  #sd_value <- as.numeric(summarise_result_step7()$result[[1]])
   level_a_sd_value <- as.numeric(level_a_sd())
 
 if (!is.null(summarise_result_step7()$result[[1]]) &&
@@ -853,9 +851,6 @@ observe({
       div(class = "error-box", "\U1F914 Not quite - try again!")
     })
     
-    # output$save_summary_result <- renderUI({
-    #       NULL
-    #     })
   }
 })
     

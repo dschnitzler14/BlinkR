@@ -158,9 +158,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           group = as.character(group_name),
           initials = as.character(student_name),
           id = as.integer(student_ID),
-          #vars$levels_variable_name = as.character(level),
           technical_replicate = as.integer(1:length(inputs)),
-          #vars$measurement_variable_name = as.integer(unlist(inputs)),
           submission_id = as.character(submission_id),
           stringsAsFactors = FALSE
         )

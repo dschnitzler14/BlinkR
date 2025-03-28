@@ -22,12 +22,6 @@ share_to_groups_admin_module_server <- function(id, user_base_data, column, user
 
     ns <- session$ns
     
-
-    # observe({
-    #   req(user_base_data)
-    #   user_base <- as.data.frame(user_base_data)
-    # })
-
     user_base <- user_base_data
     
     date_group_choices <- user_base %>%

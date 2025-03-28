@@ -146,7 +146,6 @@ average_trs_paired_wide <- reactive({
   showNotification(paste0(name, " result saved successfully."), type = "message", duration = 3)
 }
 
-### 
 rmd_content_analysis_hist_plot_explainer <- readLines("markdown/07_analysis/analysis_hist_plot_explainer.Rmd")
 processed_rmd_analysis_hist_plot_explainer <- whisker.render(paste(rmd_content_analysis_hist_plot_explainer, collapse = "\n"), vars)
 
@@ -249,8 +248,6 @@ if(!is.null(normal_unpaired_result()$result)){
         overwrite = TRUE
       )
       
-      #recordPlot(NULL)
-      #saved_results$recorded_plots[["hist_plot"]] <- NULL
       unlink(temp_file)
       showNotification("Plot saved successfully.", type = "message", duration = 3)
     })
@@ -1631,12 +1628,6 @@ processed_rmd_analysis_what_is_a_p_value <- whisker.render(paste(rmd_content_ana
 })
 
 
-
-# observeEvent(input$save_text_interpretation_button, {
-#   req(nzchar(input$interpretation_quiz_text_p_value) || nzchar(input$interpretation_quiz_text_effect_size))
-
-#   if (nzchar(input$interpretation_quiz_text_p_value) || nzchar(input$interpretation_quiz_text_effect_size)) {
-
 observeEvent(input$save_text_interpretation_button, {
   req(nzchar(input$interpretation_quiz_text_p_value) || nzchar(input$interpretation_quiz_text_effect_size))
 
@@ -1721,12 +1712,6 @@ observeEvent(input$save_text_interpretation_button, {
     }
     
     })
-
-# observeEvent(input$save_text_interpretation_button, {
-#   req(nzchar(input$interpretation_quiz_text_p_value) && nzchar(input$interpretation_quiz_text_effect_size))
-
-  
-# })
 
 observeEvent(input$back_page_stats, {
         updateTabItems(parent.session, "sidebar", "Create_Figure")

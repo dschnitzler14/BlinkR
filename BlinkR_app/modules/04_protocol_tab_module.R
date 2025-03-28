@@ -75,7 +75,7 @@ protocol_module_ui <- function(id){
 
 )
 )
-  #)
+  
 }
 
 protocol_module_server <- function(id, auth, parent.session, protocol_file_id, session_folder_id){

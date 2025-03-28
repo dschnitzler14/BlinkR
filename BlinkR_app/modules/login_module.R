@@ -36,7 +36,6 @@ custom_login_server <- function(id, user_base_sheet_id, all_users, base_group_fi
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
-    #cookie_name <- "blinkr_group_id"
 
     user_base <- reactiveVal()
 
@@ -256,13 +255,6 @@ observeEvent(input$generate_random_ID, {
           output$sign_up_status <- renderUI(paste("Error: ", e$message))
         })
 
-# #cookies
-#          set_cookie(
-#           cookie_name,
-#           input$sign_up_group_name,
-#           expiration = 1 
-#         )
-#         ####
 
         if (credentials$info$role != "admin") {
           parent_folder_name <- "BlinkR_text_results"

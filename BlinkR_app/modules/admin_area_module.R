@@ -59,11 +59,6 @@ admin_area_module_server <- function(id, group_data_file_id, parent.session, use
           vars <- get_experiment_vars()
 
     ns <- session$ns
-    
-    # observeEvent(input$open_google_drive, {
-    #   runjs('window.open("https://drive.google.com/drive/u/0/folders/1uymxsry9EekJKAlCDVBtrZXUPou7Lu_H", "_blank");')
-      
-    # })
 
     observeEvent(input$open_google_drive, {
     req(session_folder_id)
