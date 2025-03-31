@@ -1,4 +1,4 @@
-combine_sheets_module_ui <- function(id) {
+combine_sheets_module_ui <- function(id, i18n) {
   ns <- NS(id)
   tagList(
     actionButton(ns("combine_sheets"),

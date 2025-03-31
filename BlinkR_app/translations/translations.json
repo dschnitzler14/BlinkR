@@ -1,0 +1,15 @@
+{
+  "cultural_date_format": "%d-%m-%Y",
+  "languages": ["en", "de"],
+  "translation": [
+    { "en": "Background", "de": "Hintergrund" },
+    { "en": "Using Research Databases", "de": "Forschungsdatenbanken verwenden" },
+    { "en": "Search Strategies", "de": "Suchstrategien" },
+    { "en": "Additional Tips for Effective Searches", "de": "Zusätzliche Tipps für effektive Suchen" },
+    { "en": "Advice for Reading a Paper", "de": "Hinweise zum Lesen eines Fachartikels" },
+    { "en": "Back", "de": "Zurück" },
+    { "en": "Next", "de": "Weiter" },
+    { "en": "About", "de": "Über BlinkR" },
+    { "en": "Cite BlinkR", "de": "BlinkR zitieren" }
+  ]
+}

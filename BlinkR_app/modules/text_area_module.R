@@ -1,4 +1,4 @@
-text_area_module_UI <- function(id, text_label = "Type Your Notes Here", text_value = "", button_label = "Save Notes") {
+text_area_module_UI <- function(id, i18n, text_label = "Type Your Notes Here", text_value = "", button_label = "Save Notes") {
   ns <- NS(id)
   tagList(
     textAreaInput(

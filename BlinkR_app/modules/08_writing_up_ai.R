@@ -1,4 +1,4 @@
-writing_up_ai_ui <- function(id) {
+writing_up_ai_ui <- function(id, i18n) {
     ns <- NS(id)
     simulated_experiment_measurements <- tabItem(tabName = "AI",
                               fluidPage(
@@ -128,12 +128,12 @@ writing_up_ai_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_ai"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_ai"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

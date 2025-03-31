@@ -1,4 +1,4 @@
-analysis_stats_module_ui <- function(id) {
+analysis_stats_module_ui <- function(id, i18n) {
   ns <- NS(id)
 
    tabItem(
@@ -78,12 +78,12 @@ analysis_stats_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_stats"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_stats"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )
@@ -426,7 +426,7 @@ processed_rmd_analysis_wilcoxon_test_unpaired <- whisker.render(paste(rmd_conten
                   uiOutput(session$ns("not_normal_unpaired_feedback"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("not_normal_unpaired")),
+                  editor_module_ui(session$ns("not_normal_unpaired"), i18n),
                   uiOutput(session$ns("save_not_normal_unpaired"))
                   )
               ),
@@ -538,7 +538,7 @@ processed_rmd_analysis_wilcoxon_test_paired <- whisker.render(paste(rmd_content_
                   uiOutput(session$ns("not_normal_paired_feedback"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("not_normal_paired")),
+                  editor_module_ui(session$ns("not_normal_paired"), i18n),
                   uiOutput(session$ns("save_not_normal_paired"))
                   )
               ),
@@ -650,7 +650,7 @@ processed_rmd_analysis_two_sided_t_test <- whisker.render(paste(rmd_content_anal
                   uiOutput(session$ns("normal_unpaired_feedback"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("normal_unpaired")),
+                  editor_module_ui(session$ns("normal_unpaired"), i18n),
                   uiOutput(session$ns("save_normal_unpaired"))
                   )
               ),
@@ -760,7 +760,7 @@ processed_rmd_analysis_paired_t_test <- whisker.render(paste(rmd_content_analysi
                   uiOutput(session$ns("normal_paired_feedback"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("normal_paired")),
+                  editor_module_ui(session$ns("normal_paired"), i18n),
                   uiOutput(session$ns("save_normal_paired"))
                   )
               ),
@@ -857,7 +857,7 @@ processed_rmd_analysis_effect_size_t_test_paired <- whisker.render(paste(rmd_con
                   uiOutput(session$ns("t_test_effect_size_paired_feedback")),
                   ),
                   column(6,
-                  editor_module_ui(session$ns("t_test_effect_size_paired")),
+                  editor_module_ui(session$ns("t_test_effect_size_paired"), i18n),
                   uiOutput(session$ns("save_normal_paired_effect_size"))
 
                   )
@@ -957,7 +957,7 @@ processed_rmd_analysis_effect_size_t_test_unpaired <- whisker.render(paste(rmd_c
                   uiOutput(session$ns("t_test_effect_size_unpaired_feedback")),
                   ),
                   column(6,
-                  editor_module_ui(session$ns("t_test_effect_size_unpaired")),
+                  editor_module_ui(session$ns("t_test_effect_size_unpaired"), i18n),
                   uiOutput(session$ns("save_normal_unpaired_effect_size"))
                   )
               ),
@@ -1056,7 +1056,7 @@ processed_rmd_analysis_wilcoxon_test_paired_effect_size <- whisker.render(paste(
                   uiOutput(session$ns("wilcoxon_effect_size_paired_feedback")),
                   ),
                   column(6,
-                  editor_module_ui(session$ns("wilcoxon_effect_size_paired")),
+                  editor_module_ui(session$ns("wilcoxon_effect_size_paired"), i18n),
                   uiOutput(session$ns("save_not_normal_paired_effect_size"))
 
                   )
@@ -1156,7 +1156,7 @@ processed_rmd_analysis_wilcoxon_test_unpaired_effect_size <- whisker.render(past
                   uiOutput(session$ns("wilcoxon_effect_size_unpaired_feedback")),
                   ),
                   column(6,
-                  editor_module_ui(session$ns("wilcoxon_effect_size_unpaired")),
+                  editor_module_ui(session$ns("wilcoxon_effect_size_unpaired"), i18n),
                   uiOutput(session$ns("save_not_normal_unpaired_effect_size"))
 
                   )

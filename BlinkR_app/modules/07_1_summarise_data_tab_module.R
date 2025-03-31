@@ -1,4 +1,4 @@
-analysis_summarise_data_module_ui <- function(id) {
+analysis_summarise_data_module_ui <- function(id, i18n) {
   ns <- NS(id)
   
   tabItem(
@@ -74,12 +74,12 @@ analysis_summarise_data_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_summarise"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_summarise"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )
@@ -203,7 +203,7 @@ level_a_sem <- reactive({
                   uiOutput(session$ns("summary_code_feedback_step1"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step1_editor"))
+                  editor_module_ui(session$ns("step1_editor"), i18n)
                   )
               ),
               
@@ -269,7 +269,7 @@ output$step2_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step2"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step2_editor"))
+                  editor_module_ui(session$ns("step2_editor"), i18n)
                   )
               )
             )
@@ -331,7 +331,7 @@ output$step3_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step3"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step3_editor"))
+                  editor_module_ui(session$ns("step3_editor"), i18n)
                   )
               )
             )
@@ -399,7 +399,7 @@ output$step4_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step4"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step4_editor"))
+                  editor_module_ui(session$ns("step4_editor"), i18n)
                   )
               )
             )
@@ -463,7 +463,7 @@ output$step5_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step5"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step5_editor"))
+                  editor_module_ui(session$ns("step5_editor"), i18n)
                   )
               )
             )
@@ -532,7 +532,7 @@ output$step6_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step6"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step6_editor"))
+                  editor_module_ui(session$ns("step6_editor"), i18n)
                   )
               )
             )
@@ -602,7 +602,7 @@ output$step7_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step7"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step7_editor"))
+                  editor_module_ui(session$ns("step7_editor"), i18n)
                   )
               )
             )
@@ -672,7 +672,7 @@ output$step8_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step8"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step8_editor"))
+                  editor_module_ui(session$ns("step8_editor"), i18n)
                   )
               )
             )
@@ -766,7 +766,7 @@ output$step9_box <- renderUI({
                   uiOutput(session$ns("summary_code_feedback_step9"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("step9_editor")),
+                  editor_module_ui(session$ns("step9_editor"), i18n),
                   uiOutput(session$ns("save_summary_result"))
                   )
               )

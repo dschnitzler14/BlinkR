@@ -1,4 +1,4 @@
-measurement_input_module_ui <- function(id, student_name, student_ID, db_student_table){
+measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_student_table){
   ns <- NS(id)
   vars <- get_experiment_vars()
 

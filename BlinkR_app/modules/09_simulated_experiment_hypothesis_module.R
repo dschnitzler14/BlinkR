@@ -1,4 +1,4 @@
-simulated_experiment_hypothesis_module_ui <- function(id) {
+simulated_experiment_hypothesis_module_ui <- function(id, i18n) {
     ns <- NS(id) 
     simulated_experiment_hypothesis <- tabItem(tabName = "Simulated_Experiment_Hypothesis",
                               fluidPage(
@@ -57,12 +57,12 @@ simulated_experiment_hypothesis_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_background"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_protocol"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

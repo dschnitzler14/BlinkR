@@ -1,4 +1,4 @@
-simulated_experiment_writing_up_module_ui <- function(id) {
+simulated_experiment_writing_up_module_ui <- function(id, i18n) {
     ns <- NS(id)
     simulated_experiment_writing_up <- tabItem(tabName = "Simulated_Experiment_Writing_Up",
                               fluidPage(
@@ -136,12 +136,12 @@ simulated_experiment_writing_up_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_analysis"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_feedback"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

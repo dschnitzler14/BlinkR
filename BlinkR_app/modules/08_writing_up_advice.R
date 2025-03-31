@@ -1,4 +1,4 @@
-writing_up_advice_ui <- function(id) {
+writing_up_advice_ui <- function(id, i18n) {
     ns <- NS(id)
   writing_up_advice_tab <- tabItem(tabName = "Writing_Up_Advice",
                               fluidPage(
@@ -110,12 +110,12 @@ writing_up_advice_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_advice"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_advice"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

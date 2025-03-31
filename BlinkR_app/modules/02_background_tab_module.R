@@ -1,14 +1,14 @@
-background_module_ui <- function(id){
+background_module_ui <- function(id, i18n){
   ns <- NS(id)
   background_tab <- tabItem(tabName = "background",
     fluidPage(
-            fluidRow(
+      fluidRow(
         column(
           width = 12,
           div(
             class = "page-title-box",
             tags$h2(
-              tagList(shiny::icon("book-open"), "Background")
+              tagList(shiny::icon("book-open"), i18n$t("Background"))
             )
   )
 )
@@ -17,7 +17,7 @@ background_module_ui <- function(id){
       fluidRow(
         column(12,
         box(
-            title = tagList(shiny::icon("database"), "Using Research Databases"),
+            title = tagList(shiny::icon("database"), i18n$t("Using Research Databases")),
             solidHeader = FALSE,
             collapsible = TRUE,
             collapsed = TRUE,
@@ -26,7 +26,7 @@ background_module_ui <- function(id){
           ),
 
           box(
-            title = tagList(shiny::icon("search"), "Search Strategies"),
+            title = tagList(shiny::icon("search"), i18n$t("Search Strategies")),
             solidHeader = FALSE,
             collapsible = TRUE,
             collapsed = TRUE,
@@ -34,7 +34,7 @@ background_module_ui <- function(id){
             includeMarkdown("markdown/02_background/background_strategies.Rmd")
           ),
             box(
-            title = tagList(shiny::icon("lightbulb"), "Additional Tips for Effective Searches"),
+            title = tagList(shiny::icon("lightbulb"), i18n$t("Additional Tips for Effective Searches")),
             solidHeader = FALSE,
             collapsible = TRUE,
             collapsed = TRUE,
@@ -42,7 +42,7 @@ background_module_ui <- function(id){
             includeMarkdown("markdown/02_background/background_tips.Rmd")
           ),
           box(
-            title = tagList(shiny::icon("file-lines"), "Advice for Reading a Paper"),
+            title = tagList(shiny::icon("file-lines"), i18n$t("Advice for Reading a Paper")),
             solidHeader = FALSE,
             collapsible = TRUE,
             collapsed = TRUE,
@@ -65,12 +65,12 @@ background_module_ui <- function(id){
       ",
       actionButton(
         ns("back_page_background"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_background"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

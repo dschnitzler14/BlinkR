@@ -1,5 +1,5 @@
 # Hypothesis Module ----
-hypothesis_module_ui <- function(id) {
+hypothesis_module_ui <- function(id, i18n) {
   ns <- NS(id)
   hypothesis_tab <- tabItem(
     tabName = "Hypothesis",
@@ -42,11 +42,11 @@ hypothesis_module_ui <- function(id) {
           width = 12,
           solidHeader = TRUE,
           markdown("#### What is your hypothesis in plain language?"),
-          text_area_module_UI(ns("hypothesis"), text_label = "Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes")),
+          text_area_module_UI(ns("hypothesis"), i18n, text_label = "Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes")),
           markdown("#### What is your null hypothesis?"),
-          text_area_module_UI(ns("null_hypothesis"), text_label = "Null Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes")),
+          text_area_module_UI(ns("null_hypothesis"), i18n, text_label = "Null Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes")),
           markdown("#### What is your alterative hypothesis?"),
-          text_area_module_UI(ns("alt_hypothesis"), text_label = "Alternative Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes"))
+          text_area_module_UI(ns("alt_hypothesis"), i18n, text_label = "Alternative Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes"))
         )
       ),
       fluidRow(
@@ -63,12 +63,12 @@ hypothesis_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_hypo"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_hypo"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

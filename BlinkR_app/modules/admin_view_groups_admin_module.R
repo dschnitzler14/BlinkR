@@ -1,4 +1,4 @@
-view_groups_admin_module_ui <- function(id) {
+view_groups_admin_module_ui <- function(id, i18n) {
   ns <- NS(id)
     tagList(
       DT::DTOutput(ns("user_table")),

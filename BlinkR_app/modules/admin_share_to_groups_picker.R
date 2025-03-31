@@ -1,4 +1,4 @@
-share_to_groups_admin_module_ui <- function(id) {
+share_to_groups_admin_module_ui <- function(id, i18n) {
   ns <- NS(id)
   tagList(
     uiOutput(ns("group_picker")),

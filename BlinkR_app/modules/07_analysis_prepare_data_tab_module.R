@@ -1,4 +1,4 @@
-analysis_prepare_data_module_ui <- function(id) {
+analysis_prepare_data_module_ui <- function(id, i18n) {
   ns <- NS(id)
   
   tabItem(
@@ -36,7 +36,7 @@ analysis_prepare_data_module_ui <- function(id) {
               ),
               column(
                 8,
-                editor_module_ui(ns("view_data_editor"))
+                editor_module_ui(ns("view_data_editor"), i18n)
               )
             )
           ),
@@ -54,7 +54,7 @@ analysis_prepare_data_module_ui <- function(id) {
               ),
               column(
                 8,
-                editor_module_ui(ns("average_trs_editor"))
+                editor_module_ui(ns("average_trs_editor"), i18n)
               )
             )
           ),
@@ -113,12 +113,12 @@ analysis_prepare_data_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_prepare"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_prepare"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

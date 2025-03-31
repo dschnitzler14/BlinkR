@@ -1,4 +1,4 @@
-simulated_experiment_description_module_ui <- function(id) {
+simulated_experiment_description_module_ui <- function(id, i18n) {
     ns <- NS(id)
     simulated_experiment_description <- tabItem(tabName = "Simulated_Experiment_Description",
                               fluidPage(
@@ -29,7 +29,7 @@ simulated_experiment_description_module_ui <- function(id) {
       
       actionButton(
         ns("next_page_background"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

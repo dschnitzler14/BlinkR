@@ -1,4 +1,4 @@
-simulated_experiment_analysis_module_ui <- function(id) {
+simulated_experiment_analysis_module_ui <- function(id, i18n) {
     ns <- NS(id)
     simulated_experiment_analysis <- tabItem(tabName = "Simulated_Experiment_Analysis",
                               fluidPage(
@@ -37,7 +37,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                       uiOutput(ns("average_trs_caf_feedback")),
                                       ),
                                       column(6,
-                                      editor_module_ui(ns("average_trs_caf_editor"))
+                                      editor_module_ui(ns("average_trs_caf_editor"), i18n)
                                       )
                                     )
                                   ),
@@ -53,7 +53,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                       uiOutput(ns("summarise_caf_feedback")),
                                       ),
                                       column(6,
-                                      editor_module_ui(ns("summarise_caf_editor"))
+                                      editor_module_ui(ns("summarise_caf_editor"), i18n)
                                       )
                                     )
                                     
@@ -70,7 +70,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                       uiOutput(ns("caf_figure_editor_feedback"))
                                       ),
                                       column(6,
-                                      editor_module_ui(ns("figure_caf_editor"))
+                                      editor_module_ui(ns("figure_caf_editor"), i18n)
 
                                       )
                                     )
@@ -98,7 +98,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                        uiOutput(ns("caf_t_test_feedback"))
                                       ),
                                       column(6,
-                                      editor_module_ui(ns("caf_t_test_editor")),
+                                      editor_module_ui(ns("caf_t_test_editor"), i18n),
                                       )
                                     ),
                                     fluidRow(
@@ -107,7 +107,7 @@ simulated_experiment_analysis_module_ui <- function(id) {
                                        uiOutput(ns("caf_effect_size_feedback"))
                                       ),
                                       column(6,
-                                      editor_module_ui(ns("caf_effect_size_editor")),
+                                      editor_module_ui(ns("caf_effect_size_editor"), i18n),
                                       )
                                     )
                                   ),
@@ -126,12 +126,12 @@ simulated_experiment_analysis_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_raw_data"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_writing_up"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

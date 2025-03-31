@@ -1,4 +1,4 @@
-simulated_experiment_raw_data_module_ui <- function(id) {
+simulated_experiment_raw_data_module_ui <- function(id, i18n) {
     ns <- NS(id)
     simulated_experiment_raw_data <- tabItem(tabName = "Simulated_Experiment_Raw_Data",
                               fluidPage(
@@ -40,12 +40,12 @@ simulated_experiment_raw_data_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_measurements"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_analysis"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

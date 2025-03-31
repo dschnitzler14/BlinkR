@@ -1,4 +1,4 @@
-playground_module_ui <- function(id) {
+playground_module_ui <- function(id, i18n) {
     ns <- NS(id)
     tabItem(tabName = "Playground",
       fluidPage(
@@ -28,7 +28,7 @@ playground_module_ui <- function(id) {
           ),
           column(
             6, 
-          editor_module_ui(ns("playground1")),
+          editor_module_ui(ns("playground1"), i18n),
               )
             )
           )
@@ -48,12 +48,12 @@ fluidRow(
       ",
       actionButton(
         ns("back_page_playground"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_playground"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

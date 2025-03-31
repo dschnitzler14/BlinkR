@@ -1,5 +1,5 @@
 
-bucketListModuleUI <- function(id) {
+bucketListModuleUI <- function(id, i18n) {
   ns <- NS(id)
   
   tagList(

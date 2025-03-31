@@ -1,4 +1,4 @@
-admin_area_module_ui <- function(id) {
+admin_area_module_ui <- function(id, i18n) {
   ns <- NS(id)
   admin_area_tab <- tabItem(tabName = "admin_area",
                             fluidPage(
@@ -23,29 +23,29 @@ admin_area_module_ui <- function(id) {
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
-                                      view_groups_admin_module_ui(ns("view_groups"))
+                                      view_groups_admin_module_ui(ns("view_groups"), i18n)
                                   ),
                                   box(title = tagList(shiny::icon("users"), "Share Class Protocol"),
                                       collapsible = TRUE,
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
-                                      share_to_groups_admin_module_ui(ns("share_protocol")),
+                                      share_to_groups_admin_module_ui(ns("share_protocol"), i18n),
                                   ),
                                   box(title = tagList(shiny::icon("circle-plus"), "Share Class Data"),
                                       collapsible = TRUE,
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
-                                      share_to_groups_admin_module_ui(ns("share_data")),
-                                      combine_sheets_module_ui(ns("combine_data")),
+                                      share_to_groups_admin_module_ui(ns("share_data"), i18n),
+                                      combine_sheets_module_ui(ns("combine_data"), i18n),
                                   ),
                                   box(title = tagList(shiny::icon("upload"), "View Report Submission"),
                                       collapsible = TRUE,
                                       collapsed = FALSE,
                                       width = 12,
                                       solidHeader = TRUE,
-                                      view_report_submission_admin_module_ui(ns("report_submission_viewer"))
+                                      view_report_submission_admin_module_ui(ns("report_submission_viewer"), i18n)
                                   ),
                                       )
                                   ),
@@ -65,7 +65,7 @@ admin_area_module_server <- function(id, group_data_file_id, parent.session, use
         
     showModal(modalDialog(
       title = "View Google Drive",
-      your_google_drive_module_ui(session$ns("admin_drive_module")),
+      your_google_drive_module_ui(session$ns("admin_drive_module"), i18n),
 
       easyClose = TRUE,
       footer = modalButton("Close"),

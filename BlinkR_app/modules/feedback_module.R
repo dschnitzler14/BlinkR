@@ -1,4 +1,4 @@
-feedback_module_ui <- function(id) {
+feedback_module_ui <- function(id, i18n) {
   ns <- NS(id)
   feedback_tab <- tabItem(tabName = "feedback",
           fluidPage(
@@ -80,7 +80,7 @@ feedback_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_feedback"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       )
     )

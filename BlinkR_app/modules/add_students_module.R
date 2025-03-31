@@ -1,4 +1,4 @@
-group_info_module_ui <- function(id) {
+group_info_module_ui <- function(id, i18n) {
   ns <- NS(id)
   tagList(
     textInput(

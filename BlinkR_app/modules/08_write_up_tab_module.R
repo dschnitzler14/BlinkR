@@ -1,4 +1,4 @@
-write_up_module_ui <- function(id, session_folder_url) {
+write_up_module_ui <- function(id, i18n, session_folder_url) {
   ns <- NS(id)
   writing_up_tab <- 
     tabItem(tabName = "Writing-Up",
@@ -58,7 +58,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                       ),
                     ),
                   column(6, 
-                        text_area_module_UI(ns("introduction"), "Introduction", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                        text_area_module_UI(ns("introduction"), i18n, "Introduction", button_label = tagList(shiny::icon("save"), "Save Notes"))
                         ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_intro.Rmd"),
@@ -84,7 +84,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        text_area_module_UI(ns("methods"), "Methods", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                        text_area_module_UI(ns("methods"), i18n, "Methods", button_label = tagList(shiny::icon("save"), "Save Notes"))
 
                   ),
                   column(6,
@@ -110,7 +110,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        text_area_module_UI(ns("results"), "Results", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                        text_area_module_UI(ns("results"), i18n, "Results", button_label = tagList(shiny::icon("save"), "Save Notes"))
 
                   ),
                   column(6,
@@ -130,7 +130,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      text_area_module_UI(ns("discussion"), "Discussion", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                      text_area_module_UI(ns("discussion"), i18n, "Discussion", button_label = tagList(shiny::icon("save"), "Save Notes"))
                   ),
                   column(6,
                          includeMarkdown("markdown/08_writing_up/writing_up_discussion.Rmd")
@@ -144,7 +144,7 @@ write_up_module_ui <- function(id, session_folder_url) {
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      text_area_module_UI(ns("future_work"), "Future Work", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                      text_area_module_UI(ns("future_work"), i18n, "Future Work", button_label = tagList(shiny::icon("save"), "Save Notes"))
 
                   ),
                   column(6,
@@ -177,12 +177,12 @@ write_up_module_ui <- function(id, session_folder_url) {
       ",
       actionButton(
         ns("back_page_write"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_write"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )
@@ -204,7 +204,7 @@ write_up_module_server <- function(id, parent.session, auth, reload_trigger, ses
         
     showModal(modalDialog(
       title = "Your Google Drive",
-      your_google_drive_module_ui(session$ns("your_drive_module_write_up")),
+      your_google_drive_module_ui(session$ns("your_drive_module_write_up"), i18n),
 
       easyClose = TRUE,
       footer = modalButton("Close"),

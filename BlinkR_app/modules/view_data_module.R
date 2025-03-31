@@ -1,4 +1,4 @@
-view_data_module_ui <- function(id) {
+view_data_module_ui <- function(id, i18n) {
     ns <- NS(id)
     tagList(
       DT::dataTableOutput(ns("data_table")) 

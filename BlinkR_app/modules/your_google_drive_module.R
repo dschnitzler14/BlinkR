@@ -1,4 +1,4 @@
-your_google_drive_module_ui <- function(id){
+your_google_drive_module_ui <- function(id, i18n){
   ns <- NS(id)
    tagList(
         markdown("# View Your Google Drive Folder

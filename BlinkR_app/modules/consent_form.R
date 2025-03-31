@@ -1,4 +1,4 @@
-consent_form_ui <- function(id){
+consent_form_ui <- function(id, i18n){
   ns <- NS(id)
   tagList()
 }

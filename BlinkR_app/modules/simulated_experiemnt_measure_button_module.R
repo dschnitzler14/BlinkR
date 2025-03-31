@@ -1,4 +1,4 @@
-simulated_experiment_measure_button_module_ui <- function(id) {
+simulated_experiment_measure_button_module_ui <- function(id, i18n) {
     ns <- NS(id)
     uiOutput(ns("measurement_button_ui"))
 }

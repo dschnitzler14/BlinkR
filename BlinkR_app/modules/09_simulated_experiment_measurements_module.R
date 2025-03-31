@@ -1,4 +1,4 @@
-simulated_experiment_measurements_module_ui <- function(id) { 
+simulated_experiment_measurements_module_ui <- function(id, i18n) { 
     ns <- NS(id)
     simulated_experiment_measurements <- tabItem(tabName = "Simulated_Experiment_Measurements",
                               fluidPage(
@@ -37,9 +37,9 @@ simulated_experiment_measurements_module_ui <- function(id) {
                                         )
                                       ),
                                       fluidRow(
-                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement1"))),
-                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement2"))),
-                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement3")))
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement1"), i18n)),
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement2"), i18n)),
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement3"), i18n))
                                       ),
                                     ),
                                     tabPanel(
@@ -52,9 +52,9 @@ simulated_experiment_measurements_module_ui <- function(id) {
                                         )
                                       ),
                                       fluidRow(
-                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement4"))),
-                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement5"))),
-                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement6")))
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement4"), i18n)),
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement5"), i18n)),
+                                        column(4, simulated_experiment_measure_button_module_ui(ns("measurement6"), i18n))
                                       ),
                                     )
                                   )
@@ -73,12 +73,12 @@ simulated_experiment_measurements_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_protocol"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_raw_data"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

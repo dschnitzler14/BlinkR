@@ -34,6 +34,7 @@ library(sortable)
 library(grid)
 library(png)
 library(gridExtra)
+library(shiny.i18n)
 
 source("STEP1_google_drive_app_set_up.R")
 source("STEP2_define_variables.R")
@@ -100,3 +101,4 @@ css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "s
                       tags$script("hljs.highlightAll();"),
                       tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
                       )
+

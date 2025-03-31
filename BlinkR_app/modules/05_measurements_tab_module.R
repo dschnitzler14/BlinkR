@@ -1,4 +1,4 @@
-measurements_module_ui <- function(id) {
+measurements_module_ui <- function(id, i18n) {
   ns <- NS(id)
   tabItem(
     tabName = "Measurements",
@@ -23,7 +23,7 @@ measurements_module_ui <- function(id) {
                    Please enter them one at a time and hit enter after each one.
                    If you make a mistake, you can delete a student below.
                    Each student will be assigned an \"ID\" for this experiment."),
-          group_info_module_ui(ns("add_students"))
+          group_info_module_ui(ns("add_students"), i18n)
         ),
         box(
           title = tagList(shiny::icon("ruler"), "Measurements"),
@@ -62,12 +62,12 @@ measurements_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_measure"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_measure"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )
@@ -135,6 +135,7 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
                 column(10,
                        measurement_input_module_ui(
                          ns(paste0("student_module_", student_ID)),
+                         i18n, 
                          student_name = student_name,
                          student_ID = student_ID,
                          db_student_table = db_student_table

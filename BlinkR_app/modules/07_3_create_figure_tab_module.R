@@ -1,4 +1,4 @@
-analysis_create_figure_module_ui <- function(id) {
+analysis_create_figure_module_ui <- function(id, i18n) {
   ns <- NS(id)
   
   tabItem(
@@ -102,12 +102,12 @@ fluidRow(
       ",
       actionButton(
         ns("back_page_figure"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_figure"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )
@@ -165,9 +165,9 @@ processed_rmd_analysis_create_figure_boxplot <- whisker.render(paste(rmd_content
     
     output$editor_ui <- renderUI({
       if (input$figure_type_selector == "bar") {
-        editor_module_ui(session$ns("figure_editor_bar_plot"))
+        editor_module_ui(session$ns("figure_editor_bar_plot"), i18n)
       } else {
-        editor_module_ui(session$ns("figure_editor_box_plot"))
+        editor_module_ui(session$ns("figure_editor_box_plot"), i18n)
     
       }
     })

@@ -1,4 +1,4 @@
-introduction_module_ui <- function(id){
+introduction_module_ui <- function(id, i18n){
   ns <- NS(id)
   vars <- get_experiment_vars()
 

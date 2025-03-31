@@ -1,4 +1,4 @@
-experimental_design_module_ui <- function(id, label = "Protocol Planning Notes", placeholder = "Placeholder") {
+experimental_design_module_ui <- function(id, i18n, label = "Protocol Planning Notes", placeholder = "Placeholder") {
   ns <- NS(id)
   tagList(
     textAreaInput(

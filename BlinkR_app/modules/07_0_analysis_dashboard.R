@@ -1,4 +1,4 @@
-analysis_dashboard_module_ui <- function(id) {
+analysis_dashboard_module_ui <- function(id, i18n) {
   ns <- NS(id)
   
   tabItem(
@@ -140,12 +140,12 @@ analysis_dashboard_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_analysis"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_analysis"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )
@@ -403,7 +403,7 @@ output$stats_interpretation <- renderUI({
         
     showModal(modalDialog(
       title = "Your Google Drive",
-      your_google_drive_module_ui(session$ns("your_drive_module_dashboard")),
+      your_google_drive_module_ui(session$ns("your_drive_module_dashboard"), i18n),
       
       easyClose = TRUE,
       footer = modalButton("Close"),

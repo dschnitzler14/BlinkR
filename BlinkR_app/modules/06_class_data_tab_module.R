@@ -1,4 +1,4 @@
-class_data_module_ui <- function(id) {
+class_data_module_ui <- function(id, i18n) {
   ns <- NS(id)
   tagList(
     fluidPage(
@@ -45,12 +45,12 @@ class_data_module_ui <- function(id) {
       ",
       actionButton(
         ns("back_page_data"),
-        label = tagList(icon("arrow-left"), " Back"),
+        label = tagList(icon("arrow-left"), HTML("&nbsp;"), i18n$t("Back")),
         class = "fun-nav-button"
       ),
       actionButton(
         ns("next_page_data"), 
-        label = tagList("Next ", icon("arrow-right")), 
+        label = tagList(i18n$t("Next"),  HTML("&nbsp;"), icon("arrow-right")), 
         class = "fun-nav-button"
       )
     )

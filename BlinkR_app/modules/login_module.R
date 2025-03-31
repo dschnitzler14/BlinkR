@@ -3,7 +3,7 @@ library(sodium)
 
 
 
-custom_login_ui <- function(id) {
+custom_login_ui <- function(id, i18n) {
   ns <- NS(id)
   tagList(
     fluidPage(

@@ -1,4 +1,4 @@
-download_handler_ui <- function(id, label = "Download File") {
+download_handler_ui <- function(id, i18n, label = "Download File") {
   ns <- NS(id)
   tagList(
     downloadButton(ns("download_file"), label, class = "fun-download-button")

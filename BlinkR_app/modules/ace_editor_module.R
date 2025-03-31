@@ -1,4 +1,4 @@
-editor_module_ui <- function(id) { 
+editor_module_ui <- function(id, i18n) { 
   ns <- NS(id)
   tagList(
     aceEditor(

@@ -2,24 +2,38 @@ library(shiny)
 
 source("global.R")
 
+i18n_path <- "translations/translations.json"
+i18n <- Translator$new(translation_json_path = i18n_path)
+i18n$set_translation_language("en")
+
 ### load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
 sapply(module_files, source)
 
 ### header ----
-header <- dashboardHeader(title = "BlinkR",
-            tags$li(
+header <- dashboardHeader(
+  title = "BlinkR",
+    tags$li(
+  class = "dropdown",
+  style = "padding: 10px 15px;",
+  tags$select(
+    id = "selected_language",
+    class = "form-control",
+    tags$option(value = "en", "🇬🇧 English"),
+    tags$option(value = "de", "🇩🇪 Deutsch")
+  )
+),
+    tags$li(
       class = "dropdown",
-      actionLink("about_link", label = "About", icon = icon("info-circle"))
+      actionLink("about_link", label = i18n$t("About"), icon = icon("info-circle"))
     ),
     tags$li(
       class = "dropdown",
-      actionLink("citing", label = "Cite BlinkR", icon = icon("asterisk"))
+      actionLink("citing", label = i18n$t("Cite BlinkR"), icon = icon("asterisk"))
     )
-            )
+  )
 
 sidebar <- dashboardSidebar(
-    
 
   sidebarMenu(
     id = "sidebar",
@@ -105,6 +119,7 @@ sidebar <- dashboardSidebar(
 
 # dashboard body combined ----
 body <- dashboardBody(
+  usei18n(i18n),
   css_link,
   useShinyjs(),
 
@@ -113,118 +128,118 @@ body <- dashboardBody(
   tabItems(
     tabItem(
       tabName = "Introduction",
-      introduction_module_ui("introduction") 
+      introduction_module_ui("introduction", i18n) 
     ),
     tabItem(
       tabName = "admin_area",
       conditionalPanel(
         condition = "output.user_role === 'admin'",
-        admin_area_module_ui("admin_module")
+        admin_area_module_ui("admin_module", i18n)
       )
     ),
     tabItem(
       tabName = "Background",
       conditionalPanel(
         condition = "output.user_auth",
-        background_module_ui("background")
+        background_module_ui("background", i18n)
       )
     ),
     tabItem(
       tabName = "Hypothesis",
       conditionalPanel(
         condition = "output.user_auth",
-        hypothesis_module_ui("hypothesis")
+        hypothesis_module_ui("hypothesis", i18n)
       )
     ),
     tabItem(
       tabName = "Protocol",
       conditionalPanel(
         condition = "output.user_auth",
-        protocol_module_ui("protocol")
+        protocol_module_ui("protocol", i18n)
       )
     ),
     tabItem(
       tabName = "Measurements",
       conditionalPanel(
         condition = "output.user_auth",
-        measurements_module_ui("measurements")
+        measurements_module_ui("measurements", i18n)
       )
     ),
     tabItem(
       tabName = "Raw_Data",
       conditionalPanel(
         condition = "output.user_auth", 
-        class_data_module_ui("class_data")
+        class_data_module_ui("class_data", i18n)
       )
     ),
     tabItem(
       tabName = "Playground",
       conditionalPanel(
         condition = "output.user_auth",
-        playground_module_ui("playground")
+        playground_module_ui("playground", i18n)
       )
   ),
     tabItem(
       tabName = "Analysis_Dashboard",
       conditionalPanel(
         condition = "output.user_auth", 
-        analysis_dashboard_module_ui("analysis_dashboard")
+        analysis_dashboard_module_ui("analysis_dashboard", i18n)
       )
     ),
     tabItem(
       tabName = "Prepare_Data",
       conditionalPanel(
         condition = "output.user_auth", 
-        analysis_prepare_data_module_ui("analysis_prepare_data")
+        analysis_prepare_data_module_ui("analysis_prepare_data", i18n)
       )
     ),
     tabItem(
       tabName = "Summarise_Data",
       conditionalPanel(
         condition = "output.user_auth", 
-        analysis_summarise_data_module_ui("summarise")
+        analysis_summarise_data_module_ui("summarise", i18n)
       )
     ),
     tabItem(
       tabName = "Statistical_Analysis",
       conditionalPanel(
         condition = "output.user_auth", 
-        analysis_stats_module_ui("stats")
+        analysis_stats_module_ui("stats", i18n)
       )
     ),
     tabItem(
       tabName = "Create_Figure",
       conditionalPanel(
         condition = "output.user_auth", 
-        analysis_create_figure_module_ui("figure")
+        analysis_create_figure_module_ui("figure", i18n)
       )
     ),
     tabItem(
       tabName = "Writing-Up",
       conditionalPanel(
         condition = "output.user_auth",
-        write_up_module_ui("write_up")
+        write_up_module_ui("write_up", i18n)
       )
     ),
     tabItem(
       tabName = "Writing_Up_Advice",
       conditionalPanel(
         condition = "output.user_auth",
-        writing_up_advice_ui("writing_up_advice")
+        writing_up_advice_ui("writing_up_advice", i18n)
       )
     ),
     tabItem(
       tabName = "AI",
       conditionalPanel(
         condition = "output.user_auth",
-        writing_up_ai_ui("AI")
+        writing_up_ai_ui("AI", i18n)
       )
     ),
      tabItem(
       tabName = "Upload_Report",
       conditionalPanel(
         condition = "output.user_auth",
-        upload_report_module_ui("upload_report")
+        upload_report_module_ui("upload_report", i18n)
         
       )
     ),
@@ -232,63 +247,63 @@ body <- dashboardBody(
       tabName = "Simulated_Experiment_Description",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_description_module_ui("simulated_experiment_description")
+        simulated_experiment_description_module_ui("simulated_experiment_description", i18n)
       )
     ),
     tabItem(
       tabName = "Simulated_Experiment_Background",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_background_module_ui("simulated_experiment_background")
+        simulated_experiment_background_module_ui("simulated_experiment_background", i18n)
       )
     ),
     tabItem(
       tabName = "Simulated_Experiment_Hypothesis",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_hypothesis_module_ui("simulated_experiment_hypothesis")
+        simulated_experiment_hypothesis_module_ui("simulated_experiment_hypothesis", i18n)
       )
     ),
     tabItem(
       tabName = "Simulated_Experiment_Protocol",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_protocol_module_ui("simulated_experiment_protocol")
+        simulated_experiment_protocol_module_ui("simulated_experiment_protocol", i18n)
       )
     ),
     tabItem(
       tabName = "Simulated_Experiment_Measurements",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_measurements_module_ui("simulated_experiment_measurements")
+        simulated_experiment_measurements_module_ui("simulated_experiment_measurements", i18n)
       )
     ),
     tabItem(
       tabName = "Simulated_Experiment_Raw_Data",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_raw_data_module_ui("simulated_experiment_raw_data")
+        simulated_experiment_raw_data_module_ui("simulated_experiment_raw_data", i18n)
       )
     ),
     tabItem(
       tabName = "Simulated_Experiment_Analysis",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_analysis_module_ui("simulated_experiment_analysis")
+        simulated_experiment_analysis_module_ui("simulated_experiment_analysis", i18n)
       )
     ),
     tabItem(
       tabName = "Simulated_Experiment_Writing_Up",
       conditionalPanel(
         condition = "output.user_auth",
-        simulated_experiment_writing_up_module_ui("simulated_experiment_writing_up")
+        simulated_experiment_writing_up_module_ui("simulated_experiment_writing_up", i18n)
       )
     ),
     tabItem(
       tabName = "Feedback",
       conditionalPanel(
         condition = "output.user_auth",
-        feedback_module_ui("feedback")
+        feedback_module_ui("feedback", i18n)
         
       )
     )
@@ -297,12 +312,28 @@ body <- dashboardBody(
 
 
 # ui combined ----
-ui <- add_cookie_handlers(dashboardPage(header, sidebar, body))
+ui <- dashboardPage(header, sidebar, body)
 
 
 #server function ----
 server <- function(input, output, session) {
+
+  observeEvent(input$selected_language,{
+      lang <- input$selected_language
+       update_lang(lang, session)
+
+    updateActionLink(session, "about_link", label = i18n$t("About"))
+    updateActionLink(session, "citing", label = i18n$t("Cite BlinkR"))
+  })
   
+  # current_lang <- reactiveVal("en")
+
+  # observeEvent(input$selected_language, {
+  #   lang <- input$selected_language
+  #   current_lang(lang)
+  #   i18n$set_translation_language(lang)
+  # })
+
 auth_status <- reactiveVal(FALSE)
 
   observe({
@@ -390,7 +421,7 @@ saved_results <- reactiveValues(
     
     showModal(modalDialog(
       title = "Your Google Drive",
-      your_google_drive_module_ui("your_drive_module"),
+      your_google_drive_module_ui("your_drive_module", i18n),
       
       easyClose = TRUE,
       footer = modalButton("Close"),
