@@ -22,7 +22,9 @@ background_module_ui <- function(id, i18n){
             collapsible = TRUE,
             collapsed = TRUE,
             width = 12,
-            includeMarkdown("markdown/02_background/background_databases.Rmd")
+            uiOutput(ns("background_databases_markdown"))
+            #includeLocalisedMarkdown("02_background/background_databases.Rmd")
+            #includeMarkdown("markdown/02_background/background_databases.Rmd")
           ),
 
           box(
@@ -81,12 +83,17 @@ background_module_ui <- function(id, i18n){
   )
 }
 
-background_module_server <- function(id, parent.session){
+background_module_server <- function(id, i18n, parent.session){
   moduleServer(
     id,
     function(input, output, server){
 
     vars <- get_experiment_vars()
+
+    output$background_databases_markdown <- renderUI({
+    includeLocalisedMarkdown("02_background/background_databases.Rmd")
+  })
+
 
       
        observeEvent(input$back_page_background, {

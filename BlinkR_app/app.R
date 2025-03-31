@@ -6,6 +6,8 @@ i18n_path <- "translations/translations.json"
 i18n <- Translator$new(translation_json_path = i18n_path)
 i18n$set_translation_language("en")
 
+includeLocalisedMarkdown <- make_includeLocalisedMarkdown(i18n)
+
 ### load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
 sapply(module_files, source)
@@ -34,8 +36,10 @@ header <- dashboardHeader(
   )
 
 sidebar <- dashboardSidebar(
+  
 
   sidebarMenu(
+    usei18n(i18n),
     id = "sidebar",
 
 
@@ -47,11 +51,11 @@ sidebar <- dashboardSidebar(
     )
 ),
 
-    menuItem("Introduction", tabName = "Introduction", icon = icon("sun")),
+    menuItem(i18n$t("Introduction"), tabName = "Introduction", icon = icon("sun")),
 
     conditionalPanel(
       condition = "!output.user_auth",
-      actionButton("login_button", "Log In", icon = icon("sign-in-alt"), class = "btn-primary", style = "margin: 10px; width: 90%")
+      actionButton("login_button", i18n$t("Log In"), icon = icon("sign-in-alt"), class = "btn-primary", style = "margin: 10px; width: 90%")
     ),
     
     conditionalPanel(
@@ -59,7 +63,7 @@ sidebar <- dashboardSidebar(
     div(
       style = "padding: 10px; font-weight: bold; background-color: #ff9800; color: white !important; border-radius: 5px; text-align: left;",
     tags$li(
-        menuItem("Admin Area", tabName = "admin_area", icon = icon("lock"))  
+        menuItem(i18n$t("Admin Area"), tabName = "admin_area", icon = icon("lock"))  
     )
     )
 ),
@@ -67,48 +71,50 @@ sidebar <- dashboardSidebar(
     conditionalPanel(
       condition = "output.user_auth",
       sidebarMenu(
-        menuItem("Background", tabName = "Background", icon = icon("book-open")),
-        menuItem("Hypothesis", tabName = "Hypothesis", icon = icon("pen-to-square")),
-        menuItem("Protocol", tabName = "Protocol", icon = icon("list")),
-        menuItem("Measurements", tabName = "Measurements", icon = icon("ruler")),
-        menuItem("Raw Data", tabName = "Raw_Data", icon = icon("database")),
-        menuItem("Playground", tabName = "Playground", icon = icon("hand")),
-        menuItem("Analysis", tabName = "Analysis", icon = icon("play"),
-                 menuItem("Analysis Dashboard", tabName = "Analysis_Dashboard", icon = icon("dashboard")),
-                 menuItem("1. Prepare Data", tabName = "Prepare_Data", icon = icon("magnifying-glass")),
-                 menuItem("2. Summarise Data", tabName="Summarise_Data", icon = icon("rectangle-list")),
-                 menuItem("3. Create Figure", tabName="Create_Figure", icon = icon("chart-simple")),
-                 menuItem("4. Statistical Analysis", tabName="Statistical_Analysis", icon = icon("equals"))
-        ),
-        menuItem("Writing Up", tabName = "Writing-Up-menu",icon = icon("pen"),
-          menuItem("Write Up Advice", tabName = "Writing_Up_Advice", icon = icon("circle-question")),
-          menuItem("AI", tabName = "AI", icon = icon("wand-magic-sparkles")),
-          menuItem("Write Up", tabName = "Writing-Up", icon = icon("pen")),
-          menuItem("Upload Final Report", tabName = "Upload_Report", icon = icon("upload"))
-          ),
-          menuItem("Simulated Experiment", tabName = "Simulated_Experiment", icon = icon("microscope"),
-        menuItem("Description", tabName = "Simulated_Experiment_Description", icon = icon("circle-info")),
-        menuItem("Background", tabName = "Simulated_Experiment_Background", icon = icon("book-open")),
-        menuItem("Hypothesis", tabName = "Simulated_Experiment_Hypothesis", icon = icon("pen-to-square")),
-        menuItem("Protocol", tabName = "Simulated_Experiment_Protocol", icon = icon("list")),
-        menuItem("Measurements", tabName = "Simulated_Experiment_Measurements", icon = icon("ruler")),
-        menuItem("Raw Data", tabName = "Simulated_Experiment_Raw_Data", icon = icon("database")),
-        menuItem("Analysis", tabName = "Simulated_Experiment_Analysis", icon = icon("chart-simple")),
-        menuItem("Writing Up", tabName = "Simulated_Experiment_Writing_Up", icon = icon("pen"))
-        ),
+        usei18n(i18n),
         
-        menuItem("Feedback", tabName = "Feedback", icon = icon("comment"))
+        menuItem(i18n$t("Background"), tabName = "Background", icon = icon("book-open")),
+        menuItem(i18n$t("Hypothesis"), tabName = "Hypothesis", icon = icon("pen-to-square")),
+        menuItem(i18n$t("Protocol"), tabName = "Protocol", icon = icon("list")),
+        menuItem(i18n$t("Measurements"), tabName = "Measurements", icon = icon("ruler")),
+        menuItem(i18n$t("Raw Data"), tabName = "Raw_Data", icon = icon("database")),
+        menuItem(i18n$t("Playground"), tabName = "Playground", icon = icon("hand")),
+        menuItem(i18n$t("Analysis"), tabName = "Analysis", icon = icon("play"),
+                 menuItem(i18n$t("Analysis Dashboard"), tabName = "Analysis_Dashboard", icon = icon("dashboard")),
+                 menuItem(i18n$t("1. Prepare Data"), tabName = "Prepare_Data", icon = icon("magnifying-glass")),
+                 menuItem(i18n$t("2. Summarise Data"), tabName="Summarise_Data", icon = icon("rectangle-list")),
+                 menuItem(i18n$t("3. Create Figure"), tabName="Create_Figure", icon = icon("chart-simple")),
+                 menuItem(i18n$t("4. Statistical Analysis"), tabName="Statistical_Analysis", icon = icon("equals"))
+        ),
+        menuItem(i18n$t("Writing Up"), tabName = "Writing-Up-menu", icon = icon("pen"),
+            menuItem(i18n$t("Write Up Advice"), tabName = "Writing_Up_Advice", icon = icon("circle-question")),
+            menuItem(i18n$t("AI"), tabName = "AI", icon = icon("wand-magic-sparkles")),
+            menuItem(i18n$t("Write Up"), tabName = "Writing-Up", icon = icon("pen")),
+            menuItem(i18n$t("Upload Final Report"), tabName = "Upload_Report", icon = icon("upload"))
+          ),
+        menuItem(i18n$t("Simulated Experiment"), tabName = "Simulated_Experiment", icon = icon("microscope"),
+            menuItem(i18n$t("Description"), tabName = "Simulated_Experiment_Description", icon = icon("circle-info")),
+            menuItem(i18n$t("Background"), tabName = "Simulated_Experiment_Background", icon = icon("book-open")),
+            menuItem(i18n$t("Hypothesis"), tabName = "Simulated_Experiment_Hypothesis", icon = icon("pen-to-square")),
+            menuItem(i18n$t("Protocol"), tabName = "Simulated_Experiment_Protocol", icon = icon("list")),
+            menuItem(i18n$t("Measurements"), tabName = "Simulated_Experiment_Measurements", icon = icon("ruler")),
+            menuItem(i18n$t("Raw Data"), tabName = "Simulated_Experiment_Raw_Data", icon = icon("database")),
+            menuItem(i18n$t("Analysis"), tabName = "Simulated_Experiment_Analysis", icon = icon("chart-simple")),
+            menuItem(i18n$t("Writing Up"), tabName = "Simulated_Experiment_Writing_Up", icon = icon("pen"))
+          ),
+        menuItem(i18n$t("Feedback"), tabName = "Feedback", icon = icon("comment"))
+
       )
     ),
     
     conditionalPanel(
       condition = "output.user_auth",
-      actionButton("your_drive_button", "View Your Drive", icon = icon("google-drive"), class = "btn-primary", style = "margin: 10px; width: 90%")
+      actionButton("your_drive_button", i18n$t("View Your Drive"), icon = icon("google-drive"), class = "btn-primary", style = "margin: 10px; width: 90%")
     ),
     
     conditionalPanel(
       condition = "output.user_auth",
-      actionButton("logout_button", "Logout", icon = icon("sign-out-alt"), class = "btn-danger", style = "margin: 10px; width: 90%")
+      actionButton("logout_button", i18n$t("Logout"), icon = icon("sign-out-alt"), class = "btn-danger", style = "margin: 10px; width: 90%")
     )
   )
   
@@ -320,19 +326,12 @@ server <- function(input, output, session) {
 
   observeEvent(input$selected_language,{
       lang <- input$selected_language
-       update_lang(lang, session)
+      update_lang(lang, session)
 
     updateActionLink(session, "about_link", label = i18n$t("About"))
     updateActionLink(session, "citing", label = i18n$t("Cite BlinkR"))
   })
   
-  # current_lang <- reactiveVal("en")
-
-  # observeEvent(input$selected_language, {
-  #   lang <- input$selected_language
-  #   current_lang(lang)
-  #   i18n$set_translation_language(lang)
-  # })
 
 auth_status <- reactiveVal(FALSE)
 
@@ -436,7 +435,7 @@ saved_results <- reactiveValues(
     session_folder_id = auth()$session_folder_id
     
     admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base = all_users, final_reports_folder_id = final_reports_folder_id, user_base_google_sheet, session_folder_id = session_folder_id)
-    background_module_server("background", parent.session = session)
+    background_module_server("background", i18n, parent.session = session)
     hypothesis_module_server("hypothesis", parent.session = session, auth = auth)
     protocol_module_server("protocol", auth = auth, parent.session = session, protocol_file_id = protocol_file_id, session_folder_id = session_folder_id)
     measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session)
