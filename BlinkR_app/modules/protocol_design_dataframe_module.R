@@ -1,4 +1,4 @@
-experimental_design_module_ui <- function(id, i18n, label = "Protocol Planning Notes", placeholder = "Placeholder") {
+experimental_design_module_ui <- function(id, i18n, label = i18n$t("Protocol Planning Notes"), placeholder = i18n$t("Placeholder")) {
   ns <- NS(id)
   tagList(
     textAreaInput(
@@ -6,11 +6,11 @@ experimental_design_module_ui <- function(id, i18n, label = "Protocol Planning N
       label = label,
       placeholder = placeholder
     ),
-    actionButton(ns("submit_protocol_notes"), tagList(shiny::icon("save"), "Save Notes"), class = "fun-save-button")
+    actionButton(ns("submit_protocol_notes"), tagList(shiny::icon("save"), i18n$t("Save Notes")), class = "fun-save-button")
     )
 }
 
-experimental_design_module_server <- function(id, auth, protocol_file_id, sheet_name = "Protocol_Notes", input_question = "Input Question") {
+experimental_design_module_server <- function(id, i18n, auth, protocol_file_id, sheet_name = "Protocol_Notes", input_question = i18n$t("Input Question")) {
   moduleServer(id, function(input, output, session) {
     vars <- get_experiment_vars()
 
@@ -36,9 +36,9 @@ experimental_design_module_server <- function(id, auth, protocol_file_id, sheet_
       tryCatch({
         print(new_entry)
         sheet_write(data = new_entry, ss = protocol_file_id, sheet = sheet_name)
-        showNotification("Protocol notes submitted successfully!", type = "message", duration = 3)
+        showNotification(i18n$t("Protocol notes submitted successfully!"), type = "message", duration = 3)
       }, error = function(e) {
-        showNotification("Error saving protocol notes: Please try again.", type = "error", duration = 3)
+        showNotification(i18n$t("Error saving protocol notes: Please try again."), type = "error", duration = 3)
       })
     })
   })

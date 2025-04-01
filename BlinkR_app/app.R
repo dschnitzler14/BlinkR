@@ -6,8 +6,6 @@ i18n_path <- "translations/translations.json"
 i18n <- Translator$new(translation_json_path = i18n_path)
 i18n$set_translation_language("en")
 
-includeLocalisedMarkdown <- make_includeLocalisedMarkdown(i18n)
-
 ### load all modules in modules/ directory ----
 module_files <- list.files(path = "modules", pattern = "\\.R$", full.names = TRUE)
 sapply(module_files, source)
@@ -324,14 +322,28 @@ ui <- dashboardPage(header, sidebar, body)
 #server function ----
 server <- function(input, output, session) {
 
-  observeEvent(input$selected_language,{
-      lang <- input$selected_language
-      update_lang(lang, session)
+  markdown_path <- reactiveVal("markdown/english/")
 
+  observeEvent(input$selected_language, {
+    if (input$selected_language == "en") {
+      markdown_path("markdown/english/")
+    } else if (input$selected_language == "de") {
+      markdown_path("markdown/german/")
+    }
+    
+    update_lang(input$selected_language, session)
     updateActionLink(session, "about_link", label = i18n$t("About"))
     updateActionLink(session, "citing", label = i18n$t("Cite BlinkR"))
   })
-  
+
+  include_markdown_language <- function(filepath) {
+    cat("markdown path: ", markdown_path(), "\n")
+    cat("file path: ", filepath, "\n")
+
+    includeMarkdown(file.path(markdown_path(), filepath))
+  }
+
+
 
 auth_status <- reactiveVal(FALSE)
 
@@ -342,7 +354,7 @@ auth_status <- reactiveVal(FALSE)
 
   output$login_ui <- renderUI({
     req(isolate(!auth_status()))
-    custom_login_ui("login_module")
+    custom_login_ui("login_module", i18n)
 })
 
 outputOptions(output, "login_ui", suspendWhenHidden = FALSE)
@@ -380,9 +392,9 @@ saved_results <- reactiveValues(
   
   feedback_data <- reactiveVal(feedback_data_dataframe)
   
-  introduction_module_server("introduction", parent.session = session, auth_status)
+  introduction_module_server("introduction", i18n, parent.session = session, auth_status)
 
-  auth <- custom_login_server("login_module", user_base_google_sheet, all_users, base_group_files_url, external_logout_button = reactive(input$logout_button))
+  auth <- custom_login_server("login_module", i18n, user_base_google_sheet, all_users, base_group_files_url, external_logout_button = reactive(input$logout_button))
 
   output$sidebar_group_name <- renderText({
     req(auth()$user_auth)
@@ -405,7 +417,7 @@ saved_results <- reactiveValues(
   observeEvent(input$login_button, {
     output$login_ui <- renderUI({
       req(!auth()$user_auth)
-      custom_login_ui("login_module")
+      custom_login_ui("login_module", i18n)
     })
   })
   
@@ -435,9 +447,9 @@ saved_results <- reactiveValues(
     session_folder_id = auth()$session_folder_id
     
     admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base = all_users, final_reports_folder_id = final_reports_folder_id, user_base_google_sheet, session_folder_id = session_folder_id)
-    background_module_server("background", i18n, parent.session = session)
-    hypothesis_module_server("hypothesis", parent.session = session, auth = auth)
-    protocol_module_server("protocol", auth = auth, parent.session = session, protocol_file_id = protocol_file_id, session_folder_id = session_folder_id)
+    background_module_server("background", i18n, parent.session = session, include_markdown_language = include_markdown_language)
+    hypothesis_module_server("hypothesis", i18n, parent.session = session, auth = auth, include_markdown_language = include_markdown_language)
+    protocol_module_server("protocol", i18n, auth = auth, parent.session = session, protocol_file_id = protocol_file_id, session_folder_id = session_folder_id)
     measurements_module_server("measurements", db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session)
     class_data_module_server("class_data", db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session, auth = auth)
     playground_module_server("playground", session_folder_id = session_folder_id, parent.session = session)

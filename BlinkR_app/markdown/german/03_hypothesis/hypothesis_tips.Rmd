@@ -1,0 +1,8 @@
+1. **Halte es klar und spezifisch:**  
+   Deine Hypothese sollte eine eindeutige Vorhersage treffen und die Variablen, die du untersuchst, klar benennen.
+
+2. **Mach sie testbar:**  
+   Stelle sicher, dass deine Hypothese durch die in deinem Experiment gesammelten Daten bestätigt oder widerlegt werden kann.
+
+3. **Gründe sie auf Hintergrundinformationen:**  
+   Überlege, was du aus der Literatur gelernt hast. Eine Hypothese sollte auf vorhandenem Wissen und logischer Überlegung basieren.

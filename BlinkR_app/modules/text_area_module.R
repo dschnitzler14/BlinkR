@@ -1,4 +1,4 @@
-text_area_module_UI <- function(id, i18n, text_label = "Type Your Notes Here", text_value = "", button_label = "Save Notes") {
+text_area_module_UI <- function(id, i18n, text_label = i18n$t("Type Your Notes Here"), text_value = "", button_label = i18n$t("Save Notes")) {
   ns <- NS(id)
   tagList(
     textAreaInput(
@@ -15,7 +15,7 @@ text_area_module_UI <- function(id, i18n, text_label = "Type Your Notes Here", t
   )
 }
 
-text_area_module_server <- function(id, auth, filename = "Filename", time = "") {
+text_area_module_server <- function(id, i18n, auth, filename = "Filename", time = "") {
   moduleServer(
     id,
     function(input, output, session) {
@@ -48,7 +48,7 @@ text_area_module_server <- function(id, auth, filename = "Filename", time = "") 
         )
 
         output$submission_feedback <- renderUI({
-          div(class = "success-box", "\U1F64C Your notes have been saved!")
+          div(class = "success-box", i18n$t("\U1F64C Your notes have been saved!"))
         })
 
       })

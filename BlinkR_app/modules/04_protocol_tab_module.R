@@ -8,7 +8,7 @@ protocol_module_ui <- function(id, i18n){
                                     div(
                                       class = "page-title-box",
                                       tags$h2(
-                                        tagList(shiny::icon("list"), "Protocol")
+                                        tagList(shiny::icon("list"), i18n$t("Protocol"))
                                       )
                             )
                           )
@@ -20,14 +20,14 @@ protocol_module_ui <- function(id, i18n){
                                   width = 12,
                                   tabPanel(
                                     tabName = "Your Protocol",
-                                    title =  tagList(shiny::icon("user"), "Your Protocol"),
-                                    experimental_design_module_ui(ns("experimental_design_protocol"), i18n, "Experimental Design", "Think about some general ideas for the experiment here"),
-                                    experimental_design_module_ui(ns("measurement_protocol"), i18n, "Measurement", "How will you record measurements?"),
-                                    experimental_design_module_ui(ns("analysis_protocol"), i18n, "Analysis", "How will you analyse your results?")
+                                    title =  tagList(shiny::icon("user"), i18n$t("Your Protocol")),
+                                    experimental_design_module_ui(ns("experimental_design_protocol"), i18n, i18n$t("Experimental Design"), i18n$t("Think about some general ideas for the experiment here")),
+                                    experimental_design_module_ui(ns("measurement_protocol"), i18n, i18n$t("Measurement"), i18n$t("How will you record measurements?")),
+                                    experimental_design_module_ui(ns("analysis_protocol"), i18n, i18n$t("Analysis"), i18n$t("How will you analyse your results?"))
                                     ),
                                   tabPanel(
                                     tabName = "Class Protocol",
-                                    title = tagList(shiny::icon("users"), "Class Protocol"),
+                                    title = tagList(shiny::icon("users"), i18n$t("Class Protocol")),
                                     DT::dataTableOutput(ns("class_protocol")),
                                     textOutput(ns("no_protocol_text"))
                                   )
@@ -43,7 +43,7 @@ protocol_module_ui <- function(id, i18n){
     width = 12,
     solidHeader = TRUE,
     includeMarkdown("markdown/04_protocol/protocol_data_hazards.Rmd"),
-    bucketListModuleUI(ns("bucket_list"))
+    bucketListModuleUI(ns("bucket_list"), i18n)
   )
   ),
   ),
@@ -78,17 +78,17 @@ protocol_module_ui <- function(id, i18n){
   
 }
 
-protocol_module_server <- function(id, auth, parent.session, protocol_file_id, session_folder_id){
+protocol_module_server <- function(id, i18n, auth, parent.session, protocol_file_id, session_folder_id){
   moduleServer(
     id,
     function(input, output, session){
       vars <- get_experiment_vars()
     
-      bucketListModuleServer("bucket_list", auth = auth, session_folder_id = session_folder_id)
+      bucketListModuleServer("bucket_list", i18n, auth = auth, session_folder_id = session_folder_id)
 
-      experimental_design_module_server("experimental_design_protocol", auth, protocol_file_id, "Experimental Design", "What is your general design?")
-      experimental_design_module_server("measurement_protocol", auth, protocol_file_id, "Measurement", "How will you record measurements?")
-      experimental_design_module_server("analysis_protocol", auth, protocol_file_id, "Experimental Design", "How will you analyse your results?")
+      experimental_design_module_server("experimental_design_protocol", i18n, auth, protocol_file_id, i18n$t("Experimental Design"), i18n$t("What is your general design?"))
+      experimental_design_module_server("measurement_protocol", i18n, auth, protocol_file_id, i18n$t("Measurement"), i18n$t("How will you record measurements?"))
+      experimental_design_module_server("analysis_protocol", i18n, auth, protocol_file_id, i18n$t("Experimental Design"), i18n$t("How will you analyse your results?"))
       
       view_permission_protocol = auth()$user_info$Protocol
 
@@ -141,7 +141,7 @@ protocol_module_server <- function(id, auth, parent.session, protocol_file_id, s
           }
         })
       } else {
-        output$no_protocol_text <- renderText("Check back later for the Class Protocol")
+        output$no_protocol_text <- renderText(i18n$t("Check back later for the Class Protocol"))
       }
       
       

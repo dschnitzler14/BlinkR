@@ -12,8 +12,8 @@ custom_login_ui <- function(id, i18n) {
             id = ns("signup-login-choice"),
             class = "custom-login-panel",
             
-            h3("Welcome to BlinkR"),
-            p("Please Login with your Group ID or Sign Up with a new Group ID to continue"),
+            h3(i18n$t("Welcome to BlinkR")),
+            p(i18n$t("Please Login with your Group ID or Sign Up with a new Group ID to continue")),
             
             uiOutput(ns("login_signup_choice")),
             
@@ -32,7 +32,7 @@ custom_login_ui <- function(id, i18n) {
 }
 
 
-custom_login_server <- function(id, user_base_sheet_id, all_users, base_group_files_url, external_logout_button = NULL) {
+custom_login_server <- function(id, i18n, user_base_sheet_id, all_users, base_group_files_url, external_logout_button = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -49,8 +49,8 @@ output$login_signup_choice <- renderUI({
     id = ns("login-signup-options"),
   
   tagList(
-    actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), "I have a Group ID"), class = "fun-choice-button"),
-    actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), "I do not have a Group ID"), class = "fun-choice-button")
+    actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), i18n$t("I have a Group ID")), class = "fun-choice-button"),
+    actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
   )
   )
 })
@@ -63,17 +63,17 @@ output$signup_panel <- renderUI({
   tagList(
     div(
       id = ns("signup-panel"),
-      p("Please Sign Up to Continue"),
+      p(i18n$t("Please Sign Up to Continue")),
         div(
         style = "max-width: 300px; margin: 0 auto;",
-        p("Enter a 4-digit number or generate a random Group ID")
+        p(i18n$t("Enter a 4-digit number or generate a random Group ID"))
       ),
-      actionButton(ns("generate_random_ID"), "Generate New Group ID",  class = "generate-id-button"),
-      textInput(ns("sign_up_group_name"), "Group ID", placeholder = "Enter a new Group ID"),
-      textInput(ns("name"), "Your First Name", placeholder = "Enter the First Name of Anyone in your Group"),
+      actionButton(ns("generate_random_ID"), i18n$t("Generate New Group ID"),  class = "generate-id-button"),
+      textInput(ns("sign_up_group_name"), i18n$t("Group ID"), placeholder = i18n$t("Enter a new Group ID")),
+      textInput(ns("name"), i18n$t("Your First Name"), placeholder = i18n$t("Enter the First Name of Anyone in your Group")),
       div(class = "text-danger", uiOutput(ns("sign_uperror"), inline = TRUE)),
-      actionButton(ns("sign_up_button"), tagList(shiny::icon("right-to-bracket"), "Sign Up"), class = "custom-login-button"),
-      actionButton(ns("cancel_sign_up"), tagList(shiny::icon("trash-can"), "Cancel Signup"), class = "custom-cancel-button")
+      actionButton(ns("sign_up_button"), tagList(shiny::icon("right-to-bracket"), i18n$t("Sign Up")), class = "custom-login-button"),
+      actionButton(ns("cancel_sign_up"), tagList(shiny::icon("trash-can"), i18n$t("Cancel Signup")), class = "custom-cancel-button")
     )
   )
 })
@@ -88,11 +88,11 @@ output$login_panel <- renderUI({
   tagList(
     div(
       id = ns("login-panel"),
-      p("Please enter your Group ID to continue"),
-      textInput(ns("group_name"), "Group ID", placeholder = "Enter your Group ID"),
+      p(i18n$t("Please enter your Group ID to continue")),
+      textInput(ns("group_name"), i18n$t("Group ID"), placeholder = i18n$t("Enter your Group ID")),
       div(class = "text-danger", textOutput(ns("error"), inline = TRUE)),
-      actionButton(ns("login_button"), tagList(shiny::icon("right-to-bracket"), "Login"), class = "custom-login-button"),
-      actionButton(ns("cancel_login"), tagList(shiny::icon("trash-can"), "Cancel Login"), class = "custom-cancel-button")
+      actionButton(ns("login_button"), tagList(shiny::icon("right-to-bracket"), i18n$t("Login")), class = "custom-login-button"),
+      actionButton(ns("cancel_login"), tagList(shiny::icon("trash-can"), i18n$t("Cancel Login")), class = "custom-cancel-button")
     )
   )
 })
@@ -105,8 +105,8 @@ observeEvent(input$cancel_login, {
     div(
     id = ns("login-signup-options"),
     tagList(
-       actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), "I have a Group ID"), class = "fun-choice-button"),
-       actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), "I do not have a Group ID"), class = "fun-choice-button")
+       actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), i18n$t("I have a Group ID")), class = "fun-choice-button"),
+       actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
     )
     )
   })
@@ -119,8 +119,8 @@ observeEvent(input$cancel_sign_up, {
     div(
     id = ns("login-signup-options"),
     tagList(
-       actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), "I have a Group ID"), class = "fun-choice-button"),
-       actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), "I do not have a Group ID"), class = "fun-choice-button")
+       actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), i18n$t("I have a Group ID")), class = "fun-choice-button"),
+       actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
     )
     )
   })
@@ -202,9 +202,9 @@ observeEvent(input$generate_random_ID, {
     credentials$session_folder_url <- paste0(base_group_files_url, parent_folder$id)
   }
 
-  output$error <- renderText("Logged in successfully.")
+  output$error <- renderText(i18n$t("Logged in successfully."))
 } else {
-  output$error <- renderText("Invalid Group ID. Please try again.")
+  output$error <- renderText(i18n$t("Invalid Group ID. Please try again."))
 }
 
       
@@ -289,7 +289,7 @@ observeEvent(input$generate_random_ID, {
         }
 
       } else {
-        output$sign_uperror <- renderUI("Group already exists.")
+        output$sign_uperror <- renderUI(i18n$t("Group already exists."))
       }
 
         user_base(read_sheet(user_base_sheet_id))
@@ -319,7 +319,7 @@ observeEvent(input$generate_random_ID, {
 
       session$reload()
 
-      output$error <- renderText("Logged out successfully.")
+      output$error <- renderText(i18n$t("Logged out successfully."))
         user_base(read_sheet(user_base_sheet_id))
 
     })

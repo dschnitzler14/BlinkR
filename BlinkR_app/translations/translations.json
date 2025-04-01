@@ -34,6 +34,237 @@
     { "en": "View Your Drive", "de": "Google Drive Öffnen" },
     { "en": "Logout", "de": "Abmelden" },
     { "en": "Log In", "de": "Anmelden" },
-    { "en": "Admin Area", "de": "Admin Bereich" }
+    { "en": "Admin Area", "de": "Admin Bereich" },
+    {
+      "en": "What is a hypothesis?",
+      "de": "Was ist eine Hypothese?"
+    },
+    {
+      "en": "Tips for Writing Your Hypothesis",
+      "de": "Tipps zum Formulieren deiner Hypothese"
+    },
+    {
+      "en": "What is your hypothesis?",
+      "de": "Was ist deine Hypothese?"
+    },
+    {
+      "en": "What is your hypothesis in plain language?",
+      "de": "Was ist deine Hypothese in einfachen Worten?"
+    },
+    {
+      "en": "What is your null hypothesis?",
+      "de": "Was ist deine Nullhypothese?"
+    },
+    {
+      "en": "What is your alterative hypothesis?",
+      "de": "Was ist deine Alternativhypothese?"
+    },
+    {
+      "en": "Null Hypothesis",
+      "de": "Nullhypothese"
+    },
+    {
+      "en": "Alternative Hypothesis",
+      "de": "Alternativhypothese"
+    },
+    {
+      "en": "Type Your Notes Here",
+      "de": "Schreibe deine Notizen hier"
+    },
+    {
+      "en": "Save Notes",
+      "de": "Notizen speichern"
+    },
+    {
+      "en": "🙌 Your notes have been saved!",
+      "de": "🙌 Deine Notizen wurden gespeichert!"
+    },
+    {
+      "en": "Your Protocol",
+      "de": "Dein Protokoll"
+    },
+    {
+      "en": "Experimental Design",
+      "de": "Versuchsdesign"
+    },
+    {
+      "en": "Think about some general ideas for the experiment here",
+      "de": "Überlege dir hier einige allgemeine Ideen für das Experiment"
+    },
+    
+    {
+      "en": "How will you record measurements?",
+      "de": "Wie wirst du Messungen erfassen?"
+    },
+    {
+      "en": "How will you analyse your results?",
+      "de": "Wie wirst du deine Ergebnisse analysieren?"
+    },
+    {
+      "en": "Class Protocol",
+      "de": "Klassenprotokoll"
+    },
+    {
+      "en": "Check back later for the Class Protocol",
+      "de": "Schau später nochmal vorbei, um das Klassenprotokoll zu sehen"
+    },
+    {
+      "en": "Select the appropriate data hazards for this experiment",
+      "de": "Wähle die passenden Datenrisiken für dieses Experiment aus"
+    },
+    {
+      "en": "Drag the hazards from the list to the box on the right to select them for this experiment.",
+      "de": "Ziehe die Risiken aus der Liste in das Feld rechts, um sie für dieses Experiment auszuwählen."
+    },
+    {
+      "en": "Drag from here",
+      "de": "Hierher ziehen"
+    },
+    {
+      "en": "Selected data hazards",
+      "de": "Ausgewählte Datenrisiken"
+    },
+    {
+      "en": "Submit Hazards",
+      "de": "Risiken einreichen"
+    },
+    {
+      "en": "Error: Please Select Data Hazards",
+      "de": "Fehler: Bitte wähle Datenrisiken aus"
+    },
+    {
+      "en": "Hazards submitted!",
+      "de": "Risiken eingereicht!"
+    },
+    {
+      "en": "Placeholder",
+      "de": "Platzhalter"
+    },
+    {
+      "en": "Protocol Planning Notes",
+      "de": "Notizen zur Protokollplanung"
+    },
+    {
+      "en": "Input Question",
+      "de": "Frage eingeben"
+    },
+    {
+      "en": "Protocol notes submitted successfully!",
+      "de": "Protokollnotizen erfolgreich eingereicht!"
+    },
+    {
+      "en": "Error saving protocol notes: Please try again.",
+      "de": "Fehler beim Speichern der Protokollnotizen: Bitte versuche es erneut."
+    },
+    {
+      "en": "Welcome to BlinkR",
+      "de": "Willkommen bei BlinkR"
+    },
+    {
+      "en": "Research Roadmap",
+      "de": "Forschungsfahrplan"
+    },
+    {
+      "en": "Start Here",
+      "de": "Hier starten"
+    },
+    {
+      "en": "Data Collection & Analysis",
+      "de": "Datenerhebung & Analyse"
+    },
+    {
+      "en": "Writing & Presentation",
+      "de": "Schreiben & Präsentation"
+    },
+    {
+      "en": "AI Writing Help",
+      "de": "KI-Schreibhilfe"
+    },
+    {
+      "en": "Final Steps",
+      "de": "Letzte Schritte"
+    },
+    {
+      "en": "Please Login with your Group ID or Sign Up with a new Group ID to continue",
+      "de": "Bitte melde dich mit deiner Gruppen-ID an oder registriere dich mit einer neuen Gruppen-ID, um fortzufahren"
+    },
+    {
+      "en": "I have a Group ID",
+      "de": "Ich habe eine Gruppen-ID"
+    },
+    {
+      "en": "I do not have a Group ID",
+      "de": "Ich habe keine Gruppen-ID"
+    },
+    {
+      "en": "Please Sign Up to Continue",
+      "de": "Bitte registriere dich, um fortzufahren"
+    },
+    {
+      "en": "Enter the First Name of Anyone in your Group",
+      "de": "Gib den Vornamen von jemandem aus deiner Gruppe ein"
+    },
+    {
+      "en": "Your First Name",
+      "de": "Dein Vorname"
+    },
+    {
+      "en": "Group ID",
+      "de": "Gruppen-ID"
+    },
+    {
+      "en": "Generate New Group ID",
+      "de": "Neue Gruppen-ID generieren"
+    },
+    {
+      "en": "Enter a new Group ID",
+      "de": "Neue Gruppen-ID eingeben"
+    },
+    {
+      "en": "Enter a 4-digit number or generate a random Group ID",
+      "de": "Gib eine 4-stellige Zahl ein oder generiere eine zufällige Gruppen-ID"
+    },
+    {
+      "en": "Cancel Signup",
+      "de": "Registrierung abbrechen"
+    },
+    {
+      "en": "Sign Up",
+      "de": "Registrieren"
+    },
+    {
+      "en": "Please enter your Group ID to continue",
+      "de": "Bitte gib deine Gruppen-ID ein, um fortzufahren"
+    },
+    {
+      "en": "Enter your Group ID",
+      "de": "Gib deine Gruppen-ID ein"
+    },
+    {
+      "en": "Login",
+      "de": "Anmelden"
+    },
+    {
+      "en": "Cancel Login",
+      "de": "Anmeldung abbrechen"
+    },
+    {
+      "en": "Logged in successfully.",
+      "de": "Erfolgreich angemeldet."
+    },
+    {
+      "en": "Invalid Group ID. Please try again.",
+      "de": "Ungültige Gruppen-ID. Bitte versuche es erneut."
+    },
+    {
+      "en": "Group already exists.",
+      "de": "Gruppe existiert bereits."
+    },
+    {
+      "en": "Logged out successfully.",
+      "de": "Erfolgreich abgemeldet."
+    }
+
+
   ]
 }

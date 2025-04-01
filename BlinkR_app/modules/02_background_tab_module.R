@@ -23,8 +23,6 @@ background_module_ui <- function(id, i18n){
             collapsed = TRUE,
             width = 12,
             uiOutput(ns("background_databases_markdown"))
-            #includeLocalisedMarkdown("02_background/background_databases.Rmd")
-            #includeMarkdown("markdown/02_background/background_databases.Rmd")
           ),
 
           box(
@@ -33,7 +31,8 @@ background_module_ui <- function(id, i18n){
             collapsible = TRUE,
             collapsed = TRUE,
             width = 12,
-            includeMarkdown("markdown/02_background/background_strategies.Rmd")
+            uiOutput(ns("background_strategies_markdown"))
+            #includeMarkdown("markdown/02_background/background_strategies.Rmd")
           ),
             box(
             title = tagList(shiny::icon("lightbulb"), i18n$t("Additional Tips for Effective Searches")),
@@ -41,7 +40,8 @@ background_module_ui <- function(id, i18n){
             collapsible = TRUE,
             collapsed = TRUE,
             width = 12,
-            includeMarkdown("markdown/02_background/background_tips.Rmd")
+            uiOutput(ns("background_tips_markdown"))
+            #includeMarkdown("markdown/02_background/background_tips.Rmd")
           ),
           box(
             title = tagList(shiny::icon("file-lines"), i18n$t("Advice for Reading a Paper")),
@@ -49,7 +49,8 @@ background_module_ui <- function(id, i18n){
             collapsible = TRUE,
             collapsed = TRUE,
             width = 12,
-            includeMarkdown("markdown/02_background/background_reading_paper.Rmd")
+            uiOutput(ns("background_reading_paper_markdown"))
+            #includeMarkdown("markdown/02_background/background_reading_paper.Rmd")
           )
     )
   ),
@@ -83,7 +84,7 @@ background_module_ui <- function(id, i18n){
   )
 }
 
-background_module_server <- function(id, i18n, parent.session){
+background_module_server <- function(id, i18n, parent.session, include_markdown_language){
   moduleServer(
     id,
     function(input, output, server){
@@ -91,9 +92,20 @@ background_module_server <- function(id, i18n, parent.session){
     vars <- get_experiment_vars()
 
     output$background_databases_markdown <- renderUI({
-    includeLocalisedMarkdown("02_background/background_databases.Rmd")
+    include_markdown_language("02_background/background_databases.Rmd")
   })
 
+   output$background_strategies_markdown <- renderUI({
+    include_markdown_language("02_background/background_strategies.Rmd")
+  })
+
+   output$background_tips_markdown <- renderUI({
+    include_markdown_language("02_background/background_tips.Rmd")
+  })
+
+  output$background_reading_paper_markdown <- renderUI({
+    include_markdown_language("02_background/background_reading_paper.Rmd")
+  })
 
       
        observeEvent(input$back_page_background, {

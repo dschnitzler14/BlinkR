@@ -138,7 +138,7 @@ bucketListModuleUI <- function(id, i18n) {
   )
 }
 
-bucketListModuleServer <- function(id, auth, session_folder_id) {
+bucketListModuleServer <- function(id, i18n, auth, session_folder_id) {
   moduleServer(id, function(input, output, session) {
 
     output$results_1 <- renderPrint(input$rank_list_1)

@@ -10,7 +10,7 @@ hypothesis_module_ui <- function(id, i18n) {
           div(
             class = "page-title-box",
             tags$h2(
-              tagList(shiny::icon("pen-to-square"), "Hypothesis")
+              tagList(shiny::icon("pen-to-square"), i18n$t("Hypothesis"))
             )
   )
 )
@@ -18,35 +18,37 @@ hypothesis_module_ui <- function(id, i18n) {
       ),
       fluidRow(
         box(
-          title = tagList(shiny::icon("question-circle"), "What is a hypothesis?"),
+          title = tagList(shiny::icon("question-circle"), i18n$t("What is a hypothesis?")),
           id = "hypothesis_box1",
           collapsible = TRUE,
           collapsed = TRUE,
           width = 12,
           solidHeader = TRUE,
-          includeMarkdown("markdown/03_hypothesis/what_is_a_hypothesis.Rmd")
+          uiOutput(ns("what_hypothesis_markdown")),
+          #includeMarkdown("markdown/03_hypothesis/what_is_a_hypothesis.Rmd")
         ),
         box(
-          title = tagList(shiny::icon("pen"), "Tips for Writing Your Hypothesis"),
+          title = tagList(shiny::icon("pen"), i18n$t("Tips for Writing Your Hypothesis")),
           id = "hypothesis_box2",
           collapsible = TRUE,
           collapsed = TRUE,
           width = 12,
           solidHeader = TRUE,
-          includeMarkdown("markdown/03_hypothesis/hypothesis_tips.Rmd")
+          uiOutput(ns("hypothesis_tips_markdown")),
+          #includeMarkdown("markdown/03_hypothesis/hypothesis_tips.Rmd")
         ),
         box(
-          title = tagList(shiny::icon("lightbulb"), "What is your hypothesis?"),
+          title = tagList(shiny::icon("lightbulb"), i18n$t("What is your hypothesis?")),
           id = "hypothesis_box3",
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          markdown("#### What is your hypothesis in plain language?"),
-          text_area_module_UI(ns("hypothesis"), i18n, text_label = "Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes")),
-          markdown("#### What is your null hypothesis?"),
-          text_area_module_UI(ns("null_hypothesis"), i18n, text_label = "Null Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes")),
-          markdown("#### What is your alterative hypothesis?"),
-          text_area_module_UI(ns("alt_hypothesis"), i18n, text_label = "Alternative Hypothesis", text_value = "", button_label = tagList(shiny::icon("save"), "Save Notes"))
+          h2(i18n$t("What is your hypothesis in plain language?")),
+          text_area_module_UI(ns("hypothesis"), i18n, text_label = i18n$t("Hypothesis"), text_value = "", button_label = tagList(shiny::icon("save"), i18n$t("Save Notes"))),
+          h2(i18n$t("What is your null hypothesis?")),
+          text_area_module_UI(ns("null_hypothesis"), i18n, text_label = i18n$t("Null Hypothesis"), text_value = "", button_label = tagList(shiny::icon("save"), i18n$t("Save Notes"))),
+          h2(i18n$t("What is your alterative hypothesis?")),
+          text_area_module_UI(ns("alt_hypothesis"), i18n, text_label = i18n$t("Alternative Hypothesis"), text_value = "", button_label = tagList(shiny::icon("save"), i18n$t("Save Notes")))
         )
       ),
       fluidRow(
@@ -78,16 +80,24 @@ hypothesis_module_ui <- function(id, i18n) {
   )
 }
 
-hypothesis_module_server <- function(id, parent.session, auth) {
+hypothesis_module_server <- function(id, i18n, parent.session, auth, include_markdown_language) {
   moduleServer(
     id,
     function(input, output, session) {
             vars <- get_experiment_vars()
 
+
+      output$what_hypothesis_markdown <- renderUI({
+        include_markdown_language("03_hypothesis/what_is_a_hypothesis.Rmd")
+      })
+
+      output$hypothesis_tips_markdown <- renderUI({
+        include_markdown_language("03_hypothesis/hypothesis_tips.Rmd")
+      })
       
-      text_area_module_server("hypothesis", auth, "Hypothesis")
-      text_area_module_server("null_hypothesis", auth, "Null Hypothesis")
-      text_area_module_server("alt_hypothesis", auth, "Alternative Hypothesis")
+      text_area_module_server("hypothesis", i18n, auth, i18n$t("Hypothesis"))
+      text_area_module_server("null_hypothesis", i18n, auth, i18n$t("Null Hypothesis"))
+      text_area_module_server("alt_hypothesis", i18n, auth, i18n$t("Alternative Hypothesis"))
 
 
       

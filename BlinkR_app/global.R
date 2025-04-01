@@ -102,26 +102,3 @@ css_link <- tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "s
                       tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
                       )
 
-# global.R
-
-make_includeLocalisedMarkdown <- function(i18n) {
-  function(relative_path) {
-    lang <- i18n$get_language()
-
-    lang_folder <- switch(
-      lang,
-      "de" = "german",
-      "en" = "english",
-      "english"
-    )
-
-    full_path <- file.path("markdown", lang_folder, relative_path)
-
-    if (!file.exists(full_path)) {
-      warning(sprintf("Missing markdown file: %s", full_path))
-      return(HTML(sprintf("<p><strong>Missing file:</strong> %s</p>", full_path)))
-    }
-
-    includeMarkdown(full_path)
-  }
-}
