@@ -9,28 +9,25 @@ measurements_module_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("ruler"), "Measurements")
+                  tagList(shiny::icon("ruler"), i18n$t("Measurements"))
                 )
       )
     )),
       fluidRow(
         box(
-          title = tagList(shiny::icon("circle-plus"), "Add Students"),
+          title = tagList(shiny::icon("circle-plus"), i18n$t("Add Students")),
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          markdown("To get started, use this box to enter everyone's initials.
-                   Please enter them one at a time and hit enter after each one.
-                   If you make a mistake, you can delete a student below.
-                   Each student will be assigned an \"ID\" for this experiment."),
+          textOutput(ns("get_started_text")),
           group_info_module_ui(ns("add_students"), i18n)
         ),
         box(
-          title = tagList(shiny::icon("ruler"), "Measurements"),
+          title = tagList(shiny::icon("ruler"), i18n$t("Measurements")),
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          uiOutput(ns("students_added_helper_text")),
+          textOutput(ns("students_added_helper_text")),
           uiOutput(ns("students_ui")),
           textOutput(ns("please_add_students"))
         )
@@ -42,7 +39,7 @@ measurements_module_ui <- function(id, i18n) {
             style = "display: flex; justify-content: center; align-items: center; height: 100px;",
             actionButton(
               ns("raw_data"),
-              label = tagList(icon("database"), "View Raw Data"),
+              label = tagList(icon("database"), i18n$t("View Raw Data")),
               class = "action-button custom-action"
             )
           )
@@ -78,13 +75,20 @@ measurements_module_ui <- function(id, i18n) {
 }
 
 
-measurements_module_server <- function(id, db_student_table, db_measurement, auth, parent.session) {
+measurements_module_server <- function(id, i18n, db_student_table, db_measurement, auth, parent.session) {
   moduleServer(
     id,
     function(input, output, session) {
             vars <- get_experiment_vars()
 
       ns <- session$ns
+
+      output$get_started_text <- renderText(
+            i18n$t("To get started, use this box to enter everyone's initials.\n
+                   Please enter them one at a time and hit enter after each one.\n
+                   If you make a mistake, you can delete a student below.\n
+                   Each student will be assigned an \"ID\" for this experiment.")
+          )
       
       observeEvent(input$back_page_measure, {
         updateTabItems(parent.session, "sidebar", "Protocol")
@@ -93,7 +97,7 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
         updateTabItems(parent.session, "sidebar", "Raw_Data")
       })
       
-      group_info_module_server("add_students", db_student_table = db_student_table, auth = auth)
+      group_info_module_server("add_students", i18n, db_student_table = db_student_table, auth = auth)
       
       student_ids <- reactiveVal(character())
       
@@ -144,7 +148,7 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
                 column(2,
                        actionButton(
                          ns(paste0("delete_student_", student_ID)),
-                         label = "Delete Student",
+                         label = i18n$t("Delete Student"),
                          class = "fun-delete-button"
                        )
                 )
@@ -153,6 +157,7 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
             
             measurement_input_module_server(
               paste0("student_module_", student_ID),
+              i18n,
               student_name = student_name,
               student_ID = student_ID,
               group_name = group_name,
@@ -172,14 +177,14 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
               
               student_ids(setdiff(student_ids(), student_ID))
               
-              showNotification(paste("Deleted student with ID:", student_ID), type = "message", duration = 3)
+              showNotification(paste(i18n$t("Deleted student with ID:"), student_ID), type = "message", duration = 3)
             }, ignoreInit = TRUE)
           }
           
           student_ids(current_ids)
         } else {
           output$please_add_students <- renderText(
-            "To get started, please add students in the box above!"
+            i18n$t("To get started, please add students in the box above!")
           )
         }
       }, ignoreNULL = FALSE, ignoreInit = FALSE)
@@ -188,10 +193,11 @@ measurements_module_server <- function(id, db_student_table, db_measurement, aut
         div(id = ns("students_ui"))
       })
       
-      output$students_added_helper_text <- renderUI(
-        markdown("You can enter your measurement results here. 
-                 If you make a mistake, you can re-enter the results and overwrite the existing data.
-                 You can also delete students from your group using the button on the right.")
+      output$students_added_helper_text <- renderText(
+        i18n$t("You can enter your measurement results here.\n
+        If you make a mistake, you can re-enter the results and overwrite the existing data.\n
+        You can also delete students from your group using the button on the right.")
+        
       )
       
       observeEvent(input$raw_data, {

@@ -10,7 +10,7 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
           div(
             class = "page-title-box",
             tags$h2(
-              tagList(shiny::icon("magnifying-glass"), "Analyis: Prepare Your Data")
+              tagList(shiny::icon("magnifying-glass"), i18n$t("Analyis: Prepare Your Data"))
             )
   )
 )
@@ -21,7 +21,7 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
         column(
           12,
           shinydashboard::box(
-            title = "1️⃣ View Data",
+            title = i18n$t("1️⃣ View Data"),
             collapsible = TRUE,
             width = 12,
             solidHeader = TRUE,
@@ -41,7 +41,7 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
             )
           ),
           shinydashboard::box(
-            title = "2️⃣ Prepare Data",
+            title = i18n$t("2️⃣ Prepare Data"),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -66,19 +66,19 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
               style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
               actionButton(
                 ns("summarise"),
-                label = tagList(icon("rectangle-list"), "Summarise the Data"),
+                label = tagList(icon("rectangle-list"), i18n$t("Summarise the Data")),
                 class = "action-button custom-action",
                 `data-id` = "summarise_data"
               ),
               actionButton(
                 ns("statistics"),
-                label = tagList(icon("equals"), "Run Statistical Analysis"),
+                label = tagList(icon("equals"), i18n$t("Run Statistical Analysis")),
                 class = "action-button custom-action",
                 `data-id` = "stats"
               ),
               actionButton(
                 ns("figure"),
-                label = tagList(icon("chart-simple"), "Create a Figure"),
+                label = tagList(icon("chart-simple"), i18n$t("Create a Figure")),
                 class = "action-button custom-action",
                 `data-id` = "create_figure"
               )
@@ -92,7 +92,7 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
               style = "display: flex; justify-content: center; align-items: center; height: 100px;",
               actionButton(
                 ns("dashboard"),
-                label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
+                label = tagList(icon("dashboard"), i18n$t("Go to Analysis Dashboard")),
                 class = "action-button custom-dark-yellow"
               )
             )
@@ -130,7 +130,7 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
 }
 
 
-analysis_prepare_data_module_server <- function(id, results_data, parent.session, session_folder_id) {
+analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.session, session_folder_id) {
   moduleServer(id, function(input, output, session) {
 
       vars <- get_experiment_vars()
@@ -154,7 +154,7 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
       req(!is.null(view_data_result()), !is.null(view_data_result()$result))
       feedback <- if (is.data.frame(view_data_result()$result) && nrow(view_data_result()$result) > 0) {
           tagList(
-            div(class = "success-box", "\U1F64C That's our data! Looks good!"),
+            div(class = "success-box", i18n$t("\U1F64C That's our data! Looks good!")),
             markdown("
         Well done! You just ran your first bit of code!
         The `head()` command returns the first 6 lines of our table, so we can confirm that our data has loaded.
@@ -163,21 +163,21 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
         "),
             textInput(
               session$ns("interpret_head_results"),
-              label = "How many subjects (students) can you see in this slice of data?",
+              label = i18n$t("How many subjects (students) can you see in this slice of data?"),
               placeholder = "Type your answer here",
               ),
               div(
                 style = "text-align: center;",
                 actionButton(
                   session$ns("interpret_head_results_submit"),
-                  label = "Submit",
+                  label = i18n$t("Submit"),
                   class = "fun-submit-button"
                 )
               ),
               uiOutput(session$ns("feedback_head")),
             radioButtons(
               session$ns("analysis_step2_quiz"), 
-              label = "What do you think we need to do to our data?", 
+              label = i18n$t("What do you think we need to do to our data?"), 
               choices = list(
                 "Get the average for each condition?" = "option1", 
                 "Get average from technical replicates for each subject?" = "option2", 
@@ -188,7 +188,7 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
           )
       
       } else if (!is.null(view_data_result())) {
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
       } else {
         NULL
       }
@@ -202,9 +202,9 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
 
   observeEvent(input$interpret_head_results_submit, {
       feedback_head <- if (input$interpret_head_results == 1) {
-        div(class = "success-box", "\U1F64C Correct!")
+        div(class = "success-box", i18n$t("\U1F64C Correct!"))
       } else {
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
       }
       
       output$feedback_head <- renderUI({
@@ -214,9 +214,9 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
     
     observeEvent(input$analysis_step2_quiz, {
       feedback <- if (input$analysis_step2_quiz == "option2") {
-        div(class = "success-box", "\U1F64C Correct!")
+        div(class = "success-box", i18n$t("\U1F64C Correct!"))
       } else {
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
       }
       
       output$view_data_quiz_feedback <- renderUI({
@@ -248,11 +248,11 @@ analysis_prepare_data_module_server <- function(id, results_data, parent.session
 
       feedback <- if (is.data.frame(average_trs_result()$result) && nrow(average_trs_result()$result) > 0) {
         tagList(
-          div(class = "success-box", "\U1F64C Good Job!"),
+          div(class = "success-box", i18n$t("\U1F64C Good Job!")),
           HTML(markdownToHTML(text = processed_rmd_analysis_home_prepare_data, fragment.only = TRUE))
         )
       } else if (!is.null(average_trs_result())) {
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
       } else {
         NULL
       }

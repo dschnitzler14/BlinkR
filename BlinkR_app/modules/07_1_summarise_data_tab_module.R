@@ -10,7 +10,7 @@ analysis_summarise_data_module_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("rectangle-list"), "Analysis: Summarise Data")
+                  tagList(shiny::icon("rectangle-list"), i18n$t("Analysis: Summarise Data"))
                 )
       )
     )),
@@ -33,13 +33,13 @@ analysis_summarise_data_module_ui <- function(id, i18n) {
               style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
               actionButton(
                 ns("statistics"),
-                label = tagList(icon("equals"), "Run Statistical Analysis"),
+                label = tagList(icon("equals"), i18n$t("Run Statistical Analysis")),
                 class = "action-button custom-action",
                 `data-id` = "stats"
               ),
               actionButton(
                 ns("figure"),
-                label = tagList(icon("chart-simple"), "Create a Figure"),
+                label = tagList(icon("chart-simple"), i18n$t("Create a Figure")),
                 class = "action-button custom-action",
                 `data-id` = "create_figure"
               )
@@ -53,7 +53,7 @@ analysis_summarise_data_module_ui <- function(id, i18n) {
               style = "display: flex; justify-content: center; align-items: center; height: 100px;",
               actionButton(
                 ns("dashboard"),
-                label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
+                label = tagList(icon("dashboard"), i18n$t("Go to Analysis Dashboard")),
                 class = "action-button custom-dark-yellow"
               )
             )
@@ -88,7 +88,7 @@ analysis_summarise_data_module_ui <- function(id, i18n) {
 ))}
 
 
-analysis_summarise_data_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
+analysis_summarise_data_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
   vars <- get_experiment_vars()
 
@@ -180,7 +180,7 @@ level_a_sem <- reactive({
   read_file("markdown/07_analysis/predefined_code_summarise_filter_level_b.txt"),
   vars
   )
-  summarise_result_step1 <- editor_module_server("step1_editor", average_trs, "average_trs", predefined_code = predefined_code_step1, return_type = "result", session_folder_id, save_header = "Step 1: Summarise Data")
+  summarise_result_step1 <- editor_module_server("step1_editor", average_trs, "average_trs", predefined_code = predefined_code_step1, return_type = "result", session_folder_id, save_header = i18n$t("Step 1: Summarise Data"))
 
   rmd_content_analysis_summarise_data_filter_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_filter_level_b.Rmd")
   processed_rmd_analysis_summarise_data_filter_level_b <- whisker.render(paste(rmd_content_analysis_summarise_data_filter_level_b, collapse = "\n"), vars)
@@ -192,7 +192,7 @@ level_a_sem <- reactive({
             12,
           box(
               id = "step1_box",
-              title = sprintf("1️⃣ Filter to %s Data", vars$level_b_variable_name),
+              title = sprintf(i18n$t("1️⃣ Filter to %s Data"), vars$level_b_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -222,12 +222,12 @@ level_a_sem <- reactive({
       if (tibble::is_tibble(summarise_result_step1()$result)) {
         output$summary_code_feedback_step1 <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         } else {
         output$summary_code_feedback_step1 <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -240,7 +240,7 @@ level_a_sem <- reactive({
   read_file("markdown/07_analysis/predefined_code_calculate_mean_level_b.txt"),
   vars
   )
-  summarise_result_step2 <- editor_module_server("step2_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step2, return_type = "result", session_folder_id, save_header = "Step 2: Summarise Data")
+  summarise_result_step2 <- editor_module_server("step2_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step2, return_type = "result", session_folder_id, save_header = i18n$t("Step 2: Summarise Data"))
 
 
 rmd_content_summarise_data_mean_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_mean_level_b.Rmd")
@@ -258,7 +258,7 @@ output$step2_box <- renderUI({
             12,
           box(
               id = "step2_box",
-              title = sprintf("2️⃣ Calculate the Mean of %s Data", vars$level_b_text_name),
+              title = sprintf(i18n$t("2️⃣ Calculate the Mean of %s Data"), vars$level_b_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -287,14 +287,14 @@ observe({
     
     output$summary_code_feedback_step2 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!")
+        div(class = "success-box", i18n$t("\U1F64C Great!"))
       )
     })
     
   } else {
     
     output$summary_code_feedback_step2 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
     
   }
@@ -307,7 +307,7 @@ predefined_code_step3 <- whisker.render(
 read_file("markdown/07_analysis/predefined_code_calculate_sd_level_b.txt"),
 vars
 )
-summarise_result_step3 <- editor_module_server("step3_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step3, return_type = "result", session_folder_id, save_header = "Step 2: Summarise Data")
+summarise_result_step3 <- editor_module_server("step3_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step3, return_type = "result", session_folder_id, save_header = i18n$t("Step 2: Summarise Data"))
 
 rmd_content_summarise_data_sd_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_sd_level_b.Rmd")
 processed_rmd_summarise_data_sd_level_b <- whisker.render(paste(rmd_content_summarise_data_sd_level_b, collapse = "\n"), vars)
@@ -320,7 +320,7 @@ output$step3_box <- renderUI({
             12,
           box(
               id = "step3_box",
-              title = sprintf("3️⃣ Calculate the Standard Deviation of %s Data", vars$level_b_text_name),
+              title = sprintf(i18n$t("3️⃣ Calculate the Standard Deviation of %s Data"), vars$level_b_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -349,14 +349,14 @@ observe({
     
     output$summary_code_feedback_step3 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!")
+        div(class = "success-box", i18n$t("\U1F64C Great!"))
       )
     })
     
   } else {
     
     output$summary_code_feedback_step3 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
     
   }
@@ -374,7 +374,7 @@ predefined_code_step4 <- whisker.render(
 summarise_result_step4 <- editor_module_server("step4_editor",list(
     level_b_data = level_b_data,
     level_b_sd   = level_b_sd
-  ), c(level_b_data_name, level_b_sd_name), predefined_code_step4, "result", session_folder_id, "Step 4: Summarise Data")
+  ), c(level_b_data_name, level_b_sd_name), predefined_code_step4, "result", session_folder_id, i18n$t("Step 4: Summarise Data"))
 
 rmd_content_summarise_data_sem_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_sem_level_b.Rmd")
 processed_rmd_summarise_data_sem_level_b <- whisker.render(paste(rmd_content_summarise_data_sem_level_b, collapse = "\n"), vars)
@@ -388,7 +388,7 @@ output$step4_box <- renderUI({
             12,
           box(
               id = "step4_box",
-              title = sprintf("4️⃣ Calculate the Standard Error of the Mean of %s Data", vars$level_b_text_name),
+              title = sprintf(i18n$t("4️⃣ Calculate the Standard Error of the Mean of %s Data"), vars$level_b_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -417,14 +417,14 @@ observe({
     
     output$summary_code_feedback_step4 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!")
+        div(class = "success-box", i18n$t("\U1F64C Great!"))
       )
     })
     
   } else {
     
     output$summary_code_feedback_step4 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
     
   }
@@ -438,7 +438,7 @@ predefined_code_step5 <- whisker.render(
   vars
   )
 
-summarise_result_step5 <- editor_module_server("step5_editor", average_trs, "average_trs", predefined_code = predefined_code_step5, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+summarise_result_step5 <- editor_module_server("step5_editor", average_trs, "average_trs", predefined_code = predefined_code_step5, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
 rmd_content_summarise_data_filter_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_filter_level_a.Rmd")
 processed_rmd_summarise_data_filter_level_a <- whisker.render(paste(rmd_content_summarise_data_filter_level_a, collapse = "\n"), vars)
@@ -452,7 +452,7 @@ output$step5_box <- renderUI({
             12,
           box(
               id = "step5_box",
-              title = sprintf("5️⃣ Your turn! First, filter the data to the %s group", vars$level_a_variable_name),
+              title = sprintf(i18n$t("5️⃣ Your turn! First, filter the data to the %s group"), vars$level_a_variable_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -480,7 +480,7 @@ observe({
     
     output$summary_code_feedback_step5 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!"),
+        div(class = "success-box", i18n$t("\U1F64C Great!")),
         
       )
 
@@ -490,7 +490,7 @@ observe({
   } else {
     
     output$summary_code_feedback_step5 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
     
   }
@@ -507,7 +507,7 @@ predefined_code_step6 <- whisker.render(
   read_file("markdown/07_analysis/predefined_code_calculate_mean_level_a.txt"),
   vars
   )
-summarise_result_step6 <- editor_module_server("step6_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step6, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+summarise_result_step6 <- editor_module_server("step6_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step6, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
 rmd_content_summarise_data_mean_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_mean_level_a.Rmd")
 processed_rmd_summarise_data_mean_level_a <- whisker.render(paste(rmd_content_summarise_data_mean_level_a, collapse = "\n"), vars)
@@ -521,7 +521,7 @@ output$step6_box <- renderUI({
             12,
           box(
               id = "step6_box",
-              title = sprintf("6️⃣ Your turn! Calculate the mean for the  %s group", vars$level_a_text_name),
+              title = sprintf(i18n$t("6️⃣ Your turn! Calculate the mean for the  %s group"), vars$level_a_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -555,7 +555,7 @@ if (!is.null(summarise_result_step6()$result[[1]]) &&
     
     output$summary_code_feedback_step6 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!"),
+        div(class = "success-box", i18n$t("\U1F64C Great!")),
         
       )
 
@@ -565,7 +565,7 @@ if (!is.null(summarise_result_step6()$result[[1]]) &&
   } else {
     
     output$summary_code_feedback_step6 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
     
   }
@@ -578,7 +578,7 @@ predefined_code_step7 <- whisker.render(
   read_file("markdown/07_analysis/predefined_code_calculate_sd_level_a.txt"),
   vars
   )
-summarise_result_step7 <- editor_module_server("step7_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+summarise_result_step7 <- editor_module_server("step7_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
 rmd_content_summarise_data_sd_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_sd_level_a.Rmd")
 processed_rmd_summarise_data_sd_level_a <- whisker.render(paste(rmd_content_summarise_data_sd_level_a, collapse = "\n"), vars)
@@ -591,7 +591,7 @@ output$step7_box <- renderUI({
             12,
           box(
               id = "step7_box",
-              title = sprintf("7️⃣ Your turn! Calculate the sd for the %s group", vars$level_a_text_name),
+              title = sprintf(i18n$t("7️⃣ Your turn! Calculate the sd for the %s group"), vars$level_a_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -624,7 +624,7 @@ if (!is.null(summarise_result_step7()$result[[1]]) &&
     
     output$summary_code_feedback_step7 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!"),
+        div(class = "success-box", i18n$t("\U1F64C Great!")),
         
       )
 
@@ -634,7 +634,7 @@ if (!is.null(summarise_result_step7()$result[[1]]) &&
   } else {
     
     output$summary_code_feedback_step7 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
     
   }
@@ -647,7 +647,7 @@ predefined_code_step8 <- whisker.render(
   vars
   )
 
-summarise_result_step8 <- editor_module_server("step8_editor", list(level_a_data, level_a_n, level_a_sd), c(level_a_data_name, level_a_n_name, level_a_sd_name), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = "Step 5: Summarise Data")
+summarise_result_step8 <- editor_module_server("step8_editor", list(level_a_data, level_a_n, level_a_sd), c(level_a_data_name, level_a_n_name, level_a_sd_name), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
 rmd_content_summarise_data_sem_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_sem_level_a.Rmd")
 processed_rmd_summarise_data_sem_level_a <- whisker.render(paste(rmd_content_summarise_data_sem_level_a, collapse = "\n"), vars)
@@ -661,7 +661,7 @@ output$step8_box <- renderUI({
             12,
           box(
               id = "step8_box",
-              title = sprintf("8️⃣ Your turn! Calculate the n and sem for the %s group", vars$level_a_text_name),
+              title = sprintf(i18n$t("8️⃣ Your turn! Calculate the n and sem for the %s group"), vars$level_a_text_name),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -692,7 +692,7 @@ observe({
   
   if (!is.numeric(result_values)) {
     output$summary_code_feedback_step8 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
     return()
   }
@@ -703,8 +703,8 @@ observe({
   ) {
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!"),
-        strong("Now you have the n. Next, calculate the sem!")
+        div(class = "success-box", i18n$t("\U1F64C Great!")),
+        strong(i18n$t("Now you have the n. Next, calculate the sem!"))
       )
     })
 
@@ -714,7 +714,7 @@ observe({
   ) {
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!")
+        div(class = "success-box", i18n$t("\U1F64C Great!"))
       )
     })
 
@@ -724,13 +724,13 @@ observe({
   ) {
     output$summary_code_feedback_step8 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!")
+        div(class = "success-box", i18n$t("\U1F64C Great!"))
       )
     })
 
   } else {
     output$summary_code_feedback_step8 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
   }
 })
@@ -741,7 +741,7 @@ predefined_code_step9 <- whisker.render(
   vars
   )
 
-summarise_result_step9 <- editor_module_server("step9_editor", average_trs, "average_trs", predefined_code_step9, "result", session_folder_id, "Step 6: Summarise Data with Dplyr")
+summarise_result_step9 <- editor_module_server("step9_editor", average_trs, "average_trs", predefined_code_step9, "result", session_folder_id, i18n$t("Step 6: Summarise Data with Dplyr"))
 
 rmd_content_summarise_data_dplyr <- readLines("markdown/07_analysis/analysis_summarise_data_dplyr.Rmd")
 processed_rmd_summarise_data_dplyr <- whisker.render(paste(rmd_content_summarise_data_dplyr, collapse = "\n"), vars)
@@ -755,8 +755,7 @@ output$step9_box <- renderUI({
             12,
           box(
               id = "step9_box",
-              title = "6️⃣ Use Dplyr to quickly summarise your data",
-              collapsible = TRUE,
+              title = i18n$t("9️⃣ Use Dplyr to quickly summarise your data"),
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
@@ -784,11 +783,11 @@ observe({
     
     output$summary_code_feedback_step9 <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!"),
+        div(class = "success-box", i18n$t("\U1F64C Great!")),
         markdown("Next let's take a look at the result."),
           numericInput(
             inputId = session$ns("mean_level_b_variable_group_quiz"),
-            label = sprintf("What is the mean of the %s group", vars$level_b_variable_name),
+            label = sprintf(i18n$t("What is the mean of the %s group"), vars$level_b_variable_name),
             value = 0,
             min = 5,
             max = 60
@@ -797,14 +796,14 @@ observe({
           style = "text-align: center;",
           actionButton(
             session$ns("submit_mean_level_b_variable_group_quiz_answer"),
-            label = "Submit",
+            label = i18n$t("Submit"),
             class = "fun-submit-button"
           )
           ),
           uiOutput(session$ns("mean_level_b_variable_group_quiz_feedback")),
           numericInput(
             inputId = session$ns("sem_level_a_group_quiz"),
-            label = sprintf("What is the standard error of the mean (sem) of the %s group", vars$level_a_variable_name),
+            label = sprintf(i18n$t("What is the standard error of the mean (sem) of the %s group"), vars$level_a_variable_name),
             value = 0,
             min = 5,
             max = 60
@@ -813,13 +812,13 @@ observe({
                 style = "text-align: center;",
           actionButton(
             session$ns("submit_sem_level_a_group_quiz_answer"),
-            label = "Submit",
+            label = i18n$t("Submit"),
             class = "fun-submit-button"
           )),
           uiOutput(session$ns("submit_sem_level_a_group_quiz_feedback")),
           radioButtons(
             session$ns("summary_result_interpretation_quiz"), 
-            label = "Can we tell from this if this is statistically significant?", 
+            label = i18n$t("Can we tell from this if this is statistically significant?"), 
             choices = list(
               "Yes" = "option1", 
               "No" = "option2"
@@ -836,7 +835,7 @@ observe({
       style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_summary_results_button"),
-            label = tagList(icon("save"), "Save Results to Dashboard"),
+            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
             class = "action-button custom-action",
             `data-id` = "summary_save"
           )
@@ -848,7 +847,7 @@ observe({
   } else {
     
     output$summary_code_feedback_step9 <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
     
   }
@@ -891,7 +890,7 @@ observeEvent(input$submit_mean_level_b_variable_group_quiz_answer, {
 
   if (is.null(val)) {
     output$mean_level_b_variable_group_quiz_feedback <- renderUI({
-      div(class = "error-box", "\U1F914 We do not have a valid mean yet!")
+      div(class = "error-box", i18n$t("\U1F914 We do not have a valid mean yet!"))
     })
     return()
   }
@@ -899,14 +898,14 @@ observeEvent(input$submit_mean_level_b_variable_group_quiz_answer, {
   user_answer_mean_level_b <- as.numeric(input$mean_level_b_variable_group_quiz)
 
   if (is.na(user_answer_mean_level_b)) {
-    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+    feedback <- div(class = "error-box", i18n$t("\U1F914 Please enter a numeric value!"))
   } else {
     tolerance <- 0.5
     
     if (abs(user_answer_mean_level_b - val) <= tolerance) {
-      feedback <- div(class = "success-box", "\U1F64C Correct!")
+      feedback <- div(class = "success-box", i18n$t("\U1F64C Correct!"))
     } else {
-      feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+      feedback <- div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     }
   }
 
@@ -950,7 +949,7 @@ observeEvent(input$submit_sem_level_a_group_quiz_answer, {
   
   if (is.null(val)) {
     output$submit_sem_level_a_group_quiz_feedback <- renderUI({
-      div(class = "error-box", "\U1F914 We do not have a valid SEM yet!")
+      div(class = "error-box", i18n$t("\U1F914 We do not have a valid SEM yet!"))
     })
     return()
   }
@@ -958,14 +957,14 @@ observeEvent(input$submit_sem_level_a_group_quiz_answer, {
   user_answer_sem_level_a <- as.numeric(input$sem_level_a_group_quiz)
   
   if (is.na(user_answer_sem_level_a)) {
-    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+    feedback <- div(class = "error-box", i18n$t("\U1F914 Please enter a numeric value!"))
   } else {
     tolerance <- 0.1
     
     if (abs(user_answer_sem_level_a - val) <= tolerance) {
-      feedback <- div(class = "success-box", "\U1F64C Correct!")
+      feedback <- div(class = "success-box", i18n$t("\U1F64C Correct!"))
     } else {
-      feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+      feedback <- div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     }
   }
   
@@ -978,9 +977,9 @@ observeEvent(input$submit_sem_level_a_group_quiz_answer, {
     #for significance radio quiz
     observeEvent(input$summary_result_interpretation_quiz, {
       feedback <- if (input$summary_result_interpretation_quiz == "option2") {
-        div(class = "success-box", "\U1F64C Correct!")
+        div(class = "success-box", i18n$t("\U1F64C Correct!"))
       } else {
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
       }
       
       output$summary_result_interpretation_quiz_feedback <- renderUI({
@@ -1011,9 +1010,9 @@ observeEvent(input$submit_sem_level_a_group_quiz_answer, {
         
         unlink(temp_file)
         
-        showNotification("Summary script saved successfully & Uploaded to Drive.", type = "message", duration = 3)
+        showNotification(i18n$t("Summary script saved successfully & Uploaded to Drive."), type = "message", duration = 3)
       } else {
-        showNotification("No summary script to save.", type = "error", duration = 3)
+        showNotification(i18n$t("No summary script to save."), type = "error", duration = 3)
       }
     })
 

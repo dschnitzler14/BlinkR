@@ -8,24 +8,24 @@ class_data_module_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("database"), "Raw Data")
+                  tagList(shiny::icon("database"), i18n$t("Raw Data"))
                 )
       )
     )),
       fluidRow(
     tabBox(
-      title = "Raw Data",
+      title = i18n$t("Raw Data"),
       id = ns("data_box"),
       width = 12,
       side = "left",
       tabItem(
-        tabName = "Your Group Data",
-        title = tagList(shiny::icon("user"), "Your Group Data"),
+        tabName = i18n$t("Your Group Data"),
+        title = tagList(shiny::icon("user"), i18n$t("Your Group Data")),
         DT::dataTableOutput(ns("group_data"))
       ),
       tabItem(
-        tabName = "Class Data",
-        title = tagList(shiny::icon("users"), "Class Data"),
+        tabName = i18n$t("Class Data"),
+        title = tagList(shiny::icon("users"), i18n$t("Class Data")),
         DT::dataTableOutput(ns("class_data")),
         textOutput(ns("no_data_text"))
       )
@@ -63,6 +63,7 @@ class_data_module_ui <- function(id, i18n) {
 
 class_data_module_server <- function(
     id,
+    i18n,
     db_measurement,
     BlinkR_measurement_sheet,
     parent.session,
@@ -113,7 +114,7 @@ class_data_module_server <- function(
           }
         })
       } else {
-        output$no_data_text <- renderText("Check back later for the Class Data")
+        output$no_data_text <- renderText(i18n$t("Check back later for the Class Data"))
       }
       
 # Group Data 

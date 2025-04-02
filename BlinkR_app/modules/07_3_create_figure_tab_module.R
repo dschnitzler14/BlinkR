@@ -10,7 +10,7 @@ analysis_create_figure_module_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("chart-simple"), "Analysis: Create Figure")
+                  tagList(shiny::icon("chart-simple"), i18n$t("Analysis: Create Figure"))
                 )
       )
     )),
@@ -19,7 +19,7 @@ analysis_create_figure_module_ui <- function(id, i18n) {
           12,
           
           box(
-            title = "1️⃣ Creating a Figure",
+            title = i18n$t("1️⃣ Creating a Figure"),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -31,7 +31,7 @@ analysis_create_figure_module_ui <- function(id, i18n) {
                   "Time to make a figure!"
                 ),
                 radioButtons(ns("figure_type_selector"),
-                             label = "What type of figure would be best here?",
+                             label = i18n$t("What type of figure would be best here?"),
                              choices = c("bar chart" = "bar",
                                          "box plot" = "box"
                                          ),
@@ -55,19 +55,19 @@ analysis_create_figure_module_ui <- function(id, i18n) {
               style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
               actionButton(
                 ns("summarise"),
-                label = tagList(icon("rectangle-list"), "Summarise the Data"),
+                label = tagList(icon("rectangle-list"), i18n$t("Summarise the Data")),
                 class = "action-button custom-action",
                 `data-id` = "summarise_data"
               ),
               actionButton(
                 ns("statistics"),
-                label = tagList(icon("equals"), "Run Statistical Analysis"),
+                label = tagList(icon("equals"), i18n$t("Run Statistical Analysis")),
                 class = "action-button custom-action",
                 `data-id` = "stats"
               ),
               actionButton(
                 ns("figure"),
-                label = tagList(icon("chart-simple"), "Create a Figure"),
+                label = tagList(icon("chart-simple"), i18n$t("Create a Figure")),
                 class = "action-button custom-action",
                 `data-id` = "create_figure"
               )
@@ -81,7 +81,7 @@ analysis_create_figure_module_ui <- function(id, i18n) {
               style = "display: flex; justify-content: center; align-items: center; height: 100px;",
               actionButton(
                 ns("dashboard"),
-                label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
+                label = tagList(icon("dashboard"), i18n$t("Go to Analysis Dashboard")),
                 class = "action-button custom-dark-yellow"
               )
             )
@@ -117,7 +117,7 @@ fluidRow(
 
 }
 
-analysis_create_figure_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
+analysis_create_figure_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
 
           vars <- get_experiment_vars()
@@ -197,10 +197,10 @@ predefined_code_boxplot <- whisker.render(
     if (isTRUE(figure_editor_bar_plot()$is_plot)) {
       output$figure_editor_feedback <- renderUI({
         tagList(
-          div(class = "success-box", "\U1F64C Great Job!"),
+          div(class = "success-box", i18n$t("\U1F64C Great Job!")),
           includeMarkdown("markdown/07_analysis/change_axis.Rmd"),
           includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
-          box(title = "💡 Open me for a hint",
+          box(title = i18n$t("💡 Open me for a hint"),
               collapsible = TRUE,
               collapsed = TRUE,
               width = 12,
@@ -216,7 +216,7 @@ predefined_code_boxplot <- whisker.render(
             style = "display: flex; justify-content: center; align-items: center; width: 100%;",
         actionButton(
           session$ns("save_bar_plot"),
-          label = tagList(icon("save"), "Save Plot to Dashboard"),
+          label = tagList(icon("save"), i18n$t("Save Plot to Dashboard")),
           class = "action-button custom-action"
         )
           )
@@ -224,7 +224,7 @@ predefined_code_boxplot <- whisker.render(
       })
     } else {
       output$figure_editor_feedback <- renderUI({
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
       output$save_plot <- renderUI({
         NULL
@@ -240,10 +240,10 @@ predefined_code_boxplot <- whisker.render(
   if (isTRUE(figure_editor_box_plot()$is_plot) && inherits(figure_editor_box_plot()$result, "ggplot")) {
       output$figure_editor_feedback <- renderUI({
         tagList(
-          div(class = "success-box", "\U1F64C Great Job!"),
+          div(class = "success-box", i18n$t("\U1F64C Great Job!")),
           includeMarkdown("markdown/07_analysis/change_axis.Rmd"),
           includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
-          box(title = "💡 Open me for a hint",
+          box(title = i18n$t("💡 Open me for a hint"),
               collapsible = TRUE,
               collapsed = TRUE,
               width = 12,
@@ -259,7 +259,7 @@ predefined_code_boxplot <- whisker.render(
             style = "display: flex; justify-content: center; align-items: center; width: 100%;",
         actionButton(
           session$ns("save_box_plot"),
-          label = tagList(icon("save"), "Save Plot to Dashboard"),
+          label = tagList(icon("save"), i18n$t("Save Plot to Dashboard")),
           class = "action-button custom-action"
         )
         )
@@ -267,7 +267,7 @@ predefined_code_boxplot <- whisker.render(
       })
     } else {
       output$figure_editor_feedback <- renderUI({
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
       })
       output$save_plot <- renderUI({
         NULL
@@ -313,9 +313,9 @@ predefined_code_boxplot <- whisker.render(
         )
 
         unlink(temp_file)
-        showNotification("Plot saved successfully", type = "message", duration = 3)
+        showNotification(i18n$t("Plot saved successfully"), type = "message", duration = 3)
     } else {
-        showNotification("No plot to save. Please create a plot first.", type = "error", duration = 3)
+        showNotification(i18n$t("No plot to save. Please create a plot first."), type = "error", duration = 3)
     }
 })
 
@@ -346,9 +346,9 @@ predefined_code_boxplot <- whisker.render(
     )
 
     unlink(temp_file)
-    showNotification("Plot saved successfully.", type = "message", duration = 3)
+    showNotification(i18n$t("Plot saved successfully."), type = "message", duration = 3)
   } else {
-    showNotification("No valid plot to save.", type = "error", duration = 3)
+    showNotification(i18n$t("No valid plot to save."), type = "error", duration = 3)
   }
 })
 

@@ -4,30 +4,30 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
 
   tagList(
     tabBox(
-      title = paste("Student:", student_name, " | ID: ", student_ID),
+      title = paste(i18n$t("Student:"), student_name, " | ID: ", student_ID),
       width = 12,
       tabPanel(
-        title = "Consent",
+        title = i18n$t("Consent"),
         fluidRow(
           column(12,
           markdown("You must consent in order to submit measurements."),
           actionButton(
             inputId = ns("read_consent"),
-            label = "Read Consent Statement",
+            label = i18n$t("Read Consent Statement"),
             class = "fun-submit-button"
             ),
-          checkboxInput(ns("consent_check"), strong("I have read and understood the consent agreement."), value = FALSE),
+          checkboxInput(ns("consent_check"), strong(i18n$t("I have read and understood the consent agreement.")), value = FALSE),
 
           )
         )
       ),
       tabPanel(
-        title = (sprintf("%s - Measurements", vars$level_b_text_name)),
+        title = (sprintf(i18n$t("%s - Measurements"), vars$level_b_text_name)),
         fluidRow(
           column(4,
                  numericInput(
                    inputId = ns("level_b_input1"),
-                   label = "Technical Replicate 1",
+                   label = i18n$t("Technical Replicate 1"),
                    value = 0,
                    min = 0,
                    max = 100
@@ -36,7 +36,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
           column(4,
                  numericInput(
                    inputId = ns("level_b_input2"),
-                   label = "Technical Replicate 2",
+                   label = i18n$t("Technical Replicate 2"),
                    value = 0,
                    min = 0,
                    max = 100
@@ -45,7 +45,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
           column(4,
                  numericInput(
                    inputId = ns("level_b_input3"),
-                   label = "Technical Replicate 3",
+                   label = i18n$t("Technical Replicate 3"),
                    value = 0,
                    min = 0,
                    max = 100
@@ -54,7 +54,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
         ),
         conditionalPanel(
           condition = paste0("input['", ns("consent_check"), "'] == true"),
-          actionButton(ns("Submit_Level_B"), "Submit Measurements", class = "fun-submit-button")
+          actionButton(ns("Submit_Level_B"), i18n$t("Submit Measurements"), class = "fun-submit-button")
         )
       ),
       tabPanel(
@@ -63,7 +63,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
           column(4,
                  numericInput(
                    inputId = ns("level_a_input1"),
-                   label = "Technical Replicate 1",
+                   label = i18n$t("Technical Replicate 1"),
                    value = 0,
                    min = 0,
                    max = 100
@@ -72,7 +72,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
           column(4,
                  numericInput(
                    inputId = ns("level_a_input2"),
-                   label = "Technical Replicate 2",
+                   label = i18n$t("Technical Replicate 2"),
                    value = 0,
                    min = 0,
                    max = 100
@@ -81,7 +81,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
           column(4,
                  numericInput(
                    inputId = ns("level_a_input3"),
-                   label = "Technical Replicate 3",
+                   label = i18n$t("Technical Replicate 3"),
                    value = 0,
                    min = 0,
                    max = 100
@@ -90,14 +90,14 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
         ),
         conditionalPanel(
           condition = paste0("input['", ns("consent_check"), "'] == true"),
-          actionButton(ns("Submit_Level_A"), "Submit Measurements", class = "fun-submit-button")
+          actionButton(ns("Submit_Level_A"), i18n$t("Submit Measurements"), class = "fun-submit-button")
         )
       ),
     )
   )
 }
 
-measurement_input_module_server <- function(id, student_name, student_ID, group_name, submission_id, db_measurement, db_student_table) {
+measurement_input_module_server <- function(id, i18n, student_name, student_ID, group_name, submission_id, db_measurement, db_student_table) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -108,7 +108,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
       
       observeEvent(input$read_consent, {
         showModal(modalDialog(
-          title = "Consent",
+          title = i18n$t("Consent"),
           includeMarkdown("markdown/05_measurement/consent.Rmd"),
           easyClose = TRUE,
           footer = modalButton("Close"),
@@ -124,18 +124,18 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
       add_measurement <- function(level, inputs, submission_id) {
         
         if (any(sapply(inputs, is.null)) || any(sapply(inputs, function(x) x == 0))) {
-          showNotification("Please enter all three measurements.", type = "error", duration = 3)
+          showNotification(i18n$t("Please enter all three measurements."), type = "error", duration = 3)
           return(FALSE)
         }
         
         existing_list <- if (level == vars$level_b_variable_name) state$level_b_id else state$level_a_id
         if (submission_id %in% existing_list) {
           showModal(modalDialog(
-            title = "Overwrite Confirmation",
-            paste("Data for", level, "measurements already exists. Do you want to overwrite it?"),
+            title = i18n$t("Overwrite Confirmation"),
+            paste(i18n$t("Data for"), level, i18n$t("measurements already exists. Do you want to overwrite it?")),
             footer = tagList(
               modalButton("Cancel"),
-              actionButton(ns("confirm_overwrite"), "Overwrite")
+              actionButton(ns("confirm_overwrite"), i18n$t("Overwrite"))
             )
           ))
           
@@ -183,7 +183,7 @@ measurement_input_module_server <- function(id, student_name, student_ID, group_
           state$level_a_id <- unique(c(state$level_a_id, submission_id))
         }
         
-        showNotification("Success: Measurements saved.", type = "message", duration = 3)
+        showNotification(i18n$t("Success: Measurements saved."), type = "message", duration = 3)
       }
       
       observeEvent(input$Submit_Level_B, {

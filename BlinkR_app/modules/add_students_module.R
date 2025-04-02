@@ -3,18 +3,18 @@ group_info_module_ui <- function(id, i18n) {
   tagList(
     textInput(
       inputId = ns("student_initials"),
-      label = "Enter Student Initials",
-      placeholder = "Type initials here"
+      label = i18n$t("Enter Student Initials"),
+      placeholder = i18n$t("Type initials here")
     ),
     actionButton(
       inputId = ns("generate_id"),
-      label = tagList(shiny::icon("circle-plus"),"Generate ID"),
+      label = tagList(shiny::icon("circle-plus"), i18n$t("Generate ID")),
       class = "fun-generate-button"
     )
   )
 }
 
-group_info_module_server <- function(id, db_student_table, auth) {
+group_info_module_server <- function(id, i18n, db_student_table, auth) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -28,7 +28,7 @@ group_info_module_server <- function(id, db_student_table, auth) {
         initials <- trimws(input$student_initials)
 
         if (initials == "") {
-          showNotification("Please enter initials.", type = "error", duration = 3)
+          showNotification(i18n$t("Please enter initials."), type = "error", duration = 3)
           return()
         }
 
@@ -48,7 +48,7 @@ group_info_module_server <- function(id, db_student_table, auth) {
 
         updateTextInput(session, "student_initials", value = "")
 
-        showNotification("Student added to the database.", type = "message", duration = 3)
+        showNotification(i18n$t("Student added to the database."), type = "message", duration = 3)
       })
 
 

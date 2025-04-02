@@ -10,7 +10,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("dashboard"), "Analysis Dashboard")
+                  tagList(shiny::icon("dashboard"), i18n$t("Analysis Dashboard"))
                 )
       )
     )),
@@ -18,7 +18,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
         column(
           12,
           box(
-            title = tagList(shiny::icon("magnifying-glass"), "Step 1: Prepare Your Data"),
+            title = tagList(shiny::icon("magnifying-glass"), i18n$t("Step 1: Prepare Your Data")),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -27,13 +27,13 @@ analysis_dashboard_module_ui <- function(id, i18n) {
             div(
                 style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
                    actionButton(ns("prepare_data"), 
-                                label = tagList(icon("rectangle-list"), "Prepare the Data"), 
+                                label = tagList(icon("rectangle-list"), i18n$t("Prepare the Data")), 
                                 class = "action-button custom-action",
                                 `data-id` = "prepare_data")
                    ))
           ),
           box(
-            title = tagList(shiny::icon("rectangle-list"), "Step 2: Summarise Data"),
+            title = tagList(shiny::icon("rectangle-list"), i18n$t("Step 2: Summarise Data")),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -43,7 +43,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
             div(
                 style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
             actionButton(ns("summarise"), 
-                                label = tagList(icon("rectangle-list"), "Summarise the Data"), 
+                                label = tagList(icon("rectangle-list"), i18n$t("Summarise the Data")), 
                                 class = "action-button custom-action",
                                 `data-id` = "summarise_data")
             )
@@ -57,7 +57,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
                    )
           ),
           box(
-            title = tagList(shiny::icon("chart-simple"), "Step 3: Figure"),
+            title = tagList(shiny::icon("chart-simple"), i18n$t("Step 3: Figure")),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -67,7 +67,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
             div(
                 style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
             actionButton(ns("figure"),
-                                label = tagList(icon("chart-simple"), "Create a Figure"),
+                                label = tagList(icon("chart-simple"), i18n$t("Create a Figure")),
                                 class = "action-button custom-action",
                                 `data-id` = "create_figure")
             )
@@ -81,7 +81,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
             )
           ),
           box(
-            title = tagList(shiny::icon("equals"), "Step 4: Statistical Analysis"),
+            title = tagList(shiny::icon("equals"), i18n$t("Step 4: Statistical Analysis")),
             collapsible = TRUE,
             collapsed = FALSE,
             width = 12,
@@ -91,7 +91,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
             div(
                 style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
             actionButton(ns("statistics"),
-                                label = tagList(icon("equals"), "Run Statistical Analysis"),
+                                label = tagList(icon("equals"), i18n$t("Run Statistical Analysis")),
                                 class = "action-button custom-action",
                                 `data-id` = "stats")
             )
@@ -120,7 +120,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
               div(
                 style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
                 actionButton(ns("link_to_drive"),
-                             label = tagList(icon("google-drive"), "View on Google Drive"),
+                             label = tagList(icon("google-drive"), i18n$t("View on Google Drive")),
                              class = "btn-primary"
                 )
               )

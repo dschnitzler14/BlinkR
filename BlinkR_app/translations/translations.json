@@ -263,8 +263,426 @@
     {
       "en": "Logged out successfully.",
       "de": "Erfolgreich abgemeldet."
-    }
-
-
+    },
+    {
+  "en": "Add Students",
+  "de": "Student:innen hinzufügen"
+},
+{
+  "en": "View Raw Data",
+  "de": "Rohdaten anzeigen"
+},
+{
+  "en": "Deleted student with ID:",
+  "de": "Student:in mit der ID gelöscht:"
+},
+{
+  "en": "Delete Student",
+  "de": "Student:in löschen"
+},
+{
+  "en": "Prepare Data",
+  "de": "Daten vorbereiten"
+},
+{
+  "en": "Summarise Data",
+  "de": "Daten zusammenfassen"
+},
+{
+  "en": "Statistical Analysis",
+  "de": "Statistische Analyse"
+},
+{
+  "en": "Create Figure",
+  "de": "Daten Visualierien"
+},
+{
+  "en": "Writing Up Advice",
+  "de": "Tipps zum Schreiben des Exposes"
+},
+{
+  "en": "Upload Report",
+  "de": "Expose hochladen"
+},
+{
+  "en": "Generate ID",
+  "de": "ID generieren"
+},
+{
+  "en": "Enter Student Initials",
+  "de": "Initialen der Student:in eingeben"
+},
+{
+  "en": "Type initials here",
+  "de": "Initialen hier eingeben"
+},
+{
+  "en": "Please enter initials.",
+  "de": "Bitte gib Initialen ein."
+},
+{
+  "en": "Student added to the database.",
+  "de": "Student:in wurde zur Datenbank hinzugefügt."
+},
+{
+  "en": "Student:",
+  "de": "Student:in:"
+},
+{
+  "en": "Consent",
+  "de": "Einverständnis"
+},
+{
+  "en": "Read Consent Statement",
+  "de": "Einverständniserklärung lesen"
+},
+{
+  "en": "I have read and understood the consent agreement.",
+  "de": "Ich habe die Einverständniserklärung gelesen und verstanden."
+},
+{
+  "en": "%s - Measurements",
+  "de": "%s – Messungen"
+},
+{
+  "en": "Technical Replicate 1",
+  "de": "Technische Replikat 1"
+},
+{
+  "en": "Technical Replicate 2",
+  "de": "Technische Replikat 2"
+},
+{
+  "en": "Technical Replicate 3",
+  "de": "Technische Replikat 3"
+},
+{
+  "en": "Submit Measurements",
+  "de": "Messungen einreichen"
+},
+{
+  "en": "Please enter all three measurements.",
+  "de": "Bitte gib alle drei Messwerte ein."
+},
+{
+  "en": "Data for",
+  "de": "Daten für"
+},
+{
+  "en": "measurements already exists. Do you want to overwrite it?",
+  "de": "Messdaten existieren bereits. Möchtest du sie überschreiben?"
+},
+{
+  "en": "Success: Measurements saved.",
+  "de": "Erfolg: Messungen gespeichert."
+},
+{
+  "en": "Your Group Data",
+  "de": "Deine Gruppendaten"
+},
+{
+  "en": "Class Data",
+  "de": "Klassendaten"
+},
+{
+  "en": "Check back later for the Class Data",
+  "de": "Schau später nochmal vorbei, um die Klassendaten zu sehen"
+},
+{
+  "en": "Prepare the Data",
+  "de": "Daten vorbereiten"
+},
+{
+  "en": "Summarise the Data",
+  "de": "Daten zusammenfassen"
+},
+{
+  "en": "Create a Figure",
+  "de": "Daten Visualiserien"
+},
+{
+  "en": "Run Statistical Analysis",
+  "de": "Statistische Analyse durchführen"
+},
+{
+  "en": "Go to Analysis Dashboard",
+  "de": "Zum Analyse-Dashboard"
+},
+{
+  "en": "1️⃣ Filter to %s Data",
+  "de": "1️⃣ Filter auf %s-Daten"
+},
+{
+  "en": "🙌 Great!",
+  "de": "🙌 Super!"
+},
+{
+  "en": "🤔 Not quite - try again!",
+  "de": "🤔 Noch nicht ganz – versuch es nochmal!"
+},
+{
+  "en": "2️⃣ Calculate the Mean of %s Data",
+  "de": "2️⃣ Berechne den Mittelwert der %s-Daten"
+},
+{
+  "en": "3️⃣ Calculate the Standard Deviation of %s Data",
+  "de": "3️⃣ Berechne die Standardabweichung der %s-Daten"
+},
+{
+  "en": "4️⃣ Calculate the Standard Error of the Mean of %s Data",
+  "de": "4️⃣ Berechne den Standardfehler des Mittelwerts (SEM) der %s-Daten"
+},
+{
+  "en": "5️⃣ Your turn! First, filter the data to the %s group",
+  "de": "5️⃣ Du bist dran! Filtere zuerst die Daten auf die %s-Gruppe"
+},
+{
+  "en": "6️⃣ Your turn! Calculate the mean for the  %s group",
+  "de": "6️⃣ Du bist dran! Berechne den Mittelwert für die %s-Gruppe"
+},
+{
+  "en": "7️⃣ Your turn! Calculate the sd for the %s group",
+  "de": "7️⃣ Du bist dran! Berechne die Standardabweichung für die %s-Gruppe"
+},
+{
+  "en": "8️⃣ Your turn! Calculate the n and sem for the %s group",
+  "de": "8️⃣ Du bist dran! Berechne n und den SEM für die %s-Gruppe"
+},
+{
+  "en": "Now you have the n. Next, calculate the sem!",
+  "de": "Jetzt hast du das n. Als Nächstes: Berechne den SEM!"
+},
+{
+  "en": "9️⃣ Use Dplyr to quickly summarise your data",
+  "de": "9️⃣ Verwende Dplyr, um deine Daten schnell zusammenzufassen"
+},
+{
+  "en": "What is the mean of the %s group",
+  "de": "Was ist der Mittelwert der %s-Gruppe?"
+},
+{
+  "en": "Submit",
+  "de": "Absenden"
+},
+{
+  "en": "What is the standard error of the mean (sem) of the %s group",
+  "de": "Was ist der Standardfehler des Mittelwerts (SEM) der %s-Gruppe?"
+},
+{
+  "en": "Can we tell from this if this is statistically significant?",
+  "de": "Können wir daraus erkennen, ob das statistisch signifikant ist?"
+},
+{
+  "en": "Yes",
+  "de": "Ja"
+},
+{
+  "en": "No",
+  "de": "Nein"
+},
+{
+  "en": "Save Results to Dashboard",
+  "de": "Ergebnisse im Dashboard speichern"
+},
+{
+  "en": "🤔 We do not have a valid mean yet!",
+  "de": "🤔 Wir haben noch keinen gültigen Mittelwert!"
+},
+{
+  "en": "🙌 Correct!",
+  "de": "🙌 Richtig!"
+},
+{
+  "en": "🤔 We do not have a valid SEM yet!",
+  "de": "🤔 Wir haben noch keinen gültigen SEM!"
+},
+{
+  "en": "Summary script saved successfully & Uploaded to Drive.",
+  "de": "Zusammenfassungsskript erfolgreich gespeichert und in Drive hochgeladen."
+},
+{
+  "en": "No summary script to save.",
+  "de": "Kein Zusammenfassungsskript zum Speichern vorhanden."
+},
+{
+  "en": "Analyis: Prepare Your Data",
+  "de": "Analyse: Bereite deine Daten vor"
+},
+{
+  "en": "2️⃣ Prepare Data",
+  "de": "2️⃣ Daten vorbereiten"
+},
+{
+  "en": "1️⃣ View Data",
+  "de": "1️⃣ Daten anzeigen"
+},
+{
+  "en": "🙌 That's our data! Looks good!",
+  "de": "🙌 Das sind unsere Daten! Sieht gut aus!"
+},
+{
+  "en": "How many subjects (students) can you see in this slice of data?",
+  "de": "Wie viele Versuchspersonen (Schüler:innen) kannst du in diesem Datenausschnitt sehen?"
+},
+{
+  "en": "What do you think we need to do to our data?",
+  "de": "Was meinst du, müssen wir mit unseren Daten machen?"
+},
+{
+  "en": "🙌 Good Job!",
+  "de": "🙌 Gut gemacht!"
+},
+{
+  "en": "Analysis: Statistical Analysis",
+  "de": "Analyse: Statistische Auswertung"
+},
+{
+  "en": " result saved successfully.",
+  "de": " Ergebnis erfolgreich gespeichert."
+},
+{
+  "en": "1️⃣ Testing Assumptions",
+  "de": "1️⃣ Voraussetzungen prüfen"
+},
+{
+  "en": "Generate Histogram to check for Normality",
+  "de": "Histogramm erstellen, um auf Normalverteilung zu prüfen"
+},
+{
+  "en": "Distribution of %s",
+  "de": "Verteilung von %s"
+},
+{
+  "en": "Average of Technical Replicates for %s",
+  "de": "Durchschnitt der technischen Wiederholungen für %s"
+},
+{
+  "en": "Frequency",
+  "de": "Häufigkeit"
+},
+{
+  "en": "👍 The Data is Normal",
+  "de": "👍 Die Daten sind normalverteilt"
+},
+{
+  "en": "👎 The Data is Not Normal",
+  "de": "👎 Die Daten sind nicht normalverteilt"
+},
+{
+  "en": "2️⃣ Is the Data Paired or Unpaired?",
+  "de": "2️⃣ Sind die Daten gepaart oder ungepaart?"
+},
+{
+  "en": "☝️ The Data is Not Paired",
+  "de": "☝️ Die Daten sind ungepaart"
+},
+{
+  "en": "✌️ The Data is Paired",
+  "de": "✌️ Die Daten sind gepaart"
+},
+{
+  "en": "3️⃣ Not Normal Unpaired: Wilcoxon Test",
+  "de": "3️⃣ Nicht normalverteilt & ungepaart: Wilcoxon-Test"
+},
+{
+  "en": "3️⃣ Not Normal Paired: Wilcoxon Test",
+  "de": "3️⃣ Nicht normalverteilt & gepaart: Wilcoxon-Test"
+},
+{
+  "en": "3️⃣ Normal Unpaired: T-Test",
+  "de": "3️⃣ Normalverteilt & ungepaart: T-Test"
+},
+{
+  "en": "3️⃣ Normal Paired: T-Test",
+  "de": "3️⃣ Normalverteilt & gepaart: T-Test"
+},
+{
+  "en": "4️⃣ Effect Size for Paired T-Test",
+  "de": "4️⃣ Effektstärke für gepaarten T-Test"
+},
+{
+  "en": "4️⃣ Effect Size for Unpaired T-Test",
+  "de": "4️⃣ Effektstärke für ungepaarten T-Test"
+},
+{
+  "en": "4️⃣ Effect Size for Paired Wilcoxon Test",
+  "de": "4️⃣ Effektstärke für gepaarten Wilcoxon-Test"
+},
+{
+  "en": "4️⃣ Effect Size for Unpaired Wilcoxon Test",
+  "de": "4️⃣ Effektstärke für ungepaarten Wilcoxon-Test"
+},
+{
+  "en": "5️⃣ Your Results",
+  "de": "5️⃣ Deine Ergebnisse"
+},
+{
+  "en": "What is the p-value?",
+  "de": "Was ist der p-Wert?"
+},
+{
+  "en": "What is the effect size?",
+  "de": "Wie groß ist die Effektstärke?"
+},
+{
+  "en": "Interpret the p-value result in one sentence",
+  "de": "Interpretiere das Ergebnis des p-Werts in einem Satz"
+},
+{
+  "en": "Summarise these results in one sentence",
+  "de": "Fasse diese Ergebnisse in einem Satz zusammen"
+},
+{
+  "en": "🤔 We do not know the effect size yet!",
+  "de": "🤔 Wir kennen die Effektstärke noch nicht!"
+},
+{
+  "en": "🤔 Please enter a numeric value!",
+  "de": "🤔 Bitte gib einen numerischen Wert ein!"
+},
+{
+  "en": "How strong do you think this effect size is?",
+  "de": "Wie stark schätzt du diese Effektstärke ein?"
+},
+{
+  "en": "Please submit your null hypothesis in the hypothesis section.",
+  "de": "Bitte gib deine Nullhypothese im Abschnitt Hypothese ein."
+},
+{
+  "en": "Please submit your alternative hypothesis in the hypothesis section.",
+  "de": "Bitte gib deine Alternativhypothese im Abschnitt Hypothese ein."
+},
+{
+  "en": "🤔 We do not know the p-value yet!",
+  "de": "🤔 Wir kennen den p-Wert noch nicht!"
+},
+{
+  "en": "Interpretation saved successfully.",
+  "de": "Interpretation erfolgreich gespeichert."
+},
+{
+  "en": "1️⃣ Creating a Figure",
+  "de": "1️⃣ Daten visualisieren"
+},
+{
+  "en": "What type of figure would be best here?",
+  "de": "Welche Art von Diagramm wäre hier am besten geeignet?"
+},
+{
+  "en": "💡 Open me for a hint",
+  "de": "💡 Klick hier für einen Hinweis"
+},
+{
+  "en": "Plot saved successfully",
+  "de": "Diagramm erfolgreich gespeichert"
+},
+{
+  "en": "No plot to save. Please create a plot first.",
+  "de": "Kein Diagramm zum Speichern. Bitte erst ein Diagramm erstellen."
+},
+{
+  "en": "No valid plot to save.",
+  "de": "Kein gültiges Diagramm zum Speichern vorhanden."
+}
   ]
 }

@@ -10,7 +10,7 @@ analysis_stats_module_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("equals"), "Analysis: Statistical Analysis")
+                  tagList(shiny::icon("equals"), i18n$t("Analysis: Statistical Analysis"))
                 )
       )
     )),
@@ -37,13 +37,13 @@ analysis_stats_module_ui <- function(id, i18n) {
               style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
               actionButton(
                 ns("summarise"),
-                label = tagList(icon("rectangle-list"), "Summarise the Data"),
+                label = tagList(icon("rectangle-list"), i18n$t("Summarise the Data")),
                 class = "action-button custom-action",
                 `data-id` = "summarise_data"
               ),
               actionButton(
                 ns("figure"),
-                label = tagList(icon("chart-simple"), "Create a Figure"),
+                label = tagList(icon("chart-simple"), i18n$t("Create a Figure")),
                 class = "action-button custom-action",
                 `data-id` = "create_figure"
               )
@@ -57,7 +57,7 @@ analysis_stats_module_ui <- function(id, i18n) {
               style = "display: flex; justify-content: center; align-items: center; height: 100px;",
               actionButton(
                 ns("dashboard"),
-                label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
+                label = tagList(icon("dashboard"), i18n$t("Go to Analysis Dashboard")),
                 class = "action-button custom-dark-yellow"
               )
             )
@@ -93,7 +93,7 @@ analysis_stats_module_ui <- function(id, i18n) {
    )
 }
 
-analysis_stats_module_server <- function(id, results_data, parent.session, saved_results, session_folder_id) {
+analysis_stats_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
     vars <- get_experiment_vars()
 
@@ -143,7 +143,7 @@ average_trs_paired_wide <- reactive({
   )
     unlink(temp_file)
 
-  showNotification(paste0(name, " result saved successfully."), type = "message", duration = 3)
+  showNotification(paste0(name, i18n$t(" result saved successfully.")), type = "message", duration = 3)
 }
 
 rmd_content_analysis_hist_plot_explainer <- readLines("markdown/07_analysis/analysis_hist_plot_explainer.Rmd")
@@ -156,7 +156,7 @@ output$testing_assumptions <- renderUI({
             12,
           box(
               id = "testing_assumptions",
-              title = "1️⃣ Testing Assumptions",
+              title = i18n$t("1️⃣ Testing Assumptions"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -167,7 +167,7 @@ output$testing_assumptions <- renderUI({
                   div(
                   style = "text-align: center;",
                   actionButton(session$ns("run_hist_Plot"), 
-                    tagList(shiny::icon("circle-plus"), "Generate Histogram to check for Normality"),
+                    tagList(shiny::icon("circle-plus"), i18n$t("Generate Histogram to check for Normality")),
                     class = "fun-generate-button")
                   ),
                   uiOutput(session$ns("hist_explainer_ui")),
@@ -191,9 +191,9 @@ output$testing_assumptions <- renderUI({
   
   hist(
     average_trs()$average_measurement,
-    main = sprintf("Distribution of %s", vars$measurement_text_name),
-    xlab = sprintf("Average of Technical Replicates for %s", vars$measurement_text_name),
-    ylab = "Frequency",
+    main = sprintf(i18n$t("Distribution of %s"), vars$measurement_text_name),
+    xlab = sprintf(i18n$t("Average of Technical Replicates for %s"), vars$measurement_text_name),
+    ylab = i18n$t("Frequency"),
     col = "grey49", border = "black"
   )
   
@@ -249,7 +249,7 @@ if(!is.null(normal_unpaired_result()$result)){
       )
       
       unlink(temp_file)
-      showNotification("Plot saved successfully.", type = "message", duration = 3)
+      showNotification(i18n$t("Plot saved successfully."), type = "message", duration = 3)
     })
 
 rmd_content_analysis_hist_plot_explainer_output <- readLines("markdown/07_analysis/analysis_hist_plot_explainer_output.Rmd")
@@ -260,8 +260,8 @@ processed_rmd_analysis_hist_plot_explainer_output <- whisker.render(paste(rmd_co
        HTML(markdownToHTML(text = processed_rmd_analysis_hist_plot_explainer_output, fragment.only = TRUE)),
       div(
           style = "text-align: center;",
-      actionButton(session$ns("normal"), "👍 The Data is Normal", class = "fun-submit-button"),
-      actionButton(session$ns("not_normal"), "👎 The Data is Not Normal", class = "fun-submit-button")
+      actionButton(session$ns("normal"), i18n$t("👍 The Data is Normal"), class = "fun-submit-button"),
+      actionButton(session$ns("not_normal"), i18n$t("👎 The Data is Not Normal"), class = "fun-submit-button")
       )
       )
       })
@@ -302,7 +302,7 @@ processed_rmd_analysis_paired_unpaired_explainer_output <- whisker.render(paste(
       tagList(
         box(
         id = "paired_unpaired_explainer_normal",
-              title = "2️⃣ Is the Data Paired or Unpaired?",
+              title = i18n$t("2️⃣ Is the Data Paired or Unpaired?"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -310,8 +310,8 @@ processed_rmd_analysis_paired_unpaired_explainer_output <- whisker.render(paste(
         HTML(markdownToHTML(text = processed_rmd_analysis_paired_unpaired_explainer_output, fragment.only = TRUE)),
       div(
         style = "text-align: center;",
-        actionButton(session$ns("unpaired_normal"), "☝️ The Data is Not Paired", class = "fun-submit-button"),
-        actionButton(session$ns("paired_normal"), "✌️ The Data is Paired", class = "fun-submit-button")
+        actionButton(session$ns("unpaired_normal"), i18n$t("☝️ The Data is Not Paired"), class = "fun-submit-button"),
+        actionButton(session$ns("paired_normal"), i18n$t("✌️ The Data is Paired"), class = "fun-submit-button")
         )
       )
       )
@@ -353,7 +353,7 @@ processed_rmd_analysis_paired_unpaired_explainer_output <- whisker.render(paste(
       tagList(
         box(
         id = "paired_unpaired_explainer",
-              title = "2️⃣ Is the Data Paired or Unpaired?",
+              title = i18n$t("2️⃣ Is the Data Paired or Unpaired?"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -362,8 +362,8 @@ processed_rmd_analysis_paired_unpaired_explainer_output <- whisker.render(paste(
 
         div(
               style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
-        actionButton(session$ns("unpaired_not_normal"), "☝️ The Data is Not Paired", class = "fun-submit-button"),
-        actionButton(session$ns("paired_not_normal"), "✌️ The Data is Paired", class = "fun-submit-button")
+        actionButton(session$ns("unpaired_not_normal"), i18n$t("☝️ The Data is Not Paired"), class = "fun-submit-button"),
+        actionButton(session$ns("paired_not_normal"), i18n$t("✌️ The Data is Paired"), class = "fun-submit-button")
       )
         )
       )
@@ -415,7 +415,7 @@ processed_rmd_analysis_wilcoxon_test_unpaired <- whisker.render(paste(rmd_conten
             12,
           box(
               id = "not_normal_unpaired",
-              title = "3️⃣ Not Normal Unpaired: Wilcoxon Test",
+              title = i18n$t("3️⃣ Not Normal Unpaired: Wilcoxon Test"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -447,7 +447,7 @@ observe({
       if (inherits(not_normal_unpaired_result()$result, "htest")) {
         output$not_normal_unpaired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
     })
       output$save_not_normal_unpaired <- renderUI({
@@ -456,7 +456,7 @@ observe({
       style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_not_normal_unpaired_button"),
-            label = tagList(icon("save"), "Save Results to Dashboard"),
+            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
             class = "action-button custom-action",
             `data-id` = "not_normal_unpaired_save"
           )
@@ -466,7 +466,7 @@ observe({
         })
         } else {
         output$not_normal_unpaired_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -527,7 +527,7 @@ processed_rmd_analysis_wilcoxon_test_paired <- whisker.render(paste(rmd_content_
             12,
           box(
               id = "not_normal_paired",
-              title = "3️⃣ Not Normal Paired: Wilcoxon Test",
+              title = i18n$t("3️⃣ Not Normal Paired: Wilcoxon Test"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -558,7 +558,7 @@ observe({
       if (inherits(not_normal_paired_result()$result, "htest")) {
         output$not_normal_paired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         output$save_not_normal_paired <- renderUI({
@@ -567,7 +567,7 @@ observe({
       style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_not_normal_paired_button"),
-            label = tagList(icon("save"), "Save Results to Dashboard"),
+            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
             class = "action-button custom-action",
             `data-id` = "not_normal_paired_save"
 
@@ -579,7 +579,7 @@ observe({
         })
         } else {
         output$not_normal_paired_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -639,7 +639,7 @@ processed_rmd_analysis_two_sided_t_test <- whisker.render(paste(rmd_content_anal
             12,
           box(
               id = "normal_unpaired",
-              title = "3️⃣ Normal Unpaired: T-Test",
+              title = i18n$t("3️⃣ Normal Unpaired: T-Test"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -670,7 +670,7 @@ observe({
       if (inherits(normal_unpaired_result()$result, "htest")) {
         output$normal_unpaired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         output$save_normal_unpaired <- renderUI({
@@ -679,7 +679,7 @@ observe({
               style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_normal_unpaired_button"),
-            label = tagList(icon("save"), "Save Results to Dashboard"),
+            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
             class = "action-button custom-action",
             `data-id` = "normal_unpaired_save"
           )
@@ -689,7 +689,7 @@ observe({
         })
         } else {
         output$normal_unpaired_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -749,7 +749,7 @@ processed_rmd_analysis_paired_t_test <- whisker.render(paste(rmd_content_analysi
             12,
           box(
               id = "normal_paired",
-              title = "3️⃣ Normal Paired: T-Test",
+              title = i18n$t("3️⃣ Normal Paired: T-Test"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -780,7 +780,7 @@ observe({
       if (inherits(normal_paired_result()$result, "htest")) {
         output$normal_paired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         output$save_normal_paired <- renderUI({
@@ -789,7 +789,7 @@ observe({
               style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_normal_paired_button"),
-            label = tagList(icon("save"), "Save Results to Dashboard"),
+            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
             class = "action-button custom-action",
             `data-id` = "normal_paired_save"
           )
@@ -799,7 +799,7 @@ observe({
         })
         } else {
         output$normal_paired_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -846,7 +846,7 @@ processed_rmd_analysis_effect_size_t_test_paired <- whisker.render(paste(rmd_con
             12,
           box(
               id = "effect_size_t_test_paired",
-              title = "4️⃣ Effect Size for Paired T-Test",
+              title = i18n$t("4️⃣ Effect Size for Paired T-Test"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -878,7 +878,7 @@ observe({
       if (!is.null(t_test_effect_size_paired_result())) {
         output$t_test_effect_size_paired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         output$save_normal_paired_effect_size <- renderUI({
@@ -887,7 +887,7 @@ observe({
             style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
             session$ns("save_normal_paired_effect_size_button"),
-            label = tagList(icon("save"), "Save Results to Dashboard"),
+            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
             class = "action-button custom-action",
             `data-id` = "normal_paired_effect_save"
           )
@@ -898,7 +898,7 @@ observe({
 
         } else {
         output$t_test_effect_size_paired_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -946,7 +946,7 @@ processed_rmd_analysis_effect_size_t_test_unpaired <- whisker.render(paste(rmd_c
             12,
           box(
               id = "effect_size_t_test_unpaired",
-              title = "4️⃣ Effect Size for Unpaired T-Test",
+              title = i18n$t("4️⃣ Effect Size for Unpaired T-Test"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -977,7 +977,7 @@ observe({
       if (!is.null(t_test_effect_size_unpaired_result())) {
         output$t_test_effect_size_unpaired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         output$save_normal_unpaired_effect_size <- renderUI({
@@ -986,7 +986,7 @@ observe({
             style = "display: flex; justify-content: center; align-items: center; width: 100%;",
                   actionButton(
                     session$ns("save_normal_unpaired_effect_size_button"),
-                    label = tagList(icon("save"), "Save Results to Dashboard"),
+                    label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
                     class = "action-button custom-action",
                     `data-id` = "normal_unpaired_effect_save"
 
@@ -997,7 +997,7 @@ observe({
                 })
         } else {
         output$t_test_effect_size_unpaired_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -1045,7 +1045,7 @@ processed_rmd_analysis_wilcoxon_test_paired_effect_size <- whisker.render(paste(
             12,
           box(
               id = "effect_size_wilcoxon_paired",
-              title = "4️⃣ Effect Size for Paired Wilcoxon Test",
+              title = i18n$t("4️⃣ Effect Size for Paired Wilcoxon Test"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -1077,7 +1077,7 @@ observe({
       if (!is.null(wilcoxon_effect_size_paired_result())) {
         output$wilcoxon_effect_size_paired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         output$save_not_normal_paired_effect_size <- renderUI({
@@ -1086,7 +1086,7 @@ observe({
                     style = "display: flex; justify-content: center; align-items: center; width: 100%;",
                           actionButton(
                             session$ns("save_not_normal_paired_effect_size_button"),
-                            label = tagList(icon("save"), "Save Results to Dashboard"),
+                            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
                             class = "action-button custom-action",
                             `data-id` = "not_normal_paired_effect_save"
 
@@ -1097,7 +1097,7 @@ observe({
                         })
         } else {
         output$wilcoxon_effect_size_paired_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -1145,7 +1145,7 @@ processed_rmd_analysis_wilcoxon_test_unpaired_effect_size <- whisker.render(past
             12,
           box(
               id = "effect_size_wilcoxon_unpaired",
-              title = "4️⃣ Effect Size for Unpaired Wilcoxon Test",
+              title = i18n$t("4️⃣ Effect Size for Unpaired Wilcoxon Test"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -1177,7 +1177,7 @@ observe({
       if (!is.null(wilcoxon_effect_size_unpaired_result())) {
         output$wilcoxon_effect_size_unpaired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         output$save_not_normal_unpaired_effect_size <- renderUI({
@@ -1186,7 +1186,7 @@ observe({
                 style = "display: flex; justify-content: center; align-items: center; width: 100%;",
                                   actionButton(
                                     session$ns("save_not_normal_unpaired_effect_size_button"),
-                                    label = tagList(icon("save"), "Save Results to Dashboard"),
+                                    label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
                                     class = "action-button custom-action",
                                     `data-id` = "not_normal_unpaired_effect_save"
 
@@ -1197,7 +1197,7 @@ observe({
                                 })
         } else {
         output$wilcoxon_effect_size_unpaired_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -1326,7 +1326,7 @@ req(!is.null(p_value_reactive()))
             12,
           box(
               id = "interpretation_quiz",
-              title = "5️⃣ Your Results",
+              title = i18n$t("5️⃣ Your Results"),
               collapsible = TRUE,
               collapsed = FALSE,
               width = 12,
@@ -1371,36 +1371,36 @@ observe({
   if (effect_size_exists) {
     output$interpretation_quiz_feedback <- renderUI({
       tagList(
-        numericInput(session$ns("enter_p_value"), "What is the p-value?", value = 0),
+        numericInput(session$ns("enter_p_value"), i18n$t("What is the p-value?"), value = 0),
         div(
             style = "text-align: center;",
-            actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button")
+            actionButton(session$ns("enter_p_value_submit"), i18n$t("Submit"), class = "fun-submit-button")
         ),
         uiOutput(session$ns("enter_p_value_feedback")),
         uiOutput(session$ns("null_hyp_display")),
 
-        numericInput(session$ns("enter_effect_size"), "What is the effect size?", value = 0),
+        numericInput(session$ns("enter_effect_size"), i18n$t("What is the effect size?"), value = 0),
         div(
             style = "text-align: center;",
-            actionButton(session$ns("enter_effect_size_submit"), "Submit", class = "fun-submit-button")
+            actionButton(session$ns("enter_effect_size_submit"), i18n$t("Submit"), class = "fun-submit-button")
         ),
         uiOutput(session$ns("enter_effect_size_feedback")),
         uiOutput(session$ns("effect_size_display")),
         
         textInput(session$ns("interpretation_quiz_text_p_value"), 
-                  "Interpret the p-value result in one sentence", 
+                  i18n$t("Interpret the p-value result in one sentence"), 
                   value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", 
                   width = "100%"),
         
         textInput(session$ns("interpretation_quiz_text_effect_size"), 
-                  "Summarise these results in one sentence", 
+                  i18n$t("Summarise these results in one sentence"), 
                   value = "An effect size of [effect size method]=[effect size] suggests that ______.", 
                   width = "100%"),
 
         div(
             style = "text-align: center;",
             actionButton(session$ns("save_text_interpretation_button"), 
-                         tagList(shiny::icon("save"), "Save Notes"), 
+                         tagList(shiny::icon("save"), i18n$t("Save Notes")), 
                          class = "fun-save-button")
         )
       )
@@ -1409,23 +1409,23 @@ observe({
   } else if (normality_results_exist) {
     output$interpretation_quiz_feedback <- renderUI({
       tagList(
-        numericInput(session$ns("enter_p_value"), "What is the p-value?", value = 0),
+        numericInput(session$ns("enter_p_value"), i18n$t("What is the p-value?"), value = 0),
         div(
             style = "text-align: center;",
-            actionButton(session$ns("enter_p_value_submit"), "Submit", class = "fun-submit-button")
+            actionButton(session$ns("enter_p_value_submit"), i18n$t("Submit"), class = "fun-submit-button")
         ),
         uiOutput(session$ns("enter_p_value_feedback")),
         uiOutput(session$ns("null_hyp_display")),
         
         textInput(session$ns("interpretation_quiz_text_p_value"), 
-                  "Interpret the p-value result in one sentence", 
+                  i18n$t("Interpret the p-value result in one sentence"), 
                   value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", 
                   width = "100%"),
 
         div(
             style = "text-align: center;",
             actionButton(session$ns("save_text_interpretation_button"), 
-                         tagList(shiny::icon("save"), "Save Notes"), 
+                         tagList(shiny::icon("save"), i18n$t("Save Notes")), 
                          class = "fun-save-button")
         )
       )
@@ -1433,7 +1433,7 @@ observe({
   
   } else {
     output$interpretation_quiz_feedback <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
   }
 
@@ -1458,7 +1458,7 @@ observeEvent(input$enter_effect_size_submit, {
   
   if (is.null(val_es)) {
     output$enter_effect_size_feedback <- renderUI({
-      div(class = "error-box", "\U1F914 We do not know the effect size yet!")
+      div(class = "error-box", i18n$t("\U1F914 We do not know the effect size yet!"))
     })
     return()
   }
@@ -1469,19 +1469,19 @@ rmd_content_analysis_what_is_an_effect_size <- readLines("markdown/07_analysis/a
 processed_rmd_analysis_what_is_an_effect_size <- whisker.render(paste(rmd_content_analysis_what_is_an_effect_size, collapse = "\n"), vars)
 
   if (is.na(user_answer_enter_effect_size)) {
-    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+    feedback <- div(class = "error-box", i18n$t("\U1F914 Please enter a numeric value!"))
   } else {
     tolerance <- 0.5
     
     if (abs(user_answer_enter_effect_size - val_es) <= tolerance) {
-      feedback <- div(class = "success-box", "\U1F64C Correct!")
+      feedback <- div(class = "success-box", i18n$t("\U1F64C Correct!"))
 
       output$effect_size_display <- renderUI({
         tagList(
           HTML(markdownToHTML(text = processed_rmd_analysis_what_is_an_effect_size, fragment.only = TRUE)),
           radioButtons(
               inputId = (session$ns("understand_effect_size")),
-              label = "Do you think this effect size?",
+              label = i18n$t("How strong do you think this effect size is?"),
               choices = c("Negligible" = "negligible", "Small" = "small", "Medium" = "medium", "Large" = "large"),
               selected = character(0)
             ),
@@ -1490,7 +1490,7 @@ processed_rmd_analysis_what_is_an_effect_size <- whisker.render(paste(rmd_conten
        
       })
     } else {
-      feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+      feedback <- div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     }
   }
 
@@ -1507,9 +1507,9 @@ processed_rmd_analysis_what_is_an_effect_size <- whisker.render(paste(rmd_conten
            ifelse(user_answer_enter_effect_size < 0.8, "medium", "large")))
       
     if (input$understand_effect_size == correct_answer) {
-      div(class = "success-box", "\U1F64C Correct!")
+      div(class = "success-box", i18n$t("\U1F64C Correct!"))
     } else {
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     }
   })
 
@@ -1526,7 +1526,7 @@ processed_rmd_analysis_what_is_an_effect_size <- whisker.render(paste(rmd_conten
     
     submitted_null_hyp <- readLines(temp_file, warn = FALSE) %>% paste(collapse = "\n")
   } else {
-    submitted_null_hyp <- "Please submit your null hypothesis in the hypothesis section."
+    submitted_null_hyp <- i18n$t("Please submit your null hypothesis in the hypothesis section.")
   }
 
 alt_hyp_file <- files_in_folder[grepl("^Alternative Hypothesis", files_in_folder$name), ]
@@ -1537,7 +1537,7 @@ alt_hyp_file <- files_in_folder[grepl("^Alternative Hypothesis", files_in_folder
     
     submitted_alt_hyp <- readLines(temp_file, warn = FALSE) %>% paste(collapse = "\n")
   } else {
-    submitted_alt_hyp <- "Please submit your alternative hypothesis in the hypothesis section."
+    submitted_alt_hyp <- i18n$t("Please submit your alternative hypothesis in the hypothesis section.")
   }
 
 
@@ -1561,7 +1561,7 @@ observeEvent(input$enter_p_value_submit, {
   
   if (is.null(val_pv)) {
     output$enter_p_value_feedback <- renderUI({
-      div(class = "error-box", "\U1F914 We do not know the p-value yet!")
+      div(class = "error-box", i18n$t("\U1F914 We do not know the p-value yet!"))
     })
     return()
   }
@@ -1572,12 +1572,12 @@ rmd_content_analysis_what_is_a_p_value <- readLines("markdown/07_analysis/analys
 processed_rmd_analysis_what_is_a_p_value <- whisker.render(paste(rmd_content_analysis_what_is_a_p_value, collapse = "\n"), vars)
 
   if (is.na(user_answer_enter_p_value)) {
-    feedback <- div(class = "error-box", "\U1F914 Please enter a numeric value!")
+    feedback <- div(class = "error-box", i18n$t("\U1F914 Please enter a numeric value!"))
   } else {
     tolerance <- 0.5
     
     if (abs(user_answer_enter_p_value - val_pv) <= tolerance) {
-      feedback <- div(class = "success-box", "\U1F64C Correct!")
+      feedback <- div(class = "success-box", i18n$t("\U1F64C Correct!"))
 
       output$null_hyp_display <- renderUI({
         tagList(
@@ -1603,7 +1603,7 @@ processed_rmd_analysis_what_is_a_p_value <- whisker.render(paste(rmd_content_ana
       })
 
     } else {
-      feedback <- div(class = "error-box", "\U1F914 Not quite - try again!")
+      feedback <- div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     }
   }
 
@@ -1618,9 +1618,9 @@ processed_rmd_analysis_what_is_a_p_value <- whisker.render(paste(rmd_content_ana
     correct_answer <- ifelse(user_answer_enter_p_value < 0.05, "yes", "no")
     
     if (input$reject_null == correct_answer) {
-      div(class = "success-box", "\U1F64C Correct!")
+      div(class = "success-box", i18n$t("\U1F64C Correct!"))
     } else {
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     }
   })
 
@@ -1675,7 +1675,7 @@ observeEvent(input$save_text_interpretation_button, {
 
   unlink(temp_file)
 
-  showNotification("Interpretation saved successfully.", type = "message", duration = 3)
+  showNotification(i18n$t("Interpretation saved successfully."), type = "message", duration = 3)
   
 
     } else if (normality_results_exist &&
@@ -1700,14 +1700,14 @@ observeEvent(input$save_text_interpretation_button, {
 
   unlink(temp_file)
 
-  showNotification("Interpretation saved successfully.", type = "message", duration = 3)
+  showNotification(i18n$t("Interpretation saved successfully."), type = "message", duration = 3)
   
 
 
 
     } else {
       output$interpretation_quiz_text_input_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
     }
     
