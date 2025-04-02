@@ -1,0 +1,17 @@
+Jetzt können wir die Effektstärke für gepaarte Daten berechnen.
+
+Die Effektstärke hilft uns zu verstehen, **wie bedeutsam** der Unterschied zwischen zwei Bedingungen ist – über die reine statistische Signifikanz hinaus.
+
+Da wir für gepaarte Daten den **Wilcoxon-Vorzeichen-Rang-Test** verwenden, berechnen wir die Effektstärke mit **Wilcoxon’s r**.  
+Dieser Wert zeigt uns, **wie stark der Unterschied** zwischen den beiden zusammengehörenden Bedingungen ist.
+
+Allgemeine Richtlinien zur Interpretation von Wilcoxon’s r:  
+- 0,1 → kleiner Effekt  
+- 0,3 → mittlerer Effekt  
+- 0,5 oder mehr → großer Effekt
+
+```
+effect_size_paired <- average_trs %>%
+  wilcox_effsize(average_measurement ~ {{levels_variable_name}}, paired = TRUE)
+```
+

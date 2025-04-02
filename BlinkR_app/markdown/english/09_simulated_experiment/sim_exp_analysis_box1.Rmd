@@ -1,0 +1,1 @@
+Now we have collected our data, it is time to analyse it. Proceed through the boxes below to calculate the summary statistics, the p-value, and the effect size.

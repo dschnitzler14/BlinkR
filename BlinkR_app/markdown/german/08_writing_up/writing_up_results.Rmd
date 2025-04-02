@@ -1,0 +1,13 @@
+## Deskriptive Statistik
+- **Zentrale Kennwerte**: Gib Mittelwert und Standardabweichung für beide Gruppen an sowie die Gesamtzahl der Teilnehmenden pro Gruppe.  
+- **Gruppenvergleiche**: Zeige klar auf, wie sich die deskriptiven Statistiken zwischen den Gruppen unterscheiden.  
+- **Relevanz**: Hebe hervor, wie diese Statistiken in Bezug zur Hypothese oder den Zielen der Studie stehen.
+
+## Datenvisualisierung
+- **Übersichtlichkeit**: Stelle die Daten so dar, dass beide Gruppen direkt miteinander verglichen werden können.  
+- **Diagramme**: Verwende geeignete Visualisierungen wie Histogramme oder Boxplots, um die Verteilung der Daten beider Gruppen darzustellen.  
+- **Beschriftungen**: Achte darauf, dass alle Achsen klar beschriftet sind und Legenden verständlich sind.
+
+## Hypothesentest
+- **Ergebnisse berichten**: Gib die Ergebnisse des Hypothesentests deutlich an, einschließlich p-Wert und Effektstärke.  
+- **Interpretation**: Setze die Testergebnisse in Bezug zur ursprünglichen Hypothese und formuliere klare, logische Schlussfolgerungen.

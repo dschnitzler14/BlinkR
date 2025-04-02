@@ -1,0 +1,21 @@
+Diese Art von t-Test ist geeignet für **gepaarte Stichproben**, zum Beispiel bei wiederholten Messungen an derselben Person (z. B. vorher und nachher).
+
+Um deine Daten mit einem **gepaarten t-Test** zu analysieren, müssen wir zunächst die Tabelle umstrukturieren und dann den Test durchführen.  
+Kopiere dazu den folgenden Code vollständig in den Editor:
+        
+  ```
+  average_trs_paired_wide <- average_trs %>%
+    pivot_wider(names_from = {{levels_variable_name}}, values_from = average_measurement)
+            
+  t_test_paired <- t.test(
+    average_trs_paired_wide${{level_a_variable_name}},
+    average_trs_paired_wide${{level_b_variable_name}},
+    paired = TRUE
+  )
+  ```
+        
+Du wirst sehen, dass dieser t-Test ein zusätzliches Argument enthält: paired = TRUE.
+Das zeigt R, dass es sich um gepaarte Daten handelt.
+
+Der Schwellenwert für ein signifikantes Ergebnis liegt bei p ≤ 0,05.
+Wenn dein p-Wert unter diesem Wert liegt, gilt das Ergebnis als signifikant.

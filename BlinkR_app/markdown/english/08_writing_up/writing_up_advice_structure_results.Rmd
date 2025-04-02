@@ -1,0 +1,11 @@
+Your results section should clearly describe all your results.
+
+You can use tables and figures, but you also need to describe the results in words.
+
+You should be specific about the findings, but avoid interpreting what they mean.
+
+For example, you might say that groups treated with drug X had a higher survival rate than those treated with drug Y, but you should not say that drug X is more effective than drug Y.
+
+You also want to make sure you are including summary statistics (means, standard deviations, etc.) and inferential statistics (p-values, effect sizes etc.) where appropriate.
+
+For example: "The mean survival time for patients treated with drug X was 5.2 days (n= 102, SD = 2.3) and for patients treated with drug Y was 3.8 days (n = 106, SD = 1.9). This difference was statistically significant (t = 2.3, p = 0.03)."

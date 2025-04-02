@@ -1,0 +1,8 @@
+Zeit, die technischen Replikate für jede\*n Studierende\*n zu mitteln.  
+Versuche es mit folgendem Code:
+
+```
+average_trs <- data %>%
+    group_by(ID, {{levels_variable_name}}) %>%
+    summarise(average_measurement = mean({{measurement_variable_name}}, na.rm = TRUE), .groups = 'drop')
+```

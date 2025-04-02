@@ -1,0 +1,8 @@
+average_trs_paired_wide <- average_trs %>%
+      pivot_wider(names_from = {{levels_variable_name}}, values_from = average_measurement)
+    
+t_test_paired <- t.test(
+  average_trs_paired_wide${{level_a_variable_name}},
+  average_trs_paired_wide${{level_b_variable_name}},
+  paired = TRUE
+)

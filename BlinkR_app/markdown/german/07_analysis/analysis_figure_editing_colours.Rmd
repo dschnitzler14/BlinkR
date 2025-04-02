@@ -1,0 +1,9 @@
+Jetzt bist du dran!
+
+Schau dir zuerst die Abbildung an und überprüfe, ob alles enthalten ist.
+
+Danach kannst du anfangen, den Code selbst anzupassen.
+
+Wie wäre es, wenn du die Farbe der Balken oder Boxen änderst – zu etwas Spannenderem als Grau?
+
+Hier findest du eine Liste aller möglichen Farben: [FARBEN](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)

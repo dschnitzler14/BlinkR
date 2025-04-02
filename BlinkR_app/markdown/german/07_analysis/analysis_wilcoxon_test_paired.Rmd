@@ -1,0 +1,12 @@
+Da die Daten **nicht normalverteilt** sind, müssen wir einen **nicht-parametrischen Test** verwenden.
+
+Außerdem handelt es sich um **gepaarte Daten**, daher geben wir im Code `paired = TRUE` an.
+
+```
+wilcox_test_paired <- wilcox.test(
+  average_trs$average_measurement[average_trs${{levels_variable_name}} == "{{level_a_variable_name}}"], 
+  average_trs$average_measurement[average_trs${{levels_variable_name}} == "{{level_b_variable_name}}"], 
+  paired = TRUE
+)
+````
+

@@ -1,0 +1,2 @@
+effect_size_t <- average_trs %>%
+  cohens_d(average_measurement ~ {{levels_variable_name}}, var.equal = TRUE)

@@ -1,0 +1,17 @@
+Du kannst dir R wie eine Bibliothek voller Kochbücher vorstellen – jedes Kochbuch enthält Rezepte, mit denen du Daten verarbeiten kannst.
+
+In diesem Codeabschnitt haben wir ein Paket namens `dplyr` verwendet. Dieses Paket ist wie ein Kochbuch für **„Data Wrangling“**, also das Bereinigen und Organisieren von Daten, damit wir sie analysieren können. Hier ist, was der Code Schritt für Schritt macht:
+
+- **`average_trs <- data`**: Das erstellt eine neue Variable bzw. einen neuen Datensatz namens `average_trs`, basierend auf dem vorhandenen Datensatz `data`. Stell dir das vor wie eine Kopie eines Buchs, an der du dann Änderungen vornimmst.
+
+- **`%>%`**: Das nennt man den **„Pipe“-Operator**. Er sagt R, dass wir mehrere Befehle hintereinander ausführen. Es ist wie zu sagen: „und dann mach das...“
+
+- **`group_by(id, {{levels_variable_name}})`**: Dieser Schritt gruppiert die Daten nach den Spalten `id` und `{{levels_variable_name}}`. Das ist so, als würdest du die Daten in beschriftete Kisten sortieren, um mit jeder Gruppe einzeln zu arbeiten.
+
+- **`summarise`**: Damit wird eine neue Zusammenfassungsspalte erstellt. In diesem Fall:
+  - `average_measurement`: Das ist der Name der neuen Spalte.
+  - `mean({{measurement_variable_name}}, na.rm = TRUE)`: Das berechnet den Durchschnitt (`mean`) der Spalte `{{measurement_variable_name}}` für jede Gruppe. Der Teil `na.rm = TRUE` bedeutet, dass fehlende Werte („NA“) beim Berechnen ignoriert werden.
+
+- **`.groups = 'drop'`**: Das sagt R, dass die Gruppierung nach der Zusammenfassung wieder aufgehoben werden soll – am Ende bekommst du also einen „sauberen“, nicht gruppierten Datensatz.
+
+**Das Ergebnis:** Ein neuer Datensatz namens `average_trs`, der für jede Kombination aus `id` und `{{levels_variable_name}}` den Durchschnitt der Messwerte enthält – fehlende Werte werden dabei ignoriert.

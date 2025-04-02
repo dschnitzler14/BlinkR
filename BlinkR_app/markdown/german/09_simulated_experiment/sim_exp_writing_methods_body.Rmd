@@ -1,0 +1,26 @@
+Ziel dieser Studie war es, die Auswirkungen von koffeinhaltigem Kaugummi auf die Herzfrequenz bei gesunden Teilnehmenden zu untersuchen.  
+Die Teilnehmenden wurden aus einer Studierendenkohorte rekrutiert (n=100).  
+Vor Beginn der Studie unterzeichneten alle Teilnehmenden Formulare zur Einwilligung, zum Verständnis des Ablaufs und Ziels sowie zur Möglichkeit des Studienabbruchs. Es gab keine Studienabbrüche.
+
+Um ein möglichst realitätsnahes Szenario abzubilden, erhielten die Teilnehmenden keine zusätzlichen Anweisungen, z. B. zur Vermeidung von Koffein.
+
+Die Studie wurde über zwei Tage durchgeführt.  
+Am ersten Tag wurde jeder Teilnehmende per Zufall einer Startgruppe zugewiesen (Gruppe A oder B), wobei A die koffeinfreie Gruppe und B die Koffeingruppe darstellte.  
+Sowohl die Teilnehmenden als auch die verabreichende Person waren verblindet hinsichtlich der Gruppenzugehörigkeit.
+
+Die Teilnehmenden erhielten entweder einen koffeinhaltigen Kaugummi (50 mg Koffein pro Einheit, Marke X, Einheit = 2 g) oder einen koffeinfreien Kaugummi (Marke Y, Einheit = 2 g) und kauten diesen für 15 Minuten.  
+Die Marken wurden so gewählt, dass sie sich in Textur, Konsistenz und Größe ähneln, um eine Gruppenzuordnung zu vermeiden.  
+Zusätzlich wurden alle Verpackungen vor der Ausgabe durch eine\*n andere\*n Forscher\*in entfernt, die\*der nicht an der Verabreichung beteiligt war.
+
+Anschließend wurde der Kaugummi entsorgt und die Herzfrequenz für 3 Minuten gemessen. Jede Minute stellte dabei eine technische Replikation dar (3 × bpm-Werte à 1 Minute).  
+Die Daten wurden in einer sicheren und anonymisierten Datenbank gespeichert.
+
+Am zweiten Tag wurde das Verfahren wiederholt, wobei die Gruppen getauscht wurden – also erhielten Teilnehmende aus Gruppe A den Kaugummi von Gruppe B und umgekehrt.  
+Die Messung erfolgte auf dieselbe Weise wie am Vortag.
+
+Die Analyse wurde in R (Version 4.4.2) mithilfe der Software BlinkR (Version 1; Schnitzler, 2024) durchgeführt.  
+Zunächst wurden die technischen Replikate für jede Person und Gruppe gemittelt.  
+Die Daten erfüllten alle Voraussetzungen für einen parametrischen Test (kontinuierliche Daten, Unabhängigkeit, heterogene Population, Normalverteilung) (Abb. 1) und wurden daher mittels gepaartem t-Test analysiert (Vergleich von Tag 1 und Tag 2).  
+Die Effektstärke wurde mithilfe von Cohen’s d unter Verwendung des lsr-Pakets (Version 0.5.2; Navarro, 2015) berechnet.  
+
+Für jede Gruppe wird der Mittelwert ± SEM angegeben, bei n=100.

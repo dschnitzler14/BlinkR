@@ -1,0 +1,2 @@
+Jetzt, da wir unsere Daten gesammelt haben, ist es Zeit, sie zu analysieren.  
+Arbeite dich durch die folgenden Kästchen, um die **Zusammenfassenden Statistiken**, den **p-Wert** und die **Effektstärke** zu berechnen.

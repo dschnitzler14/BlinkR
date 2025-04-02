@@ -458,7 +458,7 @@ saved_results <- reactiveValues(
     analysis_summarise_data_module_server("summarise", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
     analysis_stats_module_server("stats", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
     analysis_create_figure_module_server("figure", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
-    writing_up_advice_server("writing_up_advice", parent.session = session)
+    writing_up_advice_server("writing_up_advice", i18n, parent.session = session, include_markdown_language)
     writing_up_ai_server("AI", parent.session = session)
     write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id)
     upload_report_module_server("upload_report", auth = auth, base_group_files_url = base_group_files_url, final_reports_folder_id = final_reports_folder_id, parent.session = session)

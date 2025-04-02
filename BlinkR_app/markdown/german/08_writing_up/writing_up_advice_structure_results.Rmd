@@ -1,0 +1,12 @@
+Dein Ergebnisteil sollte klar und vollständig alle deine Ergebnisse beschreiben.
+
+Du kannst Tabellen und Abbildungen verwenden, aber du musst die Ergebnisse auch in Worten beschreiben.
+
+Du solltest dabei **konkret auf die Befunde eingehen**, aber **vermeiden, sie zu interpretieren**.
+
+Zum Beispiel kannst du schreiben, dass Gruppen, die mit Medikament X behandelt wurden, eine höhere Überlebensrate hatten als Gruppen, die mit Medikament Y behandelt wurden – aber du solltest **nicht** sagen, dass Medikament X wirksamer ist als Medikament Y.
+
+Außerdem solltest du darauf achten, sowohl **deskriptive Statistiken** (Mittelwerte, Standardabweichungen etc.) als auch **inferenzstatistische Kennzahlen** (p-Werte, Effektstärken etc.) anzugeben, wo es sinnvoll ist.
+
+Ein Beispiel:  
+„Die durchschnittliche Überlebenszeit der Patient\*innen, die mit Medikament X behandelt wurden, betrug 5,2 Tage (n = 102, SD = 2,3), während sie bei den mit Medikament Y behandelten Patient\*innen 3,8 Tage betrug (n = 106, SD = 1,9). Dieser Unterschied war statistisch signifikant (t = 2,3, p = 0,03).“

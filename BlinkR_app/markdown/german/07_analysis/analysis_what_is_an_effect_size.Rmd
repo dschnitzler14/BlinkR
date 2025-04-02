@@ -1,0 +1,25 @@
+### Effektstärken verstehen
+
+Bei der Datenanalyse wollen wir nicht nur wissen, ob ein Ergebnis **statistisch signifikant** ist (p-Wert), sondern auch, **wie bedeutsam** dieses Ergebnis ist. Genau hier kommt die **Effektstärke** ins Spiel.  
+Die Effektstärke misst den **Umfang eines Unterschieds oder einer Beziehung** – unabhängig von der Stichprobengröße.  
+Während uns p-Werte nur sagen, **ob ein Effekt existiert**, zeigt uns die Effektstärke, **wie groß oder wichtig** dieser Effekt ist.
+
+### Warum ist die Effektstärke wichtig?
+
+1. **Geht über statistische Signifikanz hinaus**  
+   - Ein sehr kleiner Unterschied kann bei großer Stichprobe statistisch signifikant sein, aber **praktisch irrelevant**.  
+   - Die Effektstärke hilft einzuschätzen, **ob ein beobachteter Effekt wirklich relevant** ist.
+
+2. **Ermöglicht den Vergleich zwischen Studien**  
+   - Da Effektstärken standardisiert sind, lassen sich Ergebnisse **einfacher zwischen verschiedenen Experimenten vergleichen**.
+
+3. **Hilft bei der Studienplanung**  
+   - Wenn man weiß, welche Effektstärke zu erwarten ist, kann man die **benötigte Stichprobengröße** für zukünftige Studien besser berechnen (Power-Analyse).
+
+### Effektstärken interpretieren
+
+Die Interpretation hängt vom Kontext ab, aber es gibt allgemeine Richtlinien:
+
+- **Kleiner Effekt**: Der Unterschied existiert, ist aber möglicherweise **praktisch nicht bedeutsam**.  
+- **Mittlerer Effekt**: Ein **deutlicher und wahrscheinlich relevanter Unterschied**.  
+- **Großer Effekt**: Ein **starker Unterschied**, der sowohl **statistisch als auch praktisch bedeutsam** ist.

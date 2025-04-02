@@ -1,0 +1,3 @@
+BlinkR ist eine Web-App, die dir dabei hilft, ein Experiment von Anfang bis Ende durchzuführen.
+
+Um loszulegen, melde dich an oder registriere dich.

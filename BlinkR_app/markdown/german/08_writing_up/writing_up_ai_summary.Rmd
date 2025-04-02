@@ -1,0 +1,4 @@
+Generative KI-Tools wie ChatGPT wurden entwickelt, um neue Inhalte auf Grundlage der Daten zu erstellen, mit denen sie trainiert wurden.
+
+Beim Generieren von Text sagt das KI-Modell **das wahrscheinlichste nächste Wort** in einer Sequenz voraus.  
+Obwohl es zusammenhängende und kontextuell passende Texte erzeugen kann, fehlt es der KI an **Begründungsfähigkeit, Originalität und kritischem Denken** – also genau den Fähigkeiten, die für gutes wissenschaftliches Schreiben entscheidend sind.

@@ -1,0 +1,17 @@
+Dein Methodenteil sollte klar beschreiben, was du getan hast und warum du es getan hast. Es sollte so deutlich sein, dass jemand anderes deine Studie reproduzieren könnte.
+
+Dieser Abschnitt sollte alle Schritte zur Datenerhebung, Datenbereinigung und Analyse enthalten. Du solltest auch alle statistischen Tests angeben, die du verwendet hast, sowie die Gründe dafür. Ebenso solltest du alle verwendeten Softwareprogramme oder Tools erwähnen.  
+Auch **ethische Überlegungen**, die bei der Durchführung deiner Studie eine Rolle gespielt haben, sollten hier aufgeführt werden.
+
+Zum Beispiel: Wenn du die Wirkung eines neuen Medikaments auf eine Krankheit untersuchst, solltest du folgende Informationen angeben:
+
+- Den Namen des Medikaments und der untersuchten Krankheit.
+- Die Dosierung und Verabreichung des Medikaments.
+- Das Studiendesign (z. B. Doppelblindstudie).
+- Die Anzahl der Teilnehmenden und wie sie rekrutiert wurden.
+- Die verwendeten statistischen Tests, warum du sie gewählt hast, und die verwendete Software.
+- Alle ethischen Überlegungen, die du berücksichtigen musstest.
+
+Denk daran, dass der Methodenteil **klar und prägnant** sein sollte. Du solltest in diesem Abschnitt **keine Ergebnisse oder Diskussionen** einbringen.
+
+Dies ist auch ein guter Ort, um Abbildungen einzufügen, die deinen Analyseprozess unterstützen (z. B. ein Histogramm zur Prüfung auf Normalverteilung).

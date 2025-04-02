@@ -1,0 +1,17 @@
+In diesem Schritt werden wir die Daten zusammenfassen, um den **Mittelwert**, **n**, die **Standardabweichung** und den **Standardfehler des Mittelwerts (SEM)** für jede Gruppe zu berechnen.
+
+Ich zeige dir zuerst, wie du diese Werte für die **{{level_b_variable_name}}**-Gruppe berechnest – danach musst du das Gleiche für die **{{level_a_variable_name}}**-Gruppe machen.
+
+Zuerst filtern wir die Daten, sodass nur die **{{level_b_variable_name}}**-Gruppe enthalten ist.  
+Sende diesen Code an den Editor:
+
+```
+{{level_b_variable_name}}_data <- average_trs %>%
+    filter({{levels_variable_name}} == "{{level_b_variable_name}}")
+```
+
+Mit diesem Code nimmst du die Spalte `{{levels_variable_name}}` aus dem Datensatz `average_trs` und filterst sie so, dass nur die Daten mit dem Wert `"{{level_b_variable_name}}"` enthalten sind.
+
+Die gefilterte Ansicht des Datensatzes speicherst du dann als neue Variable namens `{{level_b_variable_name}}`.
+
+Wenn du mehr über `dplyr` lernen möchtest, schau dir das [Dplyr Cheatsheet](https://nyu-cdsc.github.io/learningr/assets/data-transformation.pdf) an.

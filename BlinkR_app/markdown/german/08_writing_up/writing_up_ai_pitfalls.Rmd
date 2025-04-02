@@ -1,0 +1,26 @@
+**1. Halluzinationen & falsche Informationen**  
+KI generiert häufig falsche oder irreführende Inhalte – darunter erfundene Fakten oder Quellen – und ist daher **nicht zuverlässig** für forschungsbasiertes Schreiben.
+
+**2. Fehlendes kritisches Denken**  
+KI analysiert oder interpretiert Informationen nicht, sondern sagt lediglich Wörter auf Basis von Mustern vorher. Das führt zu **oberflächlichen Argumenten ohne echte Einsicht oder Begründung**.
+
+**3. Generisches & sich wiederholendes Schreiben**  
+Von KI generierte Texte klingen oft **formelhaft, repetitiv und einfallslos** und erfüllen nicht die akademischen Anforderungen an Tiefe und Engagement.
+
+**4. Schwache Argumentationsfähigkeit**  
+KI hat Schwierigkeiten mit **komplexem Denken**, logischer Argumentation und der Synthese unterschiedlicher Standpunkte. Das Ergebnis sind oft **widersprüchliche oder schwache Aussagen**.
+
+**5. Verzerrungen & nicht überprüfte Quellen**  
+KI spiegelt die Verzerrungen in den Trainingsdaten wider und kann **veraltete oder unseriöse Quellen ohne korrekte Zitierung** verwenden.
+
+**6. Fehlende persönliche Stimme & Stil**  
+Von KI geschriebene Texte **fehlen Persönlichkeit, Kreativität und ein eigener Stil**, die Texte interessant und aussagekräftig machen.
+
+**7. Schlechte Zitierweise & Plagiatsrisiko**  
+KI kann **falsche oder erfundene Zitate** generieren. Eine zu starke Abhängigkeit von KI-Inhalten kann zu **unabsichtlichem Plagiat oder akademischem Fehlverhalten** führen.
+
+**8. Fehlinterpretation von Aufgabenstellungen**  
+KI „versteht“ Aufgabenstellungen nicht wirklich. Das kann zu **thematisch falschen, unvollständigen oder unpassenden Antworten** führen, die die Anforderungen nicht erfüllen.
+
+**9. Inkonsistenzen & logische Fehler**  
+KI kann sich **innerhalb eines Textes widersprechen**, wichtige Details verwechseln oder Inhalte produzieren, denen es an **Kohärenz und logischem Aufbau** fehlt.

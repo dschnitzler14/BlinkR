@@ -1,0 +1,5 @@
+Ein kurzer Überblick über BlinkR
+
+- Verwende die Seitenleiste links, um zu den verschiedenen Abschnitten zu navigieren.  
+- Deine Gruppen-ID findest du ebenfalls in der Seitenleiste – **notiere sie dir**, damit du dich beim nächsten Mal wieder einloggen kannst!  
+- Nutze die Übersicht der App unten, um schnell zu navigieren und direkt loszulegen.

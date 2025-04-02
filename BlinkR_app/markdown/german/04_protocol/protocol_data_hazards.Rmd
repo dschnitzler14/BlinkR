@@ -1,0 +1,7 @@
+Genau wie bei der Arbeit mit Chemikalien gibt es auch beim Umgang mit Daten potenzielle Gefahren.
+
+Das **Data Hazards Project** wurde entwickelt, um uns dabei zu helfen, mögliche Risiken zu erkennen und über die Konsequenzen unserer Arbeit nachzudenken.
+
+Mehr über das Projekt erfährst du hier: <a href="https://datahazards.com/" target="_blank">Data Hazards</a>.
+
+Lass uns gemeinsam überlegen, welche potenziellen Gefahren in den Daten dieses Projekts stecken könnten!

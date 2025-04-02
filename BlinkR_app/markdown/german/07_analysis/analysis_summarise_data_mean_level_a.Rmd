@@ -1,0 +1,1 @@
+Jetzt müssen wir den Mittelwert für die {{level_a_variable_name}}-Gruppe berechnen.

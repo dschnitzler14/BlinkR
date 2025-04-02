@@ -1,0 +1,17 @@
+**Zweck der Aktivität**  
+Diese Aktivität besteht darin, ein Experiment durchzuführen und die erhobenen Daten mithilfe einer Shiny-App zu analysieren.  
+Ziel ist es, dein Verständnis für Versuchsplanung, Datenerhebung und -auswertung im Rahmen des Unterrichts zu vertiefen.
+
+**Freiwillige Teilnahme**  
+Die Teilnahme an dieser Aktivität ist freiwillig. Du kannst dich jederzeit dagegen entscheiden – dies hat **keinen Einfluss auf deine Note oder deinen Status im Kurs**.
+
+**Datenerhebung und Datenschutz**  
+Die im Rahmen dieses Experiments erhobenen Daten werden **anonymisiert** und ausschließlich **zu Bildungszwecken** verwendet.  
+Es werden **keine personenbezogenen Daten** gespeichert oder weitergegeben.
+
+**Einwilligung**  
+Mit deiner Zustimmung erklärst du, dass:
+
+- du den Zweck dieser Aktivität und die damit verbundenen Abläufe verstehst.  
+- du der Erhebung und Nutzung der Daten zu den oben genannten Zwecken zustimmst.  
+- du jederzeit ohne Nachteile aus der Aktivität aussteigen kannst.

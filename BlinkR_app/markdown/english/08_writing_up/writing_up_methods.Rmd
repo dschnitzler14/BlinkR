@@ -1,0 +1,15 @@
+## Data Collection
+
+- **Clarity and Detail**: Describe your methodology clearly and in detail.
+- **Procedure**: Include exact steps and procedures followed during data collection.
+- **Participants/Samples**: Mention the number of participants or samples used in the experiment.
+- **Technical Replicates**: Provide details on the number of replicates to ensure accuracy.
+- **Outliers**: Explain whether any data points were excluded and why.
+- **Ethics and Data Protection**: Specify any measures taken for ethical compliance and data protection (e.g., consent forms, anonymisation).
+
+
+## Data Analysis
+
+- **Tools**: List the software and its version used for analysis.
+- **Tests and Methods**: Include the specific statistical tests and methods applied.
+- **Reproducibility**: Ensure the description is detailed enough for others to replicate your analysis step by step.

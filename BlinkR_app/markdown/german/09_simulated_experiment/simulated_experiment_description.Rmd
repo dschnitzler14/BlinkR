@@ -1,0 +1,9 @@
+Dieser Abschnitt ist eine optionale Hilfe. Er führt dich durch ein simuliertes Experiment, um dir den Ablauf der Planung, Durchführung und Auswertung eines Experiments sowie das Schreiben des Berichts näherzubringen.
+
+Er ist in folgende Abschnitte unterteilt:
+1. Einleitung und Hintergrund  
+2. Planung des Experiments  
+3. Durchführung des Experiments  
+4. Analyse des Experiments  
+5. Verschriftlichung des Experiments  
+6. Fazit

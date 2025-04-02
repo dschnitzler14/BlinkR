@@ -1,0 +1,12 @@
+Als Nächstes können wir den Standardfehler des Mittelwerts (SEM) mit folgendem Code berechnen:
+
+```
+{{level_b_variable_name}}_n <- nrow({{level_b_variable_name}}_data)
+{{level_b_variable_name}}_sem <- {{level_b_variable_name}}_sd / sqrt({{level_b_variable_name}}_n)
+```
+
+Um den SEM zu berechnen, musst du zuerst die Anzahl der Beobachtungen (`n`) ermitteln.
+
+Dazu definierst du die Variable `{{level_b_variable_name}}_n`, um die Anzahl der Zeilen im Dataframe `{{level_b_variable_name}}_data` zu speichern.
+
+Diese neue Variable `{{level_b_variable_name}}_n` kannst du nun zusammen mit der oben definierten Variable `{{level_b_variable_name}}_sd` verwenden, um den SEM zu berechnen.

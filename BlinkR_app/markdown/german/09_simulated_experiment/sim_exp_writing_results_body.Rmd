@@ -1,0 +1,3 @@
+In der vorliegenden Studie war die Herzfrequenz (bpm) in der Koffeingruppe signifikant höher (Mittelwert = 87,8 ± 0,28, n = 100) als in der koffeinfreien Gruppe (Mittelwert = 85,5 ± 0,23, n = 100)  
+(gepaarter t-Test: t(99) = 7,05, p = 2,4e^-10) (Abb. 2).  
+Darüber hinaus war die Effektstärke moderat (Cohen’s d = 0,71).

@@ -1,0 +1,13 @@
+Nachdem du dich für einen statistischen Test entschieden hast, musst du nun festlegen, ob deine Daten **gepaart** oder **ungepaart** sind.
+
+Es ist wichtig, den richtigen Weg zu wählen, da dies die Berechnungen beeinflusst, die durchgeführt werden.
+
+**1. Ungepaarte Daten**  
+- Die Daten stammen aus **zwei getrennten Gruppen**.  
+- Jeder Wert in der einen Gruppe steht **in keiner direkten Beziehung** zu einem Wert in der anderen Gruppe.  
+- Beispiel: Vergleich von Testergebnissen zwischen zwei verschiedenen Schulklassen.
+
+**2. Gepaarte Daten**  
+- Die Daten stammen von **denselben Personen**, die **zweimal gemessen** wurden.  
+- Jeder Wert in der einen Bedingung ist **mit einem Wert in der anderen Bedingung verknüpft**.  
+- Beispiel: Messung der Herzfrequenz **vor und nach dem Sport** bei denselben Personen.

@@ -1,0 +1,17 @@
+Jetzt können wir die Effektstärke berechnen.
+
+Die **Effektstärke** ist ein Maß dafür, **wie stark der Unterschied zwischen zwei Gruppen** ist.  
+Im Gegensatz zu p-Werten, die nur sagen, **ob** ein Unterschied existiert, zeigt uns die Effektstärke, **wie bedeutsam** dieser Unterschied ist.
+
+Eine größere Effektstärke bedeutet einen größeren Unterschied zwischen den Gruppen, während eine kleinere Effektstärke auf einen geringen oder vernachlässigbaren Unterschied hinweist.
+
+Eine allgemeine Richtlinie zur Interpretation von Cohen’s d:  
+- 0,2 → kleiner Effekt  
+- 0,5 → mittlerer Effekt  
+- 0,8 oder mehr → großer Effekt
+
+Beachte: Wir müssen hier außerdem angeben, dass es sich um **gepaarte Daten** handelt.
+
+```r
+effect_size_paired_t <- average_trs %>%
+  cohens_d(average_measurement ~ {{levels_variable_name}}, paired = TRUE)

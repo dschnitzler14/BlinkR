@@ -1,0 +1,25 @@
+Ziel dieser Studie war es, die Auswirkungen von koffeinhaltigem Kaugummi auf die Herzfrequenz zu untersuchen – im Vergleich zu einer Kontrollgruppe, die koffeinfreien Kaugummi für 15 Minuten kaute.  
+Aufgrund der signifikant höheren bpm-Werte in der Koffeingruppe im Vergleich zur koffeinfreien Kontrollgruppe kann die Nullhypothese verworfen und die Alternativhypothese angenommen werden.  
+Mit anderen Worten zeigen die Ergebnisse einen signifikanten Effekt von koffeinhaltigem Kaugummi auf die Herzfrequenz im Vergleich zur Kontrollgruppe.
+
+Bemerkenswert ist, dass in einer Studie, in der die Wirkung von Koffein (in Gelatinekapseln, 5 mg/kg) bei jungen, gesunden männlichen Probanden (Alter 19–22, n=20/Gruppe) untersucht wurde, ein signifikanter Anstieg der Herzfrequenz 60 Minuten nach der Einnahme beobachtet wurde – vergleichbar mit den Ergebnissen der vorliegenden Untersuchung (Geethavani et al., 2014).  
+Diese Studie ist jedoch möglicherweise nicht vertrauenswürdig, da die Effektstärke fehlt, die Stichprobe klein war, keine Klarheit bezüglich der verwendeten statistischen Tests besteht und auffällig identische Mittelwerte vor und nach der Kontrolle angegeben wurden. Zudem fehlen für mehrere Aussagen Quellenangaben.
+
+Im Gegensatz dazu fand eine Studie mit gesunden jungen Erwachsenen (Alter 23–32, n=10, gemischte Geschlechter), in der eine Einzeldosis Placebo, 100 mg oder 200 mg Koffein in Honig gelöst verabreicht wurde, keinen signifikanten Anstieg der Herzfrequenz 90 Minuten nach der Einnahme – weder bei 100 mg noch bei 200 mg (Sondermeijer et al., 2002).  
+Die Autor\*innen vermuten, dass der überraschende fehlende Effekt auf eine baroreflexvermittelte Reaktion auf einen Blutdruckanstieg zurückzuführen ist.  
+Tatsächlich zeigt eine Übersichtsarbeit zu den Auswirkungen von Koffein auf Herzfrequenz und Blutdruck, dass viele Studien keinen Effekt oder sogar eine Senkung der Herzfrequenz bei verschiedenen Dosen berichteten – was jedoch nicht ausschließt, dass koffeinhaltiger Kaugummi aufgrund der raschen Aufnahme über die Mundschleimhaut eine schnellere oder stärkere Wirkung haben kann (Green et al., 1996).
+
+Darüber hinaus berichteten Notarius und Floras (2012) in einer Studie zur Infusion von Koffein bei gesunden Personen und Patient\*innen mit chronischer Herzinsuffizienz (n=10 bzw. n=11), dass es bei gesunden Teilnehmenden zu einer signifikanten Abnahme der Herzfrequenz kam – verglichen mit einer Kontrollgruppe mit Kochsalzinfusion – nach einer 20-minütigen Koffeininfusion.  
+Vermutlich trugen die geringere Dosis sowie die längere Verabreichungsdauer zu den unterschiedlichen Ergebnissen bei.
+
+Auch das Kauen von Kaugummi selbst wurde bereits mit einer Erhöhung der Herzfrequenz in Verbindung gebracht (Allen et al., 2014; Hasegawa et al., 2009), was möglicherweise ebenfalls zur Erklärung der vorliegenden Ergebnisse beiträgt.  
+Es ist denkbar, dass das Kauen in der Koffeingruppe intensiver war – etwa aufgrund der Textur oder Konsistenz des Kaugummis – was sich wiederum auf die Herzfrequenz auswirkte.  
+Hasegawa et al. (2009) vermuten, dass Kauen zu einer gleichzeitigen Hemmung des vagalen Einflusses und einer Aktivierung des sympathischen Nervensystems führt, was einen Anstieg der Herzfrequenz erklärt.
+
+Eine weitere Limitation der vorliegenden Studie betrifft das mittlere Alter der Teilnehmenden; dieses ist möglicherweise nicht repräsentativ für die Zielgruppe, die koffeinhaltigen Kaugummi konsumieren würde.  
+Obwohl die Effektstärke der Studie auf einen echten Effekt hindeutet, können externe Einflussfaktoren wie vorheriger Koffeinkonsum, langfristige Koffeinverwendung, psychische Verfassung, Gesundheitszustand, individueller Stoffwechsel oder Medikamenteneinnahme nicht ausgeschlossen werden.  
+Wie bereits erwähnt, könnte auch der reine Kauvorgang die Ergebnisse beeinflusst haben – es ist unklar, wie viele Kaubewegungen pro Minute durchgeführt wurden oder wie stark sich Konsistenz und Textur des Kaugummis zwischen den Bedingungen unterschieden.
+
+Insgesamt legen die Ergebnisse der vorliegenden Studie nahe, dass die rasche Absorption von Koffein über die Mundschleimhaut zu schnellen, möglicherweise kurzfristigen Effekten auf die Herzfrequenz führen kann – im Vergleich zu koffeinfreiem Kaugummi.  
+Um diese Ergebnisse zu bestätigen, wäre eine Studie mit längerer Beobachtungsdauer sinnvoll, um zu prüfen, ob die Effekte tatsächlich kurzfristig sind.  
+Außerdem wäre ein weiteres Experiment hilfreich, in dem eine Koffeinlösung oder sich schnell auflösende Tabletten im Mund behalten, aber nicht gekaut oder geschluckt werden – um den Einfluss des Kauens besser abgrenzen zu können.

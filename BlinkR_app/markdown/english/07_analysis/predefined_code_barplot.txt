@@ -1,0 +1,31 @@
+data_summary <- average_trs %>%
+    group_by({{levels_variable_name}}) %>%
+    summarise(
+      n = n(),
+      mean = mean(average_measurement, na.rm = TRUE),
+      sd = sd(average_measurement, na.rm = TRUE),
+      sem = sd / sqrt(n)
+    )
+  
+  data_summary${{levels_variable_name}} <- factor(data_summary${{levels_variable_name}}, levels = c("{{level_b_variable_name}}", "{{level_a_variable_name}}"))
+  
+  barplot <- ggplot(data_summary, aes(x = {{levels_variable_name}}, y = mean, fill = {{levels_variable_name}})) +
+    geom_bar(stat = "identity", color = "black", position = position_dodge()) +
+    geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, position = position_dodge(.9)) +
+    geom_jitter(
+      data = average_trs, 
+      aes(x = {{levels_variable_name}}, y = average_measurement), 
+      width = 0.2, 
+      size = 2, 
+      color = "maroon"
+    ) +
+    scale_fill_manual(values = c("{{level_b_variable_name}}" = "grey49", "{{level_a_variable_name}}" = "lightgrey")) +
+    labs(x = "X AXIS",
+         y = "Y AXIS",
+         title = "TITLE") +
+    theme_minimal() +
+    theme(
+      legend.position = "none",
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )

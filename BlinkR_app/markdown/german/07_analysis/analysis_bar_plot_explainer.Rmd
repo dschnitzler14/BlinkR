@@ -1,0 +1,2 @@
+- Das Boxplot zeigt die Verteilung deiner Daten über verschiedene Gruppen hinweg (z. B. {{levels_text_name}}).  
+- Die überlagerten Streudiagramm-Punkte stellen einzelne Messwerte dar. So lässt sich die Variabilität innerhalb und zwischen den Gruppen visuell einschätzen – ein wichtiger Aspekt zur Beurteilung gleichmäßiger Varianzen.

@@ -1,0 +1,24 @@
+Koffein ist eines der weltweit am häufigsten konsumierten Stimulanzien mit Wirkung auf das ZNS (Frary et al., 2005). Bei oraler Einnahme in Form von Getränken wird es schnell über den Magen-Darm-Trakt aufgenommen. Bei der Aufnahme über koffeinhaltigen Kaugummi gelangt es jedoch schneller über die Mundschleimhaut in den Blutkreislauf. Die maximale Plasmakonzentration von Koffein wird in der Regel 15 bis 120 Minuten nach der Einnahme erreicht, abhängig von der Magenentleerungsrate (bei oraler Einnahme). Im Gegensatz dazu verkürzt sich diese Zeit auf etwa 5 Minuten beim Kauen von koffeinhaltigem Kaugummi (Kamimori et al., 2002, Institute of Medicine \(US\) Committee on Military Nutrition Research).
+
+Dieses Stimulans hat zahlreiche systemische Effekte, unter anderem auf das Nieren-, Atem-, Nerven- und Herz-Kreislauf-System. Darüber hinaus gibt es eine Vielzahl kognitiver und verhaltensbezogener Effekte von Koffein (Institute of Medicine \(US\) Committee on Military Nutrition Research; Smith et al., 2009).
+
+Es wird angenommen, dass Koffein je nach Zielstruktur über unterschiedliche Mechanismen wirkt: 1. Hemmung von Adenosinrezeptoren, 2. Erhöhung von cAMP, 3. Erhöhung der intrazellulären Kalziumfreisetzung, 4. Hemmung von Benzodiazepin-GABA-Rezeptoren.
+
+Im Nervensystem blockiert Koffein die Bindung an Adenosinrezeptoren durch kompetitive Bindung sowohl von Koffein selbst als auch seines Metaboliten Paraxanthin. Durch die Blockade der hemmenden Wirkung von Adenosin moduliert Koffein indirekt die Freisetzung weiterer neuroaktiver Substanzen wie Noradrenalin, GABA, Dopamin etc. (Institute of Medicine \(US\) Committee on Military Nutrition Research).
+
+Neben der Hemmung von Adenosinrezeptoren erhöht Koffein außerdem die intrazellulären Konzentrationen von cAMP durch Hemmung von Phosphodiesteraseenzymen in der Skelettmuskulatur und im Fettgewebe. Dies fördert die Lipolyse und führt zu erhöhter Glykogenverfügbarkeit in der Muskulatur. Ein Anstieg von cAMP kann auch die Konzentration zirkulierender Katecholamine erhöhen. Obwohl die Hemmung der Phosphodiesterasen möglicherweise zu schwach ist, um verhaltensrelevante Effekte zu verursachen, wird dieser Mechanismus mit den kardiostimulierenden und antiasthmatischen Effekten von Koffein in Verbindung gebracht (Institute of Medicine \(US\) Committee on Military Nutrition Research).
+
+Während Koffein bei hohen Konzentrationen (1–10 mM) die Aufnahme und Speicherung von Kalzium im sarkoplasmatischen Retikulum gestreifter Muskulatur hemmen kann, wurde bei geringeren Konzentrationen (250 µM) eine Mobilisierung intrazellulärer Kalziumspeicher in Skelett- und Herzmuskel beobachtet. Allerdings liegt die zur kardiostimulierenden Wirkung benötigte Konzentration in vivo deutlich niedriger (50 µM), was diese Wirkung möglicherweise als physiologisch irrelevant erscheinen lässt (Institute of Medicine \(US\) Committee on Military Nutrition Research).
+
+Darüber hinaus wirkt Koffein als Antagonist an Benzodiazepin-GABA-Rezeptoren, allerdings nur bei hohen Konzentrationen (Institute of Medicine \(US\) Committee on Military Nutrition Research).
+
+Die kardiovaskulären Effekte von Koffein werden hauptsächlich der Hemmung von Adenosinrezeptoren zugeschrieben. Es wurden jedoch auch andere Mechanismen vorgeschlagen, wie z. B. die Hemmung der Monoaminoxidase (mit einem Anstieg von Dopamin, Adrenalin, Noradrenalin und Serotonin) sowie die Hemmung der Acetylcholinesterase, was zu einem erhöhten Acetylcholinspiegel führen kann (Zulli et al., 2016).
+
+Die schnelle Aufnahme von Koffein über die Mundschleimhaut – z. B. durch Kaugummikonsum im Vergleich zur Aufnahme über den Magen-Darm-Trakt bei flüssiger Einnahme – wurde in mehreren Studien untersucht, insbesondere im sportwissenschaftlichen Kontext, da Koffein nachweislich leistungssteigernd wirkt (Paton et al., 2015; Bellar et al., 2011).
+
+Aufgrund der offenbar raschen Absorption von Koffein durch Kaugummi könnte ein Anstieg der Herzfrequenz schneller und stärker ausfallen – was vor allem bei der Beratung von Patient\*innen mit Herz-Kreislauf-Erkrankungen relevant sein könnte.
+
+Ziel dieser Studie ist es daher, die Wirkung von koffeinhaltigem Kaugummi auf die Herzfrequenz bei einer gesunden Proband\*innengruppe zu untersuchen.
+
+Die Nullhypothese lautet daher, dass das Kauen von koffeinhaltigem Kaugummi keinen signifikant anderen Einfluss auf die Herzfrequenz hat als das Kauen von koffeinfreiem Kaugummi.  
+Die Alternativhypothese ist, dass das Kauen von koffeinhaltigem Kaugummi einen signifikanten Einfluss auf die Herzfrequenz hat im Vergleich zu koffeinfreiem Kaugummi.

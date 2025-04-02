@@ -1,0 +1,16 @@
+Anstatt jede einzelne Statistik manuell zu berechnen, kannst du mit `dplyr` ganz einfach eine Tabelle mit allen zusammengefassten Ergebnissen erstellen.
+
+```
+data_summary <- average_trs %>%
+    group_by({{levels_variable_name}}) %>%
+    summarise(
+        n = n(),
+        mean = mean(average_measurement, na.rm = TRUE),
+        sd = sd(average_measurement, na.rm = TRUE),
+        sem = sd / sqrt(n)
+    )
+```
+
+Mit dem folgenden Code kannst du schnell alle wichtigen deskriptiven Statistiken für beide Gruppen berechnen.
+
+Die Tabelle, die dann in der Variable `data_summary` gespeichert wird, gibt dir einen guten Überblick über die Zusammenfassung beider Gruppen.

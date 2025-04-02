@@ -683,6 +683,42 @@
 {
   "en": "No valid plot to save.",
   "de": "Kein gültiges Diagramm zum Speichern vorhanden."
+},
+{
+  "en": "Writing Up: Advice",
+  "de": "Bericht schreiben: Tipps"
+},
+{
+  "en": "Structure",
+  "de": "Struktur"
+},
+{
+  "en": "Methods",
+  "de": "Methoden"
+},
+{
+  "en": "Results",
+  "de": "Ergebnisse"
+},
+{
+  "en": "Discussion",
+  "de": "Diskussion"
+},
+{
+  "en": "Future Work",
+  "de": "Ausblick"
+},
+{
+  "en": "References",
+  "de": "Literaturverzeichnis"
+},
+{
+  "en": "Tips and Tricks",
+  "de": "Tipps und Tricks"
+},
+{
+  "en": "Working Together",
+  "de": "Zusammenarbeit"
 }
   ]
 }

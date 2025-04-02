@@ -1,0 +1,3 @@
+BlinkR is a web app to help you run an experiment from start to finish. 
+
+To get started, log in or sign up.

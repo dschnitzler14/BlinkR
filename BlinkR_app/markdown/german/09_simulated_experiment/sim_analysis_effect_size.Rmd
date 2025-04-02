@@ -1,0 +1,3 @@
+effect_size_caf <- average_trs_caf %>%
+  cohens_d(Average_HR ~ Caffeine_Status, paired = TRUE)
+  

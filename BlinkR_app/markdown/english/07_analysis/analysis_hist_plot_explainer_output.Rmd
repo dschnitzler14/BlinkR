@@ -1,0 +1,18 @@
+Now you have to decide is this data is normally distributed.
+
+**1. What is Normality?**
+A normal distribution is a bell-shaped curve where most values are clustered around the middle, and fewer values appear at the extremes.  
+
+In a normal distribution:  
+- The data is symmetrical  
+- The mean, median, and mode are roughly the same  
+- Most values fall close to the average  
+
+**2. How do I decide if this is normal?**
+This can be a little subjective. Look at the histogram and decide if it meets your expectations of what normally distributed data looks like.
+
+**3. Why does it matter?**
+The type of statistical test you choose depends on whether the data is normal.  
+
+- If the data is normal, you can use parametric tests (e.g., t-tests).  
+- If the data is not normal, you should use non-parametric tests (e.g., Wilcoxon test).  

@@ -1,0 +1,18 @@
+This type of t-test is appropriate for samples that are paired, for example repeated measures within the same subject (e.g. before and after).
+
+In order to analyse your data with a two-sample t-test, we first need to restructure our table and then run to the t-test. Copy this whole code into the editor:
+        
+  ```
+  average_trs_paired_wide <- average_trs %>%
+    pivot_wider(names_from = {{levels_variable_name}}, values_from = average_measurement)
+            
+  t_test_paired <- t.test(
+    average_trs_paired_wide${{level_a_variable_name}},
+    average_trs_paired_wide${{level_b_variable_name}},
+    paired = TRUE
+  )
+  ```
+        
+You will notice that this t-test has an extra argument `paired = TRUE`, which indicates that the data is paired.
+
+The threshold for a significant result is p≤0.05. If your p-value is below this, then the result is significant.

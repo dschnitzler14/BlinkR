@@ -1,0 +1,12 @@
+Schauen wir uns zuerst den Code an.  
+Zunächst mussten wir unsere Daten umstrukturieren, damit wir sie an die Funktion für den gepaarten t-Test übergeben konnten.
+
+- **`average_trs_paired_wide <- average_trs_paired %>%`**: Wieder verwenden wir ein „Kochbuch“ – in diesem Fall `tidyr` – und beginnen unseren „Satz“ mit dem Befehl, einen neuen Datensatz namens `average_trs_paired_wide` zu erstellen, basierend auf dem Datensatz `average_trs_paired`.
+
+- **`pivot_wider(names_from = {{levels_variable_name}}, values_from = average_measurement)`**: Mit dem Befehl `pivot_wider` sagen wir R, dass die Werte aus `{{levels_variable_name}}` in eigene Spalten umgewandelt werden sollen (du kannst im Abschnitt „Daten anzeigen“ nochmal nachsehen, wie die Daten vorher strukturiert waren). Diese neuen Spalten werden dann mit den entsprechenden Werten aus `average_measurement` gefüllt.
+
+Im nächsten Schritt führen wir unseren gepaarten t-Test durch – diesmal mit dem „Kochbuch“ `stats` (das ich im Hintergrund schon für dich geladen habe). Aus diesem Kochbuch verwenden wir das Rezept `t.test`. Die „Zutaten“ dafür sind:
+
+- **`average_trs_paired_wide${{level_a_variable_name}}`**: Die Werte aus der Spalte `{{level_a_variable_name}}`.  
+- **`average_trs_paired_wide${{level_b_variable_name}}`**: Die Werte aus der Spalte `{{level_b_variable_name}}`.  
+- **`paired = TRUE`**: Damit teilen wir R mit, dass es sich um gepaarte Daten handelt und der Test entsprechend angepasst werden soll.

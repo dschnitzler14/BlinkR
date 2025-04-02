@@ -1,0 +1,32 @@
+### Was war nochmal ein p-Wert?
+
+Ein **p-Wert** ist eine Zahl, die uns hilft zu bestimmen, ob die Ergebnisse unseres Experiments **statistisch signifikant** sind.  
+Er gibt an, wie wahrscheinlich es wäre, Ergebnisse zu erhalten, die so extrem sind wie die beobachteten – **wenn die Nullhypothese wahr wäre**.
+
+#### Einfach erklärt:
+- Die **Nullhypothese (H₀)** ist die Annahme, dass es **keinen echten Effekt oder keinen Unterschied** zwischen den Gruppen gibt.
+- Die **Alternativhypothese (H₁)** geht davon aus, dass **ein echter Effekt oder Unterschied** vorliegt.
+- Der **p-Wert** sagt uns, wie ungewöhnlich unsere Ergebnisse wären, wenn H₀ tatsächlich wahr wäre.
+
+#### Was bedeutet ein p-Wert?
+- Ein **kleiner p-Wert (typischerweise < 0,05)** bedeutet, dass unsere beobachteten Ergebnisse **unwahrscheinlich zufällig** entstanden sind, falls H₀ wahr ist. Das spricht dafür, H₀ **abzulehnen** und H₁ zu unterstützen.
+- Ein **großer p-Wert (≥ 0,05)** legt nahe, dass unsere Ergebnisse **durch Zufall erklärbar** sind – wir haben also **nicht genügend Beweise**, um H₀ zu verwerfen.
+
+### Und was heißt das nun?
+
+Mit dem p-Wert entscheiden wir, ob wir die Nullhypothese verwerfen und die Alternativhypothese annehmen – oder ob H₀ doch richtig war.
+
+- **Wenn p < 0,05**, verwerfen wir H₀.  
+  Das bedeutet, unser Ergebnis ist **statistisch signifikant**, und wir haben Hinweise auf einen echten Effekt.  
+- **Wenn p ≥ 0,05**, behalten wir H₀ bei.  
+  Das heißt, wir haben **nicht genügend Beweise**, um H₁ zu unterstützen, und unsere Ergebnisse könnten auf Zufall beruhen.
+
+#### Wichtige Punkte, die du dir merken solltest:
+- Ein p-Wert **beweist nichts** – er zeigt nur, wie wahrscheinlich unsere Ergebnisse unter der Annahme von H₀ sind.
+- Ein **niedriger p-Wert** bedeutet **nicht**, dass der Effekt groß ist – nur, dass er **nicht zufällig** erscheint.
+- **Statistische Signifikanz ist nicht gleich praktische Bedeutung** – auch ein sehr kleiner Effekt kann bei großer Stichprobe signifikant sein.
+- **Wenn p < 0,05**, verwerfen wir H₀ → **statistisch signifikantes Ergebnis**.
+- **Wenn p ≥ 0,05**, behalten wir H₀ bei → **nicht genug Beweise für H₁**.
+- Ein p-Wert zeigt **keine Kausalität** – er hilft uns nur zu bewerten, **wie stark unsere Beweislage** ist.
+
+Das Verständnis von p-Werten ist ein **zentraler Bestandteil der Statistik** – sie helfen Forscher*innen, zu entscheiden, ob ihre Ergebnisse **aussagekräftig oder zufällig** sind.

@@ -1,0 +1,9 @@
+Als Nächstes können wir den Mittelwert mit folgendem Code berechnen:
+
+```
+{{level_b_variable_name}}_mean <- mean({{level_b_variable_name}}_data$average_measurement, na.rm = TRUE) 
+```
+
+Mit diesem Code erstellst du eine neue Variable namens `{{level_b_variable_name}}_mean`.
+
+Durch die Verwendung des Befehls `mean` berechnest du den Mittelwert aller Werte in der Datenstruktur `{{level_b_variable_name}}_data`, und zwar speziell aus der Spalte (`$`) `average_measurement`.

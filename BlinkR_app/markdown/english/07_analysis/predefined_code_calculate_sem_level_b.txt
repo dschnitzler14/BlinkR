@@ -1,0 +1,3 @@
+{{level_b_variable_name}}_n <- nrow({{level_b_variable_name}}_data)
+{{level_b_variable_name}}_sem <- {{level_b_variable_name}}_sd / sqrt({{level_b_variable_name}}_n)
+

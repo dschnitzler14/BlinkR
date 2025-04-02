@@ -1,0 +1,6 @@
+Da die Daten **nicht normalverteilt** sind, müssen wir einen **nicht-parametrischen Test** verwenden.
+
+```
+wilcox_test_unpaired <- wilcox.test(average_measurement ~ {{levels_variable_name}}, 
+                                    data = average_trs)
+````

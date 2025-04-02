@@ -1,0 +1,2 @@
+- Das Q-Q-Plot vergleicht die Quantile deiner Daten mit den Quantilen einer Normalverteilung.  
+- Wenn die Punkte entlang einer geraden diagonalen Linie liegen, sind deine Daten wahrscheinlich normalverteilt.

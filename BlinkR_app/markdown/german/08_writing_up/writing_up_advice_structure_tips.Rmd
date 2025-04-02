@@ -1,0 +1,43 @@
+**1. Was mache ich, wenn meine Ergebnisse nicht signifikant sind?**
+- Keine Panik! Das ist ein häufiges Phänomen in der Forschung. Es ist wichtig, die Ergebnisse ehrlich zu berichten – auch wenn sie nicht signifikant sind.
+- Ziehe alternative Erklärungen in Betracht. Wenn deine Ergebnisse nicht signifikant sind, überlege, welche anderen Faktoren das Ergebnis beeinflusst haben könnten.
+- Diskutiere Limitationen. Sei ehrlich über die Einschränkungen deiner Studie und wie sie die Ergebnisse beeinflusst haben könnten.
+- Denke an zukünftige Forschung. Wenn deine Ergebnisse nicht signifikant sind, überlege, wie zukünftige Studien darauf aufbauen könnten.
+
+**2. Was mache ich, wenn die Effektstärke klein ist?**
+- Überlege dir die praktische Relevanz. Auch wenn die Effektstärke gering ist, kann sie in der Praxis bedeutsam sein. Denke über die realen Auswirkungen deiner Ergebnisse nach.
+- Berücksichtige die Stichprobengröße. Eine kleine Effektstärke kann an einer zu kleinen Stichprobe liegen. Überlege, ob eine größere Stichprobe die Ergebnisse verändern würde.
+- Ziehe alternative Erklärungen in Betracht. Welche anderen Faktoren könnten die Effektstärke beeinflusst haben?
+
+**3. Wie interpretiere ich widersprüchliche Ergebnisse?**
+- Berücksichtige den Kontext. Überlege dir, unter welchen Bedingungen die widersprüchlichen Ergebnisse entstanden sind. Gibt es Faktoren, die die Unterschiede erklären könnten?
+- Schau dir die Methoden an. Welche Methoden wurden in den Studien verwendet, die zu unterschiedlichen Ergebnissen führten? Gibt es Unterschiede im Design oder in der Analyse?
+- Berücksichtige die Limitationen. Welche Einschränkungen hatten die Studien mit widersprüchlichen Ergebnissen? Könnten diese die Ergebnisse beeinflusst haben?
+
+**4. Wie verwende ich Belege zur Untermauerung meiner Argumente?**
+- Jede Tatsachenbehauptung muss mit Belegen gestützt werden – entweder durch deine eigenen Ergebnisse oder durch Studien anderer.
+- Auch wenn du denkst, etwas sei allgemein bekannt, solltest du trotzdem eine Quelle angeben.
+
+- Zum Beispiel:
+  - „Frühere Studien zeigten einen positiven Zusammenhang zwischen X und Y (Smith et al., 2010).“
+  - „Stress wirkt sich negativ auf die kognitive Leistung aus (Jones et al., 2015).“
+  - „Die Ergebnisse dieser Studie stimmen mit früheren Untersuchungen zu diesem Thema überein (Smith et al., 2010; Jones et al., 2015).“
+  - „Die HPA-Achse spielt eine Rolle in der Stressreaktion (Smith et al., 2010).“
+
+**5. Woran erkenne ich, ob eine Studie gut ist?**
+- Nutze deine kritischen Denkfähigkeiten – nicht alle Studien sind gleich gut. Achte darauf, ob eine Studie in einer renommierten Fachzeitschrift veröffentlicht wurde, peer-reviewed ist und eine klare Methodik sowie Ergebnisse hat.
+- Es ist völlig in Ordnung, eine veröffentlichte Studie kritisch zu sehen. Das ist ein normaler Teil des wissenschaftlichen Prozesses.
+- Du kannst in deinem Bericht auch Probleme oder Einschränkungen einer Studie ansprechen.
+  - Zum Beispiel: „Obwohl die vorliegenden Ergebnisse mit einer früheren Studie von Smith et al. (2010) übereinstimmen, hatte diese eine geringe Stichprobengröße, was die Generalisierbarkeit einschränken könnte.“
+
+**6. Ich weiß immer noch nicht, wie ich diesen Bericht schreiben soll**
+- Das Lesen anderer wissenschaftlicher Arbeiten kann dir helfen, zu verstehen, wie du deinen eigenen Bericht strukturieren kannst. Suche dir gut geschriebene Arbeiten aus deinem Fachgebiet, die dem Aufbau folgen, den du anstrebst.
+
+**7. Verwendung von generativer KI**
+- Es kann verlockend sein, generative KI-Tools wie ChatGPT zur Unterstützung beim Schreiben zu verwenden.
+- Bedenke jedoch, dass diese Tools nicht perfekt sind und manchmal falsche Informationen liefern.
+- Es ist immer wichtig, die Informationen aus solchen Tools zu überprüfen und sie nur als Ausgangspunkt für deine eigene Recherche zu nutzen.
+
+- Denk auch daran: Dieser Bericht ist eine **Lernaufgabe für dich** – es ist wichtig, dass du den Inhalt verstehst und ihn **mit deinen eigenen Worten erklären** kannst.
+
+***Schau dir auch den nächsten Tab „KI“ an – dort findest du Vorschläge, wie du KI sinnvoll im Schreibprozess einsetzen kannst und warum es riskant sein kann, sich zu sehr darauf zu verlassen.***

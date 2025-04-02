@@ -1,0 +1,32 @@
+## Experimental Design
+In order to test the hypothesis that chewing caffeine-containing gum has a significant effect on heart rate over chewing caffeine-free gum we must first think about how to test this.
+
+## Participants
+- For ease and efficiency, we will use all the students in one cohort
+- This likely will make up a young and healthy population, therefore unlikely to incur negative side effects of the experiment.
+    - this is a limitation however
+- one cohort contains 100 students aged between 18 and 35
+- no gender/ sex data is collected here
+- all participants must return a signed consent form, agreeing to partake in the experiment, as well as confirming that they understand what is being tested and why
+    - this signed consent form also clarifies that participants may withdraw from the study at any point, without having to state a reason
+
+## Measurement Plan
+- in order to take any individual heart rate variability into account, this experiment will be a paired design
+- this means that each participant will chew both the caffeine gum and the control gum with measurements taken for each
+- in order to account for error, each measurement will be taken 3 times (technical replicates)
+- according to the manufacturers, caffeine-containing gums take effect within 15 minutes
+- therefore, participants will chew each gum for 15 minutes, after which point measurements are taken
+- given the long-lasting effects of caffeine, the experiment will be carried out over 2 days: Monday and Wednesday.
+- No further instructions will be given to the participants regarding personal caffeine intake (coffee, tea, etc.)
+- particpants will be blinded to which gum they are given to chew first
+
+## Required Materials
+- Caffeine-containing chewing gum (100 + 10% excess = 110 units of gum): spearmint flavour
+- Caffeine-free chewing gum (100 + 10% excess = 110 units of gum): spearmint flavour
+- stopwatch, timer, or phone to time chewing time
+- tissues and bin for disposal
+- heart rate monitor for 1 minute
+
+## Statistical Analysis
+- data will be analysed using R
+- the normality of the data will be examined in order to deterime if a paramtric or non-parametric test will be carried out

@@ -1,0 +1,8 @@
+caf_summary <- average_trs_caf %>%
+  group_by(Caffeine_Status) %>%
+  summarise(
+    n = n(),
+    mean = mean(Average_HR, na.rm = TRUE),
+    sd = sd(Average_HR, na.rm = TRUE),
+    sem = sd / sqrt(n)
+  )

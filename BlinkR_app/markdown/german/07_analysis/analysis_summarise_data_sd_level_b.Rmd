@@ -1,0 +1,7 @@
+Als Nächstes können wir die Standardabweichung (`sd`) mit folgendem Code berechnen:
+
+```
+{{level_b_variable_name}}_sd <- sd({{level_b_variable_name}}_data$average_measurement, na.rm = TRUE)
+```
+
+Genau wie beim Mittelwert definierst du eine neue Variable `{{level_b_variable_name}}_sd`, in der das Ergebnis der Berechnung gespeichert wird.

@@ -1,0 +1,14 @@
+Jetzt bist du dran.
+
+Fangen wir damit an, die Daten auf die {{level_a_variable_name}}-Gruppe zu filtern – genau wie wir es oben für die {{level_b_variable_name}}-Gruppe gemacht haben.
+
+Wie auch bei der {{level_b_variable_name}}-Gruppe beginnst du mit dem vollständigen, ungefilterten Datensatz `average_trs`.
+
+Deine erste Codezeile lautet:
+```
+{{level_a_variable_name}}_group <- average_trs %>%
+
+```
+Erinnerst du dich, was in der zweiten Zeile kommt?
+
+**Wenn du nicht weiterkommst, scrolle nach oben und schau dir an, was wir für die {{level_b_variable_name}}-Daten gemacht haben.**

@@ -1,0 +1,19 @@
+Jetzt musst du entscheiden, ob deine Daten normalverteilt sind.
+
+**1. Was ist Normalverteilung?**  
+Eine Normalverteilung ist eine glockenförmige Kurve, bei der die meisten Werte um die Mitte herum liegen und nur wenige Werte an den Rändern vorkommen.
+
+Bei einer Normalverteilung gilt:  
+- Die Daten sind symmetrisch  
+- Mittelwert, Median und Modus sind ungefähr gleich  
+- Die meisten Werte liegen nahe am Durchschnitt
+
+**2. Wie entscheide ich, ob die Daten normalverteilt sind?**  
+Das ist teilweise subjektiv. Schau dir das Histogramm an und überlege, ob es deiner Vorstellung einer normalverteilten Kurve entspricht.
+
+**3. Warum ist das wichtig?**  
+Die Wahl des statistischen Tests hängt davon ab, ob die Daten normalverteilt sind.
+
+- Wenn die Daten normalverteilt sind, kannst du **parametrische Tests** verwenden (z. B. t-Test).  
+- Wenn die Daten **nicht normalverteilt** sind, solltest du **nicht-parametrische Tests** verwenden (z. B. Wilcoxon-Test).
+

@@ -1,0 +1,26 @@
+Deine Einleitung soll das Thema vorstellen und klar die Belege darlegen, die dich zu deiner Forschungsfrage geführt haben.  
+Insbesondere solltest du **wissenschaftlich begutachtete Studien (peer-reviewed)** verwenden, um die Relevanz deiner Untersuchung zu begründen.
+
+Ein großer Teil wissenschaftlichen Schreibens ist eine Art von **Geschichtenerzählen**. Du solltest versuchen, eine Geschichte zu erzählen, die die Leser*innen zur Forschungsfrage hinführt.  
+Die Einleitung sollte allgemein beginnen und sich dann **schrittweise auf die konkrete Forschungsfrage zuspitzen**.
+
+Du könntest damit beginnen, die Aspekte der Frage zu definieren, die du untersuchst.  
+Dann kannst du Belege für die Relevanz des Themas liefern und schließlich aufzeigen, welche Lücke in der bestehenden Literatur deine Studie schließen soll.  
+Wenn die Leser*innen bei deiner Hypothese ankommen, sollten sie überzeugt sein, dass deine Studie wichtig und notwendig ist.  
+**Bevor du die Hypothese formulierst, solltest du deutlich machen, was sie sein wird.**
+
+Zum Beispiel: Wenn du die Wirkung eines neuen Medikaments auf eine Krankheit untersuchst, könntest du damit beginnen, die Krankheit und ihre gesellschaftliche Bedeutung zu beschreiben.  
+Dann könntest du zeigen, dass die derzeitigen Behandlungsmethoden nicht ausreichend wirksam sind.  
+Schließlich könntest du das neue Medikament einführen und erklären, warum es wichtig ist, dessen Wirkung zu untersuchen.  
+In deiner Hypothese könntest du dann formulieren, dass das neue Medikament wirksamer ist als die bisherigen Behandlungen. Diese Hypothese sollte durch die zuvor präsentierten Belege klar nachvollziehbar sein.
+
+Ein konkretes Beispiel:
+
+- Krankheit definieren: „Krebs ist weltweit eine der häufigsten Todesursachen (Quelle).“
+- Problem belegen: „Aktuelle Behandlungen sind nicht bei allen Patient*innen wirksam (Quelle).“
+- Neues Medikament einführen: „Medikament X hat in den Studien A und B vielversprechende Ergebnisse gezeigt (Quelle).“
+- Forschungslücke benennen: „Bisher wurde Medikament X jedoch noch nicht mit den aktuellen Behandlungen verglichen.“
+- Alternativhypothese: „Medikament X wird wirksamer sein als die aktuellen Behandlungen.“
+- Nullhypothese: „Medikament X wird nicht wirksamer sein als die aktuellen Behandlungen.“
+
+Denk daran, dass die Einleitung **prägnant und auf den Punkt** sein sollte. Du solltest in diesem Abschnitt **keine Ergebnisse oder Diskussionen** einbringen.

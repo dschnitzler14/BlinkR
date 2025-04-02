@@ -1,0 +1,8 @@
+Next, we can calculate the standard deviation (sd) using this code:
+
+```
+{{level_b_variable_name}}_sd <- sd({{level_b_variable_name}}_data$average_measurement, na.rm = TRUE)
+```
+
+Just like with the mean, you are defining a new variable `{{level_b_variable_name}}_sd` to store the standard deviation calculation in.
+

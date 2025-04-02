@@ -1,0 +1,10 @@
+Diese Art von t-Test ist geeignet für Stichproben, die **völlig unabhängig voneinander** sind.
+
+Um deine Daten mit einem **Zwei-Stichproben-t-Test** (unabhängige Stichproben) zu analysieren, verwende diesen Code:
+
+  ```        
+  t_test <- t.test(average_measurement ~ {{levels_variable_name}}, var.equal = TRUE, data = average_trs)
+  ```
+
+Der Schwellenwert für ein signifikantes Ergebnis liegt bei **p ≤ 0,05**.  
+Wenn dein p-Wert unter diesem Wert liegt, gilt das Ergebnis als **signifikant**.

@@ -1,0 +1,1 @@
+Zum Schluss müssen wir noch `n` (die Stichprobengröße) und den `sem` (Standardfehler des Mittelwerts) berechnen!

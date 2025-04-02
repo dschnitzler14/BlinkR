@@ -1,0 +1,9 @@
+This type of t-test is appropriate for samples that are entirely independent of one-another.
+
+In order to analyse your data with a two-sample t-test, use this code:
+
+  ```        
+  t_test <- t.test(average_measurement ~ {{levels_variable_name}}, var.equal = TRUE, data = average_trs)
+  ```
+
+The threshold for a significant result is p≤0.05. If your p-value is below this, then the result is significant.

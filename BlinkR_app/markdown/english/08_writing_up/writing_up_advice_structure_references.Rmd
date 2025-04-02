@@ -1,0 +1,37 @@
+You should include a bibliography at the end of your expose.
+In it, you only need to include the references that you have cited in your expose.
+You must cite any statements you make, even if they are common knowledge.
+
+You can use any citation style you like, but you must be consistent throughout your expose.
+
+Here is an example of Harvard referencing style:
+
+**More than 2 authors:**
+- In-text citation: (Smith et al., 2019) OR "Smith et al. (2019) found that..."
+- Bibliograhy: Smith, J., Jones, A., & Brown, C. (2019). Title of the work. Journal, 1(1), 1-10.
+
+**2 authors:**
+- In-text citation: (Smith & Jones, 2019) OR "Smith and Jones (2019) found that..."
+- Bibliography: Smith, J., & Jones, A. (2019). Title of the work. Journal, 1(1), 1-10.
+
+**1 author:**
+- In-text citation: (Smith, 2019) OR "Smith (2019) found that...""
+- Bibliography: Smith, J. (2019). Title of the work. Journal, 1(1), 1-10.
+
+**Other types of references:**
+- Websites: Smith, J. (2019). Title of the work. Retrieved from https://www.example.com on 1st January 2019.
+- Books: Smith, J. (2019). Title of the work. Publisher.
+
+You can use a citation manager like Zotero, Mendeley, or EndNote to help you manage your references. Just make sure you double check the formatting before submitting your expose, as these managers can sometimes make mistakes.
+
+This is also how you can cite BlinkR.
+- In text: "Analysis was carried out using the BlinkR app (Schnitzler, 2024)".
+- In bibliography: Schnitzler, D. (2024). BlinkR, https://github.com/dschnitzler14/BlinkR
+
+-----
+
+- ⚠️ WARNING 1: You must actually read what you cite.
+- ⚠️ WARNING 2: You _cannot_ rely on AI to produce appropriate citations. It is your responsibility to ensure that your citations are correct.
+    - _AI has the tendency to hallucinate, and this can lead to articles that sounds real but do not actually exists._
+- ⚠️ WARNING 3: You must not plagiarise. This means you must not copy someone else's work and present it as your own. You must always cite the original source.
+

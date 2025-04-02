@@ -1,0 +1,10 @@
+This section is an optional aid. It will walk you through a simulated experiment to help you understand the process of planning, carrying out, and writing up and experiment.
+
+It is split into the following sections:
+1. Introduction and background
+2. Planning the experiment
+3. Carrying out the experiment
+4. Analysig the experiment
+5. Writing up the experiment
+6. Conclusion
+

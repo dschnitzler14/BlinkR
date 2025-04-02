@@ -1,0 +1,3 @@
+{{level_b_variable_name}}_data <- average_trs %>%
+    filter({{levels_variable_name}} == "{{level_b_variable_name}}")
+    

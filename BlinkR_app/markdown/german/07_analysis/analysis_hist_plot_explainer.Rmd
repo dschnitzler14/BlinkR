@@ -1,0 +1,15 @@
+- Das Histogramm zeigt die Verteilung deiner Daten.  
+- Für einen t-Test erwarten wir in der Regel, dass die Daten ungefähr normalverteilt sind. Achte auf eine glockenförmige Kurve.
+
+- Hier ist der Code, der in der BlinkR-App verwendet wird, um das Histogramm zu erstellen:
+
+  ```
+  hist <- hist(average_trs$average_measurement,
+                 main = "Distribution of {{measurement_text_name}}",
+                 xlab = "Average {{measurement_text_name}}",
+                 ylab = "Frequency",
+                 col = "grey49",
+                 border = "black")
+  ```
+
+

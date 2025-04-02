@@ -1,0 +1,34 @@
+Am Ende deines Exposés solltest du ein Literaturverzeichnis einfügen.  
+Darin musst du **nur die Quellen angeben, die du tatsächlich im Text zitiert hast**.  
+**Alle Aussagen, auch wenn sie allgemein bekannt erscheinen, müssen belegt werden.**
+
+Du kannst jeden Zitierstil verwenden, aber du musst im gesamten Exposé **konsistent** bleiben.
+
+Hier ist ein Beispiel für den **Harvard-Zitierstil**:
+
+**Mehr als 2 Autor*innen:**
+- Im Text: (Smith et al., 2019) ODER „Smith et al. (2019) fanden heraus, dass...“
+- Literaturverzeichnis: Smith, J., Jones, A., & Brown, C. (2019). *Title of the work*. *Journal*, 1(1), 1–10.
+
+**2 Autor*innen:**
+- Im Text: (Smith & Jones, 2019) ODER „Smith und Jones (2019) zeigten, dass...“
+- Literaturverzeichnis: Smith, J., & Jones, A. (2019). *Title of the work*. *Journal*, 1(1), 1–10.
+
+**1 Autor*in:**
+- Im Text: (Smith, 2019) ODER „Smith (2019) stellte fest, dass...“
+- Literaturverzeichnis: Smith, J. (2019). *Title of the work*. *Journal*, 1(1), 1–10.
+
+**Weitere Quellentypen:**
+- Webseiten: Smith, J. (2019). *Title of the work*. Abgerufen am 1. Januar 2019 von https://www.example.com  
+- Bücher: Smith, J. (2019). *Title of the work*. Verlag.
+
+**So kannst du auch BlinkR zitieren:**
+- Im Text: „Die Analyse wurde mit der BlinkR-App durchgeführt (Schnitzler, 2024).“
+- Literaturverzeichnis: Schnitzler, D. (2024). *BlinkR*, https://github.com/dschnitzler14/BlinkR
+
+---
+
+- ⚠️ **WARNUNG 1:** Du musst die Quellen, die du zitierst, **selbst gelesen** haben.
+- ⚠️ **WARNUNG 2:** Du darfst dich **nicht** auf KI verlassen, um passende Zitate zu generieren. Es liegt **in deiner Verantwortung**, dass deine Quellen korrekt sind.
+    - *KI kann sich Quellen ausdenken (halluzinieren), die real klingen, aber nicht existieren.*
+- ⚠️ **WARNUNG 3:** Du darfst **nicht plagiarisieren**. Das bedeutet: Du darfst keine fremden Inhalte übernehmen und als deine eigenen ausgeben. Du musst immer die **ursprüngliche Quelle** angeben.

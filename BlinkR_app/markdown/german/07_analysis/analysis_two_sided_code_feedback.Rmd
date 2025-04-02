@@ -1,0 +1,7 @@
+Schauen wir uns zuerst den Code an. Wir sagen R, dass es das „Kochbuch“ `stats` verwenden soll (ich habe es im Hintergrund für dich geladen), und aus diesem Kochbuch nutzen wir das „Rezept“ `t.test`. Die Zutaten für dieses Rezept sind:
+
+- **`average_measurement ~ {{levels_variable_name}}`**: Die bewährte Praxis ist, diesen Befehl in der Reihenfolge **abhängige Variable ~ unabhängige Variable** oder **numerisch ~ kategorisch** zu schreiben.
+
+- **`var.equal = TRUE`**: Diese Zutat sagt R, dass die Varianzen gleich sind – so, wie wir es im vorherigen Schritt überprüft haben.
+
+- **`data = average_trs`**: Zum Schluss müssen wir R noch sagen, **welche Daten** verwendet werden sollen.

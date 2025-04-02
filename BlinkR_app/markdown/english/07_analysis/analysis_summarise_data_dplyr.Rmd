@@ -1,0 +1,17 @@
+Instead of calculating each summary statistic individually, you can also use `dplyr` to quickly obtain a table of your results.
+
+```
+data_summary <- average_trs %>%
+    group_by({{levels_variable_name}}) %>%
+    summarise(
+        n = n(),
+        mean = mean(average_measurement, na.rm = TRUE),
+        sd = sd(average_measurement, na.rm = TRUE),
+        sem = sd / sqrt(n)
+    )
+```
+
+Using this code, you can quickly calculate all the summary statistics for both groups.
+
+The table that is then stored in the `data_summary` variable gives you a good overview of the summary of both groups.
+

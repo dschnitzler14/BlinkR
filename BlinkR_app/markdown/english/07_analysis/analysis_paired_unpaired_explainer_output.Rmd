@@ -1,0 +1,13 @@
+Now you have decided on which statistical test to run, the next decision you need to make it whether your data is paired or unpaired.
+
+It is important to choose the correct path, as this influences the calculations that are carried out.
+
+**1.Non-Paired**
+- The data comes from two separate groups.  
+- Each value in one group has no direct relationship to a value in the other group.  
+- Example: Comparing test scores between two different classes. 
+
+**2.Paired**
+- The data comes from the same individuals measured twice.  
+- Each value in one condition is linked to a value in the other condition.  
+- Example: Measuring heart rate before and after exercise in the same people.  

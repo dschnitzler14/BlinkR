@@ -8,92 +8,101 @@ writing_up_advice_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("circle-question"), "Writing Up: Advice")
+                  tagList(shiny::icon("circle-question"), i18n$t("Writing Up: Advice"))
                 )
       )
     )),
                                 fluidRow(
                                   box(
-                                    title = tagList(shiny::icon("file-alt"), "Structure"),
+                                    title = tagList(shiny::icon("file-alt"), i18n$t("Structure")),
                                     id = "structure",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    class = "clickable-box", 
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure.Rmd")
+                                    class = "clickable-box",
+                                    uiOutput(ns("writing_up_advice_structure")) 
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure.Rmd")
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("paper-plane"), "Introduction"),
+                                    title = tagList(shiny::icon("paper-plane"), i18n$t("Introduction")),
                                     id = "structure_introduction",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_introduction.Rmd")
+                                    uiOutput(ns("writing_up_advice_structure_introduction")) 
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_introduction.Rmd")
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("flask"), "Methods"),
+                                    title = tagList(shiny::icon("flask"), i18n$t("Methods")),
                                     id = "structure_methods",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_methods.Rmd")
+                                    uiOutput(ns("writing_up_advice_structure_methods")) 
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_methods.Rmd")
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("chart-bar"), "Results"),
+                                    title = tagList(shiny::icon("chart-bar"), i18n$t("Results")),
                                     id = "structure_results",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_results.Rmd")
+                                    uiOutput(ns("writing_up_advice_structure_results")) 
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_results.Rmd")
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("comments"), "Discussion"),
+                                    title = tagList(shiny::icon("comments"), i18n$t("Discussion")),
                                     id = "structure_discussion",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_discussion.Rmd")
+                                    uiOutput(ns("writing_up_advice_structure_discussion"))
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_discussion.Rmd")
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("forward"), "Future Work"),
+                                    title = tagList(shiny::icon("forward"), i18n$t("Future Work")),
                                     id = "structure_future",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_future_work.Rmd")
+                                    uiOutput(ns("writing_up_advice_structure_future_work"))
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_future_work.Rmd")
                                   ),
                                     box(
-                                    title = tagList(shiny::icon("book"), "References"),
+                                    title = tagList(shiny::icon("book"), i18n$t("References")),
                                     id = "structure_references",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_references.Rmd")
+                                    uiOutput(ns("writing_up_advice_structure_references"))
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_references.Rmd")
                                     ),
                                     box(
-                                    title = tagList(shiny::icon("tools"), "Tips and Tricks"),
+                                    title = tagList(shiny::icon("tools"), i18n$t("Tips and Tricks")),
                                     id = "structure_tips",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_tips.Rmd")
-                                        ),
+                                    uiOutput(ns("writing_up_advice_structure_tips"))
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_tips.Rmd")
+                                    ),
                                     box(
-                                    title = tagList(shiny::icon("users"), "Working Together"),
+                                    title = tagList(shiny::icon("users"), i18n$t("Working Together")),
                                     id = "working_together_tips",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_together.Rmd")
+                                    uiOutput(ns("writing_up_advice_structure_together"))
+                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_together.Rmd")
                                     )
                                 ),
     fluidRow(
@@ -125,10 +134,48 @@ writing_up_advice_ui <- function(id, i18n) {
   )
     }
 
-writing_up_advice_server <- function(id, parent.session) {
+writing_up_advice_server <- function(id, i18n, parent.session, include_markdown_language) {
   moduleServer(
     id,
     function(input, output, session){
+
+      output$writing_up_advice_structure <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure.Rmd")
+      })
+
+      output$writing_up_advice_structure_introduction <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure_introduction.Rmd")
+      })
+
+      output$writing_up_advice_structure_methods <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure_methods.Rmd")
+      })
+
+      output$writing_up_advice_structure_results <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure_results.Rmd")
+      })
+
+      output$writing_up_advice_structure_discussion <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure_discussion.Rmd")
+      })
+
+      output$writing_up_advice_structure_future_work <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure_future_work.Rmd")
+      })
+
+      output$writing_up_advice_structure_references <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure_references.Rmd")
+      })
+
+      output$writing_up_advice_structure_tips <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure_tips.Rmd")
+      })
+
+      output$writing_up_advice_structure_together <- renderUI({
+        include_markdown_language("08_writing_up/writing_up_advice_structure_together.Rmd")
+      })
+
+
 
     observeEvent(input$back_page_advice, {
         updateTabItems(parent.session, "sidebar", "Statistical_Analysis")

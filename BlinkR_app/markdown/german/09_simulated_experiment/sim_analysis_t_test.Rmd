@@ -1,0 +1,8 @@
+average_trs_caf_wide <- average_trs_caf %>%
+  pivot_wider(names_from = Caffeine_Status, values_from = Average_HR)
+
+  t_test_paired <- t.test(
+  average_trs_caf_wide$Caf,
+  average_trs_caf_wide$"No-Caf",
+  paired = TRUE
+  )

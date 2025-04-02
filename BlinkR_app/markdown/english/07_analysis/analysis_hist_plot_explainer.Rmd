@@ -1,0 +1,14 @@
+- The histogram shows the distribution of your data. 
+- For a t-test, we typically expect the data to follow a roughly normal distribution. Look for a bell-shaped curve.
+
+- This is the code used to create the histogram in the BlinkR app:
+  ```
+  hist <- hist(average_trs$average_measurement,
+                 main = "Distribution of {{measurement_text_name}}",
+                 xlab = "Average {{measurement_text_name}}",
+                 ylab = "Frequency",
+                 col = "grey49",
+                 border = "black")
+  ```
+
+

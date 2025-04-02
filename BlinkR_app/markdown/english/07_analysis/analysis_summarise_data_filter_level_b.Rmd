@@ -1,0 +1,16 @@
+In this step, we will summarise the data to obtain a mean, n, standard deviation, and standard error of the mean (SEM) for each group.
+
+I will show you how to calculate these for the {{level_b_variable_name}} group, but then you will need to calculate them for the {{level_a_variable_name}} group.
+
+First, we will filter the data to only include the {{level_b_variable_name}} group. Go ahead and send this code to the editor:
+
+```
+{{level_b_variable_name}}_data <- average_trs %>%
+    filter({{levels_variable_name}} == "{{level_b_variable_name}}")
+```
+
+With this code, you are taking the column `{{levels_variable_name}}` from the dataframe `average_trs` and filtering it to only contain "{{level_b_variable_name}}" data.
+
+You are then saving this new view of the dataframe as a new variable, called `{{level_b_variable_name}}`.
+
+If you want to learn more about dplyr, check out the [Dplyr Cheatsheet](https://nyu-cdsc.github.io/learningr/assets/data-transformation.pdf).

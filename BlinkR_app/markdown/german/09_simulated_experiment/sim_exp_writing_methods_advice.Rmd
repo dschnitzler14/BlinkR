@@ -1,0 +1,14 @@
+## Datenerhebung
+
+- **Klarheit und Detailgenauigkeit**: Beschreibe deine Methodik klar und ausführlich.  
+- **Vorgehen**: Führe die genauen Schritte und Abläufe der Datenerhebung auf.  
+- **Teilnehmende/Proben**: Gib die Anzahl der Teilnehmenden oder Proben im Experiment an.  
+- **Technische Replikate**: Nenne die Anzahl der Wiederholungen zur Sicherstellung der Genauigkeit.  
+- **Ausreißer**: Erkläre, ob Datenpunkte ausgeschlossen wurden und warum.  
+- **Ethik und Datenschutz**: Beschreibe Maßnahmen zur Einhaltung ethischer Richtlinien und zum Datenschutz (z. B. Einverständniserklärungen, Anonymisierung).
+
+## Datenanalyse
+
+- **Tools**: Liste die verwendete Software und deren Version.  
+- **Tests und Methoden**: Gib die konkret angewendeten statistischen Tests und Methoden an.  
+- **Reproduzierbarkeit**: Achte darauf, dass deine Beschreibung so detailliert ist, dass andere deine Analyse Schritt für Schritt nachvollziehen können.

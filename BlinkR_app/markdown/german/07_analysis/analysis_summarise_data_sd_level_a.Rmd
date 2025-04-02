@@ -1,0 +1,1 @@
+Weiter geht’s mit der Standardabweichung (`sd`) für die {{level_a_variable_name}}-Gruppe.

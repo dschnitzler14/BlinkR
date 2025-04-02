@@ -1,0 +1,32 @@
+## Versuchsdesign
+Um die Hypothese zu testen, dass das Kauen von koffeinhaltigem Kaugummi einen signifikanten Einfluss auf die Herzfrequenz hat im Vergleich zu koffeinfreiem Kaugummi, müssen wir zunächst überlegen, wie dieser Test durchgeführt werden kann.
+
+## Teilnehmende
+- Der Einfachheit halber verwenden wir alle Studierenden aus einer Kohorte.
+- Diese besteht vermutlich aus einer jungen und gesunden Population, bei der negative Nebenwirkungen des Experiments unwahrscheinlich sind.
+    - Das stellt jedoch eine Limitation dar.
+- Eine Kohorte umfasst 100 Studierende im Alter zwischen 18 und 35 Jahren.
+- Es werden keine Daten zu Geschlecht oder biologischem Geschlecht erhoben.
+- Alle Teilnehmenden müssen ein unterschriebenes Einverständnisformular abgeben, in dem sie der Teilnahme am Experiment zustimmen und bestätigen, dass sie verstehen, was getestet wird und warum.
+    - Dieses Formular stellt auch klar, dass Teilnehmende die Studie jederzeit ohne Angabe von Gründen abbrechen dürfen.
+
+## Messplan
+- Um individuelle Unterschiede in der Herzfrequenz zu berücksichtigen, wird das Experiment als gepaarter Versuch durchgeführt.
+- Das bedeutet, dass jede Person sowohl den koffeinhaltigen als auch den koffeinfreien Kaugummi kaut, jeweils mit anschließender Messung.
+- Um Messfehler zu minimieren, werden drei technische Replikate pro Messung genommen.
+- Laut Hersteller tritt die Wirkung von koffeinhaltigem Kaugummi innerhalb von 15 Minuten ein.
+- Daher werden die Teilnehmenden jeden Kaugummi 15 Minuten kauen, bevor die Messung erfolgt.
+- Aufgrund der langanhaltenden Wirkung von Koffein wird das Experiment über zwei Tage (Montag und Mittwoch) durchgeführt.
+- Es werden keine weiteren Anweisungen zum persönlichen Koffeinkonsum (Kaffee, Tee etc.) gegeben.
+- Die Teilnehmenden werden verblindet, welche Art von Kaugummi sie zuerst erhalten.
+
+## Benötigtes Material
+- Koffeinhaltiger Kaugummi (100 + 10 % Reserve = 110 Einheiten): Geschmack Spearmint
+- Koffeinfreier Kaugummi (100 + 10 % Reserve = 110 Einheiten): Geschmack Spearmint
+- Stoppuhr, Timer oder Handy zum Messen der Kauzeit
+- Taschentücher und Mülleimer zur Entsorgung
+- Herzfrequenzmesser für 1-Minuten-Messung
+
+## Statistische Analyse
+- Die Daten werden mit R analysiert.
+- Die Normalverteilung der Daten wird geprüft, um zu entscheiden, ob ein parametrischer oder nicht-parametrischer Test angewendet wird.
