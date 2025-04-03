@@ -24,7 +24,7 @@ playground_module_ui <- function(id, i18n) {
         fluidRow(
           column(
                 6,
-          includeMarkdown("markdown/playground/playground_how_to_use.md"),
+          uiOutput(ns("playground_how_to_use_markdown")),
           ),
           column(
             6, 
@@ -64,9 +64,13 @@ fluidRow(
 }
 
 
-playground_module_server <- function(id, session_folder_id, parent.session) {
+playground_module_server <- function(id, session_folder_id, parent.session, include_markdown_language = include_markdown_language) {
   moduleServer(id, function(input, output, session) {
           vars <- get_experiment_vars()
+
+output$playground_how_to_use_markdown <- renderUI({
+  include_markdown_language("playground/playground_how_to_use.md")
+})
 
     
 data <- iris

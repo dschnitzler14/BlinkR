@@ -25,7 +25,6 @@ hypothesis_module_ui <- function(id, i18n) {
           width = 12,
           solidHeader = TRUE,
           uiOutput(ns("what_hypothesis_markdown")),
-          #includeMarkdown("markdown/03_hypothesis/what_is_a_hypothesis.Rmd")
         ),
         box(
           title = tagList(shiny::icon("pen"), i18n$t("Tips for Writing Your Hypothesis")),
@@ -35,7 +34,6 @@ hypothesis_module_ui <- function(id, i18n) {
           width = 12,
           solidHeader = TRUE,
           uiOutput(ns("hypothesis_tips_markdown")),
-          #includeMarkdown("markdown/03_hypothesis/hypothesis_tips.Rmd")
         ),
         box(
           title = tagList(shiny::icon("lightbulb"), i18n$t("What is your hypothesis?")),

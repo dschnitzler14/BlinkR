@@ -337,9 +337,6 @@ server <- function(input, output, session) {
   })
 
   include_markdown_language <- function(filepath) {
-    # cat("markdown path: ", markdown_path(), "\n")
-    # cat("file path: ", filepath, "\n")
-
     includeMarkdown(file.path(markdown_path(), filepath))
   }
 
@@ -350,9 +347,6 @@ process_markdown <- function(filepath) {
 
   full_path <- file.path(markdown_path(), filepath)
   
-  cat("Markdown base path: ", markdown_path(), "\n")
-  cat("Full file path: ", full_path, "\n")
-
   rmd_content <- readLines(full_path, warn = FALSE)
   processed_rmd <- whisker::whisker.render(paste(rmd_content, collapse = "\n"), vars)
   
@@ -466,27 +460,27 @@ saved_results <- reactiveValues(
     admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base = all_users, final_reports_folder_id = final_reports_folder_id, user_base_google_sheet, session_folder_id = session_folder_id)
     background_module_server("background", i18n, parent.session = session, include_markdown_language = include_markdown_language)
     hypothesis_module_server("hypothesis", i18n, parent.session = session, auth = auth, include_markdown_language = include_markdown_language)
-    protocol_module_server("protocol", i18n, auth = auth, parent.session = session, protocol_file_id = protocol_file_id, session_folder_id = session_folder_id)
-    measurements_module_server("measurements", i18n, db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session)
+    protocol_module_server("protocol", i18n, auth = auth, parent.session = session, protocol_file_id = protocol_file_id, session_folder_id = session_folder_id, include_markdown_language = include_markdown_language)
+    measurements_module_server("measurements", i18n, db_student_table = db_student_table, db_measurement = db_measurement, auth = auth, parent.session = session, include_markdown_language = include_markdown_language)
     class_data_module_server("class_data", i18n, db_measurement = db_measurement, BlinkR_measurement_sheet = BlinkR_measurement_sheet, parent.session = session, auth = auth)
-    playground_module_server("playground", session_folder_id = session_folder_id, parent.session = session)
+    playground_module_server("playground", session_folder_id = session_folder_id, parent.session = session, include_markdown_language = include_markdown_language)
     analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results, session_folder_id = session_folder_id)
-    analysis_prepare_data_module_server("analysis_prepare_data", i18n, results_data = combined_class_data_read_reactive, parent.session = session, session_folder_id = session_folder_id)
+    analysis_prepare_data_module_server("analysis_prepare_data", i18n, results_data = combined_class_data_read_reactive, parent.session = session, session_folder_id = session_folder_id, process_markdown = process_markdown)
     analysis_summarise_data_module_server("summarise", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id, process_markdown = process_markdown)
     analysis_stats_module_server("stats", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id, process_markdown = process_markdown)
-    analysis_create_figure_module_server("figure", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    analysis_create_figure_module_server("figure", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id, process_markdown = process_markdown)
     writing_up_advice_server("writing_up_advice", i18n, parent.session = session, include_markdown_language)
-    writing_up_ai_server("AI", parent.session = session)
-    write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id)
+    writing_up_ai_server("AI", parent.session = session, include_markdown_language = include_markdown_language)
+    write_up_module_server("write_up", parent.session = session, auth = auth, reload_trigger,  session_folder_id = session_folder_id, include_markdown_language = include_markdown_language)
     upload_report_module_server("upload_report", auth = auth, base_group_files_url = base_group_files_url, final_reports_folder_id = final_reports_folder_id, parent.session = session)
-    simulated_experiment_description_module_server("simulated_experiment_description", parent.session = session)
-    simulated_experiment_background_module_server("simulated_experiment_background", parent.session = session)
+    simulated_experiment_description_module_server("simulated_experiment_description", parent.session = session,  include_markdown_language = include_markdown_language)
+    simulated_experiment_background_module_server("simulated_experiment_background", parent.session = session, include_markdown_language = include_markdown_language)
     simulated_experiment_hypothesis_module_server("simulated_experiment_hypothesis", parent.session = session)
-    simulated_experiment_protocol_module_server("simulated_experiment_protocol", parent.session = session)
-    simulated_experiment_measurements_module_server("simulated_experiment_measurements", parent.session = session)
+    simulated_experiment_protocol_module_server("simulated_experiment_protocol", parent.session = session, include_markdown_language = include_markdown_language)
+    simulated_experiment_measurements_module_server("simulated_experiment_measurements", parent.session = session, include_markdown_language = include_markdown_language)
     simulated_experiment_raw_data_module_server("simulated_experiment_raw_data", caf_data_read = caf_data_read, parent.session = session)
-    simulated_experiment_analysis_module_server("simulated_experiment_analysis", caf_data_read = caf_data_read, parent.session = session)
-    simulated_experiment_writing_up_module_server("simulated_experiment_writing_up", parent.session = session)
+    simulated_experiment_analysis_module_server("simulated_experiment_analysis", caf_data_read = caf_data_read, parent.session = session, include_markdown_language = include_markdown_language)
+    simulated_experiment_writing_up_module_server("simulated_experiment_writing_up", parent.session = session, include_markdown_language = include_markdown_language)
     feedback_module_server("feedback", feedback_data, parent.session = session)
     your_google_drive_module_server("your_drive_module", session_folder_id = session_folder_id)
     
@@ -496,7 +490,7 @@ saved_results <- reactiveValues(
     showModal(
       modalDialog(
         title = "About BlinkR",
-        includeMarkdown("markdown/00_about/about_box.Rmd"),
+        uiOutput("about_box_markdown"),
         easyClose = TRUE,
         footer = NULL
       )
@@ -507,12 +501,20 @@ saved_results <- reactiveValues(
     showModal(
       modalDialog(
         title = "Citing BlinkR",
-        includeMarkdown("markdown/00_about/citing.Rmd"),
+        uiOutput("citing_markdown"),
         easyClose = TRUE,
         footer = NULL
       )
     )
   })
+
+  output$about_box_markdown <- renderUI({
+  include_markdown_language("00_about/about_box.Rmd")
+})
+
+output$citing_markdown <- renderUI({
+  include_markdown_language("00_about/citing.Rmd")
+})
 
 }
 

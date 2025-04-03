@@ -22,7 +22,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     solidHeader = TRUE,
                                     class = "clickable-box",
                                     uiOutput(ns("writing_up_advice_structure")) 
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure.Rmd")
                                   ),
                                   box(
                                     title = tagList(shiny::icon("paper-plane"), i18n$t("Introduction")),
@@ -32,7 +31,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     uiOutput(ns("writing_up_advice_structure_introduction")) 
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_introduction.Rmd")
                                   ),
                                   box(
                                     title = tagList(shiny::icon("flask"), i18n$t("Methods")),
@@ -42,7 +40,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     uiOutput(ns("writing_up_advice_structure_methods")) 
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_methods.Rmd")
                                   ),
                                   box(
                                     title = tagList(shiny::icon("chart-bar"), i18n$t("Results")),
@@ -52,7 +49,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     uiOutput(ns("writing_up_advice_structure_results")) 
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_results.Rmd")
                                   ),
                                   box(
                                     title = tagList(shiny::icon("comments"), i18n$t("Discussion")),
@@ -62,7 +58,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     uiOutput(ns("writing_up_advice_structure_discussion"))
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_discussion.Rmd")
                                   ),
                                   box(
                                     title = tagList(shiny::icon("forward"), i18n$t("Future Work")),
@@ -72,7 +67,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     uiOutput(ns("writing_up_advice_structure_future_work"))
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_future_work.Rmd")
                                   ),
                                     box(
                                     title = tagList(shiny::icon("book"), i18n$t("References")),
@@ -82,7 +76,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     uiOutput(ns("writing_up_advice_structure_references"))
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_references.Rmd")
                                     ),
                                     box(
                                     title = tagList(shiny::icon("tools"), i18n$t("Tips and Tricks")),
@@ -92,7 +85,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     uiOutput(ns("writing_up_advice_structure_tips"))
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_tips.Rmd")
                                     ),
                                     box(
                                     title = tagList(shiny::icon("users"), i18n$t("Working Together")),
@@ -102,7 +94,6 @@ writing_up_advice_ui <- function(id, i18n) {
                                     width = 12,
                                     solidHeader = TRUE,
                                     uiOutput(ns("writing_up_advice_structure_together"))
-                                    #includeMarkdown("markdown/08_writing_up/writing_up_advice_structure_together.Rmd")
                                     )
                                 ),
     fluidRow(

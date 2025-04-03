@@ -42,7 +42,7 @@ protocol_module_ui <- function(id, i18n){
     collapsible = TRUE,
     width = 12,
     solidHeader = TRUE,
-    includeMarkdown("markdown/04_protocol/protocol_data_hazards.Rmd"),
+    uiOutput(ns("protocol_data_hazards_markdown")),
     bucketListModuleUI(ns("bucket_list"), i18n)
   )
   ),
@@ -78,12 +78,17 @@ protocol_module_ui <- function(id, i18n){
   
 }
 
-protocol_module_server <- function(id, i18n, auth, parent.session, protocol_file_id, session_folder_id){
+protocol_module_server <- function(id, i18n, auth, parent.session, protocol_file_id, session_folder_id, include_markdown_language){
   moduleServer(
     id,
     function(input, output, session){
       vars <- get_experiment_vars()
     
+    output$protocol_data_hazards_markdown <- renderUI({
+    include_markdown_language("04_protocol/protocol_data_hazards.Rmd")
+  })
+
+
       bucketListModuleServer("bucket_list", i18n, auth = auth, session_folder_id = session_folder_id)
 
       experimental_design_module_server("experimental_design_protocol", i18n, auth, protocol_file_id, i18n$t("Experimental Design"), i18n$t("What is your general design?"))

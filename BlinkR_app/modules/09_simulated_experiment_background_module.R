@@ -21,8 +21,7 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/09_simulated_experiment/simulated_experiment_background1.Rmd")
-                                    
+                                    uiOutput(ns("simulated_experiment_background1_markdown"))                                    
                                   ),
                                   box(
                                     title = tagList(shiny::icon("circle-question"), "What don't we know?"),
@@ -30,8 +29,7 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/09_simulated_experiment/simulated_experiment_background2.Rmd")
-                                    
+                                    uiOutput(ns("simulated_experiment_background2_markdown"))                                    
                                   ),
                                   box(
                                     title = tagList(shiny::icon("circle-question"), "Why is this important?"),
@@ -39,8 +37,7 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/09_simulated_experiment/simulated_experiment_background3.Rmd")
-                                    
+                                    uiOutput(ns("simulated_experiment_background3_markdown"))                                    
                                   ),
                                   ),
                                   fluidRow(
@@ -72,8 +69,21 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_background_module_server <- function(id,parent.session) {
+simulated_experiment_background_module_server <- function(id, parent.session, include_markdown_language) {
   moduleServer(id, function(input, output, session) {
+
+output$simulated_experiment_background1_markdown <- renderUI({
+  include_markdown_language("09_simulated_experiment/simulated_experiment_background1.Rmd")
+})
+
+output$simulated_experiment_background2_markdown <- renderUI({
+  include_markdown_language("09_simulated_experiment/simulated_experiment_background2.Rmd")
+})
+
+output$simulated_experiment_background3_markdown <- renderUI({
+  include_markdown_language("09_simulated_experiment/simulated_experiment_background3.Rmd")
+})
+
 
     observeEvent(input$back_page_description, {
         updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Description")

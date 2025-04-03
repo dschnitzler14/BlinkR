@@ -20,9 +20,7 @@ writing_up_ai_ui <- function(id, i18n) {
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_ai_summary.Rmd")
-                                    
-                                    
+                                    uiOutput(ns("writing_up_ai_summary_markdown"))
                                   ),
                                   box(
                                     title = tagList(shiny::icon("exclamation-triangle"), "AI Pitfalls"),
@@ -31,8 +29,7 @@ writing_up_ai_ui <- function(id, i18n) {
                                     collapsed = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/08_writing_up/writing_up_ai_pitfalls.Rmd")
-                                  
+                                    uiOutput(ns("writing_up_ai_pitfalls_markdown"))                                  
                                   ),
                                 ),
                                   fluidRow(
@@ -144,10 +141,19 @@ writing_up_ai_ui <- function(id, i18n) {
     }
 
 
-writing_up_ai_server <- function(id, parent.session) {
+writing_up_ai_server <- function(id, parent.session, include_markdown_language) {
   moduleServer(
     id,
     function(input, output, session){
+
+output$writing_up_ai_summary_markdown <- renderUI({
+  include_markdown_language("08_writing_up/writing_up_ai_summary.Rmd")
+})
+
+output$writing_up_ai_pitfalls_markdown <- renderUI({
+  include_markdown_language("08_writing_up/writing_up_ai_pitfalls.Rmd")
+})
+
 
     observeEvent(input$back_page_ai, {
         updateTabItems(parent.session, "sidebar", "Writing_Up_Advice")

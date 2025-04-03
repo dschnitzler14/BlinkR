@@ -146,9 +146,6 @@ average_trs_paired_wide <- reactive({
   showNotification(paste0(name, i18n$t(" result saved successfully.")), type = "message", duration = 3)
 }
 
-# rmd_content_analysis_hist_plot_explainer <- readLines("markdown/07_analysis/analysis_hist_plot_explainer.Rmd")
-# processed_rmd_analysis_hist_plot_explainer <- whisker.render(paste(rmd_content_analysis_hist_plot_explainer, collapse = "\n"), vars)
-
 output$hist_plot_explainer <- renderUI({
   process_markdown("07_analysis/analysis_hist_plot_explainer.Rmd")
 })
@@ -168,7 +165,6 @@ output$testing_assumptions <- renderUI({
               fluidRow(
                   column(6,
                   uiOutput(session$ns("hist_plot_explainer")),
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_hist_plot_explainer, fragment.only = TRUE)),
                   div(
                   style = "text-align: center;",
                   actionButton(session$ns("run_hist_Plot"), 
@@ -257,9 +253,6 @@ if(!is.null(normal_unpaired_result()$result)){
       showNotification(i18n$t("Plot saved successfully."), type = "message", duration = 3)
     })
 
-# rmd_content_analysis_hist_plot_explainer_output <- readLines("markdown/07_analysis/analysis_hist_plot_explainer_output.Rmd")
-# processed_rmd_analysis_hist_plot_explainer_output <- whisker.render(paste(rmd_content_analysis_hist_plot_explainer_output, collapse = "\n"), vars)
-
 output$hist_plot_explainer_output <- renderUI({
   process_markdown("07_analysis/analysis_hist_plot_explainer_output.Rmd")
 })
@@ -267,7 +260,6 @@ output$hist_plot_explainer_output <- renderUI({
     output$hist_explainer_ui <- renderUI({
       tagList(
        uiOutput(session$ns("hist_plot_explainer_output")),
-       #HTML(markdownToHTML(text = processed_rmd_analysis_hist_plot_explainer_output, fragment.only = TRUE)),
       div(
           style = "text-align: center;",
       actionButton(session$ns("normal"), i18n$t("👍 The Data is Normal"), class = "fun-submit-button"),
@@ -305,9 +297,6 @@ observeEvent(input$normal, {
      not_normal_paired_result <- NULL
   }
 
-# rmd_content_analysis_paired_unpaired_explainer_output <- readLines("markdown/07_analysis/analysis_paired_unpaired_explainer_output.Rmd")
-# processed_rmd_analysis_paired_unpaired_explainer_output <- whisker.render(paste(rmd_content_analysis_paired_unpaired_explainer_output, collapse = "\n"), vars)
-
 output$paired_unpaired_explainer_output <- renderUI({
   process_markdown("07_analysis/analysis_paired_unpaired_explainer_output.Rmd")
 })
@@ -322,7 +311,6 @@ output$paired_unpaired_explainer_output <- renderUI({
               width = 12,
               solidHeader = TRUE,
         uiOutput(session$ns("paired_unpaired_explainer_output")),
-        #HTML(markdownToHTML(text = processed_rmd_analysis_paired_unpaired_explainer_output, fragment.only = TRUE)),
       div(
         style = "text-align: center;",
         actionButton(session$ns("unpaired_normal"), i18n$t("☝️ The Data is Not Paired"), class = "fun-submit-button"),
@@ -360,9 +348,6 @@ observeEvent(input$not_normal, {
      not_normal_paired_result <- NULL
   }
   
-rmd_content_analysis_paired_unpaired_explainer_output <- readLines("markdown/07_analysis/analysis_paired_unpaired_explainer_output.Rmd")
-processed_rmd_analysis_paired_unpaired_explainer_output <- whisker.render(paste(rmd_content_analysis_paired_unpaired_explainer_output, collapse = "\n"), vars)
-
     output$not_normal_output <- renderUI({
 
       tagList(
@@ -374,7 +359,6 @@ processed_rmd_analysis_paired_unpaired_explainer_output <- whisker.render(paste(
               width = 12,
               solidHeader = TRUE,
         uiOutput(session$ns("paired_unpaired_explainer_output")),
-        #HTML(markdownToHTML(text = processed_rmd_analysis_paired_unpaired_explainer_output, fragment.only = TRUE)),
 
         div(
               style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
@@ -421,9 +405,6 @@ if(!is.null(normal_unpaired_result()$result)){
      not_normal_paired_result <- NULL
   }
 
-# rmd_content_analysis_wilcoxon_test_unpaired <- readLines("markdown/07_analysis/analysis_wilcoxon_test_unpaired.Rmd")
-# processed_rmd_analysis_wilcoxon_test_unpaired <- whisker.render(paste(rmd_content_analysis_wilcoxon_test_unpaired, collapse = "\n"), vars)
-
 output$wilcoxon_test_unpaired <- renderUI({
   process_markdown("07_analysis/analysis_wilcoxon_test_unpaired.Rmd")
 })
@@ -443,7 +424,6 @@ output$wilcoxon_test_unpaired <- renderUI({
               fluidRow(
                   column(6,
                   uiOutput(session$ns("wilcoxon_test_unpaired")),
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_wilcoxon_test_unpaired, fragment.only = TRUE)),
                   uiOutput(session$ns("not_normal_unpaired_feedback"))
                   ),
                   column(6,
@@ -538,9 +518,6 @@ if(!is.null(normal_unpaired_result()$result)){
      not_normal_paired_result <- NULL
   }
 
-# rmd_content_analysis_wilcoxon_test_paired <- readLines("markdown/07_analysis/analysis_wilcoxon_test_paired.Rmd")
-# processed_rmd_analysis_wilcoxon_test_paired <- whisker.render(paste(rmd_content_analysis_wilcoxon_test_paired, collapse = "\n"), vars)
-
 output$wilcoxon_test_paired <- renderUI({
   process_markdown("07_analysis/analysis_wilcoxon_test_paired.Rmd")
 })
@@ -560,7 +537,6 @@ output$wilcoxon_test_paired <- renderUI({
               fluidRow(
                   column(6,
                   uiOutput(session$ns("wilcoxon_test_paired")),
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_wilcoxon_test_paired, fragment.only = TRUE)),
                   uiOutput(session$ns("not_normal_paired_feedback"))
                   ),
                   column(6,
@@ -655,8 +631,6 @@ if(!is.null(normal_unpaired_result()$result)){
      not_normal_paired_result <- NULL
   }
 
-# rmd_content_analysis_two_sided_t_test <- readLines("markdown/07_analysis/analysis_two_sided_t_test.Rmd")
-# processed_rmd_analysis_two_sided_t_test <- whisker.render(paste(rmd_content_analysis_two_sided_t_test, collapse = "\n"), vars)
 
 output$two_sided_t_test <- renderUI({
   process_markdown("07_analysis/analysis_two_sided_t_test.Rmd")
@@ -677,7 +651,6 @@ output$two_sided_t_test <- renderUI({
               fluidRow(
                   column(6,
                   uiOutput(session$ns("two_sided_t_test")),
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_two_sided_t_test, fragment.only = TRUE)),
                   uiOutput(session$ns("normal_unpaired_feedback"))
                   ),
                   column(6,
@@ -770,9 +743,6 @@ observeEvent(input$paired_normal,{
      not_normal_paired_result <- NULL
   }
 
-# rmd_content_analysis_paired_t_test <- readLines("markdown/07_analysis/analysis_paired_t_test.Rmd")
-# processed_rmd_analysis_paired_t_test <- whisker.render(paste(rmd_content_analysis_paired_t_test, collapse = "\n"), vars)
-
 output$paired_t_test <- renderUI({
   process_markdown("07_analysis/analysis_paired_t_test.Rmd")
 })
@@ -792,7 +762,6 @@ output$paired_t_test <- renderUI({
               fluidRow(
                   column(6,
                   uiOutput(session$ns("paired_t_test")),
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_paired_t_test, fragment.only = TRUE)),
                   uiOutput(session$ns("normal_paired_feedback"))
                   ),
                   column(6,
@@ -872,9 +841,6 @@ observe({
 
   effect_size_reactive <- reactive({NULL})
 
-# rmd_content_analysis_effect_size_t_test_paired <- readLines("markdown/07_analysis/analysis_effect_size_t_test_paired.Rmd")
-# processed_rmd_analysis_effect_size_t_test_paired <- whisker.render(paste(rmd_content_analysis_effect_size_t_test_paired, collapse = "\n"), vars)
-
 output$effect_size_t_test_paired <- renderUI({
   process_markdown("07_analysis/analysis_effect_size_t_test_paired.Rmd")
 })
@@ -893,7 +859,6 @@ output$effect_size_t_test_paired <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_effect_size_t_test_paired, fragment.only = TRUE)),
                   uiOutput(session$ns("effect_size_t_test_paired")),
                   uiOutput(session$ns("t_test_effect_size_paired_feedback")),
                   ),
@@ -977,9 +942,6 @@ observe({
 
   effect_size_reactive <- reactive({NULL})
 
-# rmd_content_analysis_effect_size_t_test_unpaired <- readLines("markdown/07_analysis/analysis_effect_size_t_test_unpaired.Rmd")
-# processed_rmd_analysis_effect_size_t_test_unpaired <- whisker.render(paste(rmd_content_analysis_effect_size_t_test_unpaired, collapse = "\n"), vars)
-
 output$effect_size_t_test_unpaired <- renderUI({
   process_markdown("07_analysis/analysis_effect_size_t_test_unpaired.Rmd")
 })
@@ -999,7 +961,6 @@ output$effect_size_t_test_unpaired <- renderUI({
               fluidRow(
                   column(6,
                   uiOutput(session$ns("effect_size_t_test_unpaired")),
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_effect_size_t_test_unpaired, fragment.only = TRUE)),
                   uiOutput(session$ns("t_test_effect_size_unpaired_feedback")),
                   ),
                   column(6,
@@ -1081,9 +1042,6 @@ observe({
 
   effect_size_reactive <- reactive({NULL})
 
-# rmd_content_analysis_wilcoxon_test_paired_effect_size <- readLines("markdown/07_analysis/analysis_wilcoxon_test_paired_effect_size.Rmd")
-# processed_rmd_analysis_wilcoxon_test_paired_effect_size <- whisker.render(paste(rmd_content_analysis_wilcoxon_test_paired_effect_size, collapse = "\n"), vars)
-
 output$wilcoxon_test_paired_effect_size <- renderUI({
   process_markdown("07_analysis/analysis_wilcoxon_test_paired_effect_size.Rmd")
 })
@@ -1103,7 +1061,6 @@ output$wilcoxon_test_paired_effect_size <- renderUI({
               fluidRow(
                   column(6,
                   uiOutput(session$ns("wilcoxon_test_paired_effect_size")),
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_wilcoxon_test_paired_effect_size, fragment.only = TRUE)),
                   uiOutput(session$ns("wilcoxon_effect_size_paired_feedback")),
                   ),
                   column(6,
@@ -1186,8 +1143,6 @@ observe({
 
   effect_size_reactive <- reactive({NULL})
 
-# rmd_content_analysis_wilcoxon_test_unpaired_effect_size <- readLines("markdown/07_analysis/analysis_wilcoxon_test_unpaired_effect_size.Rmd")
-# processed_rmd_analysis_wilcoxon_test_unpaired_effect_size <- whisker.render(paste(rmd_content_analysis_wilcoxon_test_unpaired_effect_size, collapse = "\n"), vars)
 output$wilcoxon_test_unpaired_effect_size <- renderUI({
   process_markdown("07_analysis/analysis_wilcoxon_test_unpaired_effect_size.Rmd")
 })
@@ -1207,7 +1162,6 @@ output$wilcoxon_test_unpaired_effect_size <- renderUI({
               fluidRow(
                   column(6,
                   uiOutput(session$ns("wilcoxon_test_unpaired_effect_size")),
-                  #HTML(markdownToHTML(text = processed_rmd_analysis_wilcoxon_test_unpaired_effect_size, fragment.only = TRUE)),
                   uiOutput(session$ns("wilcoxon_effect_size_unpaired_feedback")),
                   ),
                   column(6,
@@ -1520,8 +1474,9 @@ observeEvent(input$enter_effect_size_submit, {
 
   user_answer_enter_effect_size <- as.numeric(input$enter_effect_size)
 
-rmd_content_analysis_what_is_an_effect_size <- readLines("markdown/07_analysis/analysis_what_is_an_effect_size.Rmd")
-processed_rmd_analysis_what_is_an_effect_size <- whisker.render(paste(rmd_content_analysis_what_is_an_effect_size, collapse = "\n"), vars)
+output$what_is_an_effect_size <- renderUI({
+  process_markdown("07_analysis/analysis_what_is_an_effect_size.Rmd")
+})
 
   if (is.na(user_answer_enter_effect_size)) {
     feedback <- div(class = "error-box", i18n$t("\U1F914 Please enter a numeric value!"))
@@ -1533,7 +1488,7 @@ processed_rmd_analysis_what_is_an_effect_size <- whisker.render(paste(rmd_conten
 
       output$effect_size_display <- renderUI({
         tagList(
-          HTML(markdownToHTML(text = processed_rmd_analysis_what_is_an_effect_size, fragment.only = TRUE)),
+          uiOutput(session$ns("what_is_an_effect_size")),
           radioButtons(
               inputId = (session$ns("understand_effect_size")),
               label = i18n$t("How strong do you think this effect size is?"),
@@ -1623,8 +1578,9 @@ observeEvent(input$enter_p_value_submit, {
 
   user_answer_enter_p_value <- as.numeric(input$enter_p_value)
 
-rmd_content_analysis_what_is_a_p_value <- readLines("markdown/07_analysis/analysis_what_is_a_p_value.Rmd")
-processed_rmd_analysis_what_is_a_p_value <- whisker.render(paste(rmd_content_analysis_what_is_a_p_value, collapse = "\n"), vars)
+output$what_is_a_p_value <- renderUI({
+  process_markdown("07_analysis/analysis_what_is_a_p_value.Rmd")
+})
 
   if (is.na(user_answer_enter_p_value)) {
     feedback <- div(class = "error-box", i18n$t("\U1F914 Please enter a numeric value!"))
@@ -1636,7 +1592,7 @@ processed_rmd_analysis_what_is_a_p_value <- whisker.render(paste(rmd_content_ana
 
       output$null_hyp_display <- renderUI({
         tagList(
-          HTML(markdownToHTML(text = processed_rmd_analysis_what_is_a_p_value, fragment.only = TRUE)),
+          uiOutput(session$ns("what_is_a_p_value")),
           strong("For this experiment your null hypothesis was: "),
           tags$br(),
           submitted_null_hyp,

@@ -117,7 +117,7 @@ fluidRow(
 
 }
 
-analysis_create_figure_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id) {
+analysis_create_figure_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id, process_markdown) {
   moduleServer(id, function(input, output, session) {
 
           vars <- get_experiment_vars()
@@ -136,43 +136,33 @@ analysis_create_figure_module_server <- function(id, i18n, results_data, parent.
   
   
   #Make Figure
+output$figure_type_selector_output <- renderUI({
+  req(input$figure_type_selector)
 
-rmd_content_analysis_create_figure_barplot <- readLines("markdown/07_analysis/analysis_create_figure_barplot.Rmd")
-processed_rmd_analysis_create_figure_barplot <- whisker.render(paste(rmd_content_analysis_create_figure_barplot, collapse = "\n"), vars)
-rmd_content_analysis_create_figure_boxplot <- readLines("markdown/07_analysis/analysis_create_figure_boxplot.Rmd")
-processed_rmd_analysis_create_figure_boxplot <- whisker.render(paste(rmd_content_analysis_create_figure_boxplot, collapse = "\n"), vars)
-
-  observeEvent(input$figure_type_selector, {
-    figure_type_selector_output <- if (input$figure_type_selector == "bar") {
-      HTML(markdownToHTML(text = processed_rmd_analysis_create_figure_barplot, fragment.only = TRUE))
-    } else {
-      HTML(markdownToHTML(text = processed_rmd_analysis_create_figure_boxplot, fragment.only = TRUE))
-    }
-    
-    output$figure_type_selector_output <- renderUI({
-      req(input$figure_type_selector)
-
-      figure_type_selector_output
-    })
-    
-    output$figure_editor_feedback <- renderUI({
-      NULL
-    })
-    
-    output$save_plot <- renderUI({
-      NULL
-    })
-    
-    output$editor_ui <- renderUI({
-      if (input$figure_type_selector == "bar") {
-        editor_module_ui(session$ns("figure_editor_bar_plot"), i18n)
-      } else {
-        editor_module_ui(session$ns("figure_editor_box_plot"), i18n)
-    
-      }
-    })
+  if (input$figure_type_selector == "bar") {
+    process_markdown("07_analysis/analysis_create_figure_barplot.Rmd")
+  } else {
+    process_markdown("07_analysis/analysis_create_figure_boxplot.Rmd")
+  }
 })
 
+output$figure_editor_feedback <- renderUI({
+  NULL
+})
+
+output$save_plot <- renderUI({
+  NULL
+})
+
+output$editor_ui <- renderUI({
+  req(input$figure_type_selector)
+
+  if (input$figure_type_selector == "bar") {
+    editor_module_ui(session$ns("figure_editor_bar_plot"), i18n)
+  } else {
+    editor_module_ui(session$ns("figure_editor_box_plot"), i18n)
+  }
+})
 
 predefined_code_barplot <- whisker.render(
   read_file(
@@ -198,8 +188,8 @@ predefined_code_boxplot <- whisker.render(
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", i18n$t("\U1F64C Great Job!")),
-          includeMarkdown("markdown/07_analysis/change_axis.Rmd"),
-          includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
+          uiOutput(session$ns("change_axis_markdown")),
+          uiOutput(session$ns("figure_editing_colours_markdown")),
           box(title = i18n$t("💡 Open me for a hint"),
               collapsible = TRUE,
               collapsed = TRUE,
@@ -241,8 +231,8 @@ predefined_code_boxplot <- whisker.render(
       output$figure_editor_feedback <- renderUI({
         tagList(
           div(class = "success-box", i18n$t("\U1F64C Great Job!")),
-          includeMarkdown("markdown/07_analysis/change_axis.Rmd"),
-          includeMarkdown("markdown/07_analysis/analysis_figure_editing_colours.Rmd"),
+          uiOutput(session$ns("change_axis_markdown")),
+          uiOutput(session$ns("figure_editing_colours_markdown")),
           box(title = i18n$t("💡 Open me for a hint"),
               collapsible = TRUE,
               collapsed = TRUE,
@@ -352,6 +342,13 @@ predefined_code_boxplot <- whisker.render(
   }
 })
 
+output$change_axis_markdown <- renderUI({
+  include_markdown_language("07_analysis/change_axis.Rmd")
+})
+
+output$figure_editing_colours_markdown <- renderUI({
+  include_markdown_language("07_analysis/analysis_figure_editing_colours.Rmd")
+})
 
   
   observeEvent(input$summarise, {

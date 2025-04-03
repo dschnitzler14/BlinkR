@@ -130,7 +130,7 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
 }
 
 
-analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.session, session_folder_id) {
+analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.session, session_folder_id, process_markdown) {
   moduleServer(id, function(input, output, session) {
 
       vars <- get_experiment_vars()
@@ -226,11 +226,8 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
     
         # Step 2: Pre-Process Data
 
-  rmd_content_analysis_pre_process_data_code <- readLines("markdown/07_analysis/analysis_pre_process_data_code.Rmd")
-  processed_rmd_analysis_pre_process_data_code <- whisker.render(paste(rmd_content_analysis_pre_process_data_code, collapse = "\n"), vars)
-
     output$average_technical_replicates_code <- renderUI({
-      HTML(markdownToHTML(text = processed_rmd_analysis_pre_process_data_code, fragment.only = TRUE))
+      process_markdown("07_analysis/analysis_pre_process_data_code.Rmd")
     })
 
     predefined_code_pre_process_data <- whisker.render(
@@ -240,8 +237,10 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
       
     average_trs_result <- editor_module_server("average_trs_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
     
-  rmd_content_analysis_home_prepare_data <- readLines("markdown/07_analysis/analysis_home_prepare_data.Rmd")
-  processed_rmd_analysis_home_prepare_data <- whisker.render(paste(rmd_content_analysis_home_prepare_data, collapse = "\n"), vars)
+output$home_prepare_data <- renderUI({
+  process_markdown("07_analysis/analysis_home_prepare_data.Rmd")
+})
+
 
     observe({
       req(!is.null(average_trs_result()), !is.null(average_trs_result()$result))
@@ -249,7 +248,7 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
       feedback <- if (is.data.frame(average_trs_result()$result) && nrow(average_trs_result()$result) > 0) {
         tagList(
           div(class = "success-box", i18n$t("\U1F64C Good Job!")),
-          HTML(markdownToHTML(text = processed_rmd_analysis_home_prepare_data, fragment.only = TRUE))
+          uiOutput(session$ns("home_prepare_data")),
         )
       } else if (!is.null(average_trs_result())) {
         div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))

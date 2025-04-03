@@ -10,7 +10,7 @@ simulated_experiment_description_module_ui <- function(id, i18n) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/09_simulated_experiment/simulated_experiment_description.Rmd")
+                                    uiOutput(ns("simulated_experiment_description_markdown"))
                                   ),
                                   
                                 ),
@@ -39,8 +39,12 @@ simulated_experiment_description_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_description_module_server <- function(id,parent.session) {
+simulated_experiment_description_module_server <- function(id,parent.session, include_markdown_language = include_markdown_language) {
   moduleServer(id, function(input, output, session) {
+
+output$simulated_experiment_description_markdown <- renderUI({
+  include_markdown_language("09_simulated_experiment/simulated_experiment_description.Rmd")
+})
 
        observeEvent(input$next_page_background, {
         updateTabItems(parent.session, "sidebar", "Simulated_Experiment_Background")

@@ -97,7 +97,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
   )
 }
 
-measurement_input_module_server <- function(id, i18n, student_name, student_ID, group_name, submission_id, db_measurement, db_student_table) {
+measurement_input_module_server <- function(id, i18n, student_name, student_ID, group_name, submission_id, db_measurement, db_student_table, include_markdown_language) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -109,12 +109,17 @@ measurement_input_module_server <- function(id, i18n, student_name, student_ID, 
       observeEvent(input$read_consent, {
         showModal(modalDialog(
           title = i18n$t("Consent"),
-          includeMarkdown("markdown/05_measurement/consent.Rmd"),
+          uiOutput(ns("consent_markdown")),
           easyClose = TRUE,
           footer = modalButton("Close"),
           size = "l" 
         ))
       })
+
+    output$consent_markdown <- renderUI({
+    include_markdown_language("05_measurement/consent.Rmd")
+  })
+
       
       state <- reactiveValues(
         level_b_id = list(),

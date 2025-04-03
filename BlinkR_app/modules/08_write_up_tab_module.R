@@ -61,7 +61,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
                         text_area_module_UI(ns("introduction"), i18n, "Introduction", button_label = tagList(shiny::icon("save"), "Save Notes"))
                         ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_intro.Rmd"),
+                         uiOutput(ns("writing_up_intro_markdown")),
                          actionButton(
                            ns("background"),
                            label = tagList(icon("book-open"), "Go to Background"),
@@ -88,7 +88,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
 
                   ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_methods.Rmd"),
+                         uiOutput(ns("writing_up_methods_markdown")),
                          actionButton(
                            ns("protocol"),
                            label = tagList(icon("list"), "Go to Protocol"),
@@ -114,7 +114,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
 
                   ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_results.Rmd"),
+                         uiOutput(ns("writing_up_results_markdown")),
                          actionButton(
                            ns("analysis_dashboard2"),
                            label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
@@ -133,7 +133,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
                       text_area_module_UI(ns("discussion"), i18n, "Discussion", button_label = tagList(shiny::icon("save"), "Save Notes"))
                   ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_discussion.Rmd")
+                         uiOutput(ns("writing_up_discussion_markdown"))
                          )
                 )
             ),
@@ -148,7 +148,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
 
                   ),
                   column(6,
-                         includeMarkdown("markdown/08_writing_up/writing_up_future_work.Rmd")
+                         uiOutput(ns("writing_up_future_work_markdown"))
                          
                          )
                 )
@@ -192,11 +192,32 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
 )
 }
 
-write_up_module_server <- function(id, parent.session, auth, reload_trigger, session_folder_id){
+write_up_module_server <- function(id, parent.session, auth, reload_trigger, session_folder_id, include_markdown_language){
   moduleServer(
     id,
     function(input, output, session){
             vars <- get_experiment_vars()
+
+  output$writing_up_intro_markdown <- renderUI({
+  include_markdown_language("08_writing_up/writing_up_intro.Rmd")
+})
+
+output$writing_up_methods_markdown <- renderUI({
+  include_markdown_language("08_writing_up/writing_up_methods.Rmd")
+})
+
+output$writing_up_results_markdown <- renderUI({
+  include_markdown_language("08_writing_up/writing_up_results.Rmd")
+})
+
+output$writing_up_discussion_markdown <- renderUI({
+  include_markdown_language("08_writing_up/writing_up_discussion.Rmd")
+})
+
+output$writing_up_future_work_markdown <- renderUI({
+  include_markdown_language("08_writing_up/writing_up_future_work.Rmd")
+})
+
 
 
   observeEvent(input$link_to_drive, {

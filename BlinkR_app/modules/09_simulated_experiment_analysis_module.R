@@ -23,7 +23,7 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/09_simulated_experiment/sim_exp_analysis_box1.Rmd")
+                                    uiOutput(ns("sim_exp_analysis_box1_markdown"))
                                   ),
                                   box(
                                     title = tagList(shiny::icon("magnifying-glass"), "Prepare the Data"),
@@ -141,8 +141,12 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
     )
     }
  
-simulated_experiment_analysis_module_server <- function(id, caf_data_read, parent.session) {
+simulated_experiment_analysis_module_server <- function(id, caf_data_read, parent.session, include_markdown_language) {
   moduleServer(id, function(input, output, session) {
+
+output$sim_exp_analysis_box1_markdown <- renderUI({
+  include_markdown_language("09_simulated_experiment/sim_exp_analysis_box1.Rmd")
+})
 
   caf_data <- reactive({ NULL })
 

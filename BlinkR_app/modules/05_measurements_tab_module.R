@@ -75,7 +75,7 @@ measurements_module_ui <- function(id, i18n) {
 }
 
 
-measurements_module_server <- function(id, i18n, db_student_table, db_measurement, auth, parent.session) {
+measurements_module_server <- function(id, i18n, db_student_table, db_measurement, auth, parent.session, include_markdown_language) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -163,7 +163,8 @@ measurements_module_server <- function(id, i18n, db_student_table, db_measuremen
               group_name = group_name,
               submission_id = submission_id_value,
               db_measurement = db_measurement,
-              db_student_table = db_student_table
+              db_student_table = db_student_table,
+              include_markdown_language = include_markdown_language
             )
             
             observeEvent(input[[paste0("delete_student_", student_ID)]], {

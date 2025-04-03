@@ -23,7 +23,7 @@ simulated_experiment_measurements_module_ui <- function(id, i18n) {
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    includeMarkdown("markdown/09_simulated_experiment/simulated_experiment_measurements1.Rmd")
+                                    uiOutput(ns("simulated_experiment_measurements1_markdown"))
                                   ),
                                   tabBox(
                                     width = 12,
@@ -88,11 +88,15 @@ simulated_experiment_measurements_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_measurements_module_server <- function(id, parent.session) {
+simulated_experiment_measurements_module_server <- function(id, parent.session, include_markdown_language) {
   moduleServer(
     id,
     function(input, output, session){
     
+    output$simulated_experiment_measurements1_markdown <- renderUI({
+  include_markdown_language("09_simulated_experiment/simulated_experiment_measurements1.Rmd")
+})
+
     output$timeprogress <- renderUI({ 
     NULL
   })

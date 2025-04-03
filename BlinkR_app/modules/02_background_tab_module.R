@@ -32,7 +32,6 @@ background_module_ui <- function(id, i18n){
             collapsed = TRUE,
             width = 12,
             uiOutput(ns("background_strategies_markdown"))
-            #includeMarkdown("markdown/02_background/background_strategies.Rmd")
           ),
             box(
             title = tagList(shiny::icon("lightbulb"), i18n$t("Additional Tips for Effective Searches")),
@@ -41,7 +40,6 @@ background_module_ui <- function(id, i18n){
             collapsed = TRUE,
             width = 12,
             uiOutput(ns("background_tips_markdown"))
-            #includeMarkdown("markdown/02_background/background_tips.Rmd")
           ),
           box(
             title = tagList(shiny::icon("file-lines"), i18n$t("Advice for Reading a Paper")),
@@ -50,7 +48,6 @@ background_module_ui <- function(id, i18n){
             collapsed = TRUE,
             width = 12,
             uiOutput(ns("background_reading_paper_markdown"))
-            #includeMarkdown("markdown/02_background/background_reading_paper.Rmd")
           )
     )
   ),
