@@ -88,7 +88,7 @@ analysis_summarise_data_module_ui <- function(id, i18n) {
 ))}
 
 
-analysis_summarise_data_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id) {
+analysis_summarise_data_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id, process_markdown) {
   moduleServer(id, function(input, output, session) {
   vars <- get_experiment_vars()
 
@@ -182,8 +182,9 @@ level_a_sem <- reactive({
   )
   summarise_result_step1 <- editor_module_server("step1_editor", average_trs, "average_trs", predefined_code = predefined_code_step1, return_type = "result", session_folder_id, save_header = i18n$t("Step 1: Summarise Data"))
 
-  rmd_content_analysis_summarise_data_filter_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_filter_level_b.Rmd")
-  processed_rmd_analysis_summarise_data_filter_level_b <- whisker.render(paste(rmd_content_analysis_summarise_data_filter_level_b, collapse = "\n"), vars)
+  output$analysis_filter_b <- renderUI({
+    process_markdown("07_analysis/analysis_summarise_data_filter_level_b.Rmd")
+  })
 
   output$step1_box <- renderUI({
   tagList(
@@ -199,7 +200,7 @@ level_a_sem <- reactive({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_analysis_summarise_data_filter_level_b, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_filter_b")),
                   uiOutput(session$ns("summary_code_feedback_step1"))
                   ),
                   column(6,
@@ -243,9 +244,9 @@ level_a_sem <- reactive({
   summarise_result_step2 <- editor_module_server("step2_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step2, return_type = "result", session_folder_id, save_header = i18n$t("Step 2: Summarise Data"))
 
 
-rmd_content_summarise_data_mean_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_mean_level_b.Rmd")
-processed_rmd_summarise_data_mean_level_b <- whisker.render(paste(rmd_content_summarise_data_mean_level_b, collapse = "\n"), vars)
-
+output$analysis_mean_b <- renderUI({
+  process_markdown("07_analysis/analysis_summarise_data_mean_level_b.Rmd")
+})
 
 output$step2_box <- renderUI({
     req(
@@ -265,7 +266,7 @@ output$step2_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_summarise_data_mean_level_b, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_mean_b")),
                   uiOutput(session$ns("summary_code_feedback_step2"))
                   ),
                   column(6,
@@ -309,8 +310,9 @@ vars
 )
 summarise_result_step3 <- editor_module_server("step3_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step3, return_type = "result", session_folder_id, save_header = i18n$t("Step 2: Summarise Data"))
 
-rmd_content_summarise_data_sd_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_sd_level_b.Rmd")
-processed_rmd_summarise_data_sd_level_b <- whisker.render(paste(rmd_content_summarise_data_sd_level_b, collapse = "\n"), vars)
+output$analysis_sd_b <- renderUI({
+  process_markdown("07_analysis/analysis_summarise_data_sd_level_b.Rmd")
+})
 
 output$step3_box <- renderUI({
       req(!is.null(summarise_result_step2()), !is.null(summarise_result_step2()$result))
@@ -327,7 +329,7 @@ output$step3_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_summarise_data_sd_level_b, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_sd_b")),
                   uiOutput(session$ns("summary_code_feedback_step3"))
                   ),
                   column(6,
@@ -376,9 +378,9 @@ summarise_result_step4 <- editor_module_server("step4_editor",list(
     level_b_sd   = level_b_sd
   ), c(level_b_data_name, level_b_sd_name), predefined_code_step4, "result", session_folder_id, i18n$t("Step 4: Summarise Data"))
 
-rmd_content_summarise_data_sem_level_b <- readLines("markdown/07_analysis/analysis_summarise_data_sem_level_b.Rmd")
-processed_rmd_summarise_data_sem_level_b <- whisker.render(paste(rmd_content_summarise_data_sem_level_b, collapse = "\n"), vars)
-
+output$analysis_sem_b <- renderUI({
+  process_markdown("07_analysis/analysis_summarise_data_sem_level_b.Rmd")
+})
 
 output$step4_box <- renderUI({
       req(!is.null(summarise_result_step3()), !is.null(summarise_result_step3()$result))
@@ -395,7 +397,7 @@ output$step4_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_summarise_data_sem_level_b, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_sem_b")),
                   uiOutput(session$ns("summary_code_feedback_step4"))
                   ),
                   column(6,
@@ -440,9 +442,9 @@ predefined_code_step5 <- whisker.render(
 
 summarise_result_step5 <- editor_module_server("step5_editor", average_trs, "average_trs", predefined_code = predefined_code_step5, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
-rmd_content_summarise_data_filter_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_filter_level_a.Rmd")
-processed_rmd_summarise_data_filter_level_a <- whisker.render(paste(rmd_content_summarise_data_filter_level_a, collapse = "\n"), vars)
-
+output$analysis_filter_a <- renderUI({
+  process_markdown("07_analysis/analysis_summarise_data_filter_level_a.Rmd")
+})
 
 output$step5_box <- renderUI({
   req(!is.null(summarise_result_step4()), !is.null(summarise_result_step4()$result))
@@ -459,7 +461,7 @@ output$step5_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_summarise_data_filter_level_a, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_filter_a")),
                   uiOutput(session$ns("summary_code_feedback_step5"))
                   ),
                   column(6,
@@ -509,9 +511,9 @@ predefined_code_step6 <- whisker.render(
   )
 summarise_result_step6 <- editor_module_server("step6_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step6, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
-rmd_content_summarise_data_mean_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_mean_level_a.Rmd")
-processed_rmd_summarise_data_mean_level_a <- whisker.render(paste(rmd_content_summarise_data_mean_level_a, collapse = "\n"), vars)
-
+output$analysis_mean_a <- renderUI({
+  process_markdown("07_analysis/analysis_summarise_data_mean_level_a.Rmd")
+})
 
 output$step6_box <- renderUI({
   req(!is.null(summarise_result_step5()), !is.null(summarise_result_step5()$result))
@@ -528,7 +530,7 @@ output$step6_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_summarise_data_mean_level_a, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_mean_a")),
                   uiOutput(session$ns("summary_code_feedback_step6"))
                   ),
                   column(6,
@@ -580,8 +582,9 @@ predefined_code_step7 <- whisker.render(
   )
 summarise_result_step7 <- editor_module_server("step7_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
-rmd_content_summarise_data_sd_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_sd_level_a.Rmd")
-processed_rmd_summarise_data_sd_level_a <- whisker.render(paste(rmd_content_summarise_data_sd_level_a, collapse = "\n"), vars)
+output$analysis_sd_a <- renderUI({
+  process_markdown("07_analysis/analysis_summarise_data_sd_level_a.Rmd")
+})
 
 output$step7_box <- renderUI({
   req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
@@ -598,7 +601,7 @@ output$step7_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_summarise_data_sd_level_a, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_sd_a")),
                   uiOutput(session$ns("summary_code_feedback_step7"))
                   ),
                   column(6,
@@ -649,9 +652,9 @@ predefined_code_step8 <- whisker.render(
 
 summarise_result_step8 <- editor_module_server("step8_editor", list(level_a_data, level_a_n, level_a_sd), c(level_a_data_name, level_a_n_name, level_a_sd_name), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
-rmd_content_summarise_data_sem_level_a <- readLines("markdown/07_analysis/analysis_summarise_data_sem_level_a.Rmd")
-processed_rmd_summarise_data_sem_level_a <- whisker.render(paste(rmd_content_summarise_data_sem_level_a, collapse = "\n"), vars)
-
+output$analysis_sem_a <- renderUI({
+  process_markdown("07_analysis/analysis_summarise_data_sem_level_a.Rmd")
+})
 
 output$step8_box <- renderUI({
   req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
@@ -668,7 +671,7 @@ output$step8_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_summarise_data_sem_level_a, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_sem_a")),
                   uiOutput(session$ns("summary_code_feedback_step8"))
                   ),
                   column(6,
@@ -743,9 +746,9 @@ predefined_code_step9 <- whisker.render(
 
 summarise_result_step9 <- editor_module_server("step9_editor", average_trs, "average_trs", predefined_code_step9, "result", session_folder_id, i18n$t("Step 6: Summarise Data with Dplyr"))
 
-rmd_content_summarise_data_dplyr <- readLines("markdown/07_analysis/analysis_summarise_data_dplyr.Rmd")
-processed_rmd_summarise_data_dplyr <- whisker.render(paste(rmd_content_summarise_data_dplyr, collapse = "\n"), vars)
-
+output$analysis_dplyr <- renderUI({
+  process_markdown("07_analysis/analysis_summarise_data_dplyr.Rmd")
+})
 
 output$step9_box <- renderUI({
   req(!is.null(summarise_result_step8()), !is.null(summarise_result_step8()$result))
@@ -761,7 +764,7 @@ output$step9_box <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  HTML(markdownToHTML(text = processed_rmd_summarise_data_dplyr, fragment.only = TRUE)),
+                  uiOutput(session$ns("analysis_dplyr")),
                   uiOutput(session$ns("summary_code_feedback_step9"))
                   ),
                   column(6,

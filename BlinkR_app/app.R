@@ -337,12 +337,29 @@ server <- function(input, output, session) {
   })
 
   include_markdown_language <- function(filepath) {
-    cat("markdown path: ", markdown_path(), "\n")
-    cat("file path: ", filepath, "\n")
+    # cat("markdown path: ", markdown_path(), "\n")
+    # cat("file path: ", filepath, "\n")
 
     includeMarkdown(file.path(markdown_path(), filepath))
   }
 
+
+
+process_markdown <- function(filepath) {
+  vars <- get_experiment_vars()
+
+  full_path <- file.path(markdown_path(), filepath)
+  
+  cat("Markdown base path: ", markdown_path(), "\n")
+  cat("Full file path: ", full_path, "\n")
+
+  rmd_content <- readLines(full_path, warn = FALSE)
+  processed_rmd <- whisker::whisker.render(paste(rmd_content, collapse = "\n"), vars)
+  
+  html_output <- HTML(markdown::markdownToHTML(text = processed_rmd, fragment.only = TRUE))
+  
+  return(html_output)
+}
 
 
 auth_status <- reactiveVal(FALSE)
@@ -392,7 +409,7 @@ saved_results <- reactiveValues(
   
   feedback_data <- reactiveVal(feedback_data_dataframe)
   
-  introduction_module_server("introduction", i18n, parent.session = session, auth_status)
+  introduction_module_server("introduction", i18n, parent.session = session, auth_status, process_markdown = process_markdown)
 
   auth <- custom_login_server("login_module", i18n, user_base_google_sheet, all_users, base_group_files_url, external_logout_button = reactive(input$logout_button))
 
@@ -455,8 +472,8 @@ saved_results <- reactiveValues(
     playground_module_server("playground", session_folder_id = session_folder_id, parent.session = session)
     analysis_dashboard_module_server("analysis_dashboard", parent.session = session, saved_results, session_folder_id = session_folder_id)
     analysis_prepare_data_module_server("analysis_prepare_data", i18n, results_data = combined_class_data_read_reactive, parent.session = session, session_folder_id = session_folder_id)
-    analysis_summarise_data_module_server("summarise", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
-    analysis_stats_module_server("stats", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
+    analysis_summarise_data_module_server("summarise", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id, process_markdown = process_markdown)
+    analysis_stats_module_server("stats", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id, process_markdown = process_markdown)
     analysis_create_figure_module_server("figure", i18n, results_data = combined_class_data_read_reactive, parent.session = session, saved_results = saved_results, session_folder_id = session_folder_id)
     writing_up_advice_server("writing_up_advice", i18n, parent.session = session, include_markdown_language)
     writing_up_ai_server("AI", parent.session = session)

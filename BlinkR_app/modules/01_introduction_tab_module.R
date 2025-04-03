@@ -2,9 +2,6 @@ introduction_module_ui <- function(id, i18n){
   ns <- NS(id)
   vars <- get_experiment_vars()
 
-  rmd_content_introduction_box1 <- readLines("markdown/01_introduction/introduction_box1.Rmd")
-  processed_rmd_introduction_box1 <- whisker.render(paste(rmd_content_introduction_box1, collapse = "\n"), vars)
-
   introduction_tab <- tabItem(tabName = "Introduction",
                               fluidPage(
                                 
@@ -25,8 +22,7 @@ introduction_module_ui <- function(id, i18n){
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = TRUE,
-                                    HTML(markdownToHTML(text = processed_rmd_introduction_box1, fragment.only = TRUE)                                  ),
-                
+                                    uiOutput(ns("introduction_box1"))
                                 ),
                         fluidRow(
                             uiOutput(ns("action_buttons_ui"))
@@ -36,15 +32,20 @@ introduction_module_ui <- function(id, i18n){
   )
 }
 
-introduction_module_server <- function(id, i18n, parent.session, auth_status){
+introduction_module_server <- function(id, i18n, parent.session, auth_status, process_markdown){
   moduleServer(
     id,
     function(input, output, session){
       
       vars <- get_experiment_vars()
+      
+      output$introduction_box1 <- renderUI({
+        process_markdown("01_introduction/introduction_box1.Rmd")
+      })
 
-      rmd_content <- readLines("markdown/01_introduction/introduction_box2.Rmd")
-      processed_rmd <- whisker.render(paste(rmd_content, collapse = "\n"), vars)
+      output$introduction_box2 <- renderUI({
+        process_markdown("01_introduction/introduction_box2.Rmd")
+      })
 
       output$action_buttons_ui <- renderUI({
         req(auth_status())
@@ -53,7 +54,7 @@ introduction_module_server <- function(id, i18n, parent.session, auth_status){
           solidHeader = TRUE,
           width = 12,
           collapsible = TRUE,
-          HTML(markdownToHTML(text = processed_rmd, fragment.only = TRUE))
+          uiOutput(session$ns("introduction_box2"))
           ),
         box(
           title = i18n$t("Research Roadmap"),
