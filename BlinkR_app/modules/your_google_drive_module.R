@@ -1,15 +1,15 @@
 your_google_drive_module_ui <- function(id, i18n){
   ns <- NS(id)
    tagList(
-        markdown("# View Your Google Drive Folder
+        markdown(i18n$t("# View Your Google Drive Folder
                  As you add content throughout the app, it will get uploaded to this Google Drive.
-                 From there, you can download your data, results, and figures. "),
+                 From there, you can download your data, results, and figures.")),
         uiOutput(ns("iframe_to_your_drive")),
         div(
           style = "text-align: center; margin-top: 20px;",
         uiOutput(ns("file_picker")),
         tags$br(),
-        downloadButton(ns("download_files"), "Download Selected Files", class = "fun-save-button" ),
+        downloadButton(ns("download_files"), i18n$t("Download Selected Files"), class = "fun-save-button" ),
         )
    )
 }
@@ -46,7 +46,7 @@ your_google_drive_module_server <- function(id, session_folder_id) {
         
         virtualSelectInput(
           inputId = ns("selected_files"),
-          label = "Select Files to Download:",
+          label = i18n$t("Select Files to Download:"),
           choices = file_choices,
           showValueAsTags = TRUE,
           search = TRUE,

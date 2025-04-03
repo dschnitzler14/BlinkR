@@ -10,7 +10,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
         title = i18n$t("Consent"),
         fluidRow(
           column(12,
-          markdown("You must consent in order to submit measurements."),
+          markdown(i18n$t("You must consent in order to submit measurements.")),
           actionButton(
             inputId = ns("read_consent"),
             label = i18n$t("Read Consent Statement"),

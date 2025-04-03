@@ -35,78 +35,78 @@ writing_up_ai_ui <- function(id, i18n) {
                                   fluidRow(
                                     column(6,
                                     box(
-                                    title = "✅ Proofreading",
+                                    title = i18n$t("✅ Proofreading"),
                                     id = "proofreading",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI can help catch grammar, spelling, and punctuation mistakes, but always clarify in your prompt that you *do not want new information added*.")
+                                    markdown(i18n$t("AI can help catch grammar, spelling, and punctuation mistakes, but always clarify in your prompt that you *do not want new information added*."))
                                     ),
                                     box(
-                                    title = "✅ Sentence Rewording & Clarity Improvements",
+                                    title = i18n$t("✅ Sentence Rewording & Clarity Improvements"),
                                     id = "formatting",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI can suggest clearer ways to phrase sentences, but be cautious to ensure your original meaning remains intact.")
+                                    markdown(i18n$t("AI can suggest clearer ways to phrase sentences, but be cautious to ensure your original meaning remains intact."))
                                     ),
                                     box(
-                                    title = "✅ Brainstorming",
+                                    title = i18n$t("✅ Brainstorming"),
                                     id = "brainstorming",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI can help with topic ideas, essay outlines, and brainstorming arguments, but the final content should always be your own.")
+                                    markdown(i18n$t("AI can help with topic ideas, essay outlines, and brainstorming arguments, but the final content should always be your own."))
                                     )
                                     ),
                                     column(6,
                                     box(
-                                    title = "❌ Factual Information",
+                                    title = i18n$t("❌ Factual Information"),
                                     id = "factual",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI does not have access to real-time or verified sources and can generate incorrect, outdated, or misleading facts, which can significantly weaken academic work.")
+                                    markdown(i18n$t("AI does not have access to real-time or verified sources and can generate incorrect, outdated, or misleading facts, which can significantly weaken academic work."))
                                     ),
                                     box(
-                                    title = "❌ Analysis",
+                                    title = i18n$t("❌ Analysis"),
                                     id = "analysis",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI cannot analyse data; relying on it can lead to data falsification, which is academic misconduct.")
+                                    markdown(i18n$t("AI cannot analyse data; relying on it can lead to data falsification, which is academic misconduct."))
                                     ),
                                     box(
-                                    title = "❌ Data Visualisation",
+                                    title = i18n$t("❌ Data Visualisation"),
                                     id = "analysis",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI cannot generate figures from a given dataset; It lacks access to the data and will produce entirely fabricated visualizsations, which is also considered data fabrication.")
+                                    markdown(i18n$t("AI cannot generate figures from a given dataset; It lacks access to the data and will produce entirely fabricated visualizsations, which is also considered data fabrication."))
                                     ),
                                     box(
-                                    title = "❌ References & Citations",
+                                    title = i18n$t("❌ References & Citations"),
                                     id = "references",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI frequently generates fake sources or incorrectly cites real ones, leading to plagiarism, which is a serious academic offense.")
+                                    markdown(i18n$t("AI frequently generates fake sources or incorrectly cites real ones, leading to plagiarism, which is a serious academic offense."))
                                     ),
                                     box(
-                                    title = "❌ Interpretation of Data",
+                                    title = i18n$t("❌ Interpretation of Data"),
                                     id = "interpretation",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI often misinterprets studies or evidence, leading to incorrect conclusions and poor science, which can result in a low grade.")
+                                    markdown(i18n$t("AI often misinterprets studies or evidence, leading to incorrect conclusions and poor science, which can result in a low grade."))
                                     ),
                                     box(
-                                    title = "❌ Writing the Report",
+                                    title = i18n$t("❌ Writing the Report"),
                                     id = "interpretation",
                                     collapsible = TRUE,
                                     width = 12,
                                     solidHeader = FALSE,
-                                    markdown("AI-generated essays lack original thought, critical reasoning, and often contain factual errors, leading to academic dishonesty and potential plagiarism.")
+                                    markdown(i18n$t("AI-generated essays lack original thought, critical reasoning, and often contain factual errors, leading to academic dishonesty and potential plagiarism."))
                                     )
                                     )
                                   

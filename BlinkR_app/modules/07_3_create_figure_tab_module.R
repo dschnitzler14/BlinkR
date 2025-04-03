@@ -28,7 +28,7 @@ analysis_create_figure_module_ui <- function(id, i18n) {
               column(
                 4,
                 markdown(
-                  "Time to make a figure!"
+                  i18n$t("Time to make a figure!")
                 ),
                 radioButtons(ns("figure_type_selector"),
                              label = i18n$t("What type of figure would be best here?"),
@@ -195,7 +195,7 @@ predefined_code_boxplot <- whisker.render(
               collapsed = TRUE,
               width = 12,
               status = "info",
-              markdown("Look for existing colour names in the code!")
+              markdown(i18n$t("Look for existing colour names in the code!"))
               )
         )
       })
@@ -238,7 +238,7 @@ predefined_code_boxplot <- whisker.render(
               collapsed = TRUE,
               width = 12,
               status = "info",
-              markdown("Look for existing colour names in the code!")
+              markdown(i18n$t("Look for existing colour names in the code!"))
           ),
         )
       })

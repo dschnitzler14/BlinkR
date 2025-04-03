@@ -27,18 +27,18 @@ simulated_experiment_hypothesis_module_ui <- function(id, i18n) {
                                         solidHeader = TRUE,
                                         
                                         div(style = "border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;",
-                                            markdown("**What is the hypothesis in plain language?**"),
-                                            markdown("Caffeine-containing gums affect heart rate")
+                                            markdown(i18n$t("**What is the hypothesis in plain language?**")),
+                                            markdown(i18n$t("Caffeine-containing gums affect heart rate"))
                                         ),
                                         
                                         div(style = "border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;",
-                                            markdown("**What is the null hypothesis?**"),
-                                            markdown("Chewing caffeine-containing gum does not affect heart rate significantly more than chewing caffeine-free gum")
+                                            markdown(i18n$t("**What is the null hypothesis?**")),
+                                            markdown(i18n$t("Chewing caffeine-containing gum does not affect heart rate significantly more than chewing caffeine-free gum"))
                                         ),
                                         
                                         div(style = "border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;",
-                                            markdown("**What is the alternative hypothesis?**"),
-                                            markdown("Chewing caffeine-containing gum has an effect on heart rate significantly more than chewing caffeine-free gum")
+                                            markdown(i18n$t("**What is the alternative hypothesis?**")),
+                                            markdown(i18n$t("Chewing caffeine-containing gum has an effect on heart rate significantly more than chewing caffeine-free gum"))
                                         )
                                       )
 

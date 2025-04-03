@@ -9,7 +9,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("pen"), "Writing Up")
+                  tagList(shiny::icon("pen"), i18n$t("Writing Up"))
                 )
               )
     )),
@@ -19,7 +19,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
             div(
               style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
               actionButton(ns("link_to_drive"),
-                           label = tagList(icon("google-drive"), "View on Google Drive"),
+                           label = tagList(icon("google-drive"), i18n$t("View on Google Drive")),
                            class = "btn-primary"
               )
             )

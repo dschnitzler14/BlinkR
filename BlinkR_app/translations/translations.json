@@ -719,6 +719,167 @@
 {
   "en": "Working Together",
   "de": "Zusammenarbeit"
+},
+{
+  "en": "Next let's take a look at the result.",
+  "de": "Als Nächstes schauen wir uns das Ergebnis an."
+},
+{
+  "en": "Time to make a figure!",
+  "de": "Zeit, eine Abbildung zu erstellen!"
+},
+{
+  "en": "Look for existing colour names in the code!",
+  "de": "Schau im Code nach vorhandenen Farbnamen!"
+},
+{
+  "en": "First, let's have a look at the data. Try running `head(data)` and see what happens.",
+  "de": "Schauen wir uns zuerst die Daten an. Versuch, `head(data)` auszuführen, und sieh, was passiert."
+},
+{
+  "en": "Well done! You just ran your first bit of code!\nThe `head()` command returns the first 6 lines of our table, so we can confirm that our data has loaded.\nTake a look at the column names - they will be useful for the next step!\n**The next step is turning this data into something that we can use for analysis.**",
+  "de": "Gut gemacht! Du hast gerade deinen ersten Code ausgeführt!\nDer Befehl `head()` zeigt die ersten 6 Zeilen unserer Tabelle an – so können wir prüfen, ob die Daten korrekt geladen wurden.\nSieh dir die Spaltennamen an – sie sind im nächsten Schritt nützlich!\n**Der nächste Schritt ist, diese Daten in eine Form zu bringen, die wir für die Analyse verwenden können.**"
+},
+{
+  "en": "AI can help catch grammar, spelling, and punctuation mistakes, but always clarify in your prompt that you *do not want new information added*.",
+  "de": "KI kann helfen, Grammatik-, Rechtschreib- und Zeichensetzungsfehler zu finden – aber gib in deinem Prompt immer an, dass *keine neuen Inhalte hinzugefügt* werden sollen."
+},
+{
+  "en": "✅ Proofreading",
+  "de": "✅ Korrekturlesen"
+},
+{
+  "en": "✅ Sentence Rewording & Clarity Improvements",
+  "de": "✅ Umformulierung & Verständlichkeitsverbesserungen"
+},
+{
+  "en": "✅ Brainstorming",
+  "de": "✅ Brainstorming"
+},
+{
+  "en": "AI can suggest clearer ways to phrase sentences, but be cautious to ensure your original meaning remains intact.",
+  "de": "KI kann klarere Formulierungen vorschlagen – aber achte darauf, dass deine ursprüngliche Aussage erhalten bleibt."
+},
+{
+  "en": "AI can help with topic ideas, essay outlines, and brainstorming arguments, but the final content should always be your own.",
+  "de": "KI kann bei Themenideen, Gliederungen und Argumenten helfen – aber der endgültige Inhalt sollte immer von dir stammen."
+},
+{
+  "en": "❌ Factual Information",
+  "de": "❌ Faktenwissen"
+},
+{
+  "en": "AI does not have access to real-time or verified sources and can generate incorrect, outdated, or misleading facts, which can significantly weaken academic work.",
+  "de": "KI hat keinen Zugriff auf aktuelle oder verifizierte Quellen und kann falsche, veraltete oder irreführende Informationen erzeugen – was wissenschaftliche Arbeiten erheblich schwächen kann."
+},
+{
+  "en": "❌ Analysis",
+  "de": "❌ Analyse"
+},
+{
+  "en": "AI cannot analyse data; relying on it can lead to data falsification, which is academic misconduct.",
+  "de": "KI kann keine Daten analysieren – wer sich darauf verlässt, riskiert Datenfälschung, was als wissenschaftliches Fehlverhalten gilt."
+},
+{
+  "en": "❌ Data Visualisation",
+  "de": "❌ Datenvisualisierung"
+},
+{
+  "en": "AI cannot generate figures from a given dataset; It lacks access to the data and will produce entirely fabricated visualizsations, which is also considered data fabrication.",
+  "de": "KI kann keine Diagramme aus echten Datensätzen erstellen – ihr fehlt der Zugriff auf die Daten, sodass sie komplett erfundene Visualisierungen erzeugt. Auch das gilt als Datenfälschung."
+},
+{
+  "en": "❌ References & Citations",
+  "de": "❌ Quellen & Zitate"
+},
+{
+  "en": "AI frequently generates fake sources or incorrectly cites real ones, leading to plagiarism, which is a serious academic offense.",
+  "de": "KI erfindet häufig Quellen oder zitiert echte falsch – das führt zu Plagiaten und stellt ein schwerwiegendes akademisches Vergehen dar."
+},
+{
+  "en": "❌ Interpretation of Data",
+  "de": "❌ Dateninterpretation"
+},
+{
+  "en": "AI often misinterprets studies or evidence, leading to incorrect conclusions and poor science, which can result in a low grade.",
+  "de": "KI interpretiert Studien oder Daten häufig falsch – das führt zu falschen Schlussfolgerungen und schlechter Wissenschaft, was sich negativ auf die Bewertung auswirken kann."
+},
+{
+  "en": "❌ Writing the Report",
+  "de": "❌ Verfassen des Berichts"
+},
+{
+  "en": "AI-generated essays lack original thought, critical reasoning, and often contain factual errors, leading to academic dishonesty and potential plagiarism.",
+  "de": "Von KI verfasste Texte enthalten oft keine originellen Gedanken oder kritisches Denken und sind häufig fehlerhaft – das kann als akademische Täuschung und Plagiat gewertet werden."
+},
+{
+  "en": "First, let's prepare the data by generating an average of each technical replicate.",
+  "de": "Zuerst bereiten wir die Daten vor, indem wir den Durchschnitt jeder technischen Wiederholung berechnen."
+},
+{
+  "en": "Now, let's work out the summary statistics",
+  "de": "Jetzt berechnen wir die zusammenfassenden Statistiken"
+},
+{
+  "en": "In this next step, we will create a figure",
+  "de": "Im nächsten Schritt erstellen wir eine Abbildung"
+},
+{
+  "en": "In order to decide on which statistical test we will carry out, let's check if our data is normally distributed.",
+  "de": "Um zu entscheiden, welchen statistischen Test wir verwenden, prüfen wir, ob unsere Daten normalverteilt sind."
+},
+{
+  "en": "Now, we can run the statistical analysis.",
+  "de": "Jetzt können wir die statistische Analyse durchführen."
+},
+{
+  "en": "Finally, let's calculate the effect size.",
+  "de": "Zum Schluss berechnen wir die Effektstärke."
+},
+{
+  "en": "**What is the hypothesis in plain language?**",
+  "de": "**Was ist die Hypothese in einfachen Worten?**"
+},
+{
+  "en": "Caffeine-containing gums affect heart rate",
+  "de": "Kaugummis mit Koffein beeinflussen die Herzfrequenz"
+},
+{
+  "en": "**What is the null hypothesis?**",
+  "de": "**Was ist die Nullhypothese?**"
+},
+{
+  "en": "Chewing caffeine-containing gum does not affect heart rate significantly more than chewing caffeine-free gum",
+  "de": "Das Kauen von Koffein-Kaugummi beeinflusst die Herzfrequenz nicht signifikant stärker als das Kauen von koffeinfreiem Kaugummi"
+},
+{
+  "en": "**What is the alternative hypothesis?**",
+  "de": "**Was ist die Alternativhypothese?**"
+},
+{
+  "en": "Chewing caffeine-containing gum has an effect on heart rate significantly more than chewing caffeine-free gum",
+  "de": "Das Kauen von Koffein-Kaugummi beeinflusst die Herzfrequenz signifikant stärker als das Kauen von koffeinfreiem Kaugummi"
+},
+{
+  "en": "You must consent in order to submit measurements.",
+  "de": "Du musst dein Einverständnis geben, um Messungen einzureichen."
+},
+{
+  "en": "# View Your Google Drive Folder\nAs you add content throughout the app, it will get uploaded to this Google Drive.\nFrom there, you can download your data, results, and figures.",
+  "de": "# Zeige deinen Google Drive-Ordner an\nAlles, was du in der App hinzufügst, wird in diesem Google Drive gespeichert.\nDort kannst du deine Daten, Ergebnisse und Abbildungen herunterladen."
+},
+{
+  "en": "Download Selected Files",
+  "de": "Ausgewählte Dateien herunterladen"
+},
+{
+  "en": "Select Files to Download:",
+  "de": "Dateien zum Herunterladen auswählen:"
+},
+{
+  "en": "View on Google Drive",
+  "de": "In Google Drive anzeigen"
 }
+
   ]
 }

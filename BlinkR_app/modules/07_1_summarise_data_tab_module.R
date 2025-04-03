@@ -787,7 +787,7 @@ observe({
     output$summary_code_feedback_step9 <- renderUI({
       tagList(
         div(class = "success-box", i18n$t("\U1F64C Great!")),
-        markdown("Next let's take a look at the result."),
+        markdown(i18n$t("Next let's take a look at the result.")),
           numericInput(
             inputId = session$ns("mean_level_b_variable_group_quiz"),
             label = sprintf(i18n$t("What is the mean of the %s group"), vars$level_b_variable_name),

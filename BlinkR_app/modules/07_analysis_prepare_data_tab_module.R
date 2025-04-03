@@ -29,7 +29,7 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
               column(
                 4,
                 markdown(
-                  "First, let's have a look at the data. Try running `head(data)` and see what happens."
+                  i18n$t("First, let's have a look at the data. Try running `head(data)` and see what happens.")
                 ),
                 uiOutput(ns("view_data_code_feedback")),
                 uiOutput(ns("view_data_quiz_feedback"))
@@ -155,12 +155,12 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
       feedback <- if (is.data.frame(view_data_result()$result) && nrow(view_data_result()$result) > 0) {
           tagList(
             div(class = "success-box", i18n$t("\U1F64C That's our data! Looks good!")),
-            markdown("
-        Well done! You just ran your first bit of code!
+            markdown(
+        i18n$t("Well done! You just ran your first bit of code!
         The `head()` command returns the first 6 lines of our table, so we can confirm that our data has loaded.
         Take a look at the column names - they will be useful for the next step!
         **The next step is turning this data into something that we can use for analysis.**
-        "),
+        ")),
             textInput(
               session$ns("interpret_head_results"),
               label = i18n$t("How many subjects (students) can you see in this slice of data?"),
