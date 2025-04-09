@@ -1,4 +1,4 @@
-experimental_design_module_ui <- function(id, i18n, label = i18n$t("Protocol Planning Notes"), placeholder = i18n$t("Placeholder")) {
+experimental_design_module_ui <- function(id, i18n, label = i18n$t("Protocol Planning Notes"), placeholder = "Placeholder") {
   ns <- NS(id)
   tagList(
     textAreaInput(
@@ -10,7 +10,7 @@ experimental_design_module_ui <- function(id, i18n, label = i18n$t("Protocol Pla
     )
 }
 
-experimental_design_module_server <- function(id, i18n, auth, protocol_file_id, sheet_name = "Protocol_Notes", input_question = i18n$t("Input Question")) {
+experimental_design_module_server <- function(id, i18n, auth, protocol_file_id, sheet_name = "Protocol_Notes", input_question = "Input Question") {
   moduleServer(id, function(input, output, session) {
     vars <- get_experiment_vars()
 

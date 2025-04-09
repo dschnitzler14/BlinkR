@@ -21,9 +21,9 @@ protocol_module_ui <- function(id, i18n){
                                   tabPanel(
                                     tabName = "Your Protocol",
                                     title =  tagList(shiny::icon("user"), i18n$t("Your Protocol")),
-                                    experimental_design_module_ui(ns("experimental_design_protocol"), i18n, i18n$t("Experimental Design"), i18n$t("Think about some general ideas for the experiment here")),
-                                    experimental_design_module_ui(ns("measurement_protocol"), i18n, i18n$t("Measurement"), i18n$t("How will you record measurements?")),
-                                    experimental_design_module_ui(ns("analysis_protocol"), i18n, i18n$t("Analysis"), i18n$t("How will you analyse your results?"))
+                                    experimental_design_module_ui(ns("experimental_design_protocol"), i18n, i18n$t("Experimental Design"), placeholder = i18n$t("Think about some general ideas for the experiment here")),
+                                    experimental_design_module_ui(ns("measurement_protocol"), i18n, i18n$t("Measurement"), placeholder = i18n$t("How will you record measurements?")),
+                                    experimental_design_module_ui(ns("analysis_protocol"), i18n, i18n$t("Analysis"), placeholder = i18n$t("How will you analyse your results?"))
                                     ),
                                   tabPanel(
                                     tabName = "Class Protocol",
