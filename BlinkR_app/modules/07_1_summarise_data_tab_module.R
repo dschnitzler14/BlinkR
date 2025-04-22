@@ -180,7 +180,7 @@ level_a_sem <- reactive({
   read_file("markdown/07_analysis/predefined_code_summarise_filter_level_b.txt"),
   vars
   )
-  summarise_result_step1 <- editor_module_server("step1_editor", average_trs, "average_trs", predefined_code = predefined_code_step1, return_type = "result", session_folder_id, save_header = i18n$t("Step 1: Summarise Data"))
+  summarise_result_step1 <- editor_module_server("step1_editor", i18n, average_trs, "average_trs", predefined_code = predefined_code_step1, return_type = "result", session_folder_id, save_header = i18n$t("Step 1: Summarise Data"))
 
   output$analysis_filter_b <- renderUI({
     process_markdown("07_analysis/analysis_summarise_data_filter_level_b.Rmd")
@@ -241,7 +241,7 @@ level_a_sem <- reactive({
   read_file("markdown/07_analysis/predefined_code_calculate_mean_level_b.txt"),
   vars
   )
-  summarise_result_step2 <- editor_module_server("step2_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step2, return_type = "result", session_folder_id, save_header = i18n$t("Step 2: Summarise Data"))
+  summarise_result_step2 <- editor_module_server("step2_editor", i18n, level_b_data, level_b_data_name, predefined_code = predefined_code_step2, return_type = "result", session_folder_id, save_header = i18n$t("Step 2: Summarise Data"))
 
 
 output$analysis_mean_b <- renderUI({
@@ -308,7 +308,7 @@ predefined_code_step3 <- whisker.render(
 read_file("markdown/07_analysis/predefined_code_calculate_sd_level_b.txt"),
 vars
 )
-summarise_result_step3 <- editor_module_server("step3_editor", level_b_data, level_b_data_name, predefined_code = predefined_code_step3, return_type = "result", session_folder_id, save_header = i18n$t("Step 2: Summarise Data"))
+summarise_result_step3 <- editor_module_server("step3_editor", i18n, level_b_data, level_b_data_name, predefined_code = predefined_code_step3, return_type = "result", session_folder_id, save_header = i18n$t("Step 2: Summarise Data"))
 
 output$analysis_sd_b <- renderUI({
   process_markdown("07_analysis/analysis_summarise_data_sd_level_b.Rmd")
@@ -373,7 +373,7 @@ predefined_code_step4 <- whisker.render(
   vars
   )
 
-summarise_result_step4 <- editor_module_server("step4_editor",list(
+summarise_result_step4 <- editor_module_server("step4_editor",i18n, list(
     level_b_data = level_b_data,
     level_b_sd   = level_b_sd
   ), c(level_b_data_name, level_b_sd_name), predefined_code_step4, "result", session_folder_id, i18n$t("Step 4: Summarise Data"))
@@ -440,7 +440,7 @@ predefined_code_step5 <- whisker.render(
   vars
   )
 
-summarise_result_step5 <- editor_module_server("step5_editor", average_trs, "average_trs", predefined_code = predefined_code_step5, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
+summarise_result_step5 <- editor_module_server("step5_editor", i18n, average_trs, "average_trs", predefined_code = predefined_code_step5, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
 output$analysis_filter_a <- renderUI({
   process_markdown("07_analysis/analysis_summarise_data_filter_level_a.Rmd")
@@ -509,7 +509,7 @@ predefined_code_step6 <- whisker.render(
   read_file("markdown/07_analysis/predefined_code_calculate_mean_level_a.txt"),
   vars
   )
-summarise_result_step6 <- editor_module_server("step6_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step6, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
+summarise_result_step6 <- editor_module_server("step6_editor", i18n, level_a_data, level_a_data_name, predefined_code = predefined_code_step6, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
 output$analysis_mean_a <- renderUI({
   process_markdown("07_analysis/analysis_summarise_data_mean_level_a.Rmd")
@@ -580,7 +580,7 @@ predefined_code_step7 <- whisker.render(
   read_file("markdown/07_analysis/predefined_code_calculate_sd_level_a.txt"),
   vars
   )
-summarise_result_step7 <- editor_module_server("step7_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
+summarise_result_step7 <- editor_module_server("step7_editor", i18n, level_a_data, level_a_data_name, predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
 output$analysis_sd_a <- renderUI({
   process_markdown("07_analysis/analysis_summarise_data_sd_level_a.Rmd")
@@ -650,7 +650,7 @@ predefined_code_step8 <- whisker.render(
   vars
   )
 
-summarise_result_step8 <- editor_module_server("step8_editor", list(level_a_data, level_a_n, level_a_sd), c(level_a_data_name, level_a_n_name, level_a_sd_name), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
+summarise_result_step8 <- editor_module_server("step8_editor", i18n, list(level_a_data, level_a_n, level_a_sd), c(level_a_data_name, level_a_n_name, level_a_sd_name), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
 output$analysis_sem_a <- renderUI({
   process_markdown("07_analysis/analysis_summarise_data_sem_level_a.Rmd")
@@ -744,7 +744,7 @@ predefined_code_step9 <- whisker.render(
   vars
   )
 
-summarise_result_step9 <- editor_module_server("step9_editor", average_trs, "average_trs", predefined_code_step9, "result", session_folder_id, i18n$t("Step 6: Summarise Data with Dplyr"))
+summarise_result_step9 <- editor_module_server("step9_editor", i18n, average_trs, "average_trs", predefined_code_step9, "result", session_folder_id, i18n$t("Step 6: Summarise Data with Dplyr"))
 
 output$analysis_dplyr <- renderUI({
   process_markdown("07_analysis/analysis_summarise_data_dplyr.Rmd")

@@ -80,7 +80,7 @@ background_module_ui <- function(id, i18n){
     )
   )
 }
-
+ 
 background_module_server <- function(id, i18n, parent.session, include_markdown_language){
   moduleServer(
     id,

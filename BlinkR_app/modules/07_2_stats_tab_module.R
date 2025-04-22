@@ -376,7 +376,7 @@ observeEvent(input$not_normal, {
   predefined_code_not_normal_unpaired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_wilcoxon_test_unpaired.txt"),
     vars)
-  not_normal_unpaired_result <- editor_module_server("not_normal_unpaired", average_trs, "average_trs", predefined_code = predefined_code_not_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Unpaired")
+  not_normal_unpaired_result <- editor_module_server("not_normal_unpaired", i18n, average_trs, "average_trs", predefined_code = predefined_code_not_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Unpaired")
 
 observeEvent(input$unpaired_not_normal,{
   #output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -488,7 +488,7 @@ observeEvent(input$save_not_normal_unpaired_button, {
   predefined_code_not_normal_paired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_wilcoxon_test_paired.txt"),
     vars)
-  not_normal_paired_result <- editor_module_server("not_normal_paired", average_trs, "average_trs", predefined_code = predefined_code_not_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Paired")
+  not_normal_paired_result <- editor_module_server("not_normal_paired", i18n, average_trs, "average_trs", predefined_code = predefined_code_not_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Paired")
 
 observeEvent(input$paired_not_normal,{
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -602,7 +602,7 @@ observeEvent(input$save_not_normal_paired_button, {
   predefined_code_normal_unpaired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_two_sided_t_test.txt"),
     vars)
-  normal_unpaired_result <- editor_module_server("normal_unpaired", average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
+  normal_unpaired_result <- editor_module_server("normal_unpaired", i18n, average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
 
 observeEvent(input$unpaired_normal,{
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -713,7 +713,7 @@ observe({
   predefined_code_normal_paired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_paired_t_test.txt"),
     vars)
-  normal_paired_result <- editor_module_server("normal_paired", average_trs, "average_trs", predefined_code = predefined_code_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Paired")
+  normal_paired_result <- editor_module_server("normal_paired", i18n, average_trs, "average_trs", predefined_code = predefined_code_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Paired")
 
 observeEvent(input$paired_normal,{
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -823,7 +823,7 @@ observe({
   predefined_code_t_test_effect_size_paired = whisker.render(
     read_file("markdown/07_analysis/predefined_t_test_effect_size_paired.txt"),
     vars)
-  t_test_effect_size_paired_result <- editor_module_server("t_test_effect_size_paired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
+  t_test_effect_size_paired_result <- editor_module_server("t_test_effect_size_paired", i18n, average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
 
 observe({
   req(!is.null(normal_paired_result()), !is.null(normal_paired_result()$result),  p_value_reactive() < 0.05)
@@ -924,7 +924,7 @@ observeEvent(input$save_normal_paired_effect_size_button, {
   predefined_code_t_test_effect_size_unpaired = whisker.render(
     read_file("markdown/07_analysis/predefined_t_test_effect_size_unpaired.txt"),
     vars)
-  t_test_effect_size_unpaired_result <- editor_module_server("t_test_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
+  t_test_effect_size_unpaired_result <- editor_module_server("t_test_effect_size_unpaired", i18n, average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
 
 observe({
     req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result), p_value_reactive() < 0.05)
@@ -1024,7 +1024,7 @@ observe({
   predefined_code_wilcoxon_effect_size_paired = whisker.render(
     read_file("markdown/07_analysis/predefined_wilcoxon_effect_size_paired.txt"),
     vars)
-  wilcoxon_effect_size_paired_result <- editor_module_server("wilcoxon_effect_size_paired", average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
+  wilcoxon_effect_size_paired_result <- editor_module_server("wilcoxon_effect_size_paired", i18n, average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
 
 observe({
   req(!is.null(not_normal_paired_result()), !is.null(not_normal_paired_result()$result), p_value_reactive() < 0.05)
@@ -1125,7 +1125,7 @@ observe({
     read_file("markdown/07_analysis/predefined_wilcoxon_effect_size_unpaired.txt"),
     vars)
     
-  wilcoxon_effect_size_unpaired_result <- editor_module_server("wilcoxon_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
+  wilcoxon_effect_size_unpaired_result <- editor_module_server("wilcoxon_effect_size_unpaired", i18n, average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
 
 observe({
   req(!is.null(not_normal_unpaired_result()), !is.null(not_normal_unpaired_result()$result), p_value_reactive() < 0.05)

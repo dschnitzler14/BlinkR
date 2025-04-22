@@ -157,7 +157,7 @@ analysis_dashboard_module_ui <- function(id, i18n) {
 }
 
 
-analysis_dashboard_module_server <- function(id, parent.session, saved_results, session_folder_id) {
+analysis_dashboard_module_server <- function(id, i18n, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
        vars <- get_experiment_vars()
 

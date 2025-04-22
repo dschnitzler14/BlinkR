@@ -178,7 +178,7 @@ output$sim_exp_analysis_box1_markdown <- renderUI({
 # Step1: Prepare Data 
     predefined_code_prepare_caf_data <- read_file("markdown/09_simulated_experiment/sim_analysis_prepare_data.Rmd")
       
-    prepare_caf_data_result <- editor_module_server("average_trs_caf_editor", data = caf_data, variable_name = "caf_data", predefined_code = predefined_code_prepare_caf_data, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
+    prepare_caf_data_result <- editor_module_server("average_trs_caf_editor", i18n, data = caf_data, variable_name = "caf_data", predefined_code = predefined_code_prepare_caf_data, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
     
 observe({
       req(!is.null(prepare_caf_data_result()), !is.null(prepare_caf_data_result()$result))
@@ -203,7 +203,7 @@ observe({
 
   predefined_code_summarise_caf_data <- read_file("markdown/09_simulated_experiment/sim_analysis_summarise.Rmd")
       
-  summarise_caf_data_result <- editor_module_server("summarise_caf_editor", data = average_trs_caf, variable_name = "average_trs_caf", predefined_code = predefined_code_summarise_caf_data, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
+  summarise_caf_data_result <- editor_module_server("summarise_caf_editor", i18n, data = average_trs_caf, variable_name = "average_trs_caf", predefined_code = predefined_code_summarise_caf_data, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
   
   observe({
   req(!is.null(summarise_caf_data_result()), !is.null(summarise_caf_data_result()$result))
@@ -225,7 +225,7 @@ observe({
 # Step3: Figure
   predefined_code_fig_caf_data <- read_file("markdown/09_simulated_experiment/sim_analysis_fig.Rmd")
       
-  fig_caf_data_result <- editor_module_server("figure_caf_editor", data = list(average_trs_caf, caf_summary), variable_name = c("average_trs_caf", "caf_summary"), predefined_code = predefined_code_fig_caf_data, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
+  fig_caf_data_result <- editor_module_server("figure_caf_editor", i18n, data = list(average_trs_caf, caf_summary), variable_name = c("average_trs_caf", "caf_summary"), predefined_code = predefined_code_fig_caf_data, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
 
 
   observe({
@@ -277,7 +277,7 @@ observeEvent(input$caf_run_hist_Plot, {
 
   predefined_code_caf_t_test <- read_file("markdown/09_simulated_experiment/sim_analysis_t_test.Rmd")
   
-  caf_t_test_result <- editor_module_server("caf_t_test_editor", average_trs_caf, "average_trs_caf", predefined_code = predefined_code_caf_t_test, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
+  caf_t_test_result <- editor_module_server("caf_t_test_editor", i18n, average_trs_caf, "average_trs_caf", predefined_code = predefined_code_caf_t_test, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
 
 observe({
       req(!is.null(caf_t_test_result()), !is.null(caf_t_test_result()$result))
@@ -299,7 +299,7 @@ observe({
 
 predefined_code_caf_effect_size <- read_file("markdown/09_simulated_experiment/sim_analysis_effect_size.Rmd")
 
-caf_effect_size_result <- editor_module_server("caf_effect_size_editor", average_trs_caf, "average_trs_caf", predefined_code = predefined_code_caf_effect_size, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
+caf_effect_size_result <- editor_module_server("caf_effect_size_editor", i18n, average_trs_caf, "average_trs_caf", predefined_code = predefined_code_caf_effect_size, return_type = "result", session_folder_id, save_header = "", code_history = FALSE)
 
 observe({
       req(!is.null(caf_effect_size_result()), !is.null(caf_effect_size_result()$result))

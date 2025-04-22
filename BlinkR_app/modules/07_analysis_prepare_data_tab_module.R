@@ -147,7 +147,7 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
     
     predefined_code_view_data <- "head(data)"
     
-    view_data_result <- editor_module_server("view_data_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_view_data, return_type = "result", session_folder_id, save_header = "View Data Code")
+    view_data_result <- editor_module_server("view_data_editor", i18n, data = view_data, variable_name = "data", predefined_code = predefined_code_view_data, return_type = "result", session_folder_id, save_header = "View Data Code")
     
     
     observe({
@@ -164,7 +164,7 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
             textInput(
               session$ns("interpret_head_results"),
               label = i18n$t("How many subjects (students) can you see in this slice of data?"),
-              placeholder = "Type your answer here",
+              placeholder = i18n$t("Type your answer here"),
               ),
               div(
                 style = "text-align: center;",
@@ -176,15 +176,20 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
               ),
               uiOutput(session$ns("feedback_head")),
             radioButtons(
-              session$ns("analysis_step2_quiz"), 
-              label = i18n$t("What do you think we need to do to our data?"), 
-              choices = list(
-                "Get the average for each condition?" = "option1", 
-                "Get average from technical replicates for each subject?" = "option2", 
-                "Do statistical analysis?" = "option3"
-              ),
-              selected = character(0)
-            )
+                session$ns("analysis_step2_quiz"), 
+                label = i18n$t("What do you think we need to do to our data?"),
+                choiceNames = list(
+                  i18n$t("Get the average for each condition?"),
+                  i18n$t("Get average from technical replicates for each subject?"),
+                  i18n$t("Do statistical analysis?")
+                ),
+                choiceValues = list(
+                  "option1", 
+                  "option2", 
+                  "option3"
+                ),
+                selected = character(0)
+              )
           )
       
       } else if (!is.null(view_data_result())) {
@@ -235,7 +240,7 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
     vars
     )
       
-    average_trs_result <- editor_module_server("average_trs_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
+    average_trs_result <- editor_module_server("average_trs_editor", i18n, data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
     
 output$home_prepare_data <- renderUI({
   process_markdown("07_analysis/analysis_home_prepare_data.Rmd")

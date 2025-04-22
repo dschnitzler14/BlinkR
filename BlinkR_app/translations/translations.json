@@ -266,7 +266,7 @@
     },
     {
   "en": "Add Students",
-  "de": "Student:innen hinzufügen"
+  "de": "Versuchsperson hinzufügen"
 },
 {
   "en": "View Raw Data",
@@ -274,11 +274,11 @@
 },
 {
   "en": "Deleted student with ID:",
-  "de": "Student:in mit der ID gelöscht:"
+  "de": "Versuchsperson mit der ID gelöscht:"
 },
 {
   "en": "Delete Student",
-  "de": "Student:in löschen"
+  "de": "Versuchsperson löschen"
 },
 {
   "en": "Prepare Data",
@@ -310,7 +310,7 @@
 },
 {
   "en": "Enter Student Initials",
-  "de": "Initialen der Student:in eingeben"
+  "de": "Initialen der Versuchsperson eingeben"
 },
 {
   "en": "Type initials here",
@@ -322,11 +322,11 @@
 },
 {
   "en": "Student added to the database.",
-  "de": "Student:in wurde zur Datenbank hinzugefügt."
+  "de": "Versuchsperson wurde zur Datenbank hinzugefügt."
 },
 {
   "en": "Student:",
-  "de": "Student:in:"
+  "de": "Versuchsperson:"
 },
 {
   "en": "Consent",
@@ -346,15 +346,15 @@
 },
 {
   "en": "Technical Replicate 1",
-  "de": "Technische Replikat 1"
+  "de": "Technisches Replikat 1"
 },
 {
   "en": "Technical Replicate 2",
-  "de": "Technische Replikat 2"
+  "de": "Technisches Replikat 2"
 },
 {
   "en": "Technical Replicate 3",
-  "de": "Technische Replikat 3"
+  "de": "Technisches Replikat 3"
 },
 {
   "en": "Submit Measurements",
@@ -522,7 +522,7 @@
 },
 {
   "en": "How many subjects (students) can you see in this slice of data?",
-  "de": "Wie viele Versuchspersonen (Student:innen) kannst du in diesem Datenausschnitt sehen?"
+  "de": "Wie viele Versuchspersonen kannst du in diesem Datenausschnitt sehen?"
 },
 {
   "en": "What do you think we need to do to our data?",
@@ -790,7 +790,7 @@
 },
 {
   "en": "❌ References & Citations",
-  "de": "❌ Quellen & Zitate"
+  "de": "❌ Zitierquellen"
 },
 {
   "en": "AI frequently generates fake sources or incorrectly cites real ones, leading to plagiarism, which is a serious academic offense.",
@@ -883,7 +883,22 @@
 {
   "en": "Enter your Notes",
   "de": "Gib deine Notizen ein"
-}
-
+},
+  { "en": "Code to Editor", "de": "Code in den Editor" },
+  { "en": "Run Code", "de": "Code ausführen" },
+  { "en": "Clear Code", "de": "Code löschen" },
+  { "en": "Saved to Code History", "de": "Im Codeverlauf gespeichert" },
+  { "en": "Error uploading code to Google Drive:", "de": "Fehler beim Hochladen des Codes zu Google Drive:" },
+  { "en": "Writing R Code", "de": "R Code Schreiben" },
+  { "en": "Step 1: Prepare Your Data", "de": "Schritt 1: Daten vorbereiten" },
+  { "en": "Step 2: Summarise Data", "de": "Schritt 2: Daten zusammenfassen" },
+  { "en": "Step 3: Figure", "de": "Schritt 3: Daten Visualisieren" },
+  { "en": "Step 4: Statistical Analysis", "de": "Schritt 4: Statistische Analyse" },
+  { "en": "Type your answer here", "de": "Gib deine Antwort hier ein" },
+  { "en": "Get the average for each condition?", "de": "Durchschnitt für jede Bedingung berechnen?" },
+  { "en": "Get average from technical replicates for each subject?", "de": "Durchschnitt aus technischen Replikaten für jedes Subjekt berechnen?" },
+  { "en": "Do statistical analysis?", "de": "Statistische Analyse durchführen?" },
+  { "en": "Save Plot to Dashboard", "de": "Diagramm im Dashboard speichern" },
+  { "en": "🙌 Great Job!", "de": "🙌 Großartige Arbeit!" }
   ]
 }

@@ -1,4 +1,4 @@
-editor_module_ui <- function(id, i18n) { 
+editor_module_ui <- function(id, i18n) {
   ns <- NS(id)
   tagList(
     aceEditor(
@@ -18,17 +18,17 @@ editor_module_ui <- function(id, i18n) {
     ),
     actionButton(
       ns("send_code_to_editor"),
-      label = tagList(icon("arrow-right"), "Code to Editor"),
+      label = tagList(icon("arrow-right"), i18n$t("Code to Editor")),
       class = "custom-button custom-send-button"           
     ),
     actionButton(
       ns("run_code"),
-      label = tagList(icon("code"), "Run Code"),
+      label = tagList(icon("code"), i18n$t("Run Code")),
       class = "custom-button custom-run-button"           
     ),
     actionButton(
       ns("clear_console"),
-      label = tagList(icon("trash"), "Clear Code"),
+      label = tagList(icon("trash"), i18n$t("Clear Code")),
       class = "custom-button custom-clear-button"
     ),
     div(
@@ -40,7 +40,7 @@ editor_module_ui <- function(id, i18n) {
   )
 }
 
-editor_module_server <- function(id, data, variable_name = "ace_editor_data", predefined_code = "", return_type = "", session_folder_id, save_header = "Code Header", code_history = TRUE) {
+editor_module_server <- function(id, i18n, data, variable_name = "ace_editor_data", predefined_code = "", return_type = "", session_folder_id, save_header = "Code Header", code_history = TRUE) {
   moduleServer(id, function(input, output, session) {
     vars <- get_experiment_vars()
 
@@ -168,11 +168,11 @@ output$dynamic_console <- renderUI({
       
       TRUE
       }) %...>% {
-      showNotification("Saved to Code History", type = "message", duration = 2)
+      showNotification(i18n$t("Saved to Code History"), type = "message", duration = 2)
       } %...!% {
         err <- .
         showNotification(
-          paste("Error uploading code to Google Drive:", err$message),
+          paste(i18n$t("Error uploading code to Google Drive:"), err$message),
           type = "error", duration = 3
         )
       }

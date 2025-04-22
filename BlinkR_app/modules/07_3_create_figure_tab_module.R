@@ -117,7 +117,7 @@ fluidRow(
 
 }
 
-analysis_create_figure_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id, process_markdown) {
+analysis_create_figure_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id, process_markdown, include_markdown_language) {
   moduleServer(id, function(input, output, session) {
 
           vars <- get_experiment_vars()
@@ -176,8 +176,8 @@ predefined_code_boxplot <- whisker.render(
     ),
     vars)
 
-  figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_barplot, return_type = "result", session_folder_id, save_header = "Create Bar Plot Code")
-  figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_boxplot, return_type = "result", session_folder_id, save_header = "Create Box Plot Code")
+  figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", i18n, data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_barplot, return_type = "result", session_folder_id, save_header = "Create Bar Plot Code")
+  figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", i18n, data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_boxplot, return_type = "result", session_folder_id, save_header = "Create Box Plot Code")
   
 
 #bar plot

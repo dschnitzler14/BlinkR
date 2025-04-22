@@ -119,7 +119,7 @@ bucketListModuleUI <- function(id, i18n) {
           ),
           
           add_rank_list(
-            text = "Selected data hazards",
+            text = "Selected Data Hazards",
             labels = NULL,
             input_id = ns("rank_list_2")
           )
@@ -128,7 +128,7 @@ bucketListModuleUI <- function(id, i18n) {
         style = "text-align: center;",
           actionButton(
           inputId = ns("submit_hazards"),
-          label   = "Submit Hazards",
+          label   = i18n$t("Submit Hazards"),
           class   = "fun-submit-button"
         )
         ),
@@ -149,9 +149,9 @@ bucketListModuleServer <- function(id, i18n, auth, session_folder_id) {
     observeEvent(input$submit_hazards, {
          observeEvent(input$submit_hazards, {
       if (length(input$rank_list_2) == 0) {
-        showNotification("Error: Please Select Data Hazards", type = "error")
+        showNotification(i18n$t("Error: Please Select Data Hazards"), type = "error")
       } else {
-        showNotification("Hazards submitted!", type = "message")
+        showNotification(i18n$t("Hazards submitted!"), type = "message")
         
         out_file <- file.path(tempdir(), "selected_hazards.pdf")
        pdf(out_file, width = 21/2.54, height = 29.7/2.54)
@@ -170,7 +170,7 @@ bucketListModuleServer <- function(id, i18n, auth, session_folder_id) {
     num_rows <- ceiling(num_images / num_cols)
 
 title_grob <- textGrob(
-      "Data Hazards For This Project",
+      i18n$t("Data Hazards For This Project"),
       gp = gpar(fontsize = 14, fontface = "bold")
     )
 
