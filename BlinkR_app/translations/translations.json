@@ -899,6 +899,9 @@
   { "en": "Get average from technical replicates for each subject?", "de": "Durchschnitt aus technischen Replikaten für jedes Subjekt berechnen?" },
   { "en": "Do statistical analysis?", "de": "Statistische Analyse durchführen?" },
   { "en": "Save Plot to Dashboard", "de": "Diagramm im Dashboard speichern" },
-  { "en": "🙌 Great Job!", "de": "🙌 Großartige Arbeit!" }
+  { "en": "🙌 Great Job!", "de": "🙌 Großartige Arbeit!" },
+  { "en": "Writing Up: AI", "de": "Verschriftlichung: KI" },
+  { "en": "Brief summary of how AI tools like ChatGPT work", "de": "Kurze Zusammenfassung, wie KI‑Tools wie ChatGPT funktionieren" },
+  { "en": "AI Pitfalls", "de": "KI‑Fallstricke" }
   ]
 }

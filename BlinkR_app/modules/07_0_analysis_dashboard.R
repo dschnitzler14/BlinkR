@@ -410,7 +410,7 @@ output$stats_interpretation <- renderUI({
       size = "l" 
     ))
     
-    your_google_drive_module_server("your_drive_module_dashboard", session_folder_id)
+    your_google_drive_module_server("your_drive_module_dashboard", i18n, session_folder_id)
 
   })
   

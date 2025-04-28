@@ -1,10 +1,10 @@
-experimental_design_module_ui <- function(id, i18n, label_text = "Protocol Planning Notes", placeholder_text = "Placeholder") {
+experimental_design_module_ui <- function(id, i18n, label_text = i18n$t("Protocol Planning Notes"), placeholder_text = i18n$t("Placeholder")) {
   ns <- NS(id)
   tagList(
     textAreaInput(
       ns("experimental_design"),
       label = label_text,
-      placeholder = i18n$t(placeholder_text)
+      placeholder = placeholder_text
     ),
     actionButton(ns("submit_protocol_notes"), tagList(shiny::icon("save"), i18n$t("Save Notes")), class = "fun-save-button")
     )

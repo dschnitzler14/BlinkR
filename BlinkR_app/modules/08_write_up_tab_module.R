@@ -232,7 +232,7 @@ output$writing_up_future_work_markdown <- renderUI({
       size = "l" 
     ))
     
-    your_google_drive_module_server("your_drive_module_write_up", session_folder_id)
+    your_google_drive_module_server("your_drive_module_write_up", i18n, session_folder_id)
 
   })
 

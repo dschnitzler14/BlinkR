@@ -72,7 +72,7 @@ admin_area_module_server <- function(id, group_data_file_id, parent.session, use
       size = "l" 
     ))
     
-    your_google_drive_module_server("admin_drive_module", session_folder_id)
+    your_google_drive_module_server("admin_drive_module", i18n, session_folder_id)
 
   })
     

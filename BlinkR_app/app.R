@@ -482,7 +482,7 @@ saved_results <- reactiveValues(
     simulated_experiment_analysis_module_server("simulated_experiment_analysis", caf_data_read = caf_data_read, parent.session = session, include_markdown_language = include_markdown_language)
     simulated_experiment_writing_up_module_server("simulated_experiment_writing_up", parent.session = session, include_markdown_language = include_markdown_language)
     feedback_module_server("feedback", feedback_data, parent.session = session)
-    your_google_drive_module_server("your_drive_module", session_folder_id = session_folder_id)
+    your_google_drive_module_server("your_drive_module", i18n, session_folder_id = session_folder_id)
     
   })
 

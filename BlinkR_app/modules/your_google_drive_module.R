@@ -14,7 +14,7 @@ your_google_drive_module_ui <- function(id, i18n){
    )
 }
 
-your_google_drive_module_server <- function(id, session_folder_id) {
+your_google_drive_module_server <- function(id, i18n, session_folder_id) {
   moduleServer(
     id,
     function(input, output, session) {

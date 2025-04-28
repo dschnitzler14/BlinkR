@@ -8,13 +8,13 @@ writing_up_ai_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("wand-magic-sparkles"), "Writing Up: AI")
+                  tagList(shiny::icon("wand-magic-sparkles"), i18n$t("Writing Up: AI"))
                 )
       )
     )),
                                 fluidRow(
                                     box(
-                                    title = tagList(shiny::icon("robot"), "Brief summary of how AI tools like ChatGPT work"),
+                                    title = tagList(shiny::icon("robot"), i18n$t("Brief summary of how AI tools like ChatGPT work")),
                                     id = "what_is_ai",
                                     collapsible = TRUE,
                                     collapsed = TRUE,
@@ -23,7 +23,7 @@ writing_up_ai_ui <- function(id, i18n) {
                                     uiOutput(ns("writing_up_ai_summary_markdown"))
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("exclamation-triangle"), "AI Pitfalls"),
+                                    title = tagList(shiny::icon("exclamation-triangle"), i18n$t("AI Pitfalls")),
                                     id = "pitfalls",
                                     collapsible = TRUE,
                                     collapsed = TRUE,

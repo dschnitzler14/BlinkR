@@ -4,7 +4,7 @@ feedback_module_ui <- function(id, i18n) {
           fluidPage(
             fluidRow(
               box(
-                title = "Feedback",
+                title = i18n$t("Feedback"),
                 id = "feedback",
                 collapsible = FALSE,
                 width = 12,
