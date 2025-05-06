@@ -3,7 +3,7 @@ simulated_experiment_measure_button_module_ui <- function(id, i18n) {
     uiOutput(ns("measurement_button_ui"))
 }
 
-simulated_experiment_measure_button_module_server <- function(id, min = 75, max = 120) {
+simulated_experiment_measure_button_module_server <- function(id, i18n, min = 75, max = 120) {
   moduleServer(
     id,
     function(input, output, session){
@@ -15,7 +15,7 @@ output$measurement_button_ui <- renderUI({
             textOutput(session$ns("measure_display"))
         )
     ),
-    actionButton(session$ns("measure_button"), tagList(shiny::icon("stethoscope"), "Take HR Measurement"), class = "fun-submit-button")
+    actionButton(session$ns("measure_button"), tagList(shiny::icon("stethoscope"), i18n$t("Take HR Measurement")), class = "fun-submit-button")
   )
 })
 

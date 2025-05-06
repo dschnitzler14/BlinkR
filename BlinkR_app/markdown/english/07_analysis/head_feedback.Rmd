@@ -1,0 +1,5 @@
+Well done! You just ran your first bit of code!
+
+The `head()` command returns the first 6 lines of our table, so we can confirm that our data has loaded.
+Take a look at the column names - they will be useful for the next step!
+**The next step is turning this data into something that we can use for analysis.**

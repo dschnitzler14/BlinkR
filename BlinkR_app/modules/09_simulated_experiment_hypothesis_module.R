@@ -8,37 +8,37 @@ simulated_experiment_hypothesis_module_ui <- function(id, i18n) {
                                         div(
                                             class = "page-title-box",
                                             tags$h2(
-                                            tagList(shiny::icon("pen-to-square"), "Simulated Experiment: Hypothesis")
+                                            tagList(shiny::icon("pen-to-square"), i18n$t("Simulated Experiment: Hypothesis"))
                                             )
                                 ),
                                 div(
                                         class = "yellow-box",
-                                          tagList("Remember, this is a simulated experiment. The data you see here is not real.")
+                                          tagList(i18n$t("Remember, this is a simulated experiment. The data you see here is not real."))
                                       ),
                                 )
 
                                     ),
                                 fluidRow(
                                   box(
-                                        title = tagList(shiny::icon("pen-to-square"), "Hypothesis"),
+                                        title = tagList(shiny::icon("pen-to-square"), i18n$t("Hypothesis")),
                                         id = "simulated_hypothesis",
                                         collapsible = TRUE,
                                         width = 12,
                                         solidHeader = TRUE,
                                         
                                         div(style = "border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;",
-                                            markdown(i18n$t("**What is the hypothesis in plain language?**")),
-                                            markdown(i18n$t("Caffeine-containing gums affect heart rate"))
+                                            h3(i18n$t("What is the hypothesis in plain language?")),
+                                            p(i18n$t("Caffeine-containing gums affect heart rate"))
                                         ),
                                         
                                         div(style = "border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;",
-                                            markdown(i18n$t("**What is the null hypothesis?**")),
-                                            markdown(i18n$t("Chewing caffeine-containing gum does not affect heart rate significantly more than chewing caffeine-free gum"))
+                                            h3(i18n$t("What is the null hypothesis?")),
+                                            p(i18n$t("Chewing caffeine-containing gum does not affect heart rate significantly more than chewing caffeine-free gum"))
                                         ),
                                         
                                         div(style = "border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; background-color: #f9f9f9;",
-                                            markdown(i18n$t("**What is the alternative hypothesis?**")),
-                                            markdown(i18n$t("Chewing caffeine-containing gum has an effect on heart rate significantly more than chewing caffeine-free gum"))
+                                            h3(i18n$t("What is the alternative hypothesis?")),
+                                            p(i18n$t("Chewing caffeine-containing gum has an effect on heart rate significantly more than chewing caffeine-free gum"))
                                         )
                                       )
 
@@ -72,7 +72,7 @@ simulated_experiment_hypothesis_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_hypothesis_module_server <- function(id,parent.session) {
+simulated_experiment_hypothesis_module_server <- function(id, i18n, parent.session) {
   moduleServer(id, function(input, output, session) {
 
     observeEvent(input$back_page_background, {

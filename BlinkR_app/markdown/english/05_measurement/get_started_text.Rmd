@@ -1,0 +1,5 @@
+To get started, use this box to enter everyone's initials.
+Please enter them one at a time and hit enter after each one.
+If you make a mistake, you can delete a student below.
+Each student will be assigned an "ID" for this experiment.
+

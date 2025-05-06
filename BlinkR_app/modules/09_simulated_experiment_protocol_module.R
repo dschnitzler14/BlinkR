@@ -8,7 +8,7 @@ simulated_experiment_protocol_module_ui <- function(id, i18n) {
                                     div(
                                       class = "page-title-box",
                                       tags$h2(
-                                        tagList(shiny::icon("list"), "Simulated Experiment: Protocol")
+                                        tagList(shiny::icon("list"), i18n$t("Simulated Experiment: Protocol"))
                                       )
                             )
                           )
@@ -16,7 +16,7 @@ simulated_experiment_protocol_module_ui <- function(id, i18n) {
                                 ),
                                 fluidRow(
                                   box(
-                                    title = tagList(shiny::icon("list"), "Protocol"),
+                                    title = tagList(shiny::icon("list"), i18n$t("Protocol")),
                                     id = "simulated_protocol",
                                     collapsible = TRUE,
                                     width = 12,
@@ -53,7 +53,7 @@ simulated_experiment_protocol_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_protocol_module_server <- function(id, parent.session, include_markdown_language) {
+simulated_experiment_protocol_module_server <- function(id, i18n, parent.session, include_markdown_language) {
   moduleServer(id, function(input, output, session) {
 
 output$simulated_experiment_protocol_markdown <- renderUI({

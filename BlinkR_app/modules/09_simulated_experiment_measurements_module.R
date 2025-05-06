@@ -8,17 +8,17 @@ simulated_experiment_measurements_module_ui <- function(id, i18n) {
                                             div(
                                               class = "page-title-box",
                                               tags$h2(
-                                                tagList(shiny::icon("ruler"), "Measurements")
+                                                tagList(shiny::icon("ruler"), i18n$t("Simulated Experiment: Measurements"))
                                               )
                                     ),
                                     div(
                                         class = "yellow-box",
-                                          tagList("Remember, this is a simulated experiment. The data you see here is not real.")
+                                          tagList(i18n$t("Remember, this is a simulated experiment. The data you see here is not real."))
                                       ),
                                   )),
                                 fluidRow(
                                   box(
-                                    title = tagList(shiny::icon("heart-pulse"), "Take Heart Rate Measurements"),
+                                    title = tagList(shiny::icon("heart-pulse"), i18n$t("Take Heart Rate Measurements")),
                                     id = "simulated_measurements",
                                     collapsible = TRUE,
                                     width = 12,
@@ -29,10 +29,10 @@ simulated_experiment_measurements_module_ui <- function(id, i18n) {
                                     width = 12,
                                     tabPanel(
                                       tabName = "Measurements_Day_1",
-                                      title =  tagList(shiny::icon("stethoscope"), "Measurements Day 1"),
+                                      title =  tagList(shiny::icon("stethoscope"), i18n$t("Measurements Day 1")),
                                       fluidRow(
                                         column(12,
-                                      actionButton(ns("give_gum"), tagList(shiny::icon("circle-plus"), "Particpant Start Chewing"), class = "fun-generate-button"),
+                                      actionButton(ns("give_gum"), tagList(shiny::icon("circle-plus"), i18n$t("Particpant Start Chewing")), class = "fun-generate-button"),
                                       withSpinner(uiOutput(ns("timeprogress")), type = 7, color = "#78d94c", size = 1),
                                         )
                                       ),
@@ -44,10 +44,10 @@ simulated_experiment_measurements_module_ui <- function(id, i18n) {
                                     ),
                                     tabPanel(
                                       tabName = "Measurements_Day_2",
-                                      title =  tagList(shiny::icon("stethoscope"), "Measurements Day 2"),
+                                      title =  tagList(shiny::icon("stethoscope"), i18n$t("Measurements Day 2")),
                                       fluidRow(
                                         column(12,
-                                      actionButton(ns("give_gum2"), tagList(shiny::icon("circle-plus"), "Particpant Start Chewing"), class = "fun-generate-button"),
+                                      actionButton(ns("give_gum2"), tagList(shiny::icon("circle-plus"), i18n$t("Particpant Start Chewing")), class = "fun-generate-button"),
                                       withSpinner(uiOutput(ns("timeprogress2")), type = 7, color = "#78d94c", size = 1),
                                         )
                                       ),
@@ -88,7 +88,7 @@ simulated_experiment_measurements_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_measurements_module_server <- function(id, parent.session, include_markdown_language) {
+simulated_experiment_measurements_module_server <- function(id, i18n, parent.session, include_markdown_language) {
   moduleServer(
     id,
     function(input, output, session){
@@ -110,9 +110,9 @@ simulated_experiment_measurements_module_server <- function(id, parent.session, 
       })
       
   
-  simulated_experiment_measure_button_module_server("measurement1", max = 80)
-  simulated_experiment_measure_button_module_server("measurement2", max = 80)
-  simulated_experiment_measure_button_module_server("measurement3", max = 80)
+  simulated_experiment_measure_button_module_server("measurement1", i18n, max = 80)
+  simulated_experiment_measure_button_module_server("measurement2", i18n, max = 80)
+  simulated_experiment_measure_button_module_server("measurement3", i18n, max = 80)
 
  
   })
@@ -129,9 +129,9 @@ simulated_experiment_measurements_module_server <- function(id, parent.session, 
         )
     })
   
-  simulated_experiment_measure_button_module_server("measurement4", min = 98)
-  simulated_experiment_measure_button_module_server("measurement5", min = 98)
-  simulated_experiment_measure_button_module_server("measurement6", min = 98)
+  simulated_experiment_measure_button_module_server("measurement4", i18n, min = 98)
+  simulated_experiment_measure_button_module_server("measurement5", i18n, min = 98)
+  simulated_experiment_measure_button_module_server("measurement6", i18n, min = 98)
 
  
   })

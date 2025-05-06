@@ -19,7 +19,7 @@ measurements_module_ui <- function(id, i18n) {
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          textOutput(ns("get_started_text")),
+          uiOutput(ns("get_started_text")),
           group_info_module_ui(ns("add_students"), i18n)
         ),
         box(
@@ -27,7 +27,7 @@ measurements_module_ui <- function(id, i18n) {
           collapsible = FALSE,
           width = 12,
           solidHeader = TRUE,
-          textOutput(ns("students_added_helper_text")),
+          uiOutput(ns("students_added_helper_text")),
           uiOutput(ns("students_ui")),
           textOutput(ns("please_add_students"))
         )
@@ -75,7 +75,7 @@ measurements_module_ui <- function(id, i18n) {
 }
 
 
-measurements_module_server <- function(id, i18n, db_student_table, db_measurement, auth, parent.session, include_markdown_language) {
+measurements_module_server <- function(id, i18n, db_student_table, db_measurement, auth, parent.session, include_markdown_language, process_markdown) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -83,12 +83,16 @@ measurements_module_server <- function(id, i18n, db_student_table, db_measuremen
 
       ns <- session$ns
 
-      output$get_started_text <- renderText(
-            i18n$t("To get started, use this box to enter everyone's initials.\n
-                   Please enter them one at a time and hit enter after each one.\n
-                   If you make a mistake, you can delete a student below.\n
-                   Each student will be assigned an \"ID\" for this experiment.")
-          )
+      output$get_started_text <- renderUI({
+      process_markdown("05_measurement/get_started_text.Rmd")
+    })
+
+      # output$get_started_text <- renderText(
+      #       i18n$t("To get started, use this box to enter everyone's initials.\n
+      #              Please enter them one at a time and hit enter after each one.\n
+      #              If you make a mistake, you can delete a student below.\n
+      #              Each student will be assigned an \"ID\" for this experiment.")
+      #     )
       
       observeEvent(input$back_page_measure, {
         updateTabItems(parent.session, "sidebar", "Protocol")
@@ -194,12 +198,15 @@ measurements_module_server <- function(id, i18n, db_student_table, db_measuremen
         div(id = ns("students_ui"))
       })
       
-      output$students_added_helper_text <- renderText(
-        i18n$t("You can enter your measurement results here.\n
-        If you make a mistake, you can re-enter the results and overwrite the existing data.\n
-        You can also delete students from your group using the button on the right.")
+      output$students_added_helper_text <- renderUI({
+      process_markdown("05_measurement/add_students_helper_text.Rmd")
+    })
+      # output$students_added_helper_text <- renderText(
+      #   i18n$t("You can enter your measurement results here.\n
+      #   If you make a mistake, you can re-enter the results and overwrite the existing data.\n
+      #   You can also delete students from your group using the button on the right.")
         
-      )
+      # )
       
       observeEvent(input$raw_data, {
         updateTabItems(parent.session, "sidebar", "Raw_Data")

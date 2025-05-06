@@ -29,7 +29,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
             div(
               style = "display: flex; justify-content: center; margin: 0; padding: 10px;",
               downloadButton(ns("download_instructions"),
-                           label = "Download pdf of instructions",
+                           label = i18n$t("Download pdf of instructions"),
                            class = "btn-primary"
               )
             )
@@ -40,10 +40,10 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
             12,
             div(
                 class = "yellow-box",
-                  tagList("Use this section to take notes as a group to plan your writing-up")
+                  tagList(i18n$t("Use this section to take notes as a group to plan your writing-up"))
                 
               ),
-              box(title = tagList(shiny::icon("paper-plane"), "Introduction"),
+              box(title = tagList(shiny::icon("paper-plane"), i18n$t("Introduction")),
                   collapsible = TRUE,
                   collapsed = FALSE,
                   width = 12,
@@ -58,93 +58,93 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
                       ),
                     ),
                   column(6, 
-                        text_area_module_UI(ns("introduction"), i18n, "Introduction", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                        text_area_module_UI(ns("introduction"), i18n, i18n$t("Introduction"), button_label = tagList(shiny::icon("save"), i18n$t("Save Notes")))
                         ),
                   column(6,
                          uiOutput(ns("writing_up_intro_markdown")),
                          actionButton(
                            ns("background"),
-                           label = tagList(icon("book-open"), "Go to Background"),
+                           label = tagList(icon("book-open"), i18n$t("Go to Background")),
                            class = "action-button custom-action",
                            
                          ),
                          actionButton(
                            ns("hypothesis"),
-                           label = tagList(icon("pen-to-square"), "Go to Hypothesis"),
+                           label = tagList(icon("pen-to-square"), i18n$t("Go to Hypothesis")),
                            class = "action-button custom-action",
                          ),
                          textOutput(ns("folder_url")),
                   )
                   )
                 ),
-            box(title = tagList(shiny::icon("flask"), "Methods"),
+            box(title = tagList(shiny::icon("flask"), i18n$t("Methods")),
                 collapsible = TRUE,
                 collapsed = TRUE,
                 width = 12,
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        text_area_module_UI(ns("methods"), i18n, "Methods", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                        text_area_module_UI(ns("methods"), i18n, i18n$t("Methods"), button_label = tagList(shiny::icon("save"), i18n$t("Save Notes")))
 
                   ),
                   column(6,
                          uiOutput(ns("writing_up_methods_markdown")),
                          actionButton(
                            ns("protocol"),
-                           label = tagList(icon("list"), "Go to Protocol"),
+                           label = tagList(icon("list"), i18n$t("Go to Protocol")),
                            class = "action-button custom-action",
                          ),
                          actionButton(
                            ns("analysis_dashboard1"),
-                           label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
+                           label = tagList(icon("dashboard"), i18n$t("Go to Analysis Dashboard")),
                            class = "action-button custom-action",
                          ),
                          
                          )
                 )
             ),
-            box(title = tagList(shiny::icon("chart-bar"), "Results"),
+            box(title = tagList(shiny::icon("chart-bar"), i18n$t("Results")),
                 collapsible = TRUE,
                 collapsed = TRUE,
                 width = 12,
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                        text_area_module_UI(ns("results"), i18n, "Results", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                        text_area_module_UI(ns("results"), i18n, i18n$t("Results"), button_label = tagList(shiny::icon("save"), i18n$t("Save Notes")))
 
                   ),
                   column(6,
                          uiOutput(ns("writing_up_results_markdown")),
                          actionButton(
                            ns("analysis_dashboard2"),
-                           label = tagList(icon("dashboard"), "Go to Analysis Dashboard"),
+                           label = tagList(icon("dashboard"), i18n$t("Go to Analysis Dashboard")),
                            class = "action-button custom-action",
                          ),
                          )
                 )
             ),
-            box(title = tagList(shiny::icon("comments"), "Discussion"),
+            box(title = tagList(shiny::icon("comments"), i18n$t("Discussion")),
                 collapsible = TRUE,
                 collapsed = TRUE,
                 width = 12,
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      text_area_module_UI(ns("discussion"), i18n, "Discussion", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                      text_area_module_UI(ns("discussion"), i18n, i18n$t("Discussion"), button_label = tagList(shiny::icon("save"), i18n$t("Save Notes")))
                   ),
                   column(6,
                          uiOutput(ns("writing_up_discussion_markdown"))
                          )
                 )
             ),
-            box(title = tagList(shiny::icon("forward"), "Future Work"),
+            box(title = tagList(shiny::icon("forward"), i18n$t("Future Work")),
                 collapsible = TRUE,
                 collapsed = TRUE,
                 width = 12,
                 solidHeader = TRUE,
                 fluidRow(
                   column(6, 
-                      text_area_module_UI(ns("future_work"), i18n, "Future Work", button_label = tagList(shiny::icon("save"), "Save Notes"))
+                      text_area_module_UI(ns("future_work"), i18n, i18n$t("Future Work"), button_label = tagList(shiny::icon("save"), i18n$t("Save Notes")))
 
                   ),
                   column(6,

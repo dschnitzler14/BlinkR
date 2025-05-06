@@ -1,0 +1,1 @@
+First, let's have a look at the data. Try running `head(data)` and see what happens.

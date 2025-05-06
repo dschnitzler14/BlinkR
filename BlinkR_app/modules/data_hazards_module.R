@@ -9,14 +9,16 @@ bucketListModuleUI <- function(id, i18n) {
     fluidRow(
       column(
         width = 12,
-        tags$b("Select the appropriate data hazards for this experiment"),
+        tags$b(i18n$t("Select the appropriate data hazards for this experiment")),
+        tags$br(),
+        tags$small(i18n$t("Drag the hazards from the list to the box on the right to select them for this experiment.")),
         bucket_list(
-          header = "Drag the hazards from the list to the box on the right to select them for this experiment.",
+          header = NULL,
           group_name = ns("bucket_list_group"),
           orientation = "horizontal",
           
           add_rank_list(
-            text = "Drag from here",
+            text = "❓",
             labels = list(
               "automates-decision-making" = htmltools::tags$div(
                 htmltools::tags$img(src = "hazards/automates-decision-making.png", height = "50px"),
@@ -119,7 +121,7 @@ bucketListModuleUI <- function(id, i18n) {
           ),
           
           add_rank_list(
-            text = "Selected Data Hazards",
+            text = "✅",
             labels = NULL,
             input_id = ns("rank_list_2")
           )

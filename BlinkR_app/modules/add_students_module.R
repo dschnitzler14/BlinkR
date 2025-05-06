@@ -4,8 +4,16 @@ group_info_module_ui <- function(id, i18n) {
     textInput(
       inputId = ns("student_initials"),
       label = i18n$t("Enter Student Initials"),
-      placeholder = i18n$t("Type initials here")
+      placeholder = " ",
     ),
+    tags$i(
+      tagList(
+        shiny::icon("info-circle", class = "me-1 text-info"),
+        i18n$t("Type initials in the box")
+      ),
+      style = "margin-top:-6px; display:block;",
+    ),
+    tags$br(),
     actionButton(
       inputId = ns("generate_id"),
       label = tagList(shiny::icon("circle-plus"), i18n$t("Generate ID")),

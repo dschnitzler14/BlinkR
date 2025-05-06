@@ -8,17 +8,17 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
                                           div(
                                             class = "page-title-box",
                                             tags$h2(
-                                              tagList(shiny::icon("dashboard"), "Simulated Experiment: Analysis")
+                                              tagList(shiny::icon("dashboard"), i18n$t("Simulated Experiment: Analysis"))
                                             )
                                   ),
                                   div(
                                         class = "yellow-box",
-                                          tagList("Remember, this is a simulated experiment. The data you see here is not real.")
+                                          tagList(i18n$t("Remember, this is a simulated experiment. The data you see here is not real."))
                                       ),
                                 )),
                                 fluidRow(
                                   box(
-                                    title = tagList(shiny::icon("dashboard"), "Analysing the Data"),
+                                    title = tagList(shiny::icon("dashboard"), i18n$t("Analysing the Data")),
                                     id = "simulated_analysis1",
                                     collapsible = TRUE,
                                     width = 12,
@@ -26,7 +26,7 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
                                     uiOutput(ns("sim_exp_analysis_box1_markdown"))
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("magnifying-glass"), "Prepare the Data"),
+                                    title = tagList(shiny::icon("magnifying-glass"), i18n$t("Prepare the Data")),
                                     id = "simulated_analysis2",
                                     collapsible = TRUE,
                                     width = 12,
@@ -42,7 +42,7 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
                                     )
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("rectangle-list"),"Summarising the Data"),
+                                    title = tagList(shiny::icon("rectangle-list"), i18n$t("Summarising the Data")),
                                     id = "simulated_analysis3",
                                     collapsible = TRUE,
                                     width = 12,
@@ -59,7 +59,7 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
                                     
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("chart-simple"),"Creating a Figure"),
+                                    title = tagList(shiny::icon("chart-simple"), i18n$t("Creating a Figure")),
                                     id = "simulated_analysis4",
                                     collapsible = TRUE,
                                     width = 12,
@@ -76,7 +76,7 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
                                     )
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("equals"), "Statistical Analysis Data"),
+                                    title = tagList(shiny::icon("equals"), i18n$t("Statistical Analysis")),
                                     id = "simulated_analysis5",
                                     collapsible = TRUE,
                                     width = 12,
@@ -85,7 +85,7 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
                                       column(6,
                                       markdown(i18n$t("In order to decide on which statistical test we will carry out, let's check if our data is normally distributed.")),
                                        actionButton(ns("caf_run_hist_Plot"), 
-                                          tagList(shiny::icon("circle-plus"), "Generate Histogram to check for Normality"),
+                                          tagList(shiny::icon("circle-plus"), i18n$t("Generate Histogram to check for Normality")),
                                           class = "fun-generate-button")
                                         ),
                                       column(6,
@@ -141,7 +141,7 @@ simulated_experiment_analysis_module_ui <- function(id, i18n) {
     )
     }
  
-simulated_experiment_analysis_module_server <- function(id, caf_data_read, parent.session, include_markdown_language) {
+simulated_experiment_analysis_module_server <- function(id, i18n, caf_data_read, parent.session, include_markdown_language) {
   moduleServer(id, function(input, output, session) {
 
 output$sim_exp_analysis_box1_markdown <- renderUI({
@@ -184,11 +184,11 @@ observe({
       req(!is.null(prepare_caf_data_result()), !is.null(prepare_caf_data_result()$result))
       feedback <- if (is.data.frame(prepare_caf_data_result()$result) && nrow(prepare_caf_data_result()$result) > 0) {
           tagList(
-            div(class = "success-box", "\U1F64C Good Job!"),
+            div(class = "success-box", i18n$t("\U1F64C Good Job!")),
           )
       
       } else if (!is.null(prepare_caf_data_result())) {
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
       } else {
         NULL
       }
@@ -210,13 +210,13 @@ observe({
   if (tibble::is_tibble(summarise_caf_data_result()$result)) {
     output$summarise_caf_feedback <- renderUI({
       tagList(
-        div(class = "success-box", "\U1F64C Great!"),
+        div(class = "success-box", i18n$t("\U1F64C Great!")),
       )
     })
   } else {
     
     output$summarise_caf_feedback <- renderUI({
-      div(class = "error-box", "\U1F914 Not quite - try again!")
+      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
     })
   }
 })
@@ -234,13 +234,13 @@ observe({
   if (isTRUE(fig_caf_data_result()$is_plot) && inherits(fig_caf_data_result()$result, "ggplot")) {
       output$caf_figure_editor_feedback <- renderUI({
         tagList(
-          div(class = "success-box", "\U1F64C Great Job!"),
+          div(class = "success-box", i18n$t("\U1F64C Great Job!")),
         )
       })
   
     } else {
       output$caf_figure_editor_feedback <- renderUI({
-        div(class = "error-box", "\U1F914 Not quite - try again!")
+        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
       })
       
     }
@@ -254,9 +254,9 @@ hist_plot_reactive <- eventReactive(input$caf_run_hist_Plot, {
   req(average_trs_caf())
   
   hist(average_trs_caf()$Average_HR,
-             main = "Distribution of HR",
-             xlab = "Average HR/Minute",
-             ylab = "Frequency",
+             main = i18n$t("Distribution of HR"),
+             xlab = i18n$t("Average HR/Minute"),
+             ylab = i18n$t("Frequency"),
              col = "grey49",
              border = "black")
   
@@ -285,12 +285,12 @@ observe({
       if (inherits(caf_t_test_result()$result, "htest")) {
         output$caf_t_test_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         } else {
         output$caf_t_test_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })
@@ -307,12 +307,12 @@ observe({
       if (!is.null(caf_effect_size_result())) {
         output$caf_effect_size_feedback <- renderUI({
           tagList(
-            div(class = "success-box", "\U1F64C Great!"),
+            div(class = "success-box", i18n$t("\U1F64C Great!")),
           )
         })
         } else {
         output$caf_effect_size_feedback <- renderUI({
-          div(class = "error-box", "\U1F914 Not quite - try again!")
+          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
         })
         }
       })

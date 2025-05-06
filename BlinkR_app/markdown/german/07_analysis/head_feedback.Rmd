@@ -1,0 +1,5 @@
+Gut gemacht! Du hast gerade deinen ersten Code ausgeführt!
+
+Der `head`-Befehl gibt die ersten 6 Zeilen unserer Tabelle zurück, sodass wir bestätigen können, dass unsere Daten geladen wurden.
+Schau dir die Spaltennamen an – sie werden im nächsten Schritt sehr nützlich sein!
+**Der nächste Schritt ist, diese Daten in etwas umzuwandeln, das wir für die Analyse verwenden können.**

@@ -1398,13 +1398,29 @@ observe({
         
         textInput(session$ns("interpretation_quiz_text_p_value"), 
                   i18n$t("Interpret the p-value result in one sentence"), 
-                  value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", 
+                  #value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", 
                   width = "100%"),
+                  tags$i(
+                    tagList(
+                      shiny::icon("info-circle", class = "me-1 text-info"),
+                      i18n$t("For example... 'A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.'")
+                    ),
+                    style = "margin-top:-6px; display:block;",
+                  ),
+              tags$br(),
         
         textInput(session$ns("interpretation_quiz_text_effect_size"), 
                   i18n$t("Summarise these results in one sentence"), 
-                  value = "An effect size of [effect size method]=[effect size] suggests that ______.", 
+                  #value = "An effect size of [effect size method]=[effect size] suggests that ______.", 
                   width = "100%"),
+                  tags$i(
+                    tagList(
+                      shiny::icon("info-circle", class = "me-1 text-info"),
+                      i18n$t("For example... 'An effect size of [effect size method]=[effect size] suggests that ______.'")
+                    ),
+                    style = "margin-top:-6px; display:block;",
+                  ),
+              tags$br(),
 
         div(
             style = "text-align: center;",
@@ -1492,7 +1508,18 @@ output$what_is_an_effect_size <- renderUI({
           radioButtons(
               inputId = (session$ns("understand_effect_size")),
               label = i18n$t("How strong do you think this effect size is?"),
-              choices = c("Negligible" = "negligible", "Small" = "small", "Medium" = "medium", "Large" = "large"),
+              choiceNames = list(
+                i18n$t("Negligible"),
+                i18n$t("Small"),
+                i18n$t("Medium"),
+                i18n$t("Large")
+              ),
+              choiceValues = list(
+                "negligible", 
+                "small", 
+                "medium", 
+                "large"
+              ),
               selected = character(0)
             ),
           uiOutput(session$ns("understanding_effect_size_feedback"))
@@ -1593,19 +1620,26 @@ output$what_is_a_p_value <- renderUI({
       output$null_hyp_display <- renderUI({
         tagList(
           uiOutput(session$ns("what_is_a_p_value")),
-          strong("For this experiment your null hypothesis was: "),
+          strong(i18n$t("For this experiment your null hypothesis was: ")),
           tags$br(),
           submitted_null_hyp,
           tags$br(),
-          strong("Your alternative hypothesis was: "),
+          strong(i18n$t("Your alternative hypothesis was: ")),
           tags$br(),
           submitted_alt_hyp,
           tags$br(),
           tags$br(),
           radioButtons(
               inputId = (session$ns("reject_null")),
-              label = "Do you think we can reject the null hypothesis and accept the alternative hypothesis with this p-value?",
-              choices = c("Yes" = "yes", "No" = "no"),
+              label = i18n$t("Do you think we can reject the null hypothesis and accept the alternative hypothesis with this p-value?"),
+              choiceNames = list(
+                    i18n$t("Yes"),
+                    i18n$t("No")
+                  ),
+                  choiceValues = list(
+                    "yes", 
+                    "no"
+                  ),
               selected = character(0)
             ),
           uiOutput(session$ns("reject_null_feedback"))

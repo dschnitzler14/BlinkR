@@ -1,0 +1,4 @@
+Um zu starten, benutze bitte dieses Feld, um die Initialen von jedem einzugeben.
+Gib sie einzeln ein und drücke nach jedem die Eingabetaste.
+Falls du einen Fehler machst, kannst du unten einen Studenten löschen.
+Jeder Student wird für dieses Experiment eine "ID" zugewiesen bekommen.

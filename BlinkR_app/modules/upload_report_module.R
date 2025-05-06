@@ -9,32 +9,32 @@ upload_report_module_ui <- function(id, i18n) {
               div(
                 class = "page-title-box",
                 tags$h2(
-                  tagList(shiny::icon("upload"), "Upload Report")
+                  tagList(shiny::icon("upload"), i18n$t("Upload Report"))
                 )
       )
     )),
       fluidRow(
         box(
-          title = tagList(shiny::icon("upload"), "Upload Your Reports Here"),
+          title = tagList(shiny::icon("upload"), i18n$t("Upload Your Reports Here")),
           id = ns("upload_report_box1"),
           collapsible = TRUE,
           width = 12,
           solidHeader = TRUE,
-          textInput(ns("your_name"), "Your First and Last Name"),
+          textInput(ns("your_name"), i18n$t("Your First and Last Name")),
           fileInput(
             ns("file_upload"),
-            label = "Choose a file to upload"
+            label = i18n$t("Choose a file to upload")
           ),
           actionButton(
             ns("upload_button"),
-            tagList(shiny::icon("upload"), "Upload Report to Drive"),
+            tagList(shiny::icon("upload"), i18n$t("Upload Report to Drive")),
             class = "btn btn-primary"
           ),
           br(),
           textOutput(ns("upload_status")
           ),
           br(),
-          h4("Files uploaded in this session:"),
+          h4(i18n$t("Files uploaded in this session:")),
           uiOutput(ns("uploaded_files_list"))
         )
       ),

@@ -1,0 +1,3 @@
+Du kannst hier deine Messergebnisse eingeben.
+Falls du einen Fehler machst, kannst du die Ergebnisse erneut eingeben und die vorhandenen Daten überschreiben.
+Außerdem kannst du Studenten aus deiner Gruppe mit dem Button rechts löschen.

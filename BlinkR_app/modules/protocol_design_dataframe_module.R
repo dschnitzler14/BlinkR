@@ -1,11 +1,20 @@
-experimental_design_module_ui <- function(id, i18n, label_text = i18n$t("Protocol Planning Notes"), placeholder_text = i18n$t("Placeholder")) {
+experimental_design_module_ui <- function(id, i18n, label_text = i18n$t("Protocol Planning Notes"), instruction_text = i18n$t("Instruction Text")) {
   ns <- NS(id)
   tagList(
+    
     textAreaInput(
       ns("experimental_design"),
       label = label_text,
-      placeholder = placeholder_text
+      #placeholder = placeholder_text
     ),
+    tags$i(
+      tagList(
+        shiny::icon("info-circle", class = "me-1 text-info"),
+        instruction_text
+      ),
+      style = "margin-top:-6px; display:block;",
+    ),
+    tags$br(),
     actionButton(ns("submit_protocol_notes"), tagList(shiny::icon("save"), i18n$t("Save Notes")), class = "fun-save-button")
     )
 }

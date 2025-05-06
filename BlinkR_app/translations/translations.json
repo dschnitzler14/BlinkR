@@ -313,8 +313,8 @@
   "de": "Initialen der Versuchsperson eingeben"
 },
 {
-  "en": "Type initials here",
-  "de": "Initialen hier eingeben"
+  "en": "Type initials in the box",
+  "de": "Geben Sie die Initialen in das Feld ein"
 },
 {
   "en": "Please enter initials.",
@@ -733,14 +733,6 @@
   "de": "Schau im Code nach vorhandenen Farbnamen!"
 },
 {
-  "en": "First, let's have a look at the data. Try running `head(data)` and see what happens.",
-  "de": "Schauen wir uns zuerst die Daten an. Versuch, `head(data)` auszuführen, und sieh, was passiert."
-},
-{
-  "en": "Well done! You just ran your first bit of code!\nThe `head()` command returns the first 6 lines of our table, so we can confirm that our data has loaded.\nTake a look at the column names - they will be useful for the next step!\n**The next step is turning this data into something that we can use for analysis.**",
-  "de": "Gut gemacht! Du hast gerade deinen ersten Code ausgeführt!\nDer Befehl `head()` zeigt die ersten 6 Zeilen unserer Tabelle an – so können wir prüfen, ob die Daten korrekt geladen wurden.\nSieh dir die Spaltennamen an – sie sind im nächsten Schritt nützlich!\n**Der nächste Schritt ist, diese Daten in eine Form zu bringen, die wir für die Analyse verwenden können.**"
-},
-{
   "en": "AI can help catch grammar, spelling, and punctuation mistakes, but always clarify in your prompt that you *do not want new information added*.",
   "de": "KI kann helfen, Grammatik-, Rechtschreib- und Zeichensetzungsfehler zu finden – aber gib in deinem Prompt immer an, dass *keine neuen Inhalte hinzugefügt* werden sollen."
 },
@@ -837,24 +829,24 @@
   "de": "Zum Schluss berechnen wir die Effektstärke."
 },
 {
-  "en": "**What is the hypothesis in plain language?**",
-  "de": "**Was ist die Hypothese in einfachen Worten?**"
+  "en": "What is the hypothesis in plain language?",
+  "de": "Was ist die Hypothese in einfachen Worten?"
 },
 {
   "en": "Caffeine-containing gums affect heart rate",
   "de": "Kaugummis mit Koffein beeinflussen die Herzfrequenz"
 },
 {
-  "en": "**What is the null hypothesis?**",
-  "de": "**Was ist die Nullhypothese?**"
+  "en": "What is the null hypothesis?",
+  "de": "Was ist die Nullhypothese?"
 },
 {
   "en": "Chewing caffeine-containing gum does not affect heart rate significantly more than chewing caffeine-free gum",
   "de": "Das Kauen von Koffein-Kaugummi beeinflusst die Herzfrequenz nicht signifikant stärker als das Kauen von koffeinfreiem Kaugummi"
 },
 {
-  "en": "**What is the alternative hypothesis?**",
-  "de": "**Was ist die Alternativhypothese?**"
+  "en": "What is the alternative hypothesis?",
+  "de": "Was ist die Alternativhypothese?"
 },
 {
   "en": "Chewing caffeine-containing gum has an effect on heart rate significantly more than chewing caffeine-free gum",
@@ -865,8 +857,12 @@
   "de": "Du musst dein Einverständnis geben, um Messungen einzureichen."
 },
 {
-  "en": "# View Your Google Drive Folder\nAs you add content throughout the app, it will get uploaded to this Google Drive.\nFrom there, you can download your data, results, and figures.",
-  "de": "# Zeige deinen Google Drive-Ordner an\nAlles, was du in der App hinzufügst, wird in diesem Google Drive gespeichert.\nDort kannst du deine Daten, Ergebnisse und Abbildungen herunterladen."
+  "en": "View Your Google Drive Folder",
+  "de": "Zeige deinen Google Drive-Ordner an"
+},
+{
+  "en": "As you add content throughout the app, it will get uploaded to this Google Drive.\nFrom there, you can download your data, results, and figures.",
+  "de": "Alles, was du in der App hinzufügst, wird in diesem Google Drive gespeichert.\nDort kannst du deine Daten, Ergebnisse und Abbildungen herunterladen."
 },
 {
   "en": "Download Selected Files",
@@ -902,6 +898,106 @@
   { "en": "🙌 Great Job!", "de": "🙌 Großartige Arbeit!" },
   { "en": "Writing Up: AI", "de": "Verschriftlichung: KI" },
   { "en": "Brief summary of how AI tools like ChatGPT work", "de": "Kurze Zusammenfassung, wie KI‑Tools wie ChatGPT funktionieren" },
-  { "en": "AI Pitfalls", "de": "KI‑Fallstricke" }
+  { "en": "AI Pitfalls", "de": "KI‑Fallstricke" },
+
+  { "en": "Simulated Experiment: Background",                             "de": "Simuliertes Experiment: Hintergrund" },
+  { "en": "What do we know?",                                             "de": "Was wissen wir?" },
+  { "en": "What don't we know?",                                          "de": "Was wissen wir nicht?" },
+  { "en": "Why is this important?",                                       "de": "Warum ist das wichtig?" },
+  { "en": "Simulated Experiment: Hypothesis",                             "de": "Simuliertes Experiment: Hypothese" },
+  { "en": "Remember, this is a simulated experiment. The data you see here is not real.",
+                                                                           "de": "Denkt daran, dies ist ein simuliertes Experiment. Die hier gezeigten Daten sind nicht echt." },
+  { "en": "Simulated Experiment: Protocol",                               "de": "Simuliertes Experiment: Protokoll" },
+  { "en": "Simulated Experiment: Measurements",                           "de": "Simuliertes Experiment: Messungen" },
+  { "en": "Take Heart Rate Measurements",                                 "de": "Herzfrequenzmessungen durchführen" },
+  { "en": "Measurements Day 1",                                           "de": "Messungen Tag 1" },
+  { "en": "Particpant Start Chewing",                                     "de": "Teilnehmer beginnt zu kauen" },
+  { "en": "Measurements Day 2",                                           "de": "Messungen Tag 2" },
+  { "en": "Take HR Measurement",                                          "de": "HF‑Messung durchführen" },
+  { "en": "Simulated Experiment: Raw Data",                               "de": "Simuliertes Experiment: Rohdaten" },
+  { "en": "Simulated Experiment: Analysis",                               "de": "Simuliertes Experiment: Analyse" },
+  { "en": "Analysing the Data",                                           "de": "Daten analysieren" },
+  { "en": "Summarising the Data",                                         "de": "Daten zusammenfassen" },
+  { "en": "Creating a Figure",                                            "de": "Abbildung erstellen" },
+  { "en": "Distribution of HR",                                           "de": "Verteilung der HF" },
+  { "en": "Average HR/Minute",                                            "de": "Durchschnittliche HF/Minute" },
+  { "en": "Simulated Experiment: Writing Up",                             "de": "Simuliertes Experiment: Verschriftlichung" },
+  { "en": "Download pdf of instructions",                                 "de": "PDF mit Anweisungen herunterladen" },
+  { "en": "Use this section to take notes as a group to plan your writing-up",
+                                                                           "de": "Verwendet diesen Abschnitt, um als Gruppe Notizen zur Planung eurer Verschriftlichung zu machen" },
+  { "en": "Go to Background",                                             "de": "Zum Hintergrund" },
+  { "en": "Go to Hypothesis",                                             "de": "Zur Hypothese" },
+  { "en": "Go to Protocol",                                               "de": "Zum Protokoll" },
+  { "en": "Overall, how would you rate your experience using this app? (1 is high, 5 is low)", 
+    "de": "Wie würdest Du insgesamt Ihre Erfahrung mit dieser App bewerten? (1 ist hoch, 5 ist niedrig)" },
+
+  { "en": "How easy was it to navigate the app and understand what to do at each step? (1 is high, 5 is low)", 
+    "de": "Wie leicht war es, in der App zu navigieren und bei jedem Schritt zu verstehen, was zu tun ist? (1 ist hoch, 5 ist niedrig)" },
+
+  { "en": "What part(s) of the app were confusing or difficult to use?", 
+    "de": "Welche Teile der App waren verwirrend oder schwer zu benutzen?" },
+
+  { "en": "Did you experience any technical issues or bugs while using the app?", 
+    "de": "Hattest Du während der Nutzung der App technische Probleme oder Bugs erlebt?" },
+
+  { "en": "Please describe the issue(s) you encountered", 
+    "de": "Bitte beschreibe die aufgetretenen Probleme" },
+
+  { "en": "Did the app provide all the necessary tools and guidance for you to complete the experiment?", 
+    "de": "Hat die App alle notwendigen Werkzeuge und Anleitungen bereitgestellt, um das Experiment durchzuführen?" },
+
+  { "en": "What additional features or improvements would have made the experiment easier?", 
+    "de": "Welche zusätzlichen Funktionen oder Verbesserungen hätten das Experiment erleichtert?" },
+
+  { "en": "Which feature(s) did you find the most helpful? Why?", 
+    "de": "Welche Funktion(en) fandest Du am hilfreichsten? Warum?" },
+
+  { "en": "Which feature(s) did you find the least useful or frustrating? Why?", 
+    "de": "Welche Funktion(en) fandest Du am wenigsten nützlich oder frustrierend? Warum?" },
+
+  { "en": "Do you have any other suggestions for improving the app?", 
+    "de": "Hast Du weitere Vorschläge zur Verbesserung der App?" },
+
+  { "en": "Send Feedback", 
+    "de": "Feedback senden" },
+  { "en": "Upload Your Reports Here",      "de": "Berichte hier hochladen" },
+  { "en": "Your First and Last Name",      "de": "Ihr Vor‑ und Nachname" },
+  { "en": "Choose a file to upload",       "de": "Datei zum Hochladen auswählen" },
+  { "en": "Upload Report to Drive",        "de": "Bericht auf Drive hochladen" },
+  { "en": "Files uploaded in this session:", "de": "In dieser Session hochgeladene Dateien:" },
+  { "en": "For this experiment your null hypothesis was:", 
+    "de": "Für dieses Experiment lautete Ihre Nullhypothese:" },
+
+  { "en": "Your alternative hypothesis was:", 
+    "de": "Ihre Alternativhypothese lautete:" },
+
+  { "en": "Do you think we can reject the null hypothesis and accept the alternative hypothesis with this p-value?", 
+    "de": "Meinst Du, dass wir die Nullhypothese mit diesem p‑Wert verwerfen und die Alternativhypothese akzeptieren können?" },
+      { "en": "Negligible", "de": "Vernachlässigbar" },
+  { "en": "Small",      "de": "Klein" },
+  { "en": "Medium",     "de": "Mittel" },
+  { "en": "Large",      "de": "Groß" },
+  { "en": "bar chart", "de": "Balkendiagramm" },
+  { "en": "box plot",  "de": "Boxplot" },
+  {
+    "en": "To get started, please add students in the box above!",
+    "de": "Um zu beginnen, füge bitte oben im Feld Versuchspersonen hinzu!"
+  },
+    { "en": "Describe any difficulties you faced.",     "de": "Beschreiben Sie die Schwierigkeiten, auf die Sie gestoßen sind." },
+  { "en": "Provide details on what happened",         "de": "Geben Sie Details dazu an, was passiert ist." },
+  { "en": "Share your suggestions.",                  "de": "Teilen Sie Ihre Vorschläge." },
+  { "en": "Describe what worked well.",               "de": "Beschreiben Sie, was gut funktioniert hat." },
+  { "en": "Describe what could be improved.",         "de": "Beschreiben Sie, was verbessert werden könnte." },
+  { "en": "Share any additional thoughts.",           "de": "Teilen Sie weitere Gedanken." },
+    {
+    "en": "For example... 'An effect size of [effect size method]=[effect size] suggests that ______.'",
+    "de": "Zum Beispiel … 'Eine Effektgröße von [Effektgrößenmethode]=[Effektgröße] deutet darauf hin, dass ______.'"
+  },
+  {
+    "en": "For example... 'A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.'",
+    "de": "Zum Beispiel … 'Ein p‑Wert von [statistisches Testverfahren + Freiheitsgrade], p=[p‑Wert] deutet darauf hin, dass ______.'"
+  }
+
+
   ]
 }

@@ -822,10 +822,14 @@ observe({
           radioButtons(
             session$ns("summary_result_interpretation_quiz"), 
             label = i18n$t("Can we tell from this if this is statistically significant?"), 
-            choices = list(
-              "Yes" = "option1", 
-              "No" = "option2"
-            ),
+            choiceNames = list(
+                  i18n$t("Yes"),
+                  i18n$t("No")
+                ),
+                choiceValues = list(
+                  "yes", 
+                  "no"
+                ),
             selected = character(0)
           ),
           uiOutput(session$ns("summary_result_interpretation_quiz_feedback")),

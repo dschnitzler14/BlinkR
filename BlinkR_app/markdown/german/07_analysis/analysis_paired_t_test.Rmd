@@ -14,7 +14,7 @@ Kopiere dazu den folgenden Code vollständig in den Editor:
   )
   ```
         
-Du wirst sehen, dass dieser t-Test ein zusätzliches Argument enthält: paired = TRUE.
+Du wirst sehen, dass dieser t-Test ein zusätzliches Argument enthält: `paired = TRUE`.
 Das zeigt R, dass es sich um gepaarte Daten handelt.
 
 Der Schwellenwert für ein signifikantes Ergebnis liegt bei p ≤ 0,05.

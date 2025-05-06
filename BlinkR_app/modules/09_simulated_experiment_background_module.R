@@ -8,7 +8,7 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
                                           div(
                                             class = "page-title-box",
                                             tags$h2(
-                                              tagList(shiny::icon("book-open"), "Simulated Experiment: Background")
+                                              tagList(shiny::icon("book-open"), i18n$t("Simulated Experiment: Background"))
                                             )
                                   )
                                 )
@@ -16,7 +16,7 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
                                       ),
                                 fluidRow(
                                   box(
-                                    title = tagList(shiny::icon("circle-question"),"What do we know?"),
+                                    title = tagList(shiny::icon("circle-question"), i18n$t("What do we know?")),
                                     id = "simulated_background1",
                                     collapsible = TRUE,
                                     width = 12,
@@ -24,7 +24,7 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
                                     uiOutput(ns("simulated_experiment_background1_markdown"))                                    
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("circle-question"), "What don't we know?"),
+                                    title = tagList(shiny::icon("circle-question"), i18n$t("What don't we know?")),
                                     id = "simulated_background2",
                                     collapsible = TRUE,
                                     width = 12,
@@ -32,7 +32,7 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
                                     uiOutput(ns("simulated_experiment_background2_markdown"))                                    
                                   ),
                                   box(
-                                    title = tagList(shiny::icon("circle-question"), "Why is this important?"),
+                                    title = tagList(shiny::icon("circle-question"), i18n$t("Why is this important?")),
                                     id = "simulated_background3",
                                     collapsible = TRUE,
                                     width = 12,
@@ -69,7 +69,7 @@ simulated_experiment_background_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_background_module_server <- function(id, parent.session, include_markdown_language) {
+simulated_experiment_background_module_server <- function(id, i18n, parent.session, include_markdown_language) {
   moduleServer(id, function(input, output, session) {
 
 output$simulated_experiment_background1_markdown <- renderUI({

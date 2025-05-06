@@ -32,9 +32,14 @@ analysis_create_figure_module_ui <- function(id, i18n) {
                 ),
                 radioButtons(ns("figure_type_selector"),
                              label = i18n$t("What type of figure would be best here?"),
-                             choices = c("bar chart" = "bar",
-                                         "box plot" = "box"
-                                         ),
+                             choiceNames = list(
+                                    i18n$t("bar chart"),
+                                    i18n$t("box plot")
+                                  ),
+                                  choiceValues = list(
+                                    "bar", 
+                                    "box"
+                                  ),
                              selected = character(0)),
                 uiOutput(ns("figure_type_selector_output"))
                 

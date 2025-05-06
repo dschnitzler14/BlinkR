@@ -11,56 +11,119 @@ feedback_module_ui <- function(id, i18n) {
                 solidHeader = TRUE,
               
       sliderInput(ns("overall_experience"), 
-      "Overall, how would you rate your experience using this app? (1 is high, 5 is low)", 
+      i18n$t("Overall, how would you rate your experience using this app? (1 is high, 5 is low)"), 
       min = 1, max = 5, value = 3, step = 1, ticks = FALSE),
 
       sliderInput(ns("clarity"), 
-      "How easy was it to navigate the app and understand what to do at each step? (1 is high, 5 is low)", 
+      i18n$t("How easy was it to navigate the app and understand what to do at each step? (1 is high, 5 is low)"), 
       min = 1, max = 5, value = 3, step = 1, ticks = FALSE),
 
       conditionalPanel(
       condition = sprintf("input['%s'] <= 3", ns("clarity")),
       textAreaInput(ns("clarity_issues"), 
-        "What part(s) of the app were confusing or difficult to use?", 
-        placeholder = "Describe any difficulties you faced...")
+        i18n$t("What part(s) of the app were confusing or difficult to use?"), 
+        placeholder = " ")
       ),
+      tags$i(
+        tagList(
+          shiny::icon("info-circle", class = "me-1 text-info"),
+          i18n$t("Describe any difficulties you faced.")
+        ),
+        style = "margin-top:-6px; display:block;",
+      ),
+      tags$br(),
 
       radioButtons(ns("bugs"), 
-      "Did you experience any technical issues or bugs while using the app?", 
-      choices = c("Yes" = "yes", "No" = "no"), 
+      i18n$t("Did you experience any technical issues or bugs while using the app?"), 
+      choiceNames = list(
+            i18n$t("Yes"),
+            i18n$t("No")
+          ),
+          choiceValues = list(
+            "yes", 
+            "no"
+          ),
       inline = TRUE),
 
       conditionalPanel(
       condition = sprintf("input['%s'] == 'yes'", ns("bugs")),
       textAreaInput(ns("bug_details"), 
-        "Please describe the issue(s) you encountered", 
-        placeholder = "Provide details on what happened...")
+         i18n$t("Please describe the issue(s) you encountered"), 
+        placeholder = " ")
       ),
+      tags$i(
+        tagList(
+          shiny::icon("info-circle", class = "me-1 text-info"),
+          i18n$t("Provide details on what happened")
+        ),
+        style = "margin-top:-6px; display:block;",
+      ),
+      tags$br(),
 
       radioButtons(ns("experiment_tools"), 
-      "Did the app provide all the necessary tools and guidance for you to complete the experiment?", 
-      choices = c("Yes" = "yes", "No" = "no"), 
+      i18n$t("Did the app provide all the necessary tools and guidance for you to complete the experiment?"), 
+      choiceNames = list(
+              i18n$t("Yes"),
+              i18n$t("No")
+            ),
+            choiceValues = list(
+              "yes", 
+              "no"
+            ),
       inline = TRUE),
 
       conditionalPanel(
       condition = sprintf("input['%s'] == 'no'", ns("experiment_tools")),
       textAreaInput(ns("missing_features"), 
-        "What additional features or improvements would have made the experiment easier?", 
-        placeholder = "Share your suggestions...")
+        i18n$t("What additional features or improvements would have made the experiment easier?"), 
+        placeholder = " ")
       ),
+      tags$i(
+        tagList(
+          shiny::icon("info-circle", class = "me-1 text-info"),
+          i18n$t("Share your suggestions.")
+        ),
+        style = "margin-top:-6px; display:block;",
+      ),
+      tags$br(),
 
       textAreaInput(ns("useful_features"), 
-      "Which feature(s) did you find the most helpful? Why?", 
-      placeholder = "Describe what worked well..."),
+      i18n$t("Which feature(s) did you find the most helpful? Why?"), 
+      placeholder = " "),
+       tags$i(
+        tagList(
+          shiny::icon("info-circle", class = "me-1 text-info"),
+          i18n$t("Describe what worked well.")
+        ),
+        style = "margin-top:-6px; display:block;",
+      ),
+      tags$br(),
+
       textAreaInput(ns("least_useful_features"), 
-      "Which feature(s) did you find the least useful or frustrating? Why?", 
-      placeholder = "Describe what could be improved..."),
+      i18n$t("Which feature(s) did you find the least useful or frustrating? Why?"), 
+      placeholder = " "),
+       tags$i(
+        tagList(
+          shiny::icon("info-circle", class = "me-1 text-info"),
+          i18n$t("Describe what could be improved.")
+        ),
+        style = "margin-top:-6px; display:block;",
+      ),
+      tags$br(),
       textAreaInput(ns("general_feedback"), 
-      "Do you have any other suggestions for improving the app?", 
-      placeholder = "Share any additional thoughts..."),
+      i18n$t("Do you have any other suggestions for improving the app?"), 
+      placeholder = " "),
+      tags$i(
+        tagList(
+          shiny::icon("info-circle", class = "me-1 text-info"),
+          i18n$t("Share any additional thoughts.")
+        ),
+        style = "margin-top:-6px; display:block;",
+      ),
+      tags$br(),
       div(
           style = "text-align: center;",
-      actionButton(ns("submit_feedback"), "Send Feedback", class = "fun-submit-button")
+      actionButton(ns("submit_feedback"), i18n$t("Send Feedback"), class = "fun-submit-button")
       ),
       uiOutput(ns("submission_feedback"))
           )
@@ -89,7 +152,7 @@ feedback_module_ui <- function(id, i18n) {
   )
 }
 
-feedback_module_server <- function(id, feedback_data, parent.session) {
+feedback_module_server <- function(id, i18n, feedback_data, parent.session) {
   moduleServer(id, function(input, output, session) {
           vars <- get_experiment_vars()
 

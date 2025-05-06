@@ -28,9 +28,7 @@ analysis_prepare_data_module_ui <- function(id, i18n) {
             fluidRow(
               column(
                 4,
-                markdown(
-                  i18n$t("First, let's have a look at the data. Try running `head(data)` and see what happens.")
-                ),
+                uiOutput(ns("head_instructions")),
                 uiOutput(ns("view_data_code_feedback")),
                 uiOutput(ns("view_data_quiz_feedback"))
               ),
@@ -144,6 +142,10 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
     view_data <- reactive({ view_data_read })
     
     # Step 1: View Data
+
+    output$head_instructions <- renderUI({
+      process_markdown("07_analysis/head_instructions.Rmd")
+    })
     
     predefined_code_view_data <- "head(data)"
     
@@ -155,17 +157,21 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
       feedback <- if (is.data.frame(view_data_result()$result) && nrow(view_data_result()$result) > 0) {
           tagList(
             div(class = "success-box", i18n$t("\U1F64C That's our data! Looks good!")),
-            markdown(
-        i18n$t("Well done! You just ran your first bit of code!
-        The `head()` command returns the first 6 lines of our table, so we can confirm that our data has loaded.
-        Take a look at the column names - they will be useful for the next step!
-        **The next step is turning this data into something that we can use for analysis.**
-        ")),
+            uiOutput(session$ns("head_feedback")),
+
             textInput(
               session$ns("interpret_head_results"),
               label = i18n$t("How many subjects (students) can you see in this slice of data?"),
-              placeholder = i18n$t("Type your answer here"),
+              placeholder = " ",
               ),
+              tags$i(
+                    tagList(
+                      shiny::icon("info-circle", class = "me-1 text-info"),
+                      i18n$t("Type your answer in the box above.")
+                    ),
+                    style = "margin-top:-6px; display:block;",
+                  ),
+              tags$br(),
               div(
                 style = "text-align: center;",
                 actionButton(
@@ -205,6 +211,10 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
     })
 
 
+    output$head_feedback <- renderUI({
+          process_markdown("07_analysis/head_feedback.Rmd")
+        })
+        
   observeEvent(input$interpret_head_results_submit, {
       feedback_head <- if (input$interpret_head_results == 1) {
         div(class = "success-box", i18n$t("\U1F64C Correct!"))
@@ -216,6 +226,7 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
         feedback_head
       })
     })
+
     
     observeEvent(input$analysis_step2_quiz, {
       feedback <- if (input$analysis_step2_quiz == "option2") {

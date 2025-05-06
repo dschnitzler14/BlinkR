@@ -39,7 +39,7 @@ simulated_experiment_description_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_description_module_server <- function(id,parent.session, include_markdown_language = include_markdown_language) {
+simulated_experiment_description_module_server <- function(id, i18n, parent.session, include_markdown_language = include_markdown_language) {
   moduleServer(id, function(input, output, session) {
 
 output$simulated_experiment_description_markdown <- renderUI({

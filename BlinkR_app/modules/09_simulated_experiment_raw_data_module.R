@@ -8,17 +8,17 @@ simulated_experiment_raw_data_module_ui <- function(id, i18n) {
                                             div(
                                               class = "page-title-box",
                                               tags$h2(
-                                                tagList(shiny::icon("database"), "Simulated Experiment: Raw Data")
+                                                tagList(shiny::icon("database"), i18n$t("Simulated Experiment: Raw Data"))
                                               )
                                     ),
                                     div(
                                         class = "yellow-box",
-                                          tagList("Remember, this is a simulated experiment. The data you see here is not real.")
+                                          tagList(i18n$t("Remember, this is a simulated experiment. The data you see here is not real."))
                                       ),
                                   )),
                                 fluidRow(
                                   box(
-                                    title = tagList(shiny::icon("database"), "Raw Data"),
+                                    title = tagList(shiny::icon("database"), i18n$t("Raw Data")),
                                     id = "simulated_raw_data",
                                     collapsible = TRUE,
                                     width = 12,
@@ -57,7 +57,7 @@ simulated_experiment_raw_data_module_ui <- function(id, i18n) {
 
  
 
-simulated_experiment_raw_data_module_server <- function(id, caf_data_read, parent.session) {
+simulated_experiment_raw_data_module_server <- function(id, i18n, caf_data_read, parent.session) {
     moduleServer(
     id,
     function(input, output, session){

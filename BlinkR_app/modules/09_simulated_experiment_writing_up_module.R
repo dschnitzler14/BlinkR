@@ -9,16 +9,16 @@ simulated_experiment_writing_up_module_ui <- function(id, i18n) {
                                             div(
                                               class = "page-title-box",
                                               tags$h2(
-                                                tagList(shiny::icon("pen"), "Simulated Experiment: Writing Up")
+                                                tagList(shiny::icon("pen"), i18n$t("Simulated Experiment: Writing Up"))
                                               )
                                     ),
                                     div(
                                         class = "yellow-box",
-                                          tagList("Remember, this is a simulated experiment. The data you see here is not real.")
+                                          tagList(i18n$t("Remember, this is a simulated experiment. The data you see here is not real."))
                                       ),
                                   )),
                                   box(
-                                    title = "Writing Up",
+                                    title = i18n$t("Writing Up"),
                                     id = "simulated_writing_up",
                                     collapsible = TRUE,
                                     width = 12,
@@ -26,7 +26,7 @@ simulated_experiment_writing_up_module_ui <- function(id, i18n) {
                                     uiOutput(ns("sim_exp_writing_up_first_markdown"))
                                   ),
                                   box(
-                                    title = "Introduction",
+                                    title = tagList(shiny::icon("paper-plane"), i18n$t("Introduction")),
                                     id = "simulated_writing_up2",
                                     collapsible = TRUE,
                                     width = 12,
@@ -39,7 +39,7 @@ simulated_experiment_writing_up_module_ui <- function(id, i18n) {
                                     )
                                   ),
                                   box(
-                                    title = "Methods",
+                                    title = tagList(shiny::icon("flask"), i18n$t("Methods")),
                                     id = "simulated_writing_up3",
                                     collapsible = TRUE,
                                     width = 12,
@@ -61,7 +61,7 @@ simulated_experiment_writing_up_module_ui <- function(id, i18n) {
                                     )
                                   ),
                                   box(
-                                    title = "Results",
+                                    title = tagList(shiny::icon("chart-bar"), i18n$t("Results")),
                                     id = "simulated_writing_up3",
                                     collapsible = TRUE,
                                     width = 12,
@@ -83,7 +83,7 @@ simulated_experiment_writing_up_module_ui <- function(id, i18n) {
                                     )
                                   ),
                                   box(
-                                    title = "Discussion",
+                                    title = tagList(shiny::icon("comments"), i18n$t("Discussion")),
                                     id = "simulated_writing_up4",
                                     collapsible = TRUE,
                                     width = 12,
@@ -96,7 +96,7 @@ simulated_experiment_writing_up_module_ui <- function(id, i18n) {
                                     )
                                   ),
                                   box(
-                                    title = "Future Direction",
+                                    title = tagList(shiny::icon("forward"), i18n$t("Future Work")),
                                     id = "simulated_writing_up5",
                                     collapsible = TRUE,
                                     width = 12,
@@ -109,7 +109,7 @@ simulated_experiment_writing_up_module_ui <- function(id, i18n) {
                                     )
                                   ),
                                   box(
-                                    title = "References",
+                                    title = tagList(shiny::icon("rectangle-list"), i18n$t("References")),
                                     id = "simulated_writing_up6",
                                     collapsible = TRUE,
                                     width = 12,
@@ -151,7 +151,7 @@ simulated_experiment_writing_up_module_ui <- function(id, i18n) {
     )
     }
 
-simulated_experiment_writing_up_module_server <- function(id,parent.session, include_markdown_language) {
+simulated_experiment_writing_up_module_server <- function(id, i18n, parent.session, include_markdown_language) {
   moduleServer(id, function(input, output, session) {
 
 output$sim_exp_writing_up_first_markdown <- renderUI({

@@ -1,0 +1,2 @@
+Werfen wir zunächst einen Blick auf die Daten. Führen Sie `head(data)` aus und sehen Sie, was passiert.
+

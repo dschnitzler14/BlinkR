@@ -4,8 +4,17 @@ text_area_module_UI <- function(id, i18n, text_label = i18n$t("Type Your Notes H
     textAreaInput(
       inputId = ns("text_input"),
       label = text_label,
-      value = text_value
+      #value = text_value
     ),
+    tags$i(
+                    tagList(
+                      shiny::icon("info-circle", class = "me-1 text-info"),
+                      text_value
+                    ),
+                    style = "margin-top:-6px; display:block;",
+                  ),
+              tags$br(),
+
     div(
       style = "display: flex; justify-content: center; align-items: center; width: 100%;",
     actionButton(ns("inputTextButton"), label = button_label, class = tagList(icon("save"), "fun-save-button")

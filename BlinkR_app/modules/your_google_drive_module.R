@@ -1,8 +1,8 @@
 your_google_drive_module_ui <- function(id, i18n){
   ns <- NS(id)
    tagList(
-        markdown(i18n$t("# View Your Google Drive Folder
-                 As you add content throughout the app, it will get uploaded to this Google Drive.
+        p(i18n$t("View Your Google Drive Folder")),
+        p(i18n$t("As you add content throughout the app, it will get uploaded to this Google Drive.
                  From there, you can download your data, results, and figures.")),
         uiOutput(ns("iframe_to_your_drive")),
         div(
