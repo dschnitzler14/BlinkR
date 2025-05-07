@@ -602,6 +602,7 @@ observeEvent(input$save_not_normal_paired_button, {
   predefined_code_normal_unpaired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_two_sided_t_test.txt"),
     vars)
+    
   normal_unpaired_result <- editor_module_server("normal_unpaired_editor", i18n, average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
 
 observeEvent(input$unpaired_normal,{
@@ -672,11 +673,8 @@ output$two_sided_t_test <- renderUI({
 
 observe({
 
-
       req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result))
       
-  print(normal_unpaired_result())
-  print(normal_unpaired_result()$result)
   
       if (inherits(normal_unpaired_result()$result, "htest")) {
         output$normal_unpaired_feedback <- renderUI({
