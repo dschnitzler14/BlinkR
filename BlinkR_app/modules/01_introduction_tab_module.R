@@ -77,7 +77,7 @@ introduction_module_server <- function(id, i18n, parent.session, auth_status, pr
           column(12,
             div(
               class = "roadmap-section",
-              tags$h4("Research Preparation"),
+              tags$h4(i18n$t("Research Preparation")),
               actionButton(session$ns("hypothesis"), label = tagList(icon("pen-to-square"), i18n$t("Hypothesis")), class = "action-button custom-action", `data-id` = "Hypothesis"),
               actionButton(session$ns("protocol"), label = tagList(icon("list"), i18n$t("Protocol")), class = "action-button custom-action", `data-id` = "Protocol"),
               actionButton(session$ns("measurements"), label = tagList(icon("ruler"), i18n$t("Measurements")), class = "action-button custom-action", `data-id` = "Measurements"),

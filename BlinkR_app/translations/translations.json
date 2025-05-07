@@ -314,7 +314,7 @@
 },
 {
   "en": "Type initials in the box",
-  "de": "Geben Sie die Initialen in das Feld ein"
+  "de": "Gib die Initialen in das Feld ein"
 },
 {
   "en": "Please enter initials.",
@@ -929,7 +929,7 @@
   { "en": "Go to Hypothesis",                                             "de": "Zur Hypothese" },
   { "en": "Go to Protocol",                                               "de": "Zum Protokoll" },
   { "en": "Overall, how would you rate your experience using this app? (1 is high, 5 is low)", 
-    "de": "Wie würdest Du insgesamt Ihre Erfahrung mit dieser App bewerten? (1 ist hoch, 5 ist niedrig)" },
+    "de": "Wie würdest du insgesamt Ihre Erfahrung mit dieser App bewerten? (1 ist hoch, 5 ist niedrig)" },
 
   { "en": "How easy was it to navigate the app and understand what to do at each step? (1 is high, 5 is low)", 
     "de": "Wie leicht war es, in der App zu navigieren und bei jedem Schritt zu verstehen, was zu tun ist? (1 ist hoch, 5 ist niedrig)" },
@@ -938,7 +938,7 @@
     "de": "Welche Teile der App waren verwirrend oder schwer zu benutzen?" },
 
   { "en": "Did you experience any technical issues or bugs while using the app?", 
-    "de": "Hattest Du während der Nutzung der App technische Probleme oder Bugs erlebt?" },
+    "de": "Hattest du während der Nutzung der App technische Probleme oder Bugs erlebt?" },
 
   { "en": "Please describe the issue(s) you encountered", 
     "de": "Bitte beschreibe die aufgetretenen Probleme" },
@@ -950,13 +950,13 @@
     "de": "Welche zusätzlichen Funktionen oder Verbesserungen hätten das Experiment erleichtert?" },
 
   { "en": "Which feature(s) did you find the most helpful? Why?", 
-    "de": "Welche Funktion(en) fandest Du am hilfreichsten? Warum?" },
+    "de": "Welche Funktion(en) fandest du am hilfreichsten? Warum?" },
 
   { "en": "Which feature(s) did you find the least useful or frustrating? Why?", 
-    "de": "Welche Funktion(en) fandest Du am wenigsten nützlich oder frustrierend? Warum?" },
+    "de": "Welche Funktion(en) fandest du am wenigsten nützlich oder frustrierend? Warum?" },
 
   { "en": "Do you have any other suggestions for improving the app?", 
-    "de": "Hast Du weitere Vorschläge zur Verbesserung der App?" },
+    "de": "Hast du weitere Vorschläge zur Verbesserung der App?" },
 
   { "en": "Send Feedback", 
     "de": "Feedback senden" },
@@ -972,7 +972,7 @@
     "de": "Ihre Alternativhypothese lautete:" },
 
   { "en": "Do you think we can reject the null hypothesis and accept the alternative hypothesis with this p-value?", 
-    "de": "Meinst Du, dass wir die Nullhypothese mit diesem p‑Wert verwerfen und die Alternativhypothese akzeptieren können?" },
+    "de": "Meinst du, dass wir die Nullhypothese mit diesem p‑Wert verwerfen und die Alternativhypothese akzeptieren können?" },
       { "en": "Negligible", "de": "Vernachlässigbar" },
   { "en": "Small",      "de": "Klein" },
   { "en": "Medium",     "de": "Mittel" },
@@ -983,12 +983,12 @@
     "en": "To get started, please add students in the box above!",
     "de": "Um zu beginnen, füge bitte oben im Feld Versuchspersonen hinzu!"
   },
-    { "en": "Describe any difficulties you faced.",     "de": "Beschreiben Sie die Schwierigkeiten, auf die Sie gestoßen sind." },
-  { "en": "Provide details on what happened",         "de": "Geben Sie Details dazu an, was passiert ist." },
-  { "en": "Share your suggestions.",                  "de": "Teilen Sie Ihre Vorschläge." },
-  { "en": "Describe what worked well.",               "de": "Beschreiben Sie, was gut funktioniert hat." },
-  { "en": "Describe what could be improved.",         "de": "Beschreiben Sie, was verbessert werden könnte." },
-  { "en": "Share any additional thoughts.",           "de": "Teilen Sie weitere Gedanken." },
+    { "en": "Describe any difficulties you faced.",     "de": "Beschreibe die Schwierigkeiten, auf die du gestoßen bist." },
+  { "en": "Provide details on what happened",         "de": "Gib Details dazu an, was passiert ist." },
+  { "en": "Share your suggestions.",                  "de": "Teile deine Vorschläge." },
+  { "en": "Describe what worked well.",               "de": "Beschreibe, was gut funktioniert hat." },
+  { "en": "Describe what could be improved.",         "de": "Beschreibe, was verbessert werden könnte." },
+  { "en": "Share any additional thoughts.",           "de": "Teile deine weitere Gedanken." },
     {
     "en": "For example... 'An effect size of [effect size method]=[effect size] suggests that ______.'",
     "de": "Zum Beispiel … 'Eine Effektgröße von [Effektgrößenmethode]=[Effektgröße] deutet darauf hin, dass ______.'"
@@ -996,8 +996,8 @@
   {
     "en": "For example... 'A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.'",
     "de": "Zum Beispiel … 'Ein p‑Wert von [statistisches Testverfahren + Freiheitsgrade], p=[p‑Wert] deutet darauf hin, dass ______.'"
-  }
-
+  },
+  { "en": "Research Preparation", "de": "Forschungsvorbereitung" }
 
   ]
 }
