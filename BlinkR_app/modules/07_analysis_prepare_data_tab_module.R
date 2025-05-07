@@ -167,7 +167,7 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
               tags$i(
                     tagList(
                       shiny::icon("info-circle", class = "me-1 text-info"),
-                      i18n$t("Type your answer in the box above.")
+                      i18n$t("Type your answer here.")
                     ),
                     style = "margin-top:-6px; display:block;",
                   ),

@@ -1,6 +1,6 @@
 Beim Suchen ist es wichtig, Boolesche Operatoren (AND, OR, NOT) zu verwenden, um deine Ergebnisse gezielt einzugrenzen oder zu erweitern. Diese Operatoren helfen dir, bestimmte Begriffe zu kombinieren oder auszuschließen. Hier ist ein kurzer Überblick:
 
-- **AND**: Liefert Ergebnisse, die *alle* angegebenen Begriffe enthalten (z. B. Stress AND blink* zeigt Studien an, in denen sowohl Stress als auch Blinken erwähnt werden).
+- **AND**: Liefert Ergebnisse, die *alle* angegebenen Begriffe enthalten (z. B. Stress AND blink* zeigt Studien an, in denen sowohl Stress als auch Lidschlag erwähnt werden).
 - **OR**: Erweitert deine Suche, indem es Ergebnisse mit *einem beliebigen* der Begriffe einschließt (z. B. stress OR anxiety).
 - **NOT**: Schließt Ergebnisse mit einem bestimmten Begriff aus (z. B. stress NOT chronic schließt Studien über chronischen Stress aus).
 - **Klammern ()**: Gruppieren Begriffe, um die Beziehung zwischen ihnen klarzustellen (z. B. (Stress OR anxiety) AND blink*).

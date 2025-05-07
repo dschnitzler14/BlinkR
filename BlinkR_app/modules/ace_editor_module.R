@@ -41,7 +41,8 @@ editor_module_ui <- function(id, i18n) {
 }
 
 editor_module_server <- function(id, i18n, data, variable_name = "ace_editor_data", predefined_code = "", return_type = "", session_folder_id, save_header = "Code Header", code_history = TRUE) {
-  moduleServer(id, function(input, output, session) {
+  moduleServer(id, 
+  function(input, output, session) {
     vars <- get_experiment_vars()
 
     values <- reactiveValues(result = NULL, is_plot = FALSE)
@@ -168,11 +169,11 @@ output$dynamic_console <- renderUI({
       
       TRUE
       }) %...>% {
-      showNotification(i18n$t("Saved to Code History"), type = "message", duration = 2)
+      #showNotification("Saved to Code History", type = "message", duration = 2)
       } %...!% {
         err <- .
         showNotification(
-          paste(i18n$t("Error uploading code to Google Drive:"), err$message),
+          #paste("Error uploading code to Google Drive:", err$message),
           type = "error", duration = 3
         )
       }

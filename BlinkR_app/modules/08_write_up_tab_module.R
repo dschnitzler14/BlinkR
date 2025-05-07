@@ -192,7 +192,7 @@ write_up_module_ui <- function(id, i18n, session_folder_url) {
 )
 }
 
-write_up_module_server <- function(id, parent.session, auth, reload_trigger, session_folder_id, include_markdown_language){
+write_up_module_server <- function(id, i18n, parent.session, auth, reload_trigger, session_folder_id, include_markdown_language){
   moduleServer(
     id,
     function(input, output, session){

@@ -43,7 +43,7 @@ writing_up_ai_ui <- function(id, i18n) {
                                     markdown(i18n$t("AI can help catch grammar, spelling, and punctuation mistakes, but always clarify in your prompt that you *do not want new information added*."))
                                     ),
                                     box(
-                                    title = i18n$t("✅ Sentence Rewording & Clarity Improvements"),
+                                    title = i18n$t("✅ Sentence Rewording and Clarity Improvements"),
                                     id = "formatting",
                                     collapsible = TRUE,
                                     width = 12,
@@ -85,7 +85,7 @@ writing_up_ai_ui <- function(id, i18n) {
                                     markdown(i18n$t("AI cannot generate figures from a given dataset; It lacks access to the data and will produce entirely fabricated visualizsations, which is also considered data fabrication."))
                                     ),
                                     box(
-                                    title = i18n$t("❌ References & Citations"),
+                                    title = i18n$t("❌ References and Citations"),
                                     id = "references",
                                     collapsible = TRUE,
                                     width = 12,
@@ -141,7 +141,7 @@ writing_up_ai_ui <- function(id, i18n) {
     }
 
 
-writing_up_ai_server <- function(id, parent.session, include_markdown_language) {
+writing_up_ai_server <- function(id, i18n, parent.session, include_markdown_language) {
   moduleServer(
     id,
     function(input, output, session){

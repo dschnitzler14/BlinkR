@@ -58,7 +58,7 @@ measurement_input_module_ui <- function(id, i18n, student_name, student_ID, db_s
         )
       ),
       tabPanel(
-        title = (sprintf("%s - Measurements", vars$level_a_text_name)),
+        title = (sprintf(i18n$t("%s - Measurements"), vars$level_a_text_name)),
         fluidRow(
           column(4,
                  numericInput(

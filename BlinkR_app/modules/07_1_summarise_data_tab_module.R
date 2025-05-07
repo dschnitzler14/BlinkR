@@ -827,8 +827,8 @@ observe({
                   i18n$t("No")
                 ),
                 choiceValues = list(
-                  "yes", 
-                  "no"
+                  "option1", 
+                  "option2"
                 ),
             selected = character(0)
           ),

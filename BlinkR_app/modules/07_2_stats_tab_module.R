@@ -602,7 +602,7 @@ observeEvent(input$save_not_normal_paired_button, {
   predefined_code_normal_unpaired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_two_sided_t_test.txt"),
     vars)
-  normal_unpaired_result <- editor_module_server("normal_unpaired", i18n, average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
+  normal_unpaired_result <- editor_module_server("normal_unpaired_editor", i18n, average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
 
 observeEvent(input$unpaired_normal,{
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -621,8 +621,10 @@ observeEvent(input$unpaired_normal,{
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
+
 if(!is.null(normal_unpaired_result()$result)){
     normal_unpaired_result <- NULL
+    print(normal_unpaired_result())
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -654,7 +656,7 @@ output$two_sided_t_test <- renderUI({
                   uiOutput(session$ns("normal_unpaired_feedback"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("normal_unpaired"), i18n),
+                  editor_module_ui(session$ns("normal_unpaired_editor"), i18n),
                   uiOutput(session$ns("save_normal_unpaired"))
                   )
               ),
@@ -669,8 +671,13 @@ output$two_sided_t_test <- renderUI({
 })
 
 observe({
-      req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result))
 
+
+      req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result))
+      
+  print(normal_unpaired_result())
+  print(normal_unpaired_result()$result)
+  
       if (inherits(normal_unpaired_result()$result, "htest")) {
         output$normal_unpaired_feedback <- renderUI({
           tagList(
@@ -1398,7 +1405,6 @@ observe({
         
         textInput(session$ns("interpretation_quiz_text_p_value"), 
                   i18n$t("Interpret the p-value result in one sentence"), 
-                  #value = "A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.", 
                   width = "100%"),
                   tags$i(
                     tagList(
@@ -1411,7 +1417,6 @@ observe({
         
         textInput(session$ns("interpretation_quiz_text_effect_size"), 
                   i18n$t("Summarise these results in one sentence"), 
-                  #value = "An effect size of [effect size method]=[effect size] suggests that ______.", 
                   width = "100%"),
                   tags$i(
                     tagList(
@@ -1539,8 +1544,8 @@ output$what_is_an_effect_size <- renderUI({
     req(input$understand_effect_size)
     
   correct_answer <- ifelse(
-    user_answer_enter_effect_size < 0.2, "negligible",
-    ifelse(user_answer_enter_effect_size < 0.5, "small",
+    user_answer_enter_effect_size < 0.1, "negligible",
+    ifelse(user_answer_enter_effect_size < 0.2, "small",
            ifelse(user_answer_enter_effect_size < 0.8, "medium", "large")))
       
     if (input$understand_effect_size == correct_answer) {
@@ -1620,11 +1625,11 @@ output$what_is_a_p_value <- renderUI({
       output$null_hyp_display <- renderUI({
         tagList(
           uiOutput(session$ns("what_is_a_p_value")),
-          strong(i18n$t("For this experiment your null hypothesis was: ")),
+          tags$strong(i18n$t("For this experiment your null hypothesis was: ")),
           tags$br(),
           submitted_null_hyp,
           tags$br(),
-          strong(i18n$t("Your alternative hypothesis was: ")),
+          tags$strong(i18n$t("Your alternative hypothesis was: ")),
           tags$br(),
           submitted_alt_hyp,
           tags$br(),

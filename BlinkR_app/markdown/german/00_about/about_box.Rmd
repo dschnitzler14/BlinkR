@@ -3,7 +3,4 @@ Diese App richtet sich an Universitätsstudierende, die an einem Klassenexperime
 Egal ob du neu in experimentellen Methoden bist oder deine Fähigkeiten vertiefen möchtest – diese App bietet dir einen strukturierten Ansatz und wertvolle Einblicke in den Forschungsprozess.
 
 ## Wie benutzt man diese App?
-Navigiere durch die einzelnen Abschnitte der App, um während des Experiments den Überblick zu behalten.  
-Du beginnst mit der Sichtung der Hintergrundmaterialien und der Abgabe deiner Hypothese.  
-Folge den Anleitungen in jeder Sitzung, um zum gemeinsamen Versuchsprotokoll beizutragen, deine Messwerte einzugeben und deine Ergebnisse zu analysieren.  
-Im Laufe des Prozesses sammelst du praktische Erfahrung mit R und der Datenanalyse – und entwickelst so die nötigen Fähigkeiten, um einen fundierten wissenschaftlichen Bericht zu erstellen.
+Navigiere durch die einzelnen Abschnitte der App, um während des Experiments den Überblick zu behalten. Du beginnst mit der Durchsicht der Hintergrundmaterialien und der Abgabe deiner Hypothese. Folge den Anweisungen in jeder Sitzung, um zum gemeinsamen Versuchsprotokoll beizutragen, deine Messwerte einzugeben und deine Ergebnisse zu analysieren. Im Verlauf des Prozesses sammelst du praktische Erfahrungen mit R und der Datenanalyse und entwickelst so die Fähigkeiten, einen fundierten wissenschaftlichen Bericht zu erstellen.

@@ -966,10 +966,10 @@
   { "en": "Upload Report to Drive",        "de": "Bericht auf Drive hochladen" },
   { "en": "Files uploaded in this session:", "de": "In dieser Session hochgeladene Dateien:" },
   { "en": "For this experiment your null hypothesis was:", 
-    "de": "Für dieses Experiment lautete Ihre Nullhypothese:" },
+    "de": "Für dieses Experiment lautete deine Nullhypothese:" },
 
   { "en": "Your alternative hypothesis was:", 
-    "de": "Ihre Alternativhypothese lautete:" },
+    "de": "Deine Alternativhypothese lautete:" },
 
   { "en": "Do you think we can reject the null hypothesis and accept the alternative hypothesis with this p-value?", 
     "de": "Meinst du, dass wir die Nullhypothese mit diesem p‑Wert verwerfen und die Alternativhypothese akzeptieren können?" },

@@ -67,7 +67,7 @@ upload_report_module_ui <- function(id, i18n) {
   )
 }
 
-upload_report_module_server <- function(id, auth, base_group_files_url, final_reports_folder_id, parent.session) {
+upload_report_module_server <- function(id, i18n, auth, base_group_files_url, final_reports_folder_id, parent.session) {
   moduleServer(
     id,
     function(input, output, session) {

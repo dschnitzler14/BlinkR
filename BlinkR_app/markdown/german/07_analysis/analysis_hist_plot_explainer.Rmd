@@ -5,9 +5,9 @@
 
   ```
   hist <- hist(average_trs$average_measurement,
-                 main = "Distribution of {{measurement_text_name}}",
-                 xlab = "Average {{measurement_text_name}}",
-                 ylab = "Frequency",
+                 main = "Verteilung von {{measurement_text_name}}",
+                 xlab = "Durchschnitt der technischen Wiederholungen für {{measurement_text_name}}",
+                 ylab = "Häufigkeit",
                  col = "grey49",
                  border = "black")
   ```

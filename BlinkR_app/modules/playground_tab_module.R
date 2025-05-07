@@ -64,7 +64,7 @@ fluidRow(
 }
 
 
-playground_module_server <- function(id, session_folder_id, parent.session, include_markdown_language = include_markdown_language) {
+playground_module_server <- function(id, i18n, session_folder_id, parent.session, include_markdown_language = include_markdown_language) {
   moduleServer(id, function(input, output, session) {
           vars <- get_experiment_vars()
 

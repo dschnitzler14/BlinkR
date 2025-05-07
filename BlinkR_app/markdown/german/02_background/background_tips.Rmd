@@ -1,10 +1,9 @@
-- **Verwende Anführungszeichen (" ")**: Setze Begriffe in Anführungszeichen, um nach exakten Wortgruppen zu suchen (z. B. "blinking rate").
 - **Nutze Filterfunktionen**: Verwende die Filter in PubMed, um deine Suche einzugrenzen – zum Beispiel nach Veröffentlichungsdatum, Studientyp (z. B. klinische Studie, Meta-Analyse) oder Zielgruppe (z. B. Menschen, Erwachsene).
 - **Starte breit, dann werde spezifischer**: Beginne mit allgemeinen Begriffen und verfeinere deine Suche, sobald du ein besseres Verständnis vom Forschungsfeld hast.
 - Das Lesen vorhandener Studien hilft dir nicht nur bei der Entwicklung deiner Hypothese, sondern gibt dir auch Einblicke in Methoden, die du für dein eigenes Experiment übernehmen könntest. Du könntest zum Beispiel herausfinden, wie sich die Messung der Blinzelrate unterscheiden lässt oder welche stressauslösenden Aufgaben in früheren Studien verwendet wurden.
 - Führe organisierte, detaillierte Notizen über wichtige Erkenntnisse.
 
 **Während du Studien durchgehst, behalte folgende Fragen im Hinterkopf:**  
-- Was ist der aktuelle Wissensstand zur Blinzelrate unter Stress?  
+- Was ist der aktuelle Wissensstand zum Thema?  
 - Welche Lücken gibt es in der bisherigen Literatur?  
 - Wie hängen diese Erkenntnisse mit meiner eigenen Hypothese zusammen?
