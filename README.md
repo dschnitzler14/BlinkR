@@ -38,6 +38,8 @@ BlinkR is a web app written in **Shiny for R**, designed to help students plan, 
 
 The app runs entirely in **R**, and instead of relying on complex databases like SQL, it uses **Google Sheets** and **Google Drive** for persistent storage—making it more accessible and easier to manage.
 
+BlinkR is a multilingual app, currently available in **English** and **German**.
+
 Originally developed for an experiment comparing blinks per minute under stressed and control conditions (hence the name), BlinkR is now generalisable to any experiment comparing two groups.
 
 **BlinkR can be used for experiments that compare two groups via a T-test or Wilcoxon signed-rank test (depending on normality), with three technical replicates. It supports both paired and unpaired data.**
