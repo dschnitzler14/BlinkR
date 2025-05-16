@@ -181,8 +181,8 @@ predefined_code_boxplot <- whisker.render(
     ),
     vars)
 
-  figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", i18n, data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_barplot, return_type = "result", session_folder_id, save_header = "Create Bar Plot Code")
-  figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", i18n, data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_boxplot, return_type = "result", session_folder_id, save_header = "Create Box Plot Code")
+  figure_editor_bar_plot <- editor_module_server("figure_editor_bar_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_barplot, return_type = "result", session_folder_id, save_header = "Create Bar Plot Code")
+  figure_editor_box_plot <- editor_module_server("figure_editor_box_plot", data = average_trs, variable_name = "average_trs", predefined_code = predefined_code_boxplot, return_type = "result", session_folder_id, save_header = "Create Box Plot Code")
   
 
 #bar plot
@@ -192,7 +192,7 @@ predefined_code_boxplot <- whisker.render(
     if (isTRUE(figure_editor_bar_plot()$is_plot)) {
       output$figure_editor_feedback <- renderUI({
         tagList(
-          div(class = "success-box", i18n$t("\U1F64C Great Job!")),
+          div(class = "success-box", i18n$t("🙌 Great Job!")),
           uiOutput(session$ns("change_axis_markdown")),
           uiOutput(session$ns("figure_editing_colours_markdown")),
           box(title = i18n$t("💡 Open me for a hint"),
@@ -219,7 +219,7 @@ predefined_code_boxplot <- whisker.render(
       })
     } else {
       output$figure_editor_feedback <- renderUI({
-        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+        div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
     })
       output$save_plot <- renderUI({
         NULL
@@ -235,7 +235,7 @@ predefined_code_boxplot <- whisker.render(
   if (isTRUE(figure_editor_box_plot()$is_plot) && inherits(figure_editor_box_plot()$result, "ggplot")) {
       output$figure_editor_feedback <- renderUI({
         tagList(
-          div(class = "success-box", i18n$t("\U1F64C Great Job!")),
+          div(class = "success-box", i18n$t("🙌 Great Job!")),
           uiOutput(session$ns("change_axis_markdown")),
           uiOutput(session$ns("figure_editing_colours_markdown")),
           box(title = i18n$t("💡 Open me for a hint"),
@@ -262,7 +262,7 @@ predefined_code_boxplot <- whisker.render(
       })
     } else {
       output$figure_editor_feedback <- renderUI({
-        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+        div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
       })
       output$save_plot <- renderUI({
         NULL

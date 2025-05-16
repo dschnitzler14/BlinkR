@@ -149,14 +149,14 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
     
     predefined_code_view_data <- "head(data)"
     
-    view_data_result <- editor_module_server("view_data_editor", i18n, data = view_data, variable_name = "data", predefined_code = predefined_code_view_data, return_type = "result", session_folder_id, save_header = "View Data Code")
+    view_data_result <- editor_module_server("view_data_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_view_data, return_type = "result", session_folder_id, save_header = "View Data Code")
     
     
     observe({
       req(!is.null(view_data_result()), !is.null(view_data_result()$result))
       feedback <- if (is.data.frame(view_data_result()$result) && nrow(view_data_result()$result) > 0) {
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C That's our data! Looks good!")),
+            div(class = "success-box", i18n$t("🙌 That's our data! Looks good!")),
             uiOutput(session$ns("head_feedback")),
 
             textInput(
@@ -199,7 +199,7 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
           )
       
       } else if (!is.null(view_data_result())) {
-        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+        div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
       } else {
         NULL
       }
@@ -217,9 +217,9 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
         
   observeEvent(input$interpret_head_results_submit, {
       feedback_head <- if (input$interpret_head_results == 1) {
-        div(class = "success-box", i18n$t("\U1F64C Correct!"))
+        div(class = "success-box", i18n$t("🙌 Correct!"))
       } else {
-        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+        div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
       }
       
       output$feedback_head <- renderUI({
@@ -230,9 +230,9 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
     
     observeEvent(input$analysis_step2_quiz, {
       feedback <- if (input$analysis_step2_quiz == "option2") {
-        div(class = "success-box", i18n$t("\U1F64C Correct!"))
+        div(class = "success-box", i18n$t("🙌 Correct!"))
       } else {
-        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+        div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
       }
       
       output$view_data_quiz_feedback <- renderUI({
@@ -251,7 +251,7 @@ analysis_prepare_data_module_server <- function(id, i18n, results_data, parent.s
     vars
     )
       
-    average_trs_result <- editor_module_server("average_trs_editor", i18n, data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
+    average_trs_result <- editor_module_server("average_trs_editor", data = view_data, variable_name = "data", predefined_code = predefined_code_pre_process_data, return_type = "result", session_folder_id, save_header = "Pre-Process Data Code")
     
 output$home_prepare_data <- renderUI({
   process_markdown("07_analysis/analysis_home_prepare_data.Rmd")
@@ -263,11 +263,11 @@ output$home_prepare_data <- renderUI({
 
       feedback <- if (is.data.frame(average_trs_result()$result) && nrow(average_trs_result()$result) > 0) {
         tagList(
-          div(class = "success-box", i18n$t("\U1F64C Good Job!")),
+          div(class = "success-box", i18n$t("🙌 Good Job!")),
           uiOutput(session$ns("home_prepare_data")),
         )
       } else if (!is.null(average_trs_result())) {
-        div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+        div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
       } else {
         NULL
       }

@@ -57,7 +57,7 @@ text_area_module_server <- function(id, i18n, auth, filename = "Filename", time 
         )
 
         output$submission_feedback <- renderUI({
-          div(class = "success-box", i18n$t("\U1F64C Your notes have been saved!"))
+          div(class = "success-box", i18n$t("🙌 Your notes have been saved!"))
         })
 
       })

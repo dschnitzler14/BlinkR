@@ -32,7 +32,7 @@ simulated_experiment_measurements_module_ui <- function(id, i18n) {
                                       title =  tagList(shiny::icon("stethoscope"), i18n$t("Measurements Day 1")),
                                       fluidRow(
                                         column(12,
-                                      actionButton(ns("give_gum"), tagList(shiny::icon("circle-plus"), i18n$t("Particpant Start Chewing")), class = "fun-generate-button"),
+                                      actionButton(ns("give_gum"), tagList(shiny::icon("circle-plus"), i18n$t("Particpant: Start chewing")), class = "fun-generate-button"),
                                       withSpinner(uiOutput(ns("timeprogress")), type = 7, color = "#78d94c", size = 1),
                                         )
                                       ),
@@ -47,7 +47,7 @@ simulated_experiment_measurements_module_ui <- function(id, i18n) {
                                       title =  tagList(shiny::icon("stethoscope"), i18n$t("Measurements Day 2")),
                                       fluidRow(
                                         column(12,
-                                      actionButton(ns("give_gum2"), tagList(shiny::icon("circle-plus"), i18n$t("Particpant Start Chewing")), class = "fun-generate-button"),
+                                      actionButton(ns("give_gum2"), tagList(shiny::icon("circle-plus"), i18n$t("Particpant: Start chewing")), class = "fun-generate-button"),
                                       withSpinner(uiOutput(ns("timeprogress2")), type = 7, color = "#78d94c", size = 1),
                                         )
                                       ),

@@ -1,6 +1,6 @@
 analysis_stats_module_ui <- function(id, i18n) {
   ns <- NS(id)
-
+  vars <- get_experiment_vars()
    tabItem(
     tabName = "Statistical_Analysis",
     fluidPage(
@@ -222,8 +222,8 @@ observeEvent(input$run_hist_Plot, {
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
-if(!is.null(normal_unpaired_result()$result)){
-    normal_unpaired_result <- NULL
+if(!is.null(normal_two_sided_result()$result)){
+    normal_two_sided_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -287,8 +287,8 @@ observeEvent(input$normal, {
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
-  if(!is.null(normal_unpaired_result()$result)){
-    normal_unpaired_result <- NULL
+  if(!is.null(normal_two_sided_result()$result)){
+    normal_two_sided_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -297,7 +297,11 @@ observeEvent(input$normal, {
      not_normal_paired_result <- NULL
   }
 
-output$paired_unpaired_explainer_output <- renderUI({
+output$paired_unpaired_explainer_output_normal <- renderUI({
+  process_markdown("07_analysis/analysis_paired_unpaired_explainer_output.Rmd")
+})
+
+output$paired_unpaired_explainer_output_not_normal <- renderUI({
   process_markdown("07_analysis/analysis_paired_unpaired_explainer_output.Rmd")
 })
 
@@ -310,7 +314,7 @@ output$paired_unpaired_explainer_output <- renderUI({
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
-        uiOutput(session$ns("paired_unpaired_explainer_output")),
+        uiOutput(session$ns("paired_unpaired_explainer_output_normal")),
       div(
         style = "text-align: center;",
         actionButton(session$ns("unpaired_normal"), i18n$t("☝️ The Data is Not Paired"), class = "fun-submit-button"),
@@ -338,8 +342,8 @@ observeEvent(input$not_normal, {
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
-  if(!is.null(normal_unpaired_result()$result)){
-    normal_unpaired_result <- NULL
+  if(!is.null(normal_two_sided_result()$result)){
+    normal_two_sided_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -358,7 +362,7 @@ observeEvent(input$not_normal, {
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
-        uiOutput(session$ns("paired_unpaired_explainer_output")),
+        uiOutput(session$ns("paired_unpaired_explainer_output_not_normal")),
 
         div(
               style = "display: flex; justify-content: center; align-items: center; gap: 20px; height: 100px;",
@@ -376,7 +380,7 @@ observeEvent(input$not_normal, {
   predefined_code_not_normal_unpaired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_wilcoxon_test_unpaired.txt"),
     vars)
-  not_normal_unpaired_result <- editor_module_server("not_normal_unpaired", i18n, average_trs, "average_trs", predefined_code = predefined_code_not_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Unpaired")
+  not_normal_unpaired_result <- editor_module_server("not_normal_unpaired", average_trs, "average_trs", predefined_code = predefined_code_not_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Unpaired")
 
 observeEvent(input$unpaired_not_normal,{
   #output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -395,8 +399,8 @@ observeEvent(input$unpaired_not_normal,{
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
-if(!is.null(normal_unpaired_result()$result)){
-    normal_unpaired_result <- NULL
+if(!is.null(normal_two_sided_result()$result)){
+    normal_two_sided_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -448,7 +452,7 @@ observe({
       if (inherits(not_normal_unpaired_result()$result, "htest")) {
         output$not_normal_unpaired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C Great!")),
+            div(class = "success-box", i18n$t("🙌 Great!")),
           )
     })
       output$save_not_normal_unpaired <- renderUI({
@@ -467,7 +471,7 @@ observe({
         })
         } else {
         output$not_normal_unpaired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
         }
       })
@@ -488,7 +492,8 @@ observeEvent(input$save_not_normal_unpaired_button, {
   predefined_code_not_normal_paired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_wilcoxon_test_paired.txt"),
     vars)
-  not_normal_paired_result <- editor_module_server("not_normal_paired", i18n, average_trs, "average_trs", predefined_code = predefined_code_not_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Paired")
+
+  not_normal_paired_result <- editor_module_server("not_normal_paired", average_trs, "average_trs", predefined_code = predefined_code_not_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Not Normal Paired")
 
 observeEvent(input$paired_not_normal,{
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -508,8 +513,8 @@ observeEvent(input$paired_not_normal,{
   effect_size_reactive <- reactive({NULL})
 
 
-if(!is.null(normal_unpaired_result()$result)){
-    normal_unpaired_result <- NULL
+if(!is.null(normal_two_sided_result()$result)){
+    normal_two_sided_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -540,6 +545,7 @@ output$wilcoxon_test_paired <- renderUI({
                   uiOutput(session$ns("not_normal_paired_feedback"))
                   ),
                   column(6,
+                  
                   editor_module_ui(session$ns("not_normal_paired"), i18n),
                   uiOutput(session$ns("save_not_normal_paired"))
                   )
@@ -560,7 +566,7 @@ observe({
       if (inherits(not_normal_paired_result()$result, "htest")) {
         output$not_normal_paired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C Great!")),
+            div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
         output$save_not_normal_paired <- renderUI({
@@ -581,7 +587,7 @@ observe({
         })
         } else {
         output$not_normal_paired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
         }
       })
@@ -596,14 +602,14 @@ observeEvent(input$save_not_normal_paired_button, {
     session_folder_id = session_folder_id
   )
 })
-
+ 
 # 3. normal unpaired
 
   predefined_code_normal_unpaired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_two_sided_t_test.txt"),
     vars)
-    
-  normal_unpaired_result <- editor_module_server("normal_unpaired_editor", i18n, average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
+
+  normal_two_sided_result <- editor_module_server("normal_two_sided_editor", average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
 
 observeEvent(input$unpaired_normal,{
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -623,9 +629,9 @@ observeEvent(input$unpaired_normal,{
   effect_size_reactive <- reactive({NULL})
 
 
-if(!is.null(normal_unpaired_result()$result)){
-    normal_unpaired_result <- NULL
-    print(normal_unpaired_result())
+if(!is.null(normal_two_sided_result()$result)){
+    normal_two_sided_result <- NULL
+    #print("not null")
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -657,7 +663,7 @@ output$two_sided_t_test <- renderUI({
                   uiOutput(session$ns("normal_unpaired_feedback"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("normal_unpaired_editor"), i18n),
+                  editor_module_ui(session$ns("normal_two_sided_editor"), i18n),
                   uiOutput(session$ns("save_normal_unpaired"))
                   )
               ),
@@ -669,17 +675,18 @@ output$two_sided_t_test <- renderUI({
         
       )
   })
-})
+}, ignoreInit = TRUE, ignoreNULL = TRUE)
+
 
 observe({
 
-      req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result))
-      
+  req(!is.null(normal_two_sided_result()), !is.null(normal_two_sided_result()$result))
   
-      if (inherits(normal_unpaired_result()$result, "htest")) {
+    if (inherits(normal_two_sided_result()$result, "htest")) {
+      
         output$normal_unpaired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C Great!")),
+            div(class = "success-box", i18n$t("🙌 Great!"))
           )
         })
         output$save_normal_unpaired <- renderUI({
@@ -687,7 +694,7 @@ observe({
             div(
               style = "display: flex; justify-content: center; align-items: center; width: 100%;",
           actionButton(
-            session$ns("save_normal_unpaired_button"),
+            session$ns("save_two_sided_result"),
             label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
             class = "action-button custom-action",
             `data-id` = "normal_unpaired_save"
@@ -698,16 +705,16 @@ observe({
         })
         } else {
         output$normal_unpaired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
         }
       })
 
-      observeEvent(input$save_normal_unpaired_button, {
+      observeEvent(input$save_two_sided_result, {
   save_result(
     name             = "T-Test - Unpaired",
-    key              = "stats_normal_unpaired",
-    result_obj       = normal_unpaired_result(), 
+    key              = "stats_normal_two_sided",
+    result_obj       = normal_two_sided_result(), 
     saved_results    = saved_results,
     session_folder_id = session_folder_id
   )
@@ -718,7 +725,7 @@ observe({
   predefined_code_normal_paired = whisker.render(
     read_file("markdown/07_analysis/predefined_code_paired_t_test.txt"),
     vars)
-  normal_paired_result <- editor_module_server("normal_paired", i18n, average_trs, "average_trs", predefined_code = predefined_code_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Paired")
+  normal_paired_result <- editor_module_server("normal_paired", average_trs, "average_trs", predefined_code = predefined_code_normal_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Paired")
 
 observeEvent(input$paired_normal,{
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -738,8 +745,8 @@ observeEvent(input$paired_normal,{
   effect_size_reactive <- reactive({NULL})
 
 
-  if(!is.null(normal_unpaired_result()$result)){
-    normal_unpaired_result <- NULL
+  if(!is.null(normal_two_sided_result()$result)){
+    normal_two_sided_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -790,7 +797,7 @@ observe({
       if (inherits(normal_paired_result()$result, "htest")) {
         output$normal_paired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C Great!")),
+            div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
         output$save_normal_paired <- renderUI({
@@ -809,7 +816,7 @@ observe({
         })
         } else {
         output$normal_paired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
         }
       })
@@ -828,7 +835,7 @@ observe({
   predefined_code_t_test_effect_size_paired = whisker.render(
     read_file("markdown/07_analysis/predefined_t_test_effect_size_paired.txt"),
     vars)
-  t_test_effect_size_paired_result <- editor_module_server("t_test_effect_size_paired", i18n, average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
+  t_test_effect_size_paired_result <- editor_module_server("t_test_effect_size_paired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
 
 observe({
   req(!is.null(normal_paired_result()), !is.null(normal_paired_result()$result),  p_value_reactive() < 0.05)
@@ -846,7 +853,7 @@ observe({
 
   effect_size_reactive <- reactive({NULL})
 
-output$effect_size_t_test_paired <- renderUI({
+output$effect_size_t_test_paired_text <- renderUI({
   process_markdown("07_analysis/analysis_effect_size_t_test_paired.Rmd")
 })
 
@@ -864,7 +871,7 @@ output$effect_size_t_test_paired <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  uiOutput(session$ns("effect_size_t_test_paired")),
+                  uiOutput(session$ns("effect_size_t_test_paired_text")),
                   uiOutput(session$ns("t_test_effect_size_paired_feedback")),
                   ),
                   column(6,
@@ -889,7 +896,7 @@ observe({
       if (!is.null(t_test_effect_size_paired_result())) {
         output$t_test_effect_size_paired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C Great!")),
+            div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
         output$save_normal_paired_effect_size <- renderUI({
@@ -909,7 +916,7 @@ observe({
 
         } else {
         output$t_test_effect_size_paired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
         }
       })
@@ -924,15 +931,17 @@ observeEvent(input$save_normal_paired_effect_size_button, {
   )
 })
 
-
 #6. effect size t-test unpaired
   predefined_code_t_test_effect_size_unpaired = whisker.render(
     read_file("markdown/07_analysis/predefined_t_test_effect_size_unpaired.txt"),
     vars)
-  t_test_effect_size_unpaired_result <- editor_module_server("t_test_effect_size_unpaired", i18n, average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
 
-observe({
-    req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result), p_value_reactive() < 0.05)
+  t_test_effect_size_unpaired_result <- editor_module_server("t_test_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
+
+  observe({
+  req(!is.null(normal_two_sided_result()), !is.null(normal_two_sided_result()$result), p_value_reactive() < 0.05)
+cat("in observeEvent t_test_effect_size_unpaired_result\n")
+print(normal_two_sided_result())
 
   output$not_normal_unpaired_ui <- renderUI({NULL})
   output$not_normal_paired_ui <- renderUI({NULL})
@@ -947,7 +956,7 @@ observe({
 
   effect_size_reactive <- reactive({NULL})
 
-output$effect_size_t_test_unpaired <- renderUI({
+output$effect_size_t_test_unpaired_text <- renderUI({
   process_markdown("07_analysis/analysis_effect_size_t_test_unpaired.Rmd")
 })
 
@@ -965,7 +974,7 @@ output$effect_size_t_test_unpaired <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  uiOutput(session$ns("effect_size_t_test_unpaired")),
+                  uiOutput(session$ns("effect_size_t_test_unpaired_text")),
                   uiOutput(session$ns("t_test_effect_size_unpaired_feedback")),
                   ),
                   column(6,
@@ -989,7 +998,7 @@ observe({
       if (!is.null(t_test_effect_size_unpaired_result())) {
         output$t_test_effect_size_unpaired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C Great!")),
+            div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
         output$save_normal_unpaired_effect_size <- renderUI({
@@ -1009,7 +1018,7 @@ observe({
                 })
         } else {
         output$t_test_effect_size_unpaired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
         }
       })
@@ -1029,7 +1038,7 @@ observe({
   predefined_code_wilcoxon_effect_size_paired = whisker.render(
     read_file("markdown/07_analysis/predefined_wilcoxon_effect_size_paired.txt"),
     vars)
-  wilcoxon_effect_size_paired_result <- editor_module_server("wilcoxon_effect_size_paired", i18n, average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
+  wilcoxon_effect_size_paired_result <- editor_module_server("wilcoxon_effect_size_paired", average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_paired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Paired T-Test")
 
 observe({
   req(!is.null(not_normal_paired_result()), !is.null(not_normal_paired_result()$result), p_value_reactive() < 0.05)
@@ -1047,7 +1056,7 @@ observe({
 
   effect_size_reactive <- reactive({NULL})
 
-output$wilcoxon_test_paired_effect_size <- renderUI({
+output$wilcoxon_test_paired_effect_size_text <- renderUI({
   process_markdown("07_analysis/analysis_wilcoxon_test_paired_effect_size.Rmd")
 })
 
@@ -1065,7 +1074,7 @@ output$wilcoxon_test_paired_effect_size <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  uiOutput(session$ns("wilcoxon_test_paired_effect_size")),
+                  uiOutput(session$ns("wilcoxon_test_paired_effect_size_text")),
                   uiOutput(session$ns("wilcoxon_effect_size_paired_feedback")),
                   ),
                   column(6,
@@ -1090,7 +1099,7 @@ observe({
       if (!is.null(wilcoxon_effect_size_paired_result())) {
         output$wilcoxon_effect_size_paired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C Great!")),
+            div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
         output$save_not_normal_paired_effect_size <- renderUI({
@@ -1110,7 +1119,7 @@ observe({
                         })
         } else {
         output$wilcoxon_effect_size_paired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
         }
       })
@@ -1130,7 +1139,7 @@ observe({
     read_file("markdown/07_analysis/predefined_wilcoxon_effect_size_unpaired.txt"),
     vars)
     
-  wilcoxon_effect_size_unpaired_result <- editor_module_server("wilcoxon_effect_size_unpaired", i18n, average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
+  wilcoxon_effect_size_unpaired_result <- editor_module_server("wilcoxon_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_wilcoxon_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
 
 observe({
   req(!is.null(not_normal_unpaired_result()), !is.null(not_normal_unpaired_result()$result), p_value_reactive() < 0.05)
@@ -1148,7 +1157,7 @@ observe({
 
   effect_size_reactive <- reactive({NULL})
 
-output$wilcoxon_test_unpaired_effect_size <- renderUI({
+output$wilcoxon_test_unpaired_effect_size_text <- renderUI({
   process_markdown("07_analysis/analysis_wilcoxon_test_unpaired_effect_size.Rmd")
 })
 
@@ -1166,7 +1175,7 @@ output$wilcoxon_test_unpaired_effect_size <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  uiOutput(session$ns("wilcoxon_test_unpaired_effect_size")),
+                  uiOutput(session$ns("wilcoxon_test_unpaired_effect_size_text")),
                   uiOutput(session$ns("wilcoxon_effect_size_unpaired_feedback")),
                   ),
                   column(6,
@@ -1191,7 +1200,7 @@ observe({
       if (!is.null(wilcoxon_effect_size_unpaired_result())) {
         output$wilcoxon_effect_size_unpaired_feedback <- renderUI({
           tagList(
-            div(class = "success-box", i18n$t("\U1F64C Great!")),
+            div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
         output$save_not_normal_unpaired_effect_size <- renderUI({
@@ -1211,7 +1220,7 @@ observe({
                                 })
         } else {
         output$wilcoxon_effect_size_unpaired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
         }
       })
@@ -1270,13 +1279,13 @@ print(sr_es)
   round(effect_size_reactive_round_val, 2)
 })
 
-# reactives for p-value
+ # reactives for p-value
 
 p_value_reactive <- reactive({
     sr <- NULL
-    if (!is.null(normal_unpaired_result()) && 
-      !is.null(normal_unpaired_result()$result)) {
-    sr <- normal_unpaired_result()
+    if (!is.null(normal_two_sided_result()) && 
+      !is.null(normal_two_sided_result()$result)) {
+    sr <- normal_two_sided_result()
 
   } else if (!is.null(normal_paired_result()) && 
              !is.null(normal_paired_result()$result)) {
@@ -1312,7 +1321,7 @@ p_value_reactive <- reactive({
   round(p_value_round_val, 2)
 })
 
-# 9. interpretation quiz
+# # 9. interpretation quiz
 observe({
 
 req(!is.null(p_value_reactive()))
@@ -1327,7 +1336,7 @@ req(!is.null(p_value_reactive()))
   } else {
     req(
       (!is.null(normal_paired_result()) && !is.null(normal_paired_result()$result)) ||
-      (!is.null(normal_unpaired_result()) && !is.null(normal_unpaired_result()$result)) ||
+      (!is.null(normal_two_sided_result()) && !is.null(normal_two_sided_result()$result)) ||
       (!is.null(not_normal_paired_result()) && !is.null(not_normal_paired_result()$result)) ||
       (!is.null(not_normal_unpaired_result()) && !is.null(not_normal_unpaired_result()$result))
     )
@@ -1372,7 +1381,7 @@ observe({
 
   normality_results_exist <- 
     !is.null(normal_paired_result()$result) ||
-    !is.null(normal_unpaired_result()$result) ||
+    !is.null(normal_two_sided_result()$result) ||
     !is.null(not_normal_paired_result()$result) ||
     !is.null(not_normal_unpaired_result()$result)
 
@@ -1461,7 +1470,7 @@ observe({
   
   } else {
     output$interpretation_quiz_feedback <- renderUI({
-      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+      div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
     })
   }
 
@@ -1486,7 +1495,7 @@ observeEvent(input$enter_effect_size_submit, {
   
   if (is.null(val_es)) {
     output$enter_effect_size_feedback <- renderUI({
-      div(class = "error-box", i18n$t("\U1F914 We do not know the effect size yet!"))
+      div(class = "error-box", i18n$t("🤔 We do not know the effect size yet!"))
     })
     return()
   }
@@ -1498,12 +1507,12 @@ output$what_is_an_effect_size <- renderUI({
 })
 
   if (is.na(user_answer_enter_effect_size)) {
-    feedback <- div(class = "error-box", i18n$t("\U1F914 Please enter a numeric value!"))
+    feedback <- div(class = "error-box", i18n$t("🤔 Please enter a numeric value!"))
   } else {
     tolerance <- 0.5
     
     if (abs(user_answer_enter_effect_size - val_es) <= tolerance) {
-      feedback <- div(class = "success-box", i18n$t("\U1F64C Correct!"))
+      feedback <- div(class = "success-box", i18n$t("🙌 Correct!"))
 
       output$effect_size_display <- renderUI({
         tagList(
@@ -1530,7 +1539,7 @@ output$what_is_an_effect_size <- renderUI({
        
       })
     } else {
-      feedback <- div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+      feedback <- div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
     }
   }
 
@@ -1547,9 +1556,9 @@ output$what_is_an_effect_size <- renderUI({
            ifelse(user_answer_enter_effect_size < 0.8, "medium", "large")))
       
     if (input$understand_effect_size == correct_answer) {
-      div(class = "success-box", i18n$t("\U1F64C Correct!"))
+      div(class = "success-box", i18n$t("🙌 Correct!"))
     } else {
-      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+      div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
     }
   })
 
@@ -1585,13 +1594,13 @@ alt_hyp_file <- files_in_folder[grepl("^Alternative Hypothesis", files_in_folder
 observeEvent(input$enter_p_value_submit, {
     req(
     (!is.null(normal_paired_result()) && !is.null(normal_paired_result()$result)) ||
-    (!is.null(normal_unpaired_result()) && !is.null(normal_unpaired_result()$result)) ||
+    (!is.null(normal_two_sided_result()) && !is.null(normal_two_sided_result()$result)) ||
     (!is.null(not_normal_paired_result()) && !is.null(not_normal_paired_result()$result)) ||
     (!is.null(not_normal_unpaired_result()) && !is.null(not_normal_unpaired_result()$result))
     
   )
 
-  if (!is.null(normal_paired_result()$result) || !is.null(normal_unpaired_result()$result)
+  if (!is.null(normal_paired_result()$result) || !is.null(normal_two_sided_result()$result)
   || !is.null(not_normal_paired_result()$result) || !is.null(not_normal_unpaired_result()$result)){
     val_pv <- p_value_reactive()
   }
@@ -1601,7 +1610,7 @@ observeEvent(input$enter_p_value_submit, {
   
   if (is.null(val_pv)) {
     output$enter_p_value_feedback <- renderUI({
-      div(class = "error-box", i18n$t("\U1F914 We do not know the p-value yet!"))
+      div(class = "error-box", i18n$t("🤔 We do not know the p-value yet!"))
     })
     return()
   }
@@ -1613,21 +1622,21 @@ output$what_is_a_p_value <- renderUI({
 })
 
   if (is.na(user_answer_enter_p_value)) {
-    feedback <- div(class = "error-box", i18n$t("\U1F914 Please enter a numeric value!"))
+    feedback <- div(class = "error-box", i18n$t("🤔 Please enter a numeric value!"))
   } else {
     tolerance <- 0.5
     
     if (abs(user_answer_enter_p_value - val_pv) <= tolerance) {
-      feedback <- div(class = "success-box", i18n$t("\U1F64C Correct!"))
+      feedback <- div(class = "success-box", i18n$t("🙌 Correct!"))
 
       output$null_hyp_display <- renderUI({
         tagList(
           uiOutput(session$ns("what_is_a_p_value")),
-          tags$strong(i18n$t("For this experiment your null hypothesis was: ")),
+          tags$strong(i18n$t("For this experiment your null hypothesis was")),
           tags$br(),
           submitted_null_hyp,
           tags$br(),
-          tags$strong(i18n$t("Your alternative hypothesis was: ")),
+          tags$strong(i18n$t("Your alternative hypothesis was")),
           tags$br(),
           submitted_alt_hyp,
           tags$br(),
@@ -1651,7 +1660,7 @@ output$what_is_a_p_value <- renderUI({
       })
 
     } else {
-      feedback <- div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+      feedback <- div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
     }
   }
 
@@ -1666,9 +1675,9 @@ output$what_is_a_p_value <- renderUI({
     correct_answer <- ifelse(user_answer_enter_p_value < 0.05, "yes", "no")
     
     if (input$reject_null == correct_answer) {
-      div(class = "success-box", i18n$t("\U1F64C Correct!"))
+      div(class = "success-box", i18n$t("🙌 Correct!"))
     } else {
-      div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+      div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
     }
   })
 
@@ -1689,7 +1698,7 @@ observeEvent(input$save_text_interpretation_button, {
 
   normality_results_exist <- 
     !is.null(normal_paired_result()$result) ||
-    !is.null(normal_unpaired_result()$result) ||
+    !is.null(normal_two_sided_result()$result) ||
     !is.null(not_normal_paired_result()$result) ||
     !is.null(not_normal_unpaired_result()$result)
 
@@ -1755,7 +1764,7 @@ observeEvent(input$save_text_interpretation_button, {
 
     } else {
       output$interpretation_quiz_text_input_feedback <- renderUI({
-          div(class = "error-box", i18n$t("\U1F914 Not quite - try again!"))
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
         })
     }
     

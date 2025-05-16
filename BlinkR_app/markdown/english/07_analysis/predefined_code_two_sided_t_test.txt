@@ -1,2 +1,1 @@
-t_test <- t.test(average_measurement ~ {{levels_variable_name}}, var.equal = TRUE, 
-                data = average_trs)
+t_test_result <- t.test(average_measurement ~ {{levels_variable_name}}, var.equal = TRUE, data = average_trs)

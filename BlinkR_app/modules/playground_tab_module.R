@@ -78,7 +78,7 @@ data <- iris
 predefined_code_playground <- read_file(
       "markdown/playground/predefined_code_playground.txt"
     )
-editor_module_server("playground1", i18n, data = data, variable_name = "data", predefined_code = predefined_code_playground, return_type = "result", session_folder_id, save_header = "Playground1")
+editor_module_server("playground1", data = data, variable_name = "data", predefined_code = predefined_code_playground, return_type = "result", session_folder_id, save_header = "Playground1")
 
 
 observeEvent(input$back_page_playground, {
