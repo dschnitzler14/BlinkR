@@ -35,7 +35,8 @@ required_packages <- c(
   "grid",
   "png",
   "gridExtra",
-  "stats"
+  "stats",
+  "shiny.i18n"
 )
 
 installed_packages <- rownames(installed.packages())

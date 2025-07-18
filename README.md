@@ -396,7 +396,9 @@ googledrive::drive_auth()
 2. Uncomment the two `gs4_auth()` and `drive_auth()` lines.
 3. Run the script.
 
-You’ll be redirected in your browser to authorise access. This happens once for Sheets and once for Drive. Credentials are saved in a hidden `.secrets` folder, so you won’t need to do this again.
+You’ll be redirected in your browser to authorise access. This happens once for Sheets and once for Drive. Credentials are saved in a hidden `.secrets` folder, so you won’t need to do this again. This secrets folder lives in `BlinkR/BlinkR_app/BlinkR_app/.secrets`
+
+⚠️ **Copy** the secrets into the second `.secrets` folder at `BlinkR/BlinkR_app/.secrets`
 
 4. (Optional) Re-comment the lines afterward for future clarity.
 

@@ -574,169 +574,169 @@ if (!is.null(summarise_result_step6()$result[[1]]) &&
 })
 
 
-# step7: your turn with level_a data - sd
+# # step7: your turn with level_a data - sd
 
-predefined_code_step7 <- whisker.render(
-  read_file("markdown/07_analysis/predefined_code_calculate_sd_level_a.txt"),
-  vars
-  )
-summarise_result_step7 <- editor_module_server("step7_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
+# predefined_code_step7 <- whisker.render(
+#   read_file("markdown/07_analysis/predefined_code_calculate_sd_level_a.txt"),
+#   vars
+#   )
+# summarise_result_step7 <- editor_module_server("step7_editor", level_a_data, level_a_data_name, predefined_code = predefined_code_step7, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
-output$analysis_sd_a <- renderUI({
-  process_markdown("07_analysis/analysis_summarise_data_sd_level_a.Rmd")
-})
+# output$analysis_sd_a <- renderUI({
+#   process_markdown("07_analysis/analysis_summarise_data_sd_level_a.Rmd")
+# })
 
-output$step7_box <- renderUI({
-  req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
-  tagList(
-    fluidRow(
-        column(
-            12,
-          box(
-              id = "step7_box",
-              title = sprintf(i18n$t("7️⃣ Your turn! Calculate the sd for the %s group"), vars$level_a_text_name),
-              collapsible = TRUE,
-              collapsed = FALSE,
-              width = 12,
-              solidHeader = TRUE,
-              fluidRow(
-                  column(6,
-                  uiOutput(session$ns("analysis_sd_a")),
-                  uiOutput(session$ns("summary_code_feedback_step7"))
-                  ),
-                  column(6,
-                  editor_module_ui(session$ns("step7_editor"), i18n)
-                  )
-              )
-            )
-          ),
+# output$step7_box <- renderUI({
+#   req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
+#   tagList(
+#     fluidRow(
+#         column(
+#             12,
+#           box(
+#               id = "step7_box",
+#               title = sprintf(i18n$t("7️⃣ Your turn! Calculate the sd for the %s group"), vars$level_a_text_name),
+#               collapsible = TRUE,
+#               collapsed = FALSE,
+#               width = 12,
+#               solidHeader = TRUE,
+#               fluidRow(
+#                   column(6,
+#                   uiOutput(session$ns("analysis_sd_a")),
+#                   uiOutput(session$ns("summary_code_feedback_step7"))
+#                   ),
+#                   column(6,
+#                   editor_module_ui(session$ns("step7_editor"), i18n)
+#                   )
+#               )
+#             )
+#           ),
           
-        )
-      )
-    })
+#         )
+#       )
+#     })
 
-observe({
-  req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
+# observe({
+#   req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
   
-  level_a_sd_value <- as.numeric(level_a_sd())
+#   level_a_sd_value <- as.numeric(level_a_sd())
 
-if (!is.null(summarise_result_step7()$result[[1]]) &&
-    is.numeric(summarise_result_step7()$result[[1]]) &&
-    length(summarise_result_step7()$result[[1]]) == 1 &&
-    (summarise_result_step7()$result[[1]] == level_a_sd_value)) {
+# if (!is.null(summarise_result_step7()$result[[1]]) &&
+#     is.numeric(summarise_result_step7()$result[[1]]) &&
+#     length(summarise_result_step7()$result[[1]]) == 1 &&
+#     (summarise_result_step7()$result[[1]] == level_a_sd_value)) {
     
-    output$summary_code_feedback_step7 <- renderUI({
-      tagList(
-        div(class = "success-box", i18n$t("🙌 Great!")),
+#     output$summary_code_feedback_step7 <- renderUI({
+#       tagList(
+#         div(class = "success-box", i18n$t("🙌 Great!")),
         
-      )
+#       )
 
  
-    })
+#     })
     
-  } else {
+#   } else {
     
-    output$summary_code_feedback_step7 <- renderUI({
-      div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
-    })
+#     output$summary_code_feedback_step7 <- renderUI({
+#       div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
+#     })
     
-  }
-})
+#   }
+# })
 
-# step8: your turn with level_a data - n and sem
+# # step8: your turn with level_a data - n and sem
 
-predefined_code_step8 <- whisker.render(
-  read_file("markdown/07_analysis/predefined_code_calculate_sem_level_a.txt"),
-  vars
-  )
+# predefined_code_step8 <- whisker.render(
+#   read_file("markdown/07_analysis/predefined_code_calculate_sem_level_a.txt"),
+#   vars
+#   )
 
-summarise_result_step8 <- editor_module_server("step8_editor", list(level_a_data, level_a_n, level_a_sd), c(level_a_data_name, level_a_n_name, level_a_sd_name), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
+# summarise_result_step8 <- editor_module_server("step8_editor", list(level_a_data, level_a_n, level_a_sd), c(level_a_data_name, level_a_n_name, level_a_sd_name), predefined_code = predefined_code_step8, return_type = "result", session_folder_id, save_header = i18n$t("Step 5: Summarise Data"))
 
-output$analysis_sem_a <- renderUI({
-  process_markdown("07_analysis/analysis_summarise_data_sem_level_a.Rmd")
-})
+# output$analysis_sem_a <- renderUI({
+#   process_markdown("07_analysis/analysis_summarise_data_sem_level_a.Rmd")
+# })
 
-output$step8_box <- renderUI({
-  req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
-  tagList(
-    fluidRow(
-        column(
-            12,
-          box(
-              id = "step8_box",
-              title = sprintf(i18n$t("8️⃣ Your turn! Calculate the n and sem for the %s group"), vars$level_a_text_name),
-              collapsible = TRUE,
-              collapsed = FALSE,
-              width = 12,
-              solidHeader = TRUE,
-              fluidRow(
-                  column(6,
-                  uiOutput(session$ns("analysis_sem_a")),
-                  uiOutput(session$ns("summary_code_feedback_step8"))
-                  ),
-                  column(6,
-                  editor_module_ui(session$ns("step8_editor"), i18n)
-                  )
-              )
-            )
-          ),
+# output$step8_box <- renderUI({
+#   req(!is.null(summarise_result_step7()), !is.null(summarise_result_step7()$result))
+#   tagList(
+#     fluidRow(
+#         column(
+#             12,
+#           box(
+#               id = "step8_box",
+#               title = sprintf(i18n$t("8️⃣ Your turn! Calculate the n and sem for the %s group"), vars$level_a_text_name),
+#               collapsible = TRUE,
+#               collapsed = FALSE,
+#               width = 12,
+#               solidHeader = TRUE,
+#               fluidRow(
+#                   column(6,
+#                   uiOutput(session$ns("analysis_sem_a")),
+#                   uiOutput(session$ns("summary_code_feedback_step8"))
+#                   ),
+#                   column(6,
+#                   editor_module_ui(session$ns("step8_editor"), i18n)
+#                   )
+#               )
+#             )
+#           ),
           
-        )
-      )
-    })
+#         )
+#       )
+#     })
 
-observe({
-  req(!is.null(summarise_result_step8()), !is.null(summarise_result_step8()$result))
+# observe({
+#   req(!is.null(summarise_result_step8()), !is.null(summarise_result_step8()$result))
 
-  level_a_n_value  <- as.numeric(level_a_n())
-  level_a_sem_value <- as.numeric(level_a_sem())
+#   level_a_n_value  <- as.numeric(level_a_n())
+#   level_a_sem_value <- as.numeric(level_a_sem())
 
-  result_values <- summarise_result_step8()$result
+#   result_values <- summarise_result_step8()$result
   
-  if (!is.numeric(result_values)) {
-    output$summary_code_feedback_step8 <- renderUI({
-      div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
-    })
-    return()
-  }
+#   if (!is.numeric(result_values)) {
+#     output$summary_code_feedback_step8 <- renderUI({
+#       div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
+#     })
+#     return()
+#   }
 
-  if (
-    length(result_values) == 1 &&
-    isTRUE(all.equal(result_values[[1]], level_a_n()))
-  ) {
-    output$summary_code_feedback_step8 <- renderUI({
-      tagList(
-        div(class = "success-box", i18n$t("🙌 Great!")),
-        strong(i18n$t("Now you have the n. Next, calculate the sem!"))
-      )
-    })
+#   if (
+#     length(result_values) == 1 &&
+#     isTRUE(all.equal(result_values[[1]], level_a_n()))
+#   ) {
+#     output$summary_code_feedback_step8 <- renderUI({
+#       tagList(
+#         div(class = "success-box", i18n$t("🙌 Great!")),
+#         strong(i18n$t("Now you have the n. Next, calculate the sem!"))
+#       )
+#     })
 
-  } else if (
-    length(result_values) == 1 &&
-    isTRUE(all.equal(result_values[[1]], level_a_sem()))
-  ) {
-    output$summary_code_feedback_step8 <- renderUI({
-      tagList(
-        div(class = "success-box", i18n$t("🙌 Great!"))
-      )
-    })
+#   } else if (
+#     length(result_values) == 1 &&
+#     isTRUE(all.equal(result_values[[1]], level_a_sem()))
+#   ) {
+#     output$summary_code_feedback_step8 <- renderUI({
+#       tagList(
+#         div(class = "success-box", i18n$t("🙌 Great!"))
+#       )
+#     })
 
-  } else if (
-    length(result_values) == 2 &&
-    isTRUE(all.equal(result_values, c(level_a_n(), level_a_sem())))
-  ) {
-    output$summary_code_feedback_step8 <- renderUI({
-      tagList(
-        div(class = "success-box", i18n$t("🙌 Great!"))
-      )
-    })
+#   } else if (
+#     length(result_values) == 2 &&
+#     isTRUE(all.equal(result_values, c(level_a_n(), level_a_sem())))
+#   ) {
+#     output$summary_code_feedback_step8 <- renderUI({
+#       tagList(
+#         div(class = "success-box", i18n$t("🙌 Great!"))
+#       )
+#     })
 
-  } else {
-    output$summary_code_feedback_step8 <- renderUI({
-      div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
-    })
-  }
-})
+#   } else {
+#     output$summary_code_feedback_step8 <- renderUI({
+#       div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
+#     })
+#   }
+# })
 
 # step9: dplyr shortcut
 predefined_code_step9 <- whisker.render(
@@ -751,14 +751,14 @@ output$analysis_dplyr <- renderUI({
 })
 
 output$step9_box <- renderUI({
-  req(!is.null(summarise_result_step8()), !is.null(summarise_result_step8()$result))
+  req(!is.null(summarise_result_step6()), !is.null(summarise_result_step6()$result))
   tagList(
     fluidRow(
         column(
             12,
           box(
               id = "step9_box",
-              title = i18n$t("9️⃣ Use Dplyr to quickly summarise your data"),
+              title = i18n$t("7️⃣ Use Dplyr to quickly summarise your data"),
               collapsed = FALSE,
               width = 12,
               solidHeader = TRUE,
