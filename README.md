@@ -464,3 +464,9 @@ Once deployed, your students can access BlinkR online from any device!
 This app uses a **modular Shiny** architecture. Learn more about Shiny modules [here](https://shiny.posit.co/r/articles/improve/modules/).
 
 ---
+
+## 💬 Final Notes
+
+👉 Want to contribute? You are welcome to submit PRs with suggested edits.
+👉 Encountered problems, have comments or suggestions? Feel free to open an issue or drop me a message.
+👉 Want to chat about anything else related to BlinkR? You can reach me dschnitzler1@gmail.com
