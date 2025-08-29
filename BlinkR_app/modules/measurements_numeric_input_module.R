@@ -192,6 +192,9 @@ measurement_input_module_server <- function(id, i18n, student_name, student_ID, 
       }
       
       observeEvent(input$Submit_Level_B, {
+
+      cat("Level B Inputs:", input$level_b_input1, input$level_b_input2, input$level_b_input3, "\n")
+      
         inputs <- list(
           input$level_b_input1,
           input$level_b_input2,

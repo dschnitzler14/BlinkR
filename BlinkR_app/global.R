@@ -38,6 +38,7 @@ library(shiny.i18n)
 library(htmltools)
 library(stats)
 library(lubridate)
+library(shinyvalidate)
 
 source("STEP1_google_drive_app_set_up.R")
 source("STEP2_define_variables.R")

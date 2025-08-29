@@ -79,6 +79,22 @@ output$signup_panel <- renderUI({
 })
 })
 
+four_digit_group_id <- function() {
+  compose_rules(
+    sv_required(message = "Group ID is required"),
+    sv_regex("^[0-9]{4}$", message = "Must be exactly 4 digits (e.g., 0001)")
+  )
+}
+
+iv <- InputValidator$new()
+iv$add_rule("sign_up_group_name", compose_rules(sv_required(), sv_regex("^[0-9]+$",
+    message = "Digits only"
+  )))
+iv$add_rule("sign_up_group_name", four_digit_group_id())
+iv$add_rule("name", sv_required(message = "Name is required"))
+iv$enable()
+
+
 observeEvent(input$login_choice_button, {
 
 output$login_panel <- renderUI({
@@ -212,7 +228,13 @@ observeEvent(input$generate_random_ID, {
     })
 
     observeEvent(input$sign_up_button, {
-      req(input$sign_up_group_name, input$name)
+
+    if (!iv$is_valid()) {
+      showNotification("Please enter a 4 digit group ID and your first name", type = "error")
+    return()
+    }
+
+      req(input$sign_up_group_name, input$name, iv$is_valid())
       shinyjs::disable("sign_up_button")
 
       cat("signing up for = ", input$name, "-", input$sign_up_group_name , "\n")
