@@ -37,6 +37,7 @@ library(gridExtra)
 library(shiny.i18n)
 library(htmltools)
 library(stats)
+library(lubridate)
 
 source("STEP1_google_drive_app_set_up.R")
 source("STEP2_define_variables.R")

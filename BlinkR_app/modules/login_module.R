@@ -150,7 +150,8 @@ observeEvent(input$generate_random_ID, {
       req(input$group_name)
       shinyjs::disable("login_button")
 
-      
+    cat("logging in for = ", input$group_name, "\n")
+
       user <- user_base() %>% 
         filter(group == input$group_name) %>% 
         slice(1)
@@ -212,8 +213,10 @@ observeEvent(input$generate_random_ID, {
 
     observeEvent(input$sign_up_button, {
       req(input$sign_up_group_name, input$name)
-
       shinyjs::disable("sign_up_button")
+
+      cat("signing up for = ", input$name, "-", input$sign_up_group_name , "\n")
+
 
       current_users <- all_users()
 
