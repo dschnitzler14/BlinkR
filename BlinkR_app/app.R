@@ -456,7 +456,7 @@ saved_results <- reactiveValues(
     output$login_ui <- renderUI(NULL)
     session_folder_id = auth()$session_folder_id
     
-    admin_area_module_server("admin_module", group_data_file_id = group_data_file_id, parent.session = session, user_base = all_users, final_reports_folder_id = final_reports_folder_id, user_base_google_sheet, session_folder_id = session_folder_id)
+    admin_area_module_server("admin_module", i18n, group_data_file_id = group_data_file_id, parent.session = session, user_base = all_users, final_reports_folder_id = final_reports_folder_id, user_base_google_sheet, session_folder_id = session_folder_id, base_group_files_url = base_group_files_url)
     background_module_server("background", i18n, parent.session = session, include_markdown_language = include_markdown_language)
     hypothesis_module_server("hypothesis", i18n, parent.session = session, auth = auth, include_markdown_language = include_markdown_language)
     protocol_module_server("protocol", i18n, auth = auth, parent.session = session, protocol_file_id = protocol_file_id, session_folder_id = session_folder_id, include_markdown_language = include_markdown_language)

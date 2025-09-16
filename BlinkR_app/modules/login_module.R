@@ -19,7 +19,7 @@ custom_login_ui <- function(id, i18n) {
             
             div(
               id = ns("inner-container"),
-              uiOutput(ns("signup_panel")),
+              #uiOutput(ns("signup_panel")),
               uiOutput(ns("login_panel")),
               uiOutput(ns("sign_up_status"))
             )
@@ -50,7 +50,7 @@ output$login_signup_choice <- renderUI({
   
   tagList(
     actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), i18n$t("I have a Group ID")), class = "fun-choice-button"),
-    actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
+    #actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
   )
   )
 })
@@ -122,7 +122,7 @@ observeEvent(input$cancel_login, {
     id = ns("login-signup-options"),
     tagList(
        actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), i18n$t("I have a Group ID")), class = "fun-choice-button"),
-       actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
+       #actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
     )
     )
   })
@@ -136,7 +136,7 @@ observeEvent(input$cancel_sign_up, {
     id = ns("login-signup-options"),
     tagList(
        actionButton(ns("login_choice_button"), tagList(shiny::icon("circle-check"), i18n$t("I have a Group ID")), class = "fun-choice-button"),
-       actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
+       #actionButton(ns("sign_up_choice_button"), tagList(shiny::icon("circle-xmark"), i18n$t("I do not have a Group ID")), class = "fun-choice-button")
     )
     )
   })
@@ -233,7 +233,7 @@ observeEvent(input$generate_random_ID, {
       showNotification("Please enter a 4 digit group ID and your first name", type = "error")
     return()
     }
-
+ 
       req(input$sign_up_group_name, input$name, iv$is_valid())
       shinyjs::disable("sign_up_button")
 

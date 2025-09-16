@@ -50,7 +50,7 @@ share_to_groups_admin_module_server <- function(id, user_base_data, column, user
     })
     
    
-    
+     
     observeEvent(input$share_to_selected_groups, {
       if (is.null(input$group_input) || length(input$group_input) == 0) {
         showNotification("No groups selected to share.", type = "warning", duration = 3)

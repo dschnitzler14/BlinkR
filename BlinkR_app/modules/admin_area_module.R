@@ -17,7 +17,23 @@ admin_area_module_ui <- function(id, i18n) {
                               fluidRow(
                                 column(
                                   12,
-                                  
+                                  box(title = tagList(shiny::icon("circle-plus"),"Create New Groups"),
+                                      collapsible = TRUE,
+                                      collapsed = FALSE,
+                                      width = 12,
+                                      solidHeader = TRUE,
+                                      create_groups_admin_module_ui(ns("create_groups"), i18n)
+
+                                      
+                                  ),
+                                  box(title = tagList(shiny::icon("circle-plus"),"Assign Group IDs"),
+                                      collapsible = TRUE,
+                                      collapsed = FALSE,
+                                      width = 12,
+                                      solidHeader = TRUE,
+                                      assign_groups_admin_module_ui(ns("assign_groups"))
+                                  ),
+                              
                                   box(title = tagList(shiny::icon("users-viewfinder"),"View All Groups"),
                                       collapsible = TRUE,
                                       collapsed = FALSE,
@@ -54,27 +70,33 @@ admin_area_module_ui <- function(id, i18n) {
 }
 
 
-admin_area_module_server <- function(id, group_data_file_id, parent.session, user_base, final_reports_folder_id, user_base_sheet_id, session_folder_id) {
+admin_area_module_server <- function(id, i18n, group_data_file_id, parent.session, user_base, final_reports_folder_id, user_base_sheet_id, session_folder_id, base_group_files_url) {
   moduleServer(id, function(input, output, session) {
-          vars <- get_experiment_vars()
+    vars <- get_experiment_vars()
 
     ns <- session$ns
 
+     parent_folder_name <- "BlinkR_text_results"
+     parent_folder <- googledrive::drive_get(parent_folder_name)
+
+     parent_folder_id <- googledrive::as_id(parent_folder$id)
+
+     session_folder_id <- parent_folder_id
+
     observeEvent(input$open_google_drive, {
-    req(session_folder_id)
-        
-    showModal(modalDialog(
-      title = "View Google Drive",
-      your_google_drive_module_ui(session$ns("admin_drive_module"), i18n),
+      req(session_folder_id)
 
-      easyClose = TRUE,
-      footer = modalButton("Close"),
-      size = "l" 
-    ))
-    
-    your_google_drive_module_server("admin_drive_module", i18n, session_folder_id)
+      showModal(modalDialog(
+        title = "View Google Drive",
+        your_google_drive_module_ui(session$ns("admin_drive_module"), i18n),
+        easyClose = TRUE,
+        footer = modalButton("Close"),
+        size = "l"
+      ))
 
-  })
+      your_google_drive_module_server("admin_drive_module", i18n, session_folder_id)
+    })
+
     
     user_base_data_reactive <- reactiveVal()
 
@@ -89,7 +111,9 @@ admin_area_module_server <- function(id, group_data_file_id, parent.session, use
     
     share_to_groups_admin_module_server("share_protocol", user_base_static, column = column_protocol_permissions, user_base_sheet_id)
     share_to_groups_admin_module_server("share_data", user_base_data = user_base_static, column = column_data_permissions, user_base_sheet_id)
-    view_groups_admin_module_server("view_groups", user_base_data_reactive())
+    create_groups_admin_module_server("create_groups", user_base_sheet_id = user_base_sheet_id, base_group_files_url = base_group_files_url)
+    assign_groups_admin_module_server("assign_groups", user_base_sheet_id = user_base_sheet_id)
+    view_groups_admin_module_server("view_groups", user_base_sheet_id = user_base_sheet_id)
     combine_sheets_module_server("combine_data", group_data_file_id, parent.session)
     view_report_submission_admin_module_server("report_submission_viewer", final_reports_folder_id)
     
