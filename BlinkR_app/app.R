@@ -318,7 +318,6 @@ body <- dashboardBody(
 # ui combined ----
 ui <- dashboardPage(header, sidebar, body)
 
-
 #server function ----
 server <- function(input, output, session) {
 

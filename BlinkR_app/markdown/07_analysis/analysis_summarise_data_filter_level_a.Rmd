@@ -7,7 +7,7 @@ Just like we did for the {{level_b_variable_name}} group, you need to start with
 Your first line of code is 
 
 ```
-{{level_a_variable_name}}_group <- average_trs %>%
+{{level_a_variable_name}}_data <- average_trs %>%
 
 ```
 Do you remember what goes in the second line?

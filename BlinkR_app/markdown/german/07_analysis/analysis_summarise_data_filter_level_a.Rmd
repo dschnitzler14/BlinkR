@@ -6,7 +6,7 @@ Wie auch bei der {{level_b_variable_name}}-Gruppe beginnst du mit dem vollständ
 
 Deine erste Codezeile lautet:
 ```
-{{level_a_variable_name}}_group <- average_trs %>%
+{{level_a_variable_name}}_data <- average_trs %>%
 
 ```
 Erinnerst du dich, was in der zweiten Zeile kommt?

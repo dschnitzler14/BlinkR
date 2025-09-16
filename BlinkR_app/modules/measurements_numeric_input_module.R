@@ -103,7 +103,20 @@ measurement_input_module_server <- function(id, i18n, student_name, student_ID, 
     function(input, output, session) {
             vars <- get_experiment_vars()
 
-      
+    iv_measurements_b <- InputValidator$new()
+    iv_measurements_b$add_rule("level_b_input1", sv_numeric())
+    iv_measurements_b$add_rule("level_b_input2", sv_numeric())
+    iv_measurements_b$add_rule("level_b_input3", sv_numeric())
+
+    iv_measurements_b$enable()
+
+    iv_measurements_a <- InputValidator$new()
+    iv_measurements_a$add_rule("level_a_input1", sv_numeric())
+    iv_measurements_a$add_rule("level_a_input2", sv_numeric())
+    iv_measurements_a$add_rule("level_a_input3", sv_numeric())
+    
+    iv_measurements_a$enable()
+
       ns <- session$ns
       
       observeEvent(input$read_consent, {
@@ -128,7 +141,7 @@ measurement_input_module_server <- function(id, i18n, student_name, student_ID, 
       
       add_measurement <- function(level, inputs, submission_id) {
         
-        if (any(sapply(inputs, is.null)) || any(sapply(inputs, function(x) x == 0))) {
+        if (any(sapply(inputs, is.null)) || any(sapply(inputs, is.na)) || any(sapply(inputs, function(x) x == 0))) {
           showNotification(i18n$t("Please enter all three measurements."), type = "error", duration = 3)
           return(FALSE)
         }
@@ -192,9 +205,10 @@ measurement_input_module_server <- function(id, i18n, student_name, student_ID, 
       }
       
       observeEvent(input$Submit_Level_B, {
+      req(iv_measurements_b$is_valid())
 
       cat("Level B Inputs:", input$level_b_input1, input$level_b_input2, input$level_b_input3, "\n")
-      
+
         inputs <- list(
           input$level_b_input1,
           input$level_b_input2,
@@ -204,6 +218,10 @@ measurement_input_module_server <- function(id, i18n, student_name, student_ID, 
       })
       
       observeEvent(input$Submit_Level_A, {
+        req(iv_measurements_a$is_valid())
+
+        cat("Level A Inputs:", input$level_a_input1, input$level_a_input2, input$level_a_input3, "\n")
+
         inputs <- list(
           input$level_a_input1,
           input$level_a_input2,

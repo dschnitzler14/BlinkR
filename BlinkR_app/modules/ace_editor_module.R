@@ -54,43 +54,65 @@ editor_module_server <- function(id, data, variable_name = "ace_editor_data", pr
     })
     
     observeEvent(input$run_code, {
+  code <- input$editor
+  temp_env <- new.env(parent = globalenv())
 
-      code <- input$editor
-      temp_env <- new.env(parent = globalenv())
+  if (is.list(data) && length(variable_name) == length(data)) {
+    for (i in seq_along(data)) {
+      assign(variable_name[i], data[[i]](), envir = temp_env)
+    }
+  } else {
+    assign(variable_name, data(), envir = temp_env)
+  }
 
-      if (is.list(data) && length(variable_name) == length(data)) {
-        for (i in seq_along(data)) {
-          assign(variable_name[i], data[[i]](), envir = temp_env)
-        }
-      } else {
-        assign(variable_name, data(), envir = temp_env)
+  forbidden_packages <- c("googledrive", "googlesheets4")
+  lapply(forbidden_packages, function(pkg) {
+    if (pkg %in% loadedNamespaces()) {
+      detach(paste0("package:", pkg), character.only = TRUE, unload = FALSE)
+    }
+  })
+
+  warnings_vec <- character(0)
+
+  eval_result <- tryCatch({
+    res <- withCallingHandlers(
+      withVisible(eval(parse(text = code), envir = temp_env)),
+      warning = function(w) {
+        warnings_vec <<- c(warnings_vec, conditionMessage(w))
+        invokeRestart("muffleWarning")
       }
+    )
+    if (length(warnings_vec)) attr(res, ".__warnings__") <- warnings_vec
+    res
+  }, error = function(e) {
+    structure(
+      list(value = paste0("Error: ", conditionMessage(e))),
+      class = "editor_error"
+    )
+  })
 
-      forbidden_packages <- c("googledrive", "googlesheets4")
-      lapply(forbidden_packages, function(pkg) {
-        if (pkg %in% loadedNamespaces()) {
-          detach(paste0("package:", pkg), character.only = TRUE, unload = FALSE)
-        }
-      })
+  lapply(forbidden_packages, function(pkg) {
+    if (pkg %in% installed.packages()) {
+      library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
+    }
+  })
 
-      eval_result <- tryCatch({
-        eval(parse(text = code), envir = temp_env)
-      }, error = function(e) {
-        paste("Error:", e$message)
-      })
+  if (inherits(eval_result, "editor_error")) {
+    values$result <- eval_result$value
+    values$is_plot <- FALSE
+  } else {
+    res_value <- eval_result$value
+    warn <- attr(eval_result, ".__warnings__")
+    if (length(warn)) {
+      res_value <- paste(c(paste0("Warning: ", warn), "", capture.output(print(res_value))), collapse = "\n")
+    }
+    values$result <- if (eval_result$visible) res_value else res_value
+    values$is_plot <- inherits(res_value, "ggplot") || inherits(res_value, "recordedplot")
+  }
 
-      lapply(forbidden_packages, function(pkg) {
-        if (pkg %in% installed.packages()) {
-          library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
-        }
-      })
+  current_code(code)
+}, ignoreInit = TRUE)
 
-      values$result <- eval_result
-      values$is_plot <- inherits(eval_result, "ggplot") || inherits(eval_result, "recordedplot")
-
-      current_code(code)
-
-    }, ignoreInit = TRUE)
 
 output$dynamic_console <- renderUI({
     req(input$run_code)
