@@ -162,70 +162,80 @@ observeEvent(input$generate_random_ID, {
   updateTextInput(session, "sign_up_group_name", value = new_group_id)
 })
     
-    observeEvent(input$login_button, {
-      req(input$group_name)
-      shinyjs::disable("login_button")
+  observeEvent(input$login_button, {
+  req(input$group_name)
+  shinyjs::disable("login_button")
 
-    cat("logging in for = ", input$group_name, "\n")
+  cat("logging in for = ", input$group_name, "\n")
 
-      user <- user_base() %>% 
-        filter(group == input$group_name) %>% 
-        slice(1)
-      
-      if (nrow(user) == 1) {
-  credentials$user_auth <- TRUE
-  credentials$info <- user
-  credentials$info$role <- user$Role
-  credentials$info$data <- user$Data
-  credentials$info$protocol <- user$Protocol
-  output$error <- renderText("")
+  user <- user_base() %>%
+    dplyr::filter(group == input$group_name) %>%
+    dplyr::slice(1)
 
-  parent_folder_name <- "BlinkR_text_results"
-  parent_folder <- googledrive::drive_get(parent_folder_name)
+  if (nrow(user) == 1) {
 
-  if (nrow(parent_folder) == 0) {
-    parent_folder <- googledrive::drive_mkdir(parent_folder_name)
-  }
+    parent_folder_name <- "BlinkR_text_results"
+    parent_folder <- googledrive::drive_get(parent_folder_name)
+    if (nrow(parent_folder) == 0) {
+      parent_folder <- googledrive::drive_mkdir(parent_folder_name)
+    }
+    parent_id <- parent_folder$id[[1]]
 
-  if (credentials$info$role != "admin") {
-    group_name <- input$group_name
-    session_folder_name <- group_name
+    if (user$Role != "admin") {
+      # ---- NON-ADMIN: require a matching folder before authenticating ----
+      session_folder_name <- as.character(input$group_name)
 
-    existing_folder <- googledrive::drive_ls(
-      path = googledrive::as_id(parent_folder$id),
-      pattern = session_folder_name
-    )
-
-    if (nrow(existing_folder) == 0) {
-      new_folder <- googledrive::drive_mkdir(
-        name = session_folder_name, 
-        path = googledrive::as_id(parent_folder$id)
+      # list children once, exact-name match, folders only, not trashed
+      children <- googledrive::drive_ls(
+        path    = googledrive::as_id(parent_id),
+        type    = "folder",
+        trashed = FALSE
       )
-      
-      folder_id <- new_folder$id
-      credentials$session_folder <- new_folder
-    } else {
+      existing_folder <- children[children$name == session_folder_name, , drop = FALSE]
+
+      if (nrow(existing_folder) == 0) {
+        output$error <- renderText("No Folder for this ID. Please speak to the admin.")
+        shinyjs::enable("login_button")
+        return()  # <- IMPORTANT: do not authenticate
+      }
+
+      # now (and only now) authenticate and set credentials
+      credentials$user_auth <- TRUE
+      credentials$info <- user
+      credentials$info$role <- user$Role
+      credentials$info$data <- user$Data
+      credentials$info$protocol <- user$Protocol
+
+      folder_id <- existing_folder$id[[1]]
       credentials$session_folder <- existing_folder
-      folder_id <- existing_folder$id
+      credentials$session_folder_id <- folder_id
+      credentials$session_folder_url <- paste0(base_group_files_url, folder_id)
+      try(googledrive::drive_share_anyone(googledrive::as_id(folder_id)), silent = TRUE)
+
+      output$error <- renderText(i18n$t("Logged in successfully."))
+
+    } else {
+      # ---- ADMIN: ok to authenticate to root ----
+      credentials$user_auth <- TRUE
+      credentials$info <- user
+      credentials$info$role <- user$Role
+      credentials$info$data <- user$Data
+      credentials$info$protocol <- user$Protocol
+
+      credentials$session_folder <- parent_folder
+      credentials$session_folder_id <- parent_id
+      credentials$session_folder_url <- paste0(base_group_files_url, parent_id)
+
+      output$error <- renderText(i18n$t("Logged in successfully."))
     }
 
-    drive_share_anyone(as_id(folder_id))
-    credentials$session_folder_id <- folder_id
-    folder_url <- paste0(base_group_files_url, folder_id)
-    credentials$session_folder_url <- folder_url
   } else {
-    credentials$session_folder <- parent_folder
-    credentials$session_folder_id <- parent_folder$id 
-    credentials$session_folder_url <- paste0(base_group_files_url, parent_folder$id)
+    output$error <- renderText(i18n$t("Invalid Group ID. Please try again."))
   }
 
-  output$error <- renderText(i18n$t("Logged in successfully."))
-} else {
-  output$error <- renderText(i18n$t("Invalid Group ID. Please try again."))
-}
+  shinyjs::enable("login_button")
+})
 
-      
-    })
 
     observeEvent(input$sign_up_button, {
 
