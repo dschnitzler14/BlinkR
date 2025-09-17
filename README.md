@@ -84,11 +84,12 @@ https://github.com/user-attachments/assets/f417d055-1070-40d7-a967-6505af0f9478
 On launching the app, users land on the **Introduction** tab with a login block:
 
 - **Log in**: Select "I have a Group ID" and enter the 4-digit ID.
-- **Sign up**: Enter a unique 4-digit group ID and name, or generate one randomly. If the entered ID already exists, an error will be shown.
 
-Once login or sign-up is complete, the login block disappears and the rest of the app becomes accessible.
+Once login is complete, the login block disappears and the rest of the app becomes accessible.
 
 https://github.com/user-attachments/assets/2e136476-471f-4321-8ebd-fd86aa053afc
+
+- **Email Self**: Once logged in, users can use the "email self" function in the top bar to send themselves their login IDs, the link to their google drive folder (only theirs!), as well as the site link (if added after deployment)
 
 ## Background
 
@@ -290,16 +291,13 @@ https://github.com/user-attachments/assets/fc510878-b4c8-4208-a7f1-cb37d908dce0
 
 Only visible to users with "admin" role. Features include:
 
-1. View all groups and permissions
-2. Share/hide class protocol
-3. Share/hide class data
-4. Combine class data (creates a shared file in Google Drive; renames old files)
-5. View report submissions
-6. Access all group Google Drive folders
-
----
-
-Absolutely! Here's your improved **"Set up and Deployment"** section — rewritten for clarity, grammar, and tone while keeping it friendly and approachable. I’ve used consistent formatting, made instructions more concise, and cleaned up the structure so it's easier to follow in `.md` format:
+1. Create groups and assign users
+2. View all groups and permissions
+3. Share/hide class protocol
+4. Share/hide class data
+5. Combine class data (creates a shared file in Google Drive; renames old files)
+6. View report submissions
+7. Access all group Google Drive folders
 
 ---
 
@@ -416,7 +414,7 @@ experiment_variables <- list(
   levels_text_name = "Stress Status",
   level_a_variable_name = "stressed",
   level_a_text_name = "Stressed",
-  level_b_variable_name = "unstressed",  # recommended: control group
+  level_b_variable_name = "unstressed",  # recommended: level_b as control group
   level_b_text_name = "Unstressed"
 )
 ```
@@ -454,6 +452,8 @@ There are several options — the most common is via **shinyapps.io**. Here's ho
 3. The `rsconnect` package (already installed in `STEP0`) handles deployment.
 
 Once deployed, your students can access BlinkR online from any device!
+
+> Once you have deployed you can even add the link in the `global.R` file under `site_url = "your-link.com` which will then be added to the email users can send themselves! 
 
 **✅ You're all set. Happy experimenting!**
 
