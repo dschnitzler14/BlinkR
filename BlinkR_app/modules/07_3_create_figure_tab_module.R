@@ -125,6 +125,43 @@ fluidRow(
 analysis_create_figure_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id, process_markdown, include_markdown_language) {
   moduleServer(id, function(input, output, session) {
 
+
+    ### helpers
+    save_results <- function(key, plot_obj, saved_results, session_folder_id, name = "Plot") {
+      shiny::isolate({
+        saved_results$plots[[key]] <- plot_obj
+        if (is.null(saved_results$when)) saved_results$when <- list()
+        saved_results$when[[key]] <- Sys.time()
+      })
+
+      tmp <- tempfile(fileext = ".png")
+      if (inherits(plot_obj, "ggplot")) {
+        ggplot2::ggsave(filename = tmp, plot = plot_obj, device = "png",
+                        width = 8, height = 6, dpi = 300)
+      } else if (inherits(plot_obj, "recordedplot")) {
+        grDevices::png(tmp, width = 800, height = 600, res = 96)
+        on.exit(grDevices::dev.off(), add = TRUE)
+        grDevices::replayPlot(plot_obj)
+        grDevices::dev.off()
+      } else {
+        showNotification("Invalid plot type. Unable to save.", type = "error", duration = 3)
+        return(invisible(FALSE))
+      }
+
+      googledrive::drive_upload(
+        media     = tmp,
+        path      = googledrive::as_id(session_folder_id),
+        name      = paste0(key, ".png"),
+        overwrite = TRUE
+      )
+      unlink(tmp)
+
+      showNotification(paste0(name, " saved."), type = "message", duration = 3)
+      invisible(TRUE)
+    }
+
+    ###
+
           vars <- get_experiment_vars()
 
   average_trs <- reactive({ NULL })
@@ -205,18 +242,27 @@ predefined_code_boxplot <- whisker.render(
         )
       })
       
-      output$save_plot <- renderUI({
-        tagList(
-          div(
-            style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-        actionButton(
-          session$ns("save_bar_plot"),
-          label = tagList(icon("save"), i18n$t("Save Plot to Dashboard")),
-          class = "action-button custom-action"
+      # output$save_plot <- renderUI({
+      #   tagList(
+      #     div(
+      #       style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+      #   actionButton(
+      #     session$ns("save_bar_plot"),
+      #     label = tagList(icon("save"), i18n$t("Save Plot to Dashboard")),
+      #     class = "action-button custom-action"
+      #   )
+      #     )
+      #   )
+      # })
+        p <- figure_editor_bar_plot()
+        save_results(
+          key               = "bar_plot",
+          plot_obj          = p$result,
+          saved_results     = saved_results,
+          session_folder_id = session_folder_id,
+          name              = i18n$t("Bar plot")
         )
-          )
-        )
-      })
+        
     } else {
       output$figure_editor_feedback <- renderUI({
         div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -248,18 +294,26 @@ predefined_code_boxplot <- whisker.render(
         )
       })
   
-      output$save_plot <- renderUI({
-        tagList(
-          div(
-            style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-        actionButton(
-          session$ns("save_box_plot"),
-          label = tagList(icon("save"), i18n$t("Save Plot to Dashboard")),
-          class = "action-button custom-action"
+      # output$save_plot <- renderUI({
+      #   tagList(
+      #     div(
+      #       style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+      #   actionButton(
+      #     session$ns("save_box_plot"),
+      #     label = tagList(icon("save"), i18n$t("Save Plot to Dashboard")),
+      #     class = "action-button custom-action"
+      #   )
+      #   )
+      #   )
+      # })
+        p <- figure_editor_box_plot()
+      save_results(
+          key               = "box_plot",
+          plot_obj          = p$result,
+          saved_results     = saved_results,
+          session_folder_id = session_folder_id,
+          name              = i18n$t("Box plot")
         )
-        )
-        )
-      })
     } else {
       output$figure_editor_feedback <- renderUI({
         div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -271,81 +325,81 @@ predefined_code_boxplot <- whisker.render(
   })
   
   #bar plot save
-  observeEvent(input$save_bar_plot, {
-    if (!is.null(figure_editor_bar_plot())) {
-        key <- "bar_plot"
+#   observeEvent(input$save_bar_plot, {
+#     if (!is.null(figure_editor_bar_plot())) {
+#         key <- "bar_plot"
 
-        saved_results$plots[["bar_plot"]] <- NULL
-        saved_results$plots[["box_plot"]] <- NULL
+#         saved_results$plots[["bar_plot"]] <- NULL
+#         saved_results$plots[["box_plot"]] <- NULL
 
-        if (inherits(figure_editor_bar_plot()$result, "ggplot")) {
-            saved_results$plots[[key]] <- figure_editor_bar_plot()$result
-        } else if (inherits(figure_editor_bar_plot()$result, "recordedplot")) {
-            saved_results$plots[[key]] <- figure_editor_bar_plot()$result
-        } else {
-            showNotification("Invalid plot type. Unable to save.", type = "error", duration = 3)
-            return()
-        }
+#         if (inherits(figure_editor_bar_plot()$result, "ggplot")) {
+#             saved_results$plots[[key]] <- figure_editor_bar_plot()$result
+#         } else if (inherits(figure_editor_bar_plot()$result, "recordedplot")) {
+#             saved_results$plots[[key]] <- figure_editor_bar_plot()$result
+#         } else {
+#             showNotification("Invalid plot type. Unable to save.", type = "error", duration = 3)
+#             return()
+#         }
 
-        temp_file <- tempfile(fileext = ".png")
-        png(temp_file, width = 800, height = 600)
-        tryCatch({
-            if (inherits(saved_results$plots[[key]], "ggplot")) {
-                print(saved_results$plots[[key]])
-            } else if (inherits(saved_results$plots[[key]], "recordedplot")) {
-                replayPlot(saved_results$plots[[key]])
-            }
-        }, finally = {
-            dev.off()
-        })
+#         temp_file <- tempfile(fileext = ".png")
+#         png(temp_file, width = 800, height = 600)
+#         tryCatch({
+#             if (inherits(saved_results$plots[[key]], "ggplot")) {
+#                 print(saved_results$plots[[key]])
+#             } else if (inherits(saved_results$plots[[key]], "recordedplot")) {
+#                 replayPlot(saved_results$plots[[key]])
+#             }
+#         }, finally = {
+#             dev.off()
+#         })
 
-        path <- drive_get(as_id(session_folder_id))
-        drive_upload(
-            media = temp_file,
-            path = path,
-            name = paste0(key, ".png"),
-            overwrite = TRUE
-        )
+#         path <- drive_get(as_id(session_folder_id))
+#         drive_upload(
+#             media = temp_file,
+#             path = path,
+#             name = paste0(key, ".png"),
+#             overwrite = TRUE
+#         )
 
-        unlink(temp_file)
-        showNotification(i18n$t("Plot saved successfully"), type = "message", duration = 3)
-    } else {
-        showNotification(i18n$t("No plot to save. Please create a plot first."), type = "error", duration = 3)
-    }
-})
+#         unlink(temp_file)
+#         showNotification(i18n$t("Plot saved successfully"), type = "message", duration = 3)
+#     } else {
+#         showNotification(i18n$t("No plot to save. Please create a plot first."), type = "error", duration = 3)
+#     }
+# })
 
  
   
   # box plot save
-  observeEvent(input$save_box_plot, {
-  req(figure_editor_box_plot()$result)
+#   observeEvent(input$save_box_plot, {
+#   req(figure_editor_box_plot()$result)
 
-  if (inherits(figure_editor_box_plot()$result, "ggplot")) {
-    key <- "box_plot"
-    saved_results$plots[[key]] <- figure_editor_box_plot()$result
+#   if (inherits(figure_editor_box_plot()$result, "ggplot")) {
+#     key <- "box_plot"
+#     saved_results$plots[[key]] <- figure_editor_box_plot()$result
 
-    temp_file <- tempfile(fileext = ".png")
-    ggsave(
-      filename = temp_file,
-      plot = saved_results$plots[[key]],
-      device = "png",
-      width = 8, height = 6, dpi = 300
-    )
+#     temp_file <- tempfile(fileext = ".png")
+#     ggsave(
+#       filename = temp_file,
+#       plot = saved_results$plots[[key]],
+#       device = "png",
+#       width = 8, height = 6, dpi = 300
+#     )
 
-    path <- drive_get(as_id(session_folder_id))
-    drive_upload(
-      media = temp_file,
-      path = path,
-      name = paste0(key, ".png"),
-      overwrite = TRUE
-    )
+#     path <- drive_get(as_id(session_folder_id))
+#     drive_upload(
+#       media = temp_file,
+#       path = path,
+#       name = paste0(key, ".png"),
+#       overwrite = TRUE
+#     )
 
-    unlink(temp_file)
-    showNotification(i18n$t("Plot saved successfully."), type = "message", duration = 3)
-  } else {
-    showNotification(i18n$t("No valid plot to save."), type = "error", duration = 3)
-  }
-})
+#     unlink(temp_file)
+#     showNotification(i18n$t("Plot saved successfully."), type = "message", duration = 3)
+#   } else {
+#     showNotification(i18n$t("No valid plot to save."), type = "error", duration = 3)
+#   }
+# })
 
 output$change_axis_markdown <- renderUI({
   include_markdown_language("07_analysis/change_axis.Rmd")

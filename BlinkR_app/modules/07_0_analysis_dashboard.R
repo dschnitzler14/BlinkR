@@ -159,6 +159,47 @@ analysis_dashboard_module_ui <- function(id, i18n) {
 
 analysis_dashboard_module_server <- function(id, i18n, parent.session, saved_results, session_folder_id) {
   moduleServer(id, function(input, output, session) {
+
+    ## helper and functions
+    `%||%` <- function(a, b) if (!is.null(a)) a else b
+
+      latest_key <- function(sr, keys) {
+        present <- keys[sapply(keys, function(k) !is.null(sr$scripts[[k]]))]
+        if (!length(present)) return(NULL)
+        times <- sapply(
+          present,
+          function(k) {
+            if (is.null(sr$when)) return(as.POSIXct(0, origin = "1970-01-01"))
+            sr$when[[k]] %||% as.POSIXct(0, origin = "1970-01-01")
+          }
+        )
+        present[which.max(times)]
+      }
+
+      latest_plot_key <- function(sr, keys) {
+        present <- keys[sapply(keys, function(k) !is.null(sr$plots[[k]]))]
+        if (!length(present)) return(NULL)
+        times <- sapply(
+          present,
+          function(k) {
+            if (is.null(sr$when)) return(as.POSIXct(0, origin = "1970-01-01"))
+            (sr$when[[k]]) %||% as.POSIXct(0, origin = "1970-01-01")
+          }
+        )
+        present[which.max(times)]
+      }
+
+    get_result_text <- function(x) {
+      obj <- if (!is.null(x$result)) x$result else x
+      paste(capture.output(obj), collapse = "\n")
+    }
+    get_result_plot <- function(x) {
+      obj <- if (!is.null(x$result)) x$result else x
+      obj
+    }
+  
+
+###
        vars <- get_experiment_vars()
 
         observeEvent(input$back_page_analysis, {
@@ -227,82 +268,27 @@ analysis_dashboard_module_server <- function(id, i18n, parent.session, saved_res
       replayPlot(saved_results$recorded_plots[["box_plot"]])
     })
     
-    
-    stats_content_reactive <- reactive({
-      req(!is.null(saved_results$scripts[["stats_not_normal_unpaired"]]) || 
-        !is.null(saved_results$scripts[["stats_not_normal_paired"]]) ||
-        !is.null(saved_results$scripts[["stats_normal_unpaired"]]) ||
-        !is.null(saved_results$scripts[["stats_normal_paired"]]) ||
-        !is.null(saved_results$scripts[["stats_normal_paired_effect_size"]]) ||
-        !is.null(saved_results$scripts[["stats_normal_unpaired_effect_size"]]) ||
-        !is.null(saved_results$scripts[["stats_not_normal_paired_effect_size"]]) ||
-        !is.null(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]])
-
-      )
-      
-      if (!is.null(saved_results$scripts[["stats_not_normal_unpaired"]])) {
-        paste(capture.output(saved_results$scripts[["stats_not_normal_unpaired"]]$result), collapse = "\n")
-      } else if (!is.null(saved_results$scripts[["stats_not_normal_paired"]])) {
-        paste(capture.output(saved_results$scripts[["stats_not_normal_paired"]]$result), collapse = "\n")
-        } else if (!is.null(saved_results$scripts[["stats_normal_unpaired"]])) {
-            paste(capture.output(saved_results$scripts[["stats_normal_unpaired"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_normal_paired"]])) {
-            paste(capture.output(saved_results$scripts[["stats_normal_paired"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_normal_paired_effect_size"]])) {
-            paste(capture.output(saved_results$scripts[["stats_normal_paired_effect_size"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_normal_unpaired_effect_size"]])) {
-            paste(capture.output(saved_results$scripts[["stats_normal_unpaired_effect_size"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_not_normal_paired_effect_size"]])) {
-            paste(capture.output(saved_results$scripts[["stats_not_normal_paired_effect_size"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]])) {
-            paste(capture.output(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]]$result), collapse = "\n")
-            } else {
-            "No statistical scripts found."
-            }
-})
 
 stats_content_reactive <- reactive({
-      req(!is.null(saved_results$scripts[["stats_not_normal_unpaired"]]) || 
-        !is.null(saved_results$scripts[["stats_not_normal_paired"]]) ||
-        !is.null(saved_results$scripts[["stats_normal_unpaired"]]) ||
-        !is.null(saved_results$scripts[["stats_normal_paired"]])
-      )
-      
-      if (!is.null(saved_results$scripts[["stats_not_normal_unpaired"]])) {
-        paste(capture.output(saved_results$scripts[["stats_not_normal_unpaired"]]$result), collapse = "\n")
-      } else if (!is.null(saved_results$scripts[["stats_not_normal_paired"]])) {
-        paste(capture.output(saved_results$scripts[["stats_not_normal_paired"]]$result), collapse = "\n")
-        } else if (!is.null(saved_results$scripts[["stats_normal_unpaired"]])) {
-            paste(capture.output(saved_results$scripts[["stats_normal_unpaired"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_normal_paired"]])) {
-            paste(capture.output(saved_results$scripts[["stats_normal_paired"]]$result), collapse = "\n")
-            } else {
-            "No statistical scripts found."
-            }
+  k <- latest_key(saved_results, c(
+    "stats_not_normal_unpaired",
+    "stats_not_normal_paired",
+    "stats_normal_unpaired",
+    "stats_normal_paired"
+  ))
+  req(k, saved_results$scripts[[k]])
+  get_result_text(saved_results$scripts[[k]])
 })
 
-
 effect_size_content_reactive <- reactive({
-req(!is.null(saved_results$scripts[["stats_normal_paired_effect_size"]]) ||
-        !is.null(saved_results$scripts[["stats_normal_unpaired_effect_size"]]) ||
-        !is.null(saved_results$scripts[["stats_not_normal_paired_effect_size"]]) ||
-        !is.null(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]])
-
-      )
-      
-      if (!is.null(saved_results$scripts[["stats_normal_paired_effect_size"]])) {
-            paste(capture.output(saved_results$scripts[["stats_normal_paired_effect_size"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_normal_unpaired_effect_size"]])) {
-            paste(capture.output(saved_results$scripts[["stats_normal_unpaired_effect_size"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_not_normal_paired_effect_size"]])) {
-            paste(capture.output(saved_results$scripts[["stats_not_normal_paired_effect_size"]]$result), collapse = "\n")
-            } else if (!is.null(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]])) {
-            paste(capture.output(saved_results$scripts[["stats_not_normal_unpaired_effect_size"]]$result), collapse = "\n")
-            } else {
-            "No effect size scripts found."
-            }
-
-
+  k <- latest_key(saved_results, c(
+    "stats_normal_paired_effect_size",
+    "stats_normal_unpaired_effect_size",
+    "stats_not_normal_paired_effect_size",
+    "stats_not_normal_unpaired_effect_size"
+  ))
+  req(k, saved_results$scripts[[k]])
+  get_result_text(saved_results$scripts[[k]])
 })
 
 stats_interpretation_content_reactive <- reactive({
@@ -314,7 +300,6 @@ stats_interpretation_content_reactive <- reactive({
     "No interpretation text found."
   }
 })
-    
     
     output$saved_stats_results <- renderUI({
       req(stats_content_reactive())
@@ -355,48 +340,33 @@ output$stats_interpretation <- renderUI({
     })
     
     # Figure
-    
-    output$saved_plot_results <- renderUI({
-      req(saved_results$plots)
-      
-      plot_keys <- names(saved_results$plots)
-      
-      tagList(
-        lapply(plot_keys, function(key) {
-          ns_key <- session$ns(key) 
-          box(
-            title = paste("Your Plot:"),
-            collapsible = TRUE,
-            collapsed = FALSE,
-            width = 12,
-            plotOutput(session$ns(paste0("plot_", key)))
-          )
-        })
-      )
-    })
-    
-    observe({
-      req(saved_results$plots)
-      
-      plot_keys <- names(saved_results$plots)
-      
-      lapply(plot_keys, function(key) {
-        output[[paste0("plot_", key)]] <- renderPlot({
-          req(saved_results$plots[[key]])
-          plot <- saved_results$plots[[key]]
-          if (inherits(plot, "ggplot")) {
-            print(plot)
-          } else if (inherits(plot, "recordedplot")) {
-            replayPlot(plot)
-          } else {
-            stop("The saved plot is neither a ggplot nor a base plot.")
-          }
-        })
-        
-      })
-    })
-    
-    
+
+  plot_reactive <- reactive({
+  k <- latest_plot_key(saved_results, c("bar_plot", "box_plot"))
+  req(k, saved_results$plots[[k]])
+  saved_results$plots[[k]]
+})
+
+  output$saved_plot_results <- renderUI({
+    req(plot_reactive())
+    box(
+      title = "Your Plot (latest)",
+      collapsible = TRUE, collapsed = FALSE, width = 12,
+      plotOutput(session$ns("saved_plot"))
+    )
+  })
+
+  output$saved_plot <- renderPlot({
+    p <- plot_reactive(); req(p)
+    if (inherits(p, "ggplot")) {
+      print(p)
+    } else if (inherits(p, "recordedplot")) {
+      replayPlot(p)
+    } else {
+      validate(need(FALSE, "The saved plot is neither a ggplot nor a base plot."))
+    }
+  })
+
 
   observeEvent(input$link_to_drive, {
     req(session_folder_id)

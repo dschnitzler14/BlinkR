@@ -64,9 +64,6 @@ text_area_module_server <- function(id, i18n, auth, filename = "Filename", time 
           div(class = "success-box", i18n$t("🙌 Your notes have been saved!"))
         })
 
-      cat("group name ", group, " saved to path", pathname, "as filename", name , "\n")
-
-
       })
     }
   )

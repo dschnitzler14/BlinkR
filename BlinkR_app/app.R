@@ -391,7 +391,9 @@ saved_results <- reactiveValues(
   plots = list(),
   recorded_plots = list(),
   scripts = list(),
-  user_writing = list()
+  user_writing = list(),
+  when = list(),
+  last_hash = list()
 )
   
   reload_trigger <- reactiveValues(reload = 0)

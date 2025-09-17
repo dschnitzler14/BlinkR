@@ -90,6 +90,33 @@ analysis_summarise_data_module_ui <- function(id, i18n) {
 
 analysis_summarise_data_module_server <- function(id, i18n, results_data, parent.session, saved_results, session_folder_id, process_markdown) {
   moduleServer(id, function(input, output, session) {
+
+  ### function
+
+    save_result <- function(name, key, result_obj, saved_results, session_folder_id) {
+      shiny::isolate({
+        saved_results$scripts[[key]] <- result_obj
+        saved_results$when[[key]]    <- Sys.time()
+      })
+
+      result_as_char <- capture.output(print(result_obj))
+      temp_file <- tempfile(fileext = ".txt")
+      writeLines(result_as_char, con = temp_file)
+
+      googledrive::drive_upload(
+        media     = temp_file,
+        path      = googledrive::as_id(session_folder_id),
+        name      = paste0(key, ".txt"),
+        overwrite = TRUE
+      )
+
+      unlink(temp_file)
+
+      showNotification(paste0(name, i18n$t(" result saved successfully.")),
+                      type = "message", duration = 3)
+    }
+
+  ###
   vars <- get_experiment_vars()
 
   #step1 data prep
@@ -836,20 +863,27 @@ observe({
       )
     })
 
-    output$save_summary_result <- renderUI({
-        tagList(
-          div(
-      style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-          actionButton(
-            session$ns("save_summary_results_button"),
-            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-            class = "action-button custom-action",
-            `data-id` = "summary_save"
-          )
-          )
-        )
-        }) 
+    # output$save_summary_result <- renderUI({
+    #     tagList(
+    #       div(
+    #   style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+    #       actionButton(
+    #         session$ns("save_summary_results_button"),
+    #         label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+    #         class = "action-button custom-action",
+    #         `data-id` = "summary_save"
+    #       )
+    #       )
+    #     )
+    #     }) 
         
+        save_result(
+            name             = "Summary Results",
+            key              = "summary",
+            result_obj       = summarise_result_step9(), 
+            saved_results    = saved_results,
+            session_folder_id = session_folder_id
+          )
     
   } else {
     
@@ -996,32 +1030,33 @@ observeEvent(input$submit_sem_level_a_group_quiz_answer, {
     
     summary_updated <- reactiveVal(FALSE)
     
-    observeEvent(input$save_summary_results_button, {
-      if (!is.null(summarise_result_step9())) {
-        key <- "summary"
-        saved_results$scripts[[key]] <- summarise_result_step9()
+    # observeEvent(input$save_summary_results_button, {
+    #   if (!is.null(summarise_result_step9())) {
+    #     key <- "summary"
+    #     saved_results$scripts[[key]] <- summarise_result_step9()
         
-        result_as_char <- capture.output(print(saved_results$scripts[[key]]))
+    #     result_as_char <- capture.output(print(saved_results$scripts[[key]]))
         
-        temp_file <- tempfile(fileext = ".txt")
-        writeLines(result_as_char, con = temp_file)
+    #     temp_file <- tempfile(fileext = ".txt")
+    #     writeLines(result_as_char, con = temp_file)
         
-        path <- drive_get(as_id(session_folder_id))
+    #     path <- drive_get(as_id(session_folder_id))
         
-        drive_upload(
-          media = temp_file,
-          path = path,
-          name = paste0(key, ".txt"),
-          overwrite = TRUE,
-        )
+    #     drive_upload(
+    #       media = temp_file,
+    #       path = path,
+    #       name = paste0(key, ".txt"),
+    #       overwrite = TRUE,
+    #     )
         
-        unlink(temp_file)
+
+    #     unlink(temp_file)
         
-        showNotification(i18n$t("Summary script saved successfully & Uploaded to Drive."), type = "message", duration = 3)
-      } else {
-        showNotification(i18n$t("No summary script to save."), type = "error", duration = 3)
-      }
-    })
+    #     showNotification(i18n$t("Summary script saved successfully & Uploaded to Drive."), type = "message", duration = 3)
+    #   } else {
+    #     showNotification(i18n$t("No summary script to save."), type = "error", duration = 3)
+    #   }
+    # })
 
 # navigation buttons
 

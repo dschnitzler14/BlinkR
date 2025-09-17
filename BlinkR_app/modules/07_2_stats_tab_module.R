@@ -126,25 +126,29 @@ average_trs_paired_wide <- reactive({
     })
 
 
-    save_result <- function(name, key, result_obj, saved_results, session_folder_id) {
-  saved_results$scripts[[key]] <- result_obj
+save_result <- function(name, key, result_obj, saved_results, session_folder_id) {
+  shiny::isolate({
+    saved_results$scripts[[key]] <- result_obj
+    saved_results$when[[key]]    <- Sys.time()
+  })
 
   result_as_char <- capture.output(print(result_obj))
-
   temp_file <- tempfile(fileext = ".txt")
   writeLines(result_as_char, con = temp_file)
 
-  path <- drive_get(as_id(session_folder_id))
-  drive_upload(
-    media = temp_file,
-    path = path,
-    name = paste0(key, ".txt"),
+  googledrive::drive_upload(
+    media     = temp_file,
+    path      = googledrive::as_id(session_folder_id),
+    name      = paste0(key, ".txt"),
     overwrite = TRUE
   )
-    unlink(temp_file)
 
-  showNotification(paste0(name, i18n$t(" result saved successfully.")), type = "message", duration = 3)
+  unlink(temp_file)
+
+  showNotification(paste0(name, i18n$t(" result saved successfully.")),
+                   type = "message", duration = 3)
 }
+
 
 output$hist_plot_explainer <- renderUI({
   process_markdown("07_analysis/analysis_hist_plot_explainer.Rmd")
@@ -222,8 +226,8 @@ observeEvent(input$run_hist_Plot, {
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
-if(!is.null(normal_two_sided_result()$result)){
-    normal_two_sided_result <- NULL
+if(!is.null(normal_unpaired_result()$result)){
+    normal_unpaired_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -287,8 +291,8 @@ observeEvent(input$normal, {
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
-  if(!is.null(normal_two_sided_result()$result)){
-    normal_two_sided_result <- NULL
+  if(!is.null(normal_unpaired_result()$result)){
+    normal_unpaired_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -342,8 +346,8 @@ observeEvent(input$not_normal, {
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
-  if(!is.null(normal_two_sided_result()$result)){
-    normal_two_sided_result <- NULL
+  if(!is.null(normal_unpaired_result()$result)){
+    normal_unpaired_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -399,8 +403,8 @@ observeEvent(input$unpaired_not_normal,{
   p_value_reactive <- reactive({NULL})
   effect_size_reactive <- reactive({NULL})
 
-if(!is.null(normal_two_sided_result()$result)){
-    normal_two_sided_result <- NULL
+if(!is.null(normal_unpaired_result()$result)){
+    normal_unpaired_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -455,20 +459,28 @@ observe({
             div(class = "success-box", i18n$t("🙌 Great!")),
           )
     })
-      output$save_not_normal_unpaired <- renderUI({
-        tagList(
-            div(
-      style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-          actionButton(
-            session$ns("save_not_normal_unpaired_button"),
-            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-            class = "action-button custom-action",
-            `data-id` = "not_normal_unpaired_save"
-          )
-            )
-        )
+      # output$save_not_normal_unpaired <- renderUI({
+      #   tagList(
+      #       div(
+      # style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+      #     actionButton(
+      #       session$ns("save_not_normal_unpaired_button"),
+      #       label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+      #       class = "action-button custom-action",
+      #       `data-id` = "not_normal_unpaired_save"
+      #     )
+      #       )
+      #   )
 
-        })
+      #   })
+
+        save_result(
+            name             = "Wilcoxon Test - Unpaired",
+            key              = "stats_not_normal_unpaired",
+            result_obj       = not_normal_unpaired_result(), 
+            saved_results    = saved_results,
+            session_folder_id = session_folder_id
+          )
         } else {
         output$not_normal_unpaired_feedback <- renderUI({
           div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -476,16 +488,16 @@ observe({
         }
       })
 
-
-observeEvent(input$save_not_normal_unpaired_button, {
-  save_result(
-    name             = "Wilcoxon Test - Unpaired",
-    key              = "stats_not_normal_unpaired",
-    result_obj       = not_normal_unpaired_result(), 
-    saved_results    = saved_results,
-    session_folder_id = session_folder_id
-  )
-})
+ 
+# observeEvent(input$save_not_normal_unpaired_button, {
+#   save_result(
+#     name             = "Wilcoxon Test - Unpaired",
+#     key              = "stats_not_normal_unpaired",
+#     result_obj       = not_normal_unpaired_result(), 
+#     saved_results    = saved_results,
+#     session_folder_id = session_folder_id
+#   )
+# })
 
 # 2. not normal paired
 
@@ -513,8 +525,8 @@ observeEvent(input$paired_not_normal,{
   effect_size_reactive <- reactive({NULL})
 
 
-if(!is.null(normal_two_sided_result()$result)){
-    normal_two_sided_result <- NULL
+if(!is.null(normal_unpaired_result()$result)){
+    normal_unpaired_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -569,22 +581,30 @@ observe({
             div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
-        output$save_not_normal_paired <- renderUI({
-          tagList(
-    div(
-      style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-          actionButton(
-            session$ns("save_not_normal_paired_button"),
-            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-            class = "action-button custom-action",
-            `data-id` = "not_normal_paired_save"
+        # output$save_not_normal_paired <- renderUI({
+        #   tagList(
+        #       div(
+        #         style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+        #             actionButton(
+        #               session$ns("save_not_normal_paired_button"),
+        #               label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+        #               class = "action-button custom-action",
+        #               `data-id` = "not_normal_paired_save"
 
-          )
-    )
-          )
+        #             )
+        #       )
+        #             )
 
 
-        })
+        #           })
+
+        save_result(
+          name             = "Wilcoxon Test - Paired",
+          key              = "stats_not_normal_paired",
+          result_obj       = not_normal_paired_result(), 
+          saved_results    = saved_results,
+          session_folder_id = session_folder_id
+        )
         } else {
         output$not_normal_paired_feedback <- renderUI({
           div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -593,23 +613,23 @@ observe({
       })
 
 
-observeEvent(input$save_not_normal_paired_button, {
-  save_result(
-    name             = "Wilcoxon Test - Paired",
-    key              = "stats_not_normal_paired",
-    result_obj       = not_normal_paired_result(), 
-    saved_results    = saved_results,
-    session_folder_id = session_folder_id
-  )
-})
+# observeEvent(input$save_not_normal_paired_button, {
+#   save_result(
+#     name             = "Wilcoxon Test - Paired",
+#     key              = "stats_not_normal_paired",
+#     result_obj       = not_normal_paired_result(), 
+#     saved_results    = saved_results,
+#     session_folder_id = session_folder_id
+#   )
+# })
  
 # 3. normal unpaired
 
   predefined_code_normal_unpaired = whisker.render(
-    read_file("markdown/07_analysis/predefined_code_two_sided_t_test.txt"),
+    read_file("markdown/07_analysis/predefined_code_unpaired_t_test.txt"),
     vars)
 
-  normal_two_sided_result <- editor_module_server("normal_two_sided_editor", average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
+  normal_unpaired_result <- editor_module_server("normal_unpaired_editor", average_trs, "average_trs", predefined_code = predefined_code_normal_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Normal Unpaired")
 
 observeEvent(input$unpaired_normal,{
   output$not_normal_unpaired_ui <- renderUI({NULL})
@@ -629,8 +649,8 @@ observeEvent(input$unpaired_normal,{
   effect_size_reactive <- reactive({NULL})
 
 
-if(!is.null(normal_two_sided_result()$result)){
-    normal_two_sided_result <- NULL
+if(!is.null(normal_unpaired_result()$result)){
+    normal_unpaired_result <- NULL
     #print("not null")
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
@@ -641,8 +661,8 @@ if(!is.null(normal_two_sided_result()$result)){
   }
 
 
-output$two_sided_t_test <- renderUI({
-  process_markdown("07_analysis/analysis_two_sided_t_test.Rmd")
+output$unpaired_t_test <- renderUI({
+  process_markdown("07_analysis/analysis_unpaired_t_test.Rmd")
 })
 
   output$normal_unpaired_ui <- renderUI({
@@ -659,11 +679,11 @@ output$two_sided_t_test <- renderUI({
               solidHeader = TRUE,
               fluidRow(
                   column(6,
-                  uiOutput(session$ns("two_sided_t_test")),
+                  uiOutput(session$ns("unpaired_t_test")),
                   uiOutput(session$ns("normal_unpaired_feedback"))
                   ),
                   column(6,
-                  editor_module_ui(session$ns("normal_two_sided_editor"), i18n),
+                  editor_module_ui(session$ns("normal_unpaired_editor"), i18n),
                   uiOutput(session$ns("save_normal_unpaired"))
                   )
               ),
@@ -680,29 +700,37 @@ output$two_sided_t_test <- renderUI({
 
 observe({
 
-  req(!is.null(normal_two_sided_result()), !is.null(normal_two_sided_result()$result))
+  req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result))
   
-    if (inherits(normal_two_sided_result()$result, "htest")) {
+    if (inherits(normal_unpaired_result()$result, "htest")) {
       
         output$normal_unpaired_feedback <- renderUI({
           tagList(
             div(class = "success-box", i18n$t("🙌 Great!"))
           )
         })
-        output$save_normal_unpaired <- renderUI({
-          tagList(
-            div(
-              style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-          actionButton(
-            session$ns("save_two_sided_result"),
-            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-            class = "action-button custom-action",
-            `data-id` = "normal_unpaired_save"
-          )
-    )
-          )
+    #     output$save_normal_unpaired <- renderUI({
+    #       tagList(
+    #         div(
+    #           style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+    #       actionButton(
+    #         session$ns("save_unpaired_result"),
+    #         label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+    #         class = "action-button custom-action",
+    #         `data-id` = "normal_unpaired_save"
+    #       )
+    # )
+    #       )
 
-        })
+    #     })
+
+        save_result(
+            name             = "T-Test - Unpaired",
+            key              = "stats_normal_unpaired",
+            result_obj       = normal_unpaired_result(), 
+            saved_results    = saved_results,
+            session_folder_id = session_folder_id
+          )
         } else {
         output$normal_unpaired_feedback <- renderUI({
           div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -710,15 +738,15 @@ observe({
         }
       })
 
-      observeEvent(input$save_two_sided_result, {
-  save_result(
-    name             = "T-Test - Unpaired",
-    key              = "stats_normal_two_sided",
-    result_obj       = normal_two_sided_result(), 
-    saved_results    = saved_results,
-    session_folder_id = session_folder_id
-  )
-})
+#       observeEvent(input$save_unpaired_result, {
+#   save_result(
+#     name             = "T-Test - Unpaired",
+#     key              = "stats_normal_unpaired",
+#     result_obj       = normal_unpaired_result(), 
+#     saved_results    = saved_results,
+#     session_folder_id = session_folder_id
+#   )
+# })
 
 # 4. normal paired
 
@@ -745,8 +773,8 @@ observeEvent(input$paired_normal,{
   effect_size_reactive <- reactive({NULL})
 
 
-  if(!is.null(normal_two_sided_result()$result)){
-    normal_two_sided_result <- NULL
+  if(!is.null(normal_unpaired_result()$result)){
+    normal_unpaired_result <- NULL
   } else if (!is.null(normal_paired_result()$result)) {
      normal_paired_result <- NULL
   } else if (!is.null(not_normal_unpaired_result()$result)) {
@@ -800,20 +828,28 @@ observe({
             div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
-        output$save_normal_paired <- renderUI({
-          tagList(
-            div(
-              style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-          actionButton(
-            session$ns("save_normal_paired_button"),
-            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-            class = "action-button custom-action",
-            `data-id` = "normal_paired_save"
-          )
-            )
-          )
+        # output$save_normal_paired <- renderUI({
+        #   tagList(
+        #     div(
+        #       style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+        #   actionButton(
+        #     session$ns("save_normal_paired_button"),
+        #     label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+        #     class = "action-button custom-action",
+        #     `data-id` = "normal_paired_save"
+        #   )
+        #     )
+        #   )
 
-        })
+        # })
+
+        save_result(
+          name             = "T-Test - Paired",
+          key              = "stats_normal_paired",
+          result_obj       = normal_paired_result(), 
+          saved_results    = saved_results,
+          session_folder_id = session_folder_id
+        )
         } else {
         output$normal_paired_feedback <- renderUI({
           div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -821,15 +857,15 @@ observe({
         }
       })
 
-      observeEvent(input$save_normal_paired_button, {
-  save_result(
-    name             = "T-Test - Paired",
-    key              = "stats_normal_paired",
-    result_obj       = normal_paired_result(), 
-    saved_results    = saved_results,
-    session_folder_id = session_folder_id
-  )
-})
+#       observeEvent(input$save_normal_paired_button, {
+#   save_result(
+#     name             = "T-Test - Paired",
+#     key              = "stats_normal_paired",
+#     result_obj       = normal_paired_result(), 
+#     saved_results    = saved_results,
+#     session_folder_id = session_folder_id
+#   )
+# })
 
 # 5. effect size t-test paired
   predefined_code_t_test_effect_size_paired = whisker.render(
@@ -899,21 +935,27 @@ observe({
             div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
-        output$save_normal_paired_effect_size <- renderUI({
-          tagList(
-            div(
-            style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-          actionButton(
-            session$ns("save_normal_paired_effect_size_button"),
-            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-            class = "action-button custom-action",
-            `data-id` = "normal_paired_effect_save"
-          )
-            )
-          )
+        # output$save_normal_paired_effect_size <- renderUI({
+        #   tagList(
+        #     div(
+        #     style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+        #   actionButton(
+        #     session$ns("save_normal_paired_effect_size_button"),
+        #     label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+        #     class = "action-button custom-action",
+        #     `data-id` = "normal_paired_effect_save"
+        #   )
+        #     )
+        #   )
 
-        })
-
+        # })
+        save_result(
+          name             = "Normal Effect Size - Paired",
+          key              = "stats_normal_paired_effect_size",
+          result_obj       = t_test_effect_size_paired_result(), 
+          saved_results    = saved_results,
+          session_folder_id = session_folder_id
+        )
         } else {
         output$t_test_effect_size_paired_feedback <- renderUI({
           div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -921,15 +963,15 @@ observe({
         }
       })
 
-observeEvent(input$save_normal_paired_effect_size_button, {
-  save_result(
-    name             = "Normal Effect Size - Paired",
-    key              = "stats_normal_paired_effect_size",
-    result_obj       = t_test_effect_size_paired_result(), 
-    saved_results    = saved_results,
-    session_folder_id = session_folder_id
-  )
-})
+# observeEvent(input$save_normal_paired_effect_size_button, {
+#   save_result(
+#     name             = "Normal Effect Size - Paired",
+#     key              = "stats_normal_paired_effect_size",
+#     result_obj       = t_test_effect_size_paired_result(), 
+#     saved_results    = saved_results,
+#     session_folder_id = session_folder_id
+#   )
+# })
 
 #6. effect size t-test unpaired
   predefined_code_t_test_effect_size_unpaired = whisker.render(
@@ -939,9 +981,9 @@ observeEvent(input$save_normal_paired_effect_size_button, {
   t_test_effect_size_unpaired_result <- editor_module_server("t_test_effect_size_unpaired", average_trs, "average_trs", predefined_code = predefined_code_t_test_effect_size_unpaired, return_type = "result", session_folder_id, save_header = "Statistical Analysis: Effect Size for Unpaired T-Test")
 
   observe({
-  req(!is.null(normal_two_sided_result()), !is.null(normal_two_sided_result()$result), p_value_reactive() < 0.05)
+  req(!is.null(normal_unpaired_result()), !is.null(normal_unpaired_result()$result), p_value_reactive() < 0.05)
 cat("in observeEvent t_test_effect_size_unpaired_result\n")
-print(normal_two_sided_result())
+print(normal_unpaired_result())
 
   output$not_normal_unpaired_ui <- renderUI({NULL})
   output$not_normal_paired_ui <- renderUI({NULL})
@@ -1001,21 +1043,29 @@ observe({
             div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
-        output$save_normal_unpaired_effect_size <- renderUI({
-        tagList(
-          div(
-            style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-                  actionButton(
-                    session$ns("save_normal_unpaired_effect_size_button"),
-                    label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-                    class = "action-button custom-action",
-                    `data-id` = "normal_unpaired_effect_save"
+        # output$save_normal_unpaired_effect_size <- renderUI({
+        # tagList(
+        #   div(
+        #     style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+        #           actionButton(
+        #             session$ns("save_normal_unpaired_effect_size_button"),
+        #             label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+        #             class = "action-button custom-action",
+        #             `data-id` = "normal_unpaired_effect_save"
 
-                  )
+        #           )
+        #   )
+        # )
+
+        #         })
+
+          save_result(
+            name             = "Normal Effect Size - Unpaired",
+            key              = "stats_normal_unpaired_effect_size",
+            result_obj       = t_test_effect_size_unpaired_result(), 
+            saved_results    = saved_results,
+            session_folder_id = session_folder_id
           )
-        )
-
-                })
         } else {
         output$t_test_effect_size_unpaired_feedback <- renderUI({
           div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -1023,15 +1073,15 @@ observe({
         }
       })
 
-      observeEvent(input$save_normal_unpaired_effect_size_button, {
-  save_result(
-    name             = "Normal Effect Size - Unpaired",
-    key              = "stats_normal_unpaired_effect_size",
-    result_obj       = t_test_effect_size_unpaired_result(), 
-    saved_results    = saved_results,
-    session_folder_id = session_folder_id
-  )
-})
+#       observeEvent(input$save_normal_unpaired_effect_size_button, {
+#   save_result(
+#     name             = "Normal Effect Size - Unpaired",
+#     key              = "stats_normal_unpaired_effect_size",
+#     result_obj       = t_test_effect_size_unpaired_result(), 
+#     saved_results    = saved_results,
+#     session_folder_id = session_folder_id
+#   )
+# })
 
 
 #7. effect size wilcoxon paired
@@ -1102,21 +1152,30 @@ observe({
             div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
-        output$save_not_normal_paired_effect_size <- renderUI({
-            tagList(
-                  div(
-                    style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-                          actionButton(
-                            session$ns("save_not_normal_paired_effect_size_button"),
-                            label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-                            class = "action-button custom-action",
-                            `data-id` = "not_normal_paired_effect_save"
+        # output$save_not_normal_paired_effect_size <- renderUI({
+        #     tagList(
+        #           div(
+        #             style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+        #                   actionButton(
+        #                     session$ns("save_not_normal_paired_effect_size_button"),
+        #                     label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+        #                     class = "action-button custom-action",
+        #                     `data-id` = "not_normal_paired_effect_save"
 
-                          )
-                  )
-            )
+        #                   )
+        #           )
+        #     )
 
-                        })
+        #                 })
+
+        save_result(
+          name             = "Not Normal Effect Size - Paired",
+          key              = "stats_not_normal_paired_effect_size",
+          result_obj       = wilcoxon_effect_size_paired_result(), 
+          saved_results    = saved_results,
+          session_folder_id = session_folder_id
+        )
+        
         } else {
         output$wilcoxon_effect_size_paired_feedback <- renderUI({
           div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
@@ -1124,15 +1183,15 @@ observe({
         }
       })
 
-  observeEvent(input$save_not_normal_paired_effect_size_button, {
-  save_result(
-    name             = "Not Normal Effect Size - Paired",
-    key              = "stats_not_normal_paired_effect_size",
-    result_obj       = wilcoxon_effect_size_paired_result(), 
-    saved_results    = saved_results,
-    session_folder_id = session_folder_id
-  )
-})
+#   observeEvent(input$save_not_normal_paired_effect_size_button, {
+#   save_result(
+#     name             = "Not Normal Effect Size - Paired",
+#     key              = "stats_not_normal_paired_effect_size",
+#     result_obj       = wilcoxon_effect_size_paired_result(), 
+#     saved_results    = saved_results,
+#     session_folder_id = session_folder_id
+#   )
+# })
 
 #8. effect size wilcoxon unpaired
   predefined_code_wilcoxon_effect_size_unpaired = whisker.render(
@@ -1203,29 +1262,22 @@ observe({
             div(class = "success-box", i18n$t("🙌 Great!")),
           )
         })
-        output$save_not_normal_unpaired_effect_size <- renderUI({
-            tagList(
-              div(
-                style = "display: flex; justify-content: center; align-items: center; width: 100%;",
-                                  actionButton(
-                                    session$ns("save_not_normal_unpaired_effect_size_button"),
-                                    label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
-                                    class = "action-button custom-action",
-                                    `data-id` = "not_normal_unpaired_effect_save"
+        # output$save_not_normal_unpaired_effect_size <- renderUI({
+        #     tagList(
+        #       div(
+        #         style = "display: flex; justify-content: center; align-items: center; width: 100%;",
+        #                           actionButton(
+        #                             session$ns("save_not_normal_unpaired_effect_size_button"),
+        #                             label = tagList(icon("save"), i18n$t("Save Results to Dashboard")),
+        #                             class = "action-button custom-action",
+        #                             `data-id` = "not_normal_unpaired_effect_save"
 
-                                  )
-              )
-            )
+        #                           )
+        #       )
+        #     )
 
-                                })
-        } else {
-        output$wilcoxon_effect_size_unpaired_feedback <- renderUI({
-          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
-        })
-        }
-      })
+        #                         })
 
-      observeEvent(input$save_not_normal_unpaired_effect_size_button, {
         save_result(
           name             = "Not Normal Effect Size - Unpaired",
           key              = "stats_not_normal_unpaired_effect_size",
@@ -1233,7 +1285,22 @@ observe({
           saved_results    = saved_results,
           session_folder_id = session_folder_id
         )
+        } else {
+        output$wilcoxon_effect_size_unpaired_feedback <- renderUI({
+          div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
+        })
+        }
       })
+
+      # observeEvent(input$save_not_normal_unpaired_effect_size_button, {
+      #   save_result(
+      #     name             = "Not Normal Effect Size - Unpaired",
+      #     key              = "stats_not_normal_unpaired_effect_size",
+      #     result_obj       = wilcoxon_effect_size_unpaired_result(), 
+      #     saved_results    = saved_results,
+      #     session_folder_id = session_folder_id
+      #   )
+      # })
 
 ### reactives for effect size
 
@@ -1283,9 +1350,9 @@ print(sr_es)
 
 p_value_reactive <- reactive({
     sr <- NULL
-    if (!is.null(normal_two_sided_result()) && 
-      !is.null(normal_two_sided_result()$result)) {
-    sr <- normal_two_sided_result()
+    if (!is.null(normal_unpaired_result()) && 
+      !is.null(normal_unpaired_result()$result)) {
+    sr <- normal_unpaired_result()
 
   } else if (!is.null(normal_paired_result()) && 
              !is.null(normal_paired_result()$result)) {
@@ -1336,7 +1403,7 @@ req(!is.null(p_value_reactive()))
   } else {
     req(
       (!is.null(normal_paired_result()) && !is.null(normal_paired_result()$result)) ||
-      (!is.null(normal_two_sided_result()) && !is.null(normal_two_sided_result()$result)) ||
+      (!is.null(normal_unpaired_result()) && !is.null(normal_unpaired_result()$result)) ||
       (!is.null(not_normal_paired_result()) && !is.null(not_normal_paired_result()$result)) ||
       (!is.null(not_normal_unpaired_result()) && !is.null(not_normal_unpaired_result()$result))
     )
@@ -1381,7 +1448,7 @@ observe({
 
   normality_results_exist <- 
     !is.null(normal_paired_result()$result) ||
-    !is.null(normal_two_sided_result()$result) ||
+    !is.null(normal_unpaired_result()$result) ||
     !is.null(not_normal_paired_result()$result) ||
     !is.null(not_normal_unpaired_result()$result)
 
@@ -1594,13 +1661,13 @@ alt_hyp_file <- files_in_folder[grepl("^Alternative Hypothesis", files_in_folder
 observeEvent(input$enter_p_value_submit, {
     req(
     (!is.null(normal_paired_result()) && !is.null(normal_paired_result()$result)) ||
-    (!is.null(normal_two_sided_result()) && !is.null(normal_two_sided_result()$result)) ||
+    (!is.null(normal_unpaired_result()) && !is.null(normal_unpaired_result()$result)) ||
     (!is.null(not_normal_paired_result()) && !is.null(not_normal_paired_result()$result)) ||
     (!is.null(not_normal_unpaired_result()) && !is.null(not_normal_unpaired_result()$result))
     
   )
 
-  if (!is.null(normal_paired_result()$result) || !is.null(normal_two_sided_result()$result)
+  if (!is.null(normal_paired_result()$result) || !is.null(normal_unpaired_result()$result)
   || !is.null(not_normal_paired_result()$result) || !is.null(not_normal_unpaired_result()$result)){
     val_pv <- p_value_reactive()
   }
@@ -1698,7 +1765,7 @@ observeEvent(input$save_text_interpretation_button, {
 
   normality_results_exist <- 
     !is.null(normal_paired_result()$result) ||
-    !is.null(normal_two_sided_result()$result) ||
+    !is.null(normal_unpaired_result()$result) ||
     !is.null(not_normal_paired_result()$result) ||
     !is.null(not_normal_unpaired_result()$result)
 

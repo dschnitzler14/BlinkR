@@ -11,9 +11,9 @@ custom_login_ui <- function(id, i18n) {
           div(
             id = ns("signup-login-choice"),
             class = "custom-login-panel",
-            
+             
             h3(i18n$t("Welcome to BlinkR")),
-            p(i18n$t("Please Login with your Group ID or Sign Up with a new Group ID to continue")),
+            p(i18n$t("Please Login with your Group ID. If you do not have a Group ID, please contact your admin.")),
             
             uiOutput(ns("login_signup_choice")),
             
