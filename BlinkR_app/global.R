@@ -40,10 +40,13 @@ library(stats)
 library(lubridate)
 library(shinyvalidate)
 library(digest)
+library(mailtoR)
 
 source("STEP1_google_drive_app_set_up.R")
 source("STEP2_define_variables.R")
 source("data_hazards_list.R")
+
+site_url <- "https://ds1405.shinyapps.io/blinkr_app/"
 
 # fetch experimental variables
 experiment_vars <- experiment_variables

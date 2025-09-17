@@ -23,6 +23,10 @@ header <- dashboardHeader(
     tags$option(value = "de", "🇩🇪 Deutsch")
   )
 ),
+      tags$li(
+      class = "dropdown",
+      actionLink("email_self", label = i18n$t("Send Myself A Link"), icon = icon("envelope"))
+    ),
     tags$li(
       class = "dropdown",
       actionLink("about_link", label = i18n$t("About"), icon = icon("info-circle"))
@@ -126,6 +130,7 @@ body <- dashboardBody(
   usei18n(i18n),
   css_link,
   useShinyjs(),
+  mailtoR::use_mailtoR(),
 
   uiOutput("login_ui"),
 
@@ -331,6 +336,7 @@ server <- function(input, output, session) {
     }
     
     update_lang(input$selected_language, session)
+    updateActionLink(session, "email_self", label = i18n$t("Send Myself A Link"))
     updateActionLink(session, "about_link", label = i18n$t("About"))
     updateActionLink(session, "citing", label = i18n$t("Cite BlinkR"))
   })
@@ -408,23 +414,38 @@ saved_results <- reactiveValues(
 
   auth <- custom_login_server("login_module", i18n, user_base_google_sheet, all_users, base_group_files_url, external_logout_button = reactive(input$logout_button))
 
-  output$sidebar_group_name <- renderText({
+
+  group_id            <- reactive({ req(auth()$user_info); auth()$user_info$group })
+  user_auth_r           <- reactive({ auth()$user_auth })
+  user_role           <- reactive({ req(auth()$user_info); auth()$user_info$role })
+  data_permission     <- reactive({ req(auth()$user_info); auth()$user_info$data })
+  protocol_permission <- reactive({ req(auth()$user_info); auth()$user_info$protocol })
+  session_folder_url  <- reactive({ req(auth()$session_folder_url); auth()$session_folder_url })
+
+  output$group_id_text             <- renderText(group_id())
+  output$user_role            <- renderText(user_role())
+  output$data_permission      <- renderText(data_permission())
+  output$protocol_permission  <- renderText(protocol_permission())
+  output$session_folder_url   <- renderText(session_folder_url())
+  output$user_auth <- renderPrint(user_auth())
+
+  # output$group_id <- reactive({ auth()$user_info$group })
+   output$user_auth <- reactive({ auth()$user_auth })
+  # output$user_role <- reactive({ auth()$user_info$role })
+  # output$data_permission <- reactive({ auth()$user_info$data })
+  # output$protocol_permission <- reactive({ auth()$user_info$protocol })
+
+    output$sidebar_group_name <- renderText({
     req(auth()$user_auth)
-    paste("Group ID:", auth()$user_info$group)
+    paste("Group ID:", group_id())
+    #paste("Group ID:", auth()$user_info$group)
   })
 
-  outputOptions(output, "sidebar_group_name", suspendWhenHidden = FALSE) 
-
-  output$group_id <- reactive({ auth()$user_info$group })
-  output$user_auth <- reactive({ auth()$user_auth })
-  output$user_role <- reactive({ auth()$user_info$role })
-  output$data_permission <- reactive({ auth()$user_info$data })
-  output$protocol_permission <- reactive({ auth()$user_info$protocol })
-  
+  outputOptions(output, "sidebar_group_name", suspendWhenHidden = FALSE)   
   outputOptions(output, "user_role", suspendWhenHidden = FALSE)
   outputOptions(output, "user_auth", suspendWhenHidden = FALSE)
   
-  output$session_folder_url <- reactive({ auth()$session_folder_url })
+  # output$session_folder_url <- reactive({ auth()$session_folder_url })
 
   observeEvent(input$login_button, {
     output$login_ui <- renderUI({
@@ -508,6 +529,61 @@ saved_results <- reactiveValues(
       )
     )
   })
+
+observeEvent(input$email_self, {
+  req(user_auth_r())
+  showModal(
+    modalDialog(
+      title = i18n$t("Email Yourself"),
+      textInput("email_address",
+      i18n$t("Enter one or more email addresses (separate with commas):"),
+      width = "100%"),
+      uiOutput("mailto_btn"),
+      easyClose = TRUE,
+      footer = NULL
+    )
+  )
+})
+
+output$mailto_btn <- renderUI({
+  req(nzchar(input$email_address))
+
+  emails <- unlist(strsplit(input$email_address, ","))
+  emails <- trimws(emails)
+  emails <- emails[nzchar(emails)]
+
+  valid <- grepl("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", emails)
+  if (!all(valid)) {
+    return(tags$p(style = "color:red;", i18n$t("One or more addresses look invalid.")))
+  }
+
+  body_lines <- c(
+    i18n$t("Hello! 👋"),
+    "",
+    paste(i18n$t("Your ID is"), group_id()),
+    paste(i18n$t("This is the link to your drive:"), session_folder_url())
+  )
+
+  if (exists("site_url") && !is.null(site_url) && nzchar(site_url)) {
+    body_lines <- c(
+      body_lines,
+      paste(i18n$t("You can also access BlinkR here:"), site_url)
+    )
+  }
+
+  body_lines <- c(
+    body_lines,
+    "",
+    i18n$t("Best wishes ✨")
+  )
+
+  mailtoR::mailtoR(
+    email   = emails,
+    text    = i18n$t("Email Yourself"),
+    subject = "BlinkR App Link",
+    body    = paste(body_lines, collapse = "\n")
+  )
+})
 
   output$about_box_markdown <- renderUI({
   include_markdown_language("00_about/about_box.Rmd")

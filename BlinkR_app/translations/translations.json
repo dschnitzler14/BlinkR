@@ -997,7 +997,19 @@
     "en": "For example... 'A p-value of [statisical test method + degrees of freedom], p=[p-value] suggests that ______.'",
     "de": "Zum Beispiel … 'Ein p‑Wert von [statistisches Testverfahren + Freiheitsgrade], p=[p‑Wert] deutet darauf hin, dass ______.'"
   },
-  { "en": "Research Preparation", "de": "Forschungsvorbereitung" }
+  { "en": "Research Preparation", "de": "Forschungsvorbereitung" },
+  { "en": "Send Myself a Reminder Email", "de": "Sende mir eine Erinnerungs-E-Mail"},
+  { "en": "Send Email", "de": "E-Mail senden" },
+  { "en": "Enter one or more email addresses (separate with commas):", "de": "Geben Sie eine oder mehrere E-Mail-Adressen ein (durch Kommas getrennt):" },
+  { "en": "One or more addresses look invalid.", "de": "Eine oder mehrere Adressen scheinen ungültig zu sein." },
+  { "en": "Email Yourself", "de": "E-Mail an mich selbst" },
+  { "en": "Your ID is", "de": "Ihre ID ist" },
+  { "en": "This is the link to your drive:", "de": "Hier ist der Link zu Ihrem Drive:" },
+  { "en": "BlinkR app is available at:", "de": "Die BlinkR-App ist verfügbar unter:" },
+  { "en": "Hello! 👋", "de": "Hallo! 👋" },
+  { "en": "You can also access BlinkR here:", "de": "Sie können auch hier auf BlinkR zugreifen:" },
+  { "en": "Thank you ✨", "de": "Danke ✨" }
+
 
   ]
 }
