@@ -1,5 +1,8 @@
 # BlinkR
 
+> **To Test Admin Functions:** Log in is 5555
+> **To Test User Functions:** Log in is 1234 
+
 ## Table of Contents
 
 - [Overview](#overview)
