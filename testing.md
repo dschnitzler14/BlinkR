@@ -1,6 +1,6 @@
 ## 1 App Startup
 
-terminal messages:
+On startup terminal messages confirm successful linkage to backend Google Drive and userbase located in a Google Sheet. Additionally, messages identify successful reading of userbase:
 
 ```R
 ℹ The googlesheets4 package is using a cached token for appdemo41@gmail.com.
@@ -15,6 +15,8 @@ Auto-refreshing stale OAuth token.
 ```
 
 ## 2 Log in/ Sign up
+
+On log in, terminal messages confirm correct ID and successful locating of ID-specific folder within Google Drive.
 
 ### 2.1 Log in
 
@@ -34,6 +36,8 @@ For file:
 ```
 
 ### 2.2 Signing up (if active)
+
+If sign up is active (default: inactive) terminal messages provide evidence of successful writing to userbase with correct ID and name. Additionally, successful validation creating an ID-unique folder in the Google Drive for persistent storage.
 
 ```R
 signing up for =  D - 1636
@@ -60,6 +64,8 @@ For file:
 ✔ Range Sheet1.
 ```
 
+Backend valdidation of appropriate ID entry:
+
 ```R
 four_digit_group_id <- function() {
 compose_rules(
@@ -83,6 +89,8 @@ iv$add_rule("name", sv_required(message = "Name is required"))
 iv$enable()
 ```
 
+If invalid ID, user receives error notification in the UI.
+
 ```R
 observeEvent(input$sign_up_button, {
 
@@ -101,7 +109,7 @@ req(input$sign_up_group_name, input$name, iv$is_valid())
 
 ## 3 Text Area Module
 
-- used throughout to write and save to google drive
+Used throughout to write and save to Google Drive. Terminal messages confirm writing to the drive with the appropriate file name - e.g `Hypothesis_13h_30m_43s_.txt` to the appropriate (loggin in) user's Google Drive folder - e.g. `1234`.
 
 ```R
 Local file:
@@ -117,6 +125,8 @@ group name  1234  saved to path BlinkR_text_results/1234 as filename Hypothesis_
 
 #### 4.1.1 Measurements Input
 
+When inputting measurement data, terminal messages display successful writing to the Google sheet collecting measurements, with evidence of the data that is being written - e.g. `1 1 1` written to `BlinkR_Measurements`.
+
 ```R
 Level B Inputs: 1 1 1
 ✔ Writing to BlinkR_Measurements.
@@ -129,7 +139,7 @@ Level A Inputs: 1 1 1
 ✔ Writing to sheet 1234_2025-08-29.
 ```
 
-- cannot submit 0 or NA values
+Validation to ensure user cannot submit 0 or NA values as measurments. In addition, each measurement box must be completed to ensure successful submission.
 
 ```R
 add_measurement <- function(level, inputs, submission_id) {
@@ -148,13 +158,13 @@ return(FALSE)
 
 ### 4.2 Analysis validation and UI output
 
-- User answers are validated based on reactives that change depending on the underlying data. In some cases successful validation also determines the next ui output For example:
+User answers are validated based on reactives that change depending on the underlying data. In some cases successful validation also determines the next ui output For example:
 
 ```R
-#step1 asks users to run head(data) which results in a tibble
+
 analysis_summarise_data_module_ui <- function(){
 ...
-uiOutput(ns("step1_box"))
+uiOutput(ns("step1_box")) #step1 asks users to run head(data) which results in a tibble
 ...
 })
 
@@ -196,7 +206,7 @@ div(class = "error-box", i18n$t("🤔 Not quite - try again!"))
 
 ### 4.3 Handling Code Errors
 
-- Elaborate `TryCatch`to handle NAs and error messages in the analysis sections (where `AceEditor Module` is implemented).
+Elaborate `TryCatch`to handle NAs and error messages in the analysis sections (where `AceEditor Module` is implemented). Additionally, packages where the user could access the backend are offloaded, e.g. `googledrive` and `googlesheets4`.
 
 ```R
 observeEvent(input$run_code, {
@@ -204,8 +214,6 @@ observeEvent(input$run_code, {
 code <- input$editor
 
 temp_env <- new.env(parent = globalenv())
-
-
 
 if (is.list(data) && length(variable_name) == length(data)) {
 
@@ -221,8 +229,6 @@ assign(variable_name, data(), envir = temp_env)
 
 }
 
-
-
 forbidden_packages <- c("googledrive", "googlesheets4")
 
 lapply(forbidden_packages, function(pkg) {
@@ -235,11 +241,7 @@ detach(paste0("package:", pkg), character.only = TRUE, unload = FALSE)
 
 })
 
-
-
 warnings_vec <- character(0)
-
-
 
 eval_result <- tryCatch({
 
@@ -274,7 +276,6 @@ class = "editor_error"
 })
 
 
-
 lapply(forbidden_packages, function(pkg) {
 
 if (pkg %in% installed.packages()) {
@@ -284,7 +285,6 @@ library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
 }
 
 })
-
 
 
 if (inherits(eval_result, "editor_error")) {
@@ -311,8 +311,6 @@ values$is_plot <- inherits(res_value, "ggplot") || inherits(res_value, "recorded
 
 }
 
-
-
 current_code(code)
 
 }, ignoreInit = TRUE)
@@ -320,7 +318,7 @@ current_code(code)
 
 ### 4.4 Persistent Storage and Userbase
 
-- when a new user is generated -> confirmed generation of folder in google drive
+When a new useris generated within the Admin Area terminal messages confirm generation of folder in Google Drive.
 
 ```R
 button for 1889 clicked;
