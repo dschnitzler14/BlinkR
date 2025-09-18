@@ -36,7 +36,13 @@ required_packages <- c(
   "png",
   "gridExtra",
   "stats",
-  "shiny.i18n"
+  "shiny.i18n",
+  "htmltools",
+  "stats",
+  "lubridate",
+  "shinyvalidate",
+  "digest",
+  "mailtoR"
 )
 
 installed_packages <- rownames(installed.packages())
