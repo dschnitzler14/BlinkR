@@ -18,7 +18,7 @@ affiliations:
   - name: Institute of Neuroscience and Biopsychology for Clinical Application, Medical School Berlin, Germany
     index: 1
 
-date: 18 July 2025
+date: 18 September 2025
 bibliography: paper.bib
 header-includes:
   - \usepackage{longtable}
@@ -53,9 +53,18 @@ The data is loaded dynamically through Google Drive, ensuring that quiz answers 
 
 Briefly, BlinkR contains a structured workflow guiding students through the experimental process, however, each section can also be carried out in isolation, independent of previous sections. The overview of the app is as follows:
 
-\begin{longtable}{p{4cm} X}
-\textbf{Section} & \textbf{Description} \\
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\begin{longtable}{L{0.28\linewidth} L{0.68\linewidth}}
 \toprule
+\textbf{Section} & \textbf{Description} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Section} & \textbf{Description} \\
+\midrule
+\endhead
+
 Introduction & Overview of the BlinkR app and usage \\
 Background & Guidance on using research databases and how to begin a literature search relevant to the experiment \\
 Hypothesis & Formulate null and alternative hypotheses \\
@@ -73,8 +82,8 @@ AI & Responsible use of generative AI tools, with a warning about academic misco
 Upload Final Report & Submit the final report to Google Drive \\
 Simulated Experiment & Run through a complete example using dummy data \\
 Feedback & Students provide feedback that is saved to Google Drive \\
+\bottomrule
 \end{longtable}
-
 
 Additional UI features include login/logout functionality, a direct view of the connected Google Drive, as well as a language selector (English or German). Educators (or administrators) can manage users, control data visibility (e.g., class protocols or shared datasets), either through the "Users" spreadsheet on Google Drive or via the dedicated Admin Area. Within this section, they can also monitor report submissions.
 
