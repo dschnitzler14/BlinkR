@@ -1,7 +1,8 @@
 # BlinkR
 
 > **To Test Admin Functions:** Log in is 5555
-> **To Test User Functions:** Log in is 1234 
+
+> **To Test User Functions:** Log in is 1234
 
 ## Table of Contents
 
@@ -456,7 +457,7 @@ There are several options — the most common is via **shinyapps.io**. Here's ho
 
 Once deployed, your students can access BlinkR online from any device!
 
-> Once you have deployed you can even add the link in the `global.R` file under `site_url = "your-link.com` which will then be added to the email users can send themselves! 
+> Once you have deployed you can even add the link in the `global.R` file under `site_url = "your-link.com` which will then be added to the email users can send themselves!
 
 **✅ You're all set. Happy experimenting!**
 
