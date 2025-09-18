@@ -1030,34 +1030,6 @@ observeEvent(input$submit_sem_level_a_group_quiz_answer, {
     
     summary_updated <- reactiveVal(FALSE)
     
-    # observeEvent(input$save_summary_results_button, {
-    #   if (!is.null(summarise_result_step9())) {
-    #     key <- "summary"
-    #     saved_results$scripts[[key]] <- summarise_result_step9()
-        
-    #     result_as_char <- capture.output(print(saved_results$scripts[[key]]))
-        
-    #     temp_file <- tempfile(fileext = ".txt")
-    #     writeLines(result_as_char, con = temp_file)
-        
-    #     path <- drive_get(as_id(session_folder_id))
-        
-    #     drive_upload(
-    #       media = temp_file,
-    #       path = path,
-    #       name = paste0(key, ".txt"),
-    #       overwrite = TRUE,
-    #     )
-        
-
-    #     unlink(temp_file)
-        
-    #     showNotification(i18n$t("Summary script saved successfully & Uploaded to Drive."), type = "message", duration = 3)
-    #   } else {
-    #     showNotification(i18n$t("No summary script to save."), type = "error", duration = 3)
-    #   }
-    # })
-
 # navigation buttons
 
     observeEvent(input$statistics, {
