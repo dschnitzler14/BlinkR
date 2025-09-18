@@ -318,7 +318,7 @@ current_code(code)
 
 ### 4.4 Persistent Storage and Userbase
 
-When a new useris generated within the Admin Area terminal messages confirm generation of folder in Google Drive.
+When a new user is generated within the Admin Area terminal messages confirm generation of folder in Google Drive.
 
 ```R
 button for 1889 clicked;
