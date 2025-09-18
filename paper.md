@@ -20,6 +20,8 @@ affiliations:
 
 date: 18 July 2025
 bibliography: paper.bib
+header-includes:
+  - \usepackage{longtable}
 ---
 
 # Statement of Need
