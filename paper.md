@@ -53,10 +53,27 @@ The data is loaded dynamically through Google Drive, ensuring that quiz answers 
 
 Briefly, BlinkR contains a structured workflow guiding students through the experimental process, however, each section can also be carried out in isolation, independent of previous sections. The overview of the app is as follows:
 
+- **Introduction:** Overview of the BlinkR app and usage
+- **Background:** Guidance on using research databases and how to begin a literature search relevant to the experiment
+- **Hypothesis:** Formulate null and alternative hypotheses
+- **Protocol:** Plan the experiment; view "group protocol ideas" and, if shared by the admin, "class protocol"
+- **Measurements:** Students enter measurements for both conditions. Data is saved dynamically to Google Drive
+- **Raw Data:** View raw individual, group, and class-level data (if shared)
+- **Playground:** Introduction to R syntax and working with R code to prepare for analysis
+- **Analysis Dashboard:** Overview of all analyses; includes link to the group's Google Drive folder
+  - **1. Prepare Data:** Students review data, average replicates, and complete a quiz to confirm understanding
+  - **2. Summarise Data:** Perform summary statistics, calculate mean, SD, SEM, and create summary table using `dplyr`
+  - **3. Create Figure:** Create box plot or bar chart. Students label and style plots manually
+  - **4. Statistical Analysis:** Assess normality, choose statistical test (paired/unpaired), and calculate effect size if p≤ 0.05
+- **Write Up Advice:** Guidance on scientific writing and group collaboration
+- **AI:** Responsible use of generative AI tools, with a warning about academic misconduct
+- **Upload Final Report:** Submit the final report to Google Drive
+- **Simulated Experiment:** Run through a complete example using dummy data
+- **Feedback:** Students provide feedback that is saved to Google Drive
 
-Additional UI features include login/logout functionality, a direct view of the connected Google Drive, as well as a language selector (English or German). Educators (or administrators) can manage users, control data visibility (e.g., class protocols or shared datasets), either through the "Users" spreadsheet on Google Drive or via the dedicated Admin Area. Within this section, they can also monitor report submissions.
+Additional UI features include login/logout functionality, a direct view of the connected Google Drive, as well as a language selector (English or German). Educators (or administrators) can manage users, control data visibility (e.g., class protocols or shared datasets), either through the "Users" spreadsheet on Google Drive or via the dedicated Admin Area. Within this section, they can also generate new groups and monitor report submissions.
 
-The [source code](https://github.com/dschnitzler14/BlinkR.git) is openly available on GitHub. A detailed README provides full setup instructions, including cloning the repository, adapting variables, configuring Google Drive integration, and running the necessary setup scripts.
+The [source code](https://github.com/dschnitzler14/BlinkR.git) is openly available on GitHub. A detailed README provides full setup instructions, including cloning the repository, adapting variables, configuring Google Drive integration, and running the necessary setup scripts for educators.
 
 # Acknowledgements
 
