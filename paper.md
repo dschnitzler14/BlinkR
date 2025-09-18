@@ -20,10 +20,6 @@ affiliations:
 
 date: 18 September 2025
 bibliography: paper.bib
-header-includes:
-  - \usepackage{longtable}
-  - \usepackage{tabularx}
-  - \usepackage{booktabs}
 ---
 
 # Statement of Need
@@ -64,7 +60,7 @@ Briefly, BlinkR contains a structured workflow guiding students through the expe
   - **1. Prepare Data:** Students review data, average replicates, and complete a quiz to confirm understanding
   - **2. Summarise Data:** Perform summary statistics, calculate mean, SD, SEM, and create summary table using `dplyr`
   - **3. Create Figure:** Create box plot or bar chart. Students label and style plots manually
-  - **4. Statistical Analysis:** Assess normality, choose statistical test (paired/unpaired), and calculate effect size if p≤ 0.05
+  - **4. Statistical Analysis:** Assess normality, choose statistical test (paired/unpaired), and calculate effect size if $p\leq 0.05$
 - **Write Up Advice:** Guidance on scientific writing and group collaboration
 - **AI:** Responsible use of generative AI tools, with a warning about academic misconduct
 - **Upload Final Report:** Submit the final report to Google Drive
