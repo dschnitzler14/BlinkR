@@ -24,13 +24,13 @@ bibliography: paper.bib
 
 # Statement of Need
 
-Undergraduate students in medical and medical research programmes often struggle to engage with data analysis due to limited coding experience, lack of appropriate devices, and language barriers [@paciFacingFearScaffolding2025; @williamsBarriersIntegrationBioinformatics2019]. To address these challenges, BlinkR was developed: an interactive web app designed to support the teaching of scientific practices using R in an accessible, mobile-friendly, and multilingual format.
+Undergraduate students in medical and life science programmes often struggle to engage with data analysis due to limited coding experience, lack of appropriate devices, and language barriers [@paciFacingFearScaffolding2025; @williamsBarriersIntegrationBioinformatics2019]. To address these challenges, BlinkR was developed: an interactive web app designed to support the teaching of scientific practices using R in an accessible, mobile-friendly, and multilingual format.
 
 BlinkR was initially intended to support a specific course on the fundamentals of research delivered to first-year medical students by the authors through a research-informed approach to learning and teaching [@griffithsKnowledgeProductionResearch2004; @hagtvedtPedagogicalSimulationSampling2007]. The aim of the course for first-year undergraduates is to understand the process and practice of science, including designing an experiment, carrying out the measurements, analysing the results with R, and writing up a final report.
 
-BlinkR is an interactive web app that guides students through all steps of this process, using explanations, writing and coding prompts, quizzes and interactive feedback. The interactive web app format was chosen based on the following practical assumptions:
+BlinkR is an interactive web app that guides students through all steps of this process, using explanations, writing and coding prompts, quizzes and interactive feedback. The interactive web app format was chosen based on the following practical considerations:
 
-1. Most students at this level in a medical or medical research degree programme have little to no experience writing R code (or any code).
+1. Most students at this level in a medical or life science degree programme have little to no experience writing R code (or any code).
 2. Students typically attend classes and tutorials with mobile phones or tablets, rather than laptops.
 3. Downloading and installing R and an IDE during class time is time-consuming and would reduce teaching time. Students are unlikely to complete these steps before class.
 4. Providing instruction in the students' teaching language (German) promotes greater understanding and engagement compared to English-only materials.
@@ -58,7 +58,7 @@ Briefly, BlinkR contains a structured workflow guiding students through the expe
 - **Playground:** Introduction to R syntax and working with R code to prepare for analysis
 - **Analysis Dashboard:** Overview of all analyses; includes link to the group's Google Drive folder
   - **1. Prepare Data:** Students review data, average replicates, and complete a quiz to confirm understanding
-  - **2. Summarise Data:** Perform summary statistics, calculate mean, SD, SEM, and create summary table using `dplyr`
+  - **2. Summarise Data:** Compute summary statistics, calculate mean, SD, SEM, and create summary table using `dplyr`
   - **3. Create Figure:** Create box plot or bar chart. Students label and style plots manually
   - **4. Statistical Analysis:** Assess normality, choose statistical test (paired/unpaired), and calculate effect size if $p\leq 0.05$
 - **Write Up Advice:** Guidance on scientific writing and group collaboration
@@ -73,6 +73,6 @@ The [source code](https://github.com/dschnitzler14/BlinkR.git) is openly availab
 
 # Acknowledgements
 
-This software was developed with the support of the Stefan Lab at Medical School Berlin (MSB). I would also like to thank Dr Patricia Rubisch and Ms Kira Lampert, as well as the students of the winter 2024/25 and summer 2025 terms M14 class at MSB for beta-testing and providing feedback.
+We would like to thank Dr Patricia Rubisch and Ms Kira Lampert, as well as the students of the winter 2024/25 and summer 2025 terms M14 class at Medical School Berlin (MSB) for beta-testing and providing feedback.
 
 # References
