@@ -69,7 +69,7 @@ Briefly, BlinkR contains a structured workflow guiding students through the expe
 
 Additional UI features include login/logout functionality, a direct view of the connected Google Drive, as well as a language selector (English or German). Educators (or administrators) can manage users, control data visibility (e.g., class protocols or shared datasets), either through the "Users" spreadsheet on Google Drive or via the dedicated Admin Area. Within this section, they can also generate new groups and monitor report submissions.
 
-The [source code](https://github.com/dschnitzler14/BlinkR.git) is openly available on GitHub. A detailed README provides full setup instructions, including cloning the repository, adapting variables, configuring Google Drive integration, and running the necessary setup scripts for educators.
+The [source code](https://github.com/dschnitzler14/BlinkR.git) is openly available on GitHub. A detailed README provides full setup instructions, including cloning the repository, adapting variables, configuring Google Drive integration, and running the necessary setup scripts for educators. Tests are provided in the GitHub repository. 
 
 # Acknowledgements
 
